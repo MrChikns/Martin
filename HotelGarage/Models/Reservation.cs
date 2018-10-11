@@ -11,7 +11,7 @@ namespace HotelGarage.Models
         public int Id { get; set; }
 
         [Required]
-        public string CarId { get; set; }
+        public string LicensePlate { get; set; }
 
         public Car Car { get; set; }
 

@@ -4,9 +4,9 @@
     ViewBag.Title = "Home Page";
 }
 
-<h1>list of cars</h1>
+<h1>list of reservations</h1>
 @foreach (var reservation in Model)
 {
-    <li>@reservation.CarId</li>
+    <li>@reservation.LicensePlate</li>
     <li>@reservation.Arrival</li>
 }

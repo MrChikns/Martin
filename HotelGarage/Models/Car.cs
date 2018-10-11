@@ -16,11 +16,10 @@ namespace HotelGarage.Models
         [StringLength(50)]
         public string GuestsName { get; set; }
         
-        public int GuestRoomNumber { get; set; }
+        public int? GuestRoomNumber { get; set; }
 
-        public  int PricePerNight { get; set; }
+        public int? PricePerNight { get; set; }
         
-        [Required]
         public bool IsEmployee { get; set; }
 
 

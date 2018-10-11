@@ -199,6 +199,7 @@
     <Compile Include="Controllers\CarsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ReservationsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -213,6 +214,10 @@
     <Compile Include="Migrations\201810111032071_CarsAndReservationsModel1.cs" />
     <Compile Include="Migrations\201810111032071_CarsAndReservationsModel1.Designer.cs">
       <DependentUpon>201810111032071_CarsAndReservationsModel1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810111949372_AddCarIdToReservationModel.cs" />
+    <Compile Include="Migrations\201810111949372_AddCarIdToReservationModel.Designer.cs">
+      <DependentUpon>201810111949372_AddCarIdToReservationModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -286,6 +291,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Reservations\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -309,6 +315,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810111032071_CarsAndReservationsModel1.resx">
       <DependentUpon>201810111032071_CarsAndReservationsModel1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810111949372_AddCarIdToReservationModel.resx">
+      <DependentUpon>201810111949372_AddCarIdToReservationModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

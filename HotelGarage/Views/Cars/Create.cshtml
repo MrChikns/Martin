@@ -1,0 +1,49 @@
+﻿@model HotelGarage.Models.Car
+
+@{
+    ViewBag.Title = "CreateForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create Car</h2>
+@using (Html.BeginForm("Create", "Cars"))
+{
+    <div class="form-group">
+        @Html.LabelFor(c => c.LicensePlate)
+        @Html.TextBoxFor(c => c.LicensePlate, new { @class = "form-control", autofocus = "autofocus" })
+        @Html.ValidationMessageFor(c => c.LicensePlate)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.CarModel)
+        @Html.TextBoxFor(c => c.CarModel, new { @class = "form-control" })
+        @Html.ValidationMessageFor(c => c.CarModel)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.GuestsName)
+        @Html.TextBoxFor(c => c.GuestsName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(c => c.GuestsName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.GuestRoomNumber)
+        @Html.TextBoxFor(c => c.GuestRoomNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(c => c.GuestRoomNumber)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.PricePerNight)
+        @Html.TextBoxFor(c => c.PricePerNight, new { @class = "form-control" })
+        @Html.ValidationMessageFor(c => c.PricePerNight)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.IsEmployee)
+        @Html.CheckBoxFor(c => c.IsEmployee, new { @class = "form-control" })
+        @Html.ValidationMessageFor(c => c.IsEmployee)
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+
+}
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

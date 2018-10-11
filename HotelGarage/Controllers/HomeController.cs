@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotelGarage.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +9,17 @@ namespace HotelGarage.Controllers
 {
     public class HomeController : Controller
     {
+        private ApplicationDbContext _context;
+
+        public HomeController()
+        {
+            _context = new ApplicationDbContext();
+        }
+
         public ActionResult Index()
         {
-            return View();
+            var cars = _context.Cars.ToList();
+            return View(cars);
         }
 
         public ActionResult About()

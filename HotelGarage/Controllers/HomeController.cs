@@ -18,8 +18,8 @@ namespace HotelGarage.Controllers
 
         public ActionResult Index()
         {
-            var cars = _context.Cars.ToList();
-            return View(cars);
+            var reservations = _context.Reservations.ToList();
+            return View(reservations);
         }
 
         public ActionResult About()

@@ -1,11 +1,12 @@
-﻿@model IEnumerable<HotelGarage.Models.Car>
+﻿@model IEnumerable<HotelGarage.Models.Reservation>
 
 @{
     ViewBag.Title = "Home Page";
 }
 
 <h1>list of cars</h1>
-@foreach(var car in Model)
+@foreach (var reservation in Model)
 {
-    <li>@car.LicensePlate</li>
+    <li>@reservation.CarId</li>
+    <li>@reservation.Arrival</li>
 }

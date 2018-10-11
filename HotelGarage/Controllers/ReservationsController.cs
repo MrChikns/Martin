@@ -17,9 +17,9 @@ namespace HotelGarage.Controllers
         }
 
         // Cars form
-        public ActionResult Create(Car car)
+        public ActionResult Create()
         {
-            return View(car);
+            return View();
         }
 
         [HttpPost]

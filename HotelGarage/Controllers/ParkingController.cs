@@ -8,16 +8,16 @@ using System.Web.Mvc;
 
 namespace HotelGarage.Controllers
 {
-    public class HomeController : Controller
+    public class ParkingController : Controller
     {
         private ApplicationDbContext _context;
 
-        public HomeController()
+        public ParkingController()
         {
             _context = new ApplicationDbContext();
         }
 
-        public ActionResult Index()
+        public ActionResult Parking()
         {
             var parkingPlaces = _context.ParkingPlaces
                 .Include(s => s.StateOfPlace)

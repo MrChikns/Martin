@@ -34,7 +34,7 @@ namespace HotelGarage.Controllers
             _context.Cars.Add(car);
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Parking", "Parking");
         }
     }
 }

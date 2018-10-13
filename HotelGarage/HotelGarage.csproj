@@ -231,6 +231,10 @@
     <Compile Include="Migrations\201810112051585_EditOfCarProperties.Designer.cs">
       <DependentUpon>201810112051585_EditOfCarProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810131852406_reservationLicensePlateAtributChanged.cs" />
+    <Compile Include="Migrations\201810131852406_reservationLicensePlateAtributChanged.Designer.cs">
+      <DependentUpon>201810131852406_reservationLicensePlateAtributChanged.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Car.cs" />
@@ -340,6 +344,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810112051585_EditOfCarProperties.resx">
       <DependentUpon>201810112051585_EditOfCarProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810131852406_reservationLicensePlateAtributChanged.resx">
+      <DependentUpon>201810131852406_reservationLicensePlateAtributChanged.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

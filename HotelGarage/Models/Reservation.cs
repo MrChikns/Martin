@@ -11,14 +11,18 @@ namespace HotelGarage.Models
         public int Id { get; set; }
 
         [Required]
+        [Display(Name = "SPZ")]
+        [StringLength(20)]
         public string LicensePlate { get; set; }
 
         public Car Car { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Zadejte datum ve správném formátu.")]
+        [Display(Name = "Příjezd")]
         public DateTime Arrival { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Zadejte datum ve správném formátu.")]
+        [Display(Name = "Odjezd")]
         public DateTime Departure { get; set; }
 
         [Required]

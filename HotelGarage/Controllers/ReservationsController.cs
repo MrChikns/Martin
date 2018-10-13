@@ -23,6 +23,7 @@ namespace HotelGarage.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(Reservation reservation)
         {
                         

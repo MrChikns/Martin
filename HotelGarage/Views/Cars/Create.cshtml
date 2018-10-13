@@ -1,50 +1,49 @@
 ﻿@model HotelGarage.Models.Car
 
 @{
-    ViewBag.Title = "CreateForm";
+    ViewBag.Title = "Nové auto";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create Car</h2>
-<h4>hodnota -1 znamena, ze ji zatim nezname</h4>
+<h2>Nové auto</h2>
+<br />
 @using (Html.BeginForm("Create", "Cars"))
 {
+    @Html.AntiForgeryToken();
     <div class="form-group">
-        @Html.LabelFor(c => c.LicensePlate)
+        @Html.LabelFor(c => c.LicensePlate, "Státní Poznávací Značka")
         @Html.TextBoxFor(c => c.LicensePlate, new { @class = "form-control", autofocus = "autofocus" })
         @Html.ValidationMessageFor(c => c.LicensePlate)
     </div>
     <div class="form-group">
-        @Html.LabelFor(c => c.CarModel)
+        @Html.LabelFor(c => c.CarModel, "Typ Auta")
         @Html.TextBoxFor(c => c.CarModel, new { @class = "form-control" })
         @Html.ValidationMessageFor(c => c.CarModel)
     </div>
     <div class="form-group">
-        @Html.LabelFor(c => c.GuestsName)
+        @Html.LabelFor(c => c.GuestsName, "Jméno Hosta")
         @Html.TextBoxFor(c => c.GuestsName, new { @class = "form-control" })
         @Html.ValidationMessageFor(c => c.GuestsName)
     </div>
     <div class="form-group">
-        @Html.LabelFor(c => c.GuestRoomNumber)
-        @Html.TextBoxFor(c => c.GuestRoomNumber, new { @class = "form-control"})
-        @Html.ValidationMessageFor(c => c.GuestRoomNumber)
+        @Html.LabelFor(c => c.GuestRoomNumber, "Číslo Pokoje Hosta")
+        @Html.TextBoxFor(c => c.GuestRoomNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(c => c.GuestRoomNumber, "Zadejte platné číslo pokoje.")
     </div>
     <div class="form-group">
-        @Html.LabelFor(c => c.PricePerNight)
-        @Html.TextBoxFor(c => c.PricePerNight, new { @class = "form-control"})
-        @Html.ValidationMessageFor(c => c.PricePerNight)
+        @Html.LabelFor(c => c.PricePerNight, "Cena za Noc v EUR")
+        @Html.TextBoxFor(c => c.PricePerNight, new { @class = "form-control" })
+        @Html.ValidationMessageFor(c => c.PricePerNight,"Cena musí být zadána číslem.")
     </div>
-    <div class="form-group">
-        @Html.LabelFor(c => c.IsEmployee)
+    <div class="form-group form-inline">
+        @Html.LabelFor(c => c.IsEmployee, "Zaměstnanec?")
         @Html.CheckBoxFor(c => c.IsEmployee, new { @class = "form-control" })
         @Html.ValidationMessageFor(c => c.IsEmployee)
     </div>
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="submit" class="btn btn-primary">Uložit</button>
 
 }
 @section scripts
 {
     @Scripts.Render("~/bundles/jqueryval")
 }
-
-

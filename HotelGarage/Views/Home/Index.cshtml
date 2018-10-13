@@ -1,18 +1,19 @@
 ﻿@model IEnumerable<HotelGarage.Models.Reservation>
 
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Náhled garáže";
 }
 
-<h1>list of reservations</h1>
-
-@Html.ActionLink("Make new reservation", "Create", "Reservations", new{ Reservations = Model }, new { @class = "btn btn-primary", type="submit" })
-
-
-    <ul>
-        @foreach (var reservation in Model)
-        {
-            <li>@reservation.Car.LicensePlate</li>
-            <li>@reservation.Arrival</li>
-        }
-    </ul>
+<h2>Parkovací Místa</h2>
+<br />
+@foreach (var reservation in Model)
+{
+    <li>SPZ Auta - @reservation.Car.LicensePlate</li>
+    <li>Příjezd rezervace - @reservation.Arrival</li>
+    <br />
+}
+@Html.ActionLink("Make new reservation", 
+    "Create", 
+    "Reservations", 
+    new { Reservations = Model }, 
+    new { @class = "btn btn-primary", type = "submit" })

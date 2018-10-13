@@ -9,6 +9,13 @@
 @foreach (var parkingPlace in Model)
 {
     <li>@parkingPlace.Name - @parkingPlace.StateOfPlace.Name</li>
+    <li>
+        @Html.ActionLink("Check In",
+    "CheckIn",
+    "Reservations",       
+    new { parkplace = parkingPlace.Id },
+    new { @class = "btn btn-primary", type = "submit" })
+    </li>
     <br />
 }
 @Html.ActionLink("Nová Rezervace", 

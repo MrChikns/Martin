@@ -26,18 +26,15 @@ namespace HotelGarage.Controllers
             return View(parkingPlaces);
         }
 
-        public ActionResult About()
+       public ActionResult CheckIn(ActualReservation reservation)
         {
-            ViewBag.Message = "Your application description page.";
 
-            return View();
-        }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
+            var parkingPlaces = _context.ParkingPlaces
+                .Include(s => s.StateOfPlace)
+                .ToList();
 
-            return View();
+            return View(parkingPlaces);
         }
     }
 }

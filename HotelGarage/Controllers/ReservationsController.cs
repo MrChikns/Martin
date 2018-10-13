@@ -1,4 +1,5 @@
 ﻿using HotelGarage.Models;
+using HotelGarage.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,5 +48,24 @@ namespace HotelGarage.Controllers
 
             return RedirectToAction("Parking", "Parking");
         }
+
+        public ActionResult CheckIn(int parkPlace)
+        {
+            CheckInViewModel viewModel = new CheckInViewModel() { id = parkPlace };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CheckIn(CheckInViewModel viewModel)
+        {
+            var parkingPlace = _context.ParkingPlaces.First(p => viewModel.id == p.Id);
+
+            parkingPlace.Reservation = viewModel.InhouseReservation;
+                
+            return RedirectToAction("Parking", "Parking");
+        }
+
     }
 }

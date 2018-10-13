@@ -11,7 +11,7 @@ namespace HotelGarage.Models
 
         public string Name { get; set; }
 
-        public Reservation Reservation { get; set; }
+        public InhouseReservation Reservation { get; set; }
 
         public int StateOfPlaceId { get; set; }
 

@@ -235,12 +235,18 @@
     <Compile Include="Migrations\201810131852406_reservationLicensePlateAtributChanged.Designer.cs">
       <DependentUpon>201810131852406_reservationLicensePlateAtributChanged.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810131926398_parkingPlaceAndItsStateModel.cs" />
+    <Compile Include="Migrations\201810131926398_parkingPlaceAndItsStateModel.Designer.cs">
+      <DependentUpon>201810131926398_parkingPlaceAndItsStateModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Car.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ParkingPlace.cs" />
     <Compile Include="Models\Reservation.cs" />
+    <Compile Include="Models\StateOfPlace.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -347,6 +353,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810131852406_reservationLicensePlateAtributChanged.resx">
       <DependentUpon>201810131852406_reservationLicensePlateAtributChanged.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810131926398_parkingPlaceAndItsStateModel.resx">
+      <DependentUpon>201810131926398_parkingPlaceAndItsStateModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

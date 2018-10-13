@@ -30,4 +30,19 @@ namespace HotelGarage.Models
 
 
     }
+
+    public class ActualReservation : Reservation
+    {
+
+    }
+
+    public class InhouseReservation : Reservation
+    {
+
+    }
+
+    public class PastReservation : Reservation
+    {
+
+    }
 }

@@ -24,7 +24,7 @@ namespace HotelGarage.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Reservation reservation)
+        public ActionResult Create(ActualReservation reservation)
         {
                         
 
@@ -40,10 +40,9 @@ namespace HotelGarage.Controllers
                 car = new Car { LicensePlate = reservation.LicensePlate };
                 _context.Cars.Add(car);
             }
-                       
 
             reservation.Car = car;
-            _context.Reservations.Add(reservation);
+            _context.ActualReservations.Add(reservation);
             _context.SaveChanges();
 
             return RedirectToAction("Parking", "Parking");

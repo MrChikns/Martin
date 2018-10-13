@@ -243,6 +243,10 @@
     <Compile Include="Migrations\201810131953171_addNameToParkingPlacesAndPopulateItsDbTable.Designer.cs">
       <DependentUpon>201810131953171_addNameToParkingPlacesAndPopulateItsDbTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810132053385_newReservationTypesPlusTheirTables.cs" />
+    <Compile Include="Migrations\201810132053385_newReservationTypesPlusTheirTables.Designer.cs">
+      <DependentUpon>201810132053385_newReservationTypesPlusTheirTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Car.cs" />
@@ -361,6 +365,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810131953171_addNameToParkingPlacesAndPopulateItsDbTable.resx">
       <DependentUpon>201810131953171_addNameToParkingPlacesAndPopulateItsDbTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810132053385_newReservationTypesPlusTheirTables.resx">
+      <DependentUpon>201810132053385_newReservationTypesPlusTheirTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

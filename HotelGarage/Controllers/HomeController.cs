@@ -19,11 +19,11 @@ namespace HotelGarage.Controllers
 
         public ActionResult Index()
         {
-            var reservations = _context.Reservations
-                .Include(c => c.Car)
+            var parkingPlaces = _context.ParkingPlaces
+                .Include(s => s.StateOfPlace)
                 .ToList();
 
-            return View(reservations);
+            return View(parkingPlaces);
         }
 
         public ActionResult About()

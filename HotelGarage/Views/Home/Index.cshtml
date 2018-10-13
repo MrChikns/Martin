@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HotelGarage.Models.Reservation>
+﻿@model IEnumerable<HotelGarage.Models.ParkingPlace>
 
 @{
     ViewBag.Title = "Náhled garáže";
@@ -6,10 +6,9 @@
 
 <h2>Parkovací Místa</h2>
 <br />
-@foreach (var reservation in Model)
+@foreach (var parkingPlace in Model)
 {
-    <li>SPZ Auta - @reservation.Car.LicensePlate</li>
-    <li>Příjezd rezervace - @reservation.Arrival</li>
+    <li>@parkingPlace.Name - @parkingPlace.StateOfPlace.Name</li>
     <br />
 }
 @Html.ActionLink("Nová Rezervace", 

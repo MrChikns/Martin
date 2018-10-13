@@ -5,8 +5,14 @@
 }
 
 <h1>list of reservations</h1>
-@foreach (var reservation in Model)
-{
-    <li>@reservation.LicensePlate</li>
-    <li>@reservation.Arrival</li>
-}
+
+@Html.ActionLink("Make new reservation", "Create", "Reservations", new{ Reservations = Model }, new { @class = "btn btn-primary", type="submit" })
+
+
+    <ul>
+        @foreach (var reservation in Model)
+        {
+            <li>@reservation.Car.LicensePlate</li>
+            <li>@reservation.Arrival</li>
+        }
+    </ul>

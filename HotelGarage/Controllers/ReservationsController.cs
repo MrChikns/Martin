@@ -25,11 +25,23 @@ namespace HotelGarage.Controllers
         [HttpPost]
         public ActionResult Create(Reservation reservation)
         {
+                        
+
             if (!ModelState.IsValid)
             {
                 return View("Create", reservation);
             }
 
+            Car car = _context.Cars.FirstOrDefault(c => c.LicensePlate == reservation.LicensePlate);
+
+            if (car == null)
+            {
+                car = new Car { LicensePlate = reservation.LicensePlate };
+                _context.Cars.Add(car);
+            }
+                       
+
+            reservation.Car = car;
             _context.Reservations.Add(reservation);
             _context.SaveChanges();
 

@@ -5,35 +5,49 @@
 }
 
 <h2>Create Reservation</h2>
-@using (Html.BeginForm("Create", "Reservations"))
-{
-    <div class="form-group">
-        @Html.LabelFor(r => r.LicensePlate)
-        @Html.TextBoxFor(r => r.LicensePlate, new { @class = "form-control", autofocus = "autofocus" })
-        @Html.ValidationMessageFor(r => r.LicensePlate)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(r => r.Arrival)
-        @Html.TextBoxFor(r => r.Arrival, new { @class = "form-control" })
-        @Html.ValidationMessageFor(r => r.Arrival)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(r => r.Departure)
-        @Html.TextBoxFor(r => r.Departure, new { @class = "form-control" })
-        @Html.ValidationMessageFor(r => r.Departure)
-    </div>    
-    <div class="form-group">
-        @Html.LabelFor(r => r.IsRegistered)
-        @Html.CheckBoxFor(r => r.IsRegistered, new { @class = "form-control" })
-        @Html.ValidationMessageFor(r => r.IsRegistered)
-    </div>
-    <button type="submit" class="btn btn-primary">Save</button>
+<div class="col-sm-4">
+    
+        @using (Html.BeginForm("Create", "Reservations"))
+        {
+        
+            
+                <div class="form-group">
 
-}
+                        @Html.LabelFor(r => r.LicensePlate)
+                        @Html.TextBoxFor(r => r.LicensePlate, new { @class = "form-control", autofocus = "autofocus" })
+                        @Html.ValidationMessageFor(r => r.LicensePlate)
+                    </div>
+                        <div class="form-group">
+                            @Html.ActionLink("Make new car", "Create", "Cars", new { Cars = Model }, new { @class = "btn btn-primary", type = "submit" })
+                        </div>
+                
+            
+            <div class="form-group">
+                @Html.LabelFor(r => r.Arrival)
+                @Html.TextBoxFor(r => r.Arrival, new { @class = "form-control" })
+                @Html.ValidationMessageFor(r => r.Arrival)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(r => r.Departure)
+                @Html.TextBoxFor(r => r.Departure, new { @class = "form-control" })
+                @Html.ValidationMessageFor(r => r.Departure)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(r => r.IsRegistered)
+                @Html.CheckBoxFor(r => r.IsRegistered, new { @class = "form-control" })
+                @Html.ValidationMessageFor(r => r.IsRegistered)
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+
+        }
+    
+    </div>
+
+
 @section scripts
 {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+        @Scripts.Render("~/bundles/jqueryval")
+    }
 
 
 

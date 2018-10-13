@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Web;
 using System.Web.Mvc;
 
@@ -18,7 +19,10 @@ namespace HotelGarage.Controllers
 
         public ActionResult Index()
         {
-            var reservations = _context.Reservations.ToList();
+            var reservations = _context.Reservations
+                .Include(c => c.Car)
+                .ToList();
+
             return View(reservations);
         }
 

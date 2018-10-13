@@ -9,6 +9,8 @@ namespace HotelGarage.Models
     {
         public int Id { get; set; }
 
+        public string Name { get; set; }
+
         public Reservation Reservation { get; set; }
 
         public int StateOfPlaceId { get; set; }

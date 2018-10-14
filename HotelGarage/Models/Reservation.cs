@@ -28,6 +28,7 @@ namespace HotelGarage.Models
         [Required]
         public bool IsRegistered{ get; set; }
 
+        public int ParkingPlaceId { get; set; }
 
     }
 

@@ -1,8 +1,44 @@
-﻿@model HotelGarage.ViewModels.CheckInViewModel
+﻿@model HotelGarage.Models.InhouseReservation
 @{
     ViewBag.Title = "CheckIn";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>CheckIn</h2>
-<h2>@Model.id</h2>
+
+<br />
+@using (Html.BeginForm("Checkin", "Reservations"))
+{
+    @Html.AntiForgeryToken();
+    <div class="form-group">
+        @Html.LabelFor(r => r.LicensePlate, "Státní Poznávací Značka")
+        @Html.TextBoxFor(r => r.LicensePlate, new { @class = "form-control", autofocus = "autofocus" })
+        @Html.ValidationMessageFor(r => r.LicensePlate)
+    </div>
+    <div class="form-group">
+        @Html.ActionLink("Nové Auto", "Create", "Cars", new { Cars = Model }, new { @class = "btn btn-primary", type = "submit" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(r => r.Arrival, "Příjezd")
+        @Html.TextBoxFor(r => r.Arrival, new { @class = "form-control" })
+        @Html.ValidationMessageFor(r => r.Arrival)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(r => r.Departure, "Odjezd")
+        @Html.TextBoxFor(r => r.Departure, new { @class = "form-control" })
+        @Html.ValidationMessageFor(r => r.Departure)
+    </div>
+    <div class="form-group form-inline">
+        @Html.LabelFor(r => r.IsRegistered, "Je Registrovaná?")
+        @Html.CheckBoxFor(r => r.IsRegistered, new { @class = "form-control" })
+        @Html.ValidationMessageFor(r => r.IsRegistered)
+    </div>
+    <button type="submit" class="btn btn-primary">Uložit</button>
+    <div hidden="hidden" >@Html.TextBoxFor(p => p.ParkingPlaceId, new { value = Model.ParkingPlaceId })</div>
+}
+
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}

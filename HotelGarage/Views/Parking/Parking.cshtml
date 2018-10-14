@@ -8,18 +8,30 @@
 <br />
 @foreach (var parkingPlace in Model)
 {
-    <li>@parkingPlace.Name - @parkingPlace.StateOfPlace.Name</li>
-    <li>
-        @Html.ActionLink("Check In",
+    var pplaceId = parkingPlace.Id;
+
+    <li>parkPlace @parkingPlace.Name - @parkingPlace.StateOfPlace.Name</li>
+
+    if (parkingPlace.Reservation == null)
+    {
+        <li>neobsazeno</li>
+    }
+    else
+    {
+        <li>res @parkingPlace.Reservation.LicensePlate</li>
+        <li>car @parkingPlace.Reservation.Car.LicensePlate</li>
+    }
+
+    <li>@Html.ActionLink("Check In",
     "CheckIn",
-    "Reservations",       
-    new { parkplace = parkingPlace.Id },
+    "Reservations",
+    new { parkplace = pplaceId },
     new { @class = "btn btn-primary", type = "submit" })
     </li>
     <br />
 }
-@Html.ActionLink("Nová Rezervace", 
-    "Create", 
-    "Reservations", 
-    new { Reservations = Model }, 
+@Html.ActionLink("Nová Rezervace",
+    "Create",
+    "Reservations",
+    new { Reservations = Model },
     new { @class = "btn btn-primary", type = "submit" })

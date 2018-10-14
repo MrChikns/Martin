@@ -5,6 +5,7 @@ using System.Linq;
 using System.Data.Entity;
 using System.Web;
 using System.Web.Mvc;
+using HotelGarage.ViewModels;
 
 namespace HotelGarage.Controllers
 {
@@ -19,9 +20,14 @@ namespace HotelGarage.Controllers
 
         public ActionResult Parking()
         {
-            var parkingPlaces = _context.ParkingPlaces
+            
+                IEnumerable<ParkingPlace> parkingPlaces = _context.ParkingPlaces
                 .Include(s => s.StateOfPlace)
+                .Include(r => r.Reservation)
+                .Include(c => c.Reservation.Car)
                 .ToList();
+
+                
 
             return View(parkingPlaces);
         }

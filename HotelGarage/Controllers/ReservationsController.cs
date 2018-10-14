@@ -51,18 +51,34 @@ namespace HotelGarage.Controllers
 
         public ActionResult CheckIn(int parkPlace)
         {
-            CheckInViewModel viewModel = new CheckInViewModel() { id = parkPlace };
+            var res = new InhouseReservation() { ParkingPlaceId = parkPlace };
 
-            return View(viewModel);
+            return View(res);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CheckIn(CheckInViewModel viewModel)
+        public ActionResult CheckIn(InhouseReservation reservation)
         {
-            var parkingPlace = _context.ParkingPlaces.First(p => viewModel.id == p.Id);
+            var parkingPlace = _context.ParkingPlaces.First(p => p.Id == reservation.ParkingPlaceId);
 
-            parkingPlace.Reservation = viewModel.InhouseReservation;
+            Car car = _context.Cars.FirstOrDefault(c => c.LicensePlate == reservation.LicensePlate);
+
+            if (car == null)
+            {
+                car = new Car { LicensePlate = reservation.LicensePlate };
+                _context.Cars.Add(car);
+            }
+
+            reservation.Car = car;
+
+            //parkingPlace.Reservation = parkPlace.Reservation;
+
+            _context.InhouseReservations.Add(reservation);
+            parkingPlace.Reservation = reservation;
+            
+            _context.SaveChanges();
+            
                 
             return RedirectToAction("Parking", "Parking");
         }

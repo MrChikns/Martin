@@ -247,6 +247,10 @@
     <Compile Include="Migrations\201810132053385_newReservationTypesPlusTheirTables.Designer.cs">
       <DependentUpon>201810132053385_newReservationTypesPlusTheirTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810140901537_AddParkingPlaceIdToReservationModelClass.cs" />
+    <Compile Include="Migrations\201810140901537_AddParkingPlaceIdToReservationModelClass.Designer.cs">
+      <DependentUpon>201810140901537_AddParkingPlaceIdToReservationModelClass.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Car.cs" />
@@ -258,6 +262,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\CheckInViewModel.cs" />
+    <Compile Include="ViewModels\ParkingViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -369,6 +374,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810132053385_newReservationTypesPlusTheirTables.resx">
       <DependentUpon>201810132053385_newReservationTypesPlusTheirTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810140901537_AddParkingPlaceIdToReservationModelClass.resx">
+      <DependentUpon>201810140901537_AddParkingPlaceIdToReservationModelClass.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

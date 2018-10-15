@@ -28,12 +28,12 @@
     <div class="form-group">
         @Html.LabelFor(c => c.GuestRoomNumber, "Číslo Pokoje Hosta")
         @Html.TextBoxFor(c => c.GuestRoomNumber, new { @class = "form-control" })
-        @Html.ValidationMessageFor(c => c.GuestRoomNumber, "Zadejte platné číslo pokoje.")
+        @Html.ValidationMessageFor(c => c.GuestRoomNumber)
     </div>
     <div class="form-group">
         @Html.LabelFor(c => c.PricePerNight, "Cena za Noc v EUR")
         @Html.TextBoxFor(c => c.PricePerNight, new { @class = "form-control" })
-        @Html.ValidationMessageFor(c => c.PricePerNight,"Cena musí být zadána číslem.")
+        @Html.ValidationMessageFor(c => c.PricePerNight)
     </div>
     <div class="form-group form-inline">
         @Html.LabelFor(c => c.IsEmployee, "Zaměstnanec?")

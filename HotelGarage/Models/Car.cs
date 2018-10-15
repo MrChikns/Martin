@@ -19,6 +19,7 @@ namespace HotelGarage.Models
         [Display(Name = "Jméno")]
         public string GuestsName { get; set; }
 
+        [Range(101, 528, ErrorMessage = "Zadejte prosím platné číslo pokoje.")]
         [Display(Name = "Číslo Pokoje")]
         public int? GuestRoomNumber { get; set; }
 

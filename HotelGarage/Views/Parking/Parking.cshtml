@@ -6,30 +6,53 @@
 
 <h2>Parkovací Místa</h2>
 <br />
-@foreach (var parkingPlace in Model)
-{
-    var pplaceId = parkingPlace.Id;
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            One of three columns
+        </div>
+        <div class="col-sm">
+            One of three columns
+        </div>
+        <div class="col-sm">
+            One of three columns
+        </div>
+    </div>
+</div>
 
-    <li>parkPlace @parkingPlace.Name - @parkingPlace.StateOfPlace.Name</li>
 
-    if (parkingPlace.Reservation == null)
+    @foreach (var parkingPlace in Model)
     {
-        <li>neobsazeno</li>
-    }
-    else
-    {
-        <li>res @parkingPlace.Reservation.LicensePlate</li>
-        <li>car @parkingPlace.Reservation.Car.LicensePlate</li>
+        var pplaceId = parkingPlace.Id;
+
+        <div>parkPlace @parkingPlace.Name - @parkingPlace.StateOfPlace.Name</div>
+
+        if (parkingPlace.Reservation == null)
+        {
+        <div>neobsazeno</div>
+        }
+        else
+        {
+        <div>res @parkingPlace.Reservation.LicensePlate</div>
+        <div>car @parkingPlace.Reservation.Car.LicensePlate</div>
+        }
+
+        <div class="btn-group" style="margin-bottom:30px">
+            @Html.ActionLink("Assign Res",
+            "CheckIn",
+            "Reservations",
+            new { parkplace = pplaceId },
+            new { @class = "btn btn-primary btn-sm", type = "submit" })
+
+            @Html.ActionLink("Check In",
+            "CheckIn",
+            "Reservations",
+            new { parkplace = pplaceId },
+            new { @class = "btn btn-primary btn-sm", type = "submit", style = "margin-left:10px" })
+        </div>
+        <br />
     }
 
-    <li>@Html.ActionLink("Check In",
-    "CheckIn",
-    "Reservations",
-    new { parkplace = pplaceId },
-    new { @class = "btn btn-primary", type = "submit" })
-    </li>
-    <br />
-}
 @Html.ActionLink("Nová Rezervace",
     "Create",
     "Reservations",

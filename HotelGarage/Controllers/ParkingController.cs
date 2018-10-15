@@ -19,23 +19,18 @@ namespace HotelGarage.Controllers
         }
 
         public ActionResult Parking()
-        {
-            
+        {            
                 IEnumerable<ParkingPlace> parkingPlaces = _context.ParkingPlaces
                 .Include(s => s.StateOfPlace)
                 .Include(r => r.Reservation)
                 .Include(c => c.Reservation.Car)
-                .ToList();
-
-                
+                .ToList();                
 
             return View(parkingPlaces);
         }
 
        public ActionResult CheckIn(ActualReservation reservation)
         {
-
-
             var parkingPlaces = _context.ParkingPlaces
                 .Include(s => s.StateOfPlace)
                 .ToList();

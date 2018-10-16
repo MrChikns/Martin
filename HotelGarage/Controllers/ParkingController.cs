@@ -28,7 +28,7 @@ namespace HotelGarage.Controllers
 
             return View(parkingPlaces);
         }
-
+                
        public ActionResult CheckIn(ActualReservation reservation)
         {
             var parkingPlaces = _context.ParkingPlaces

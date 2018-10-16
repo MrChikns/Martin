@@ -1,6 +1,6 @@
 ﻿body {
     
-    padding-bottom: 20px;
+    margin-top: 90px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -45,9 +45,20 @@ span.field-validation-error {
 
 .navbar-brand {
     font-weight: 700;
-    font-size: 21px;
+    font-size: 24px;
 }
 
+.nav-link {
+    font-size: 20px;
+}
+
+.nav > li > a:hover, .navbar-brand:hover, #logoutForm > ul > li > a:hover {
+    color: #FFF;
+}
+
+.btn{
+    border-radius:10px;
+}
 
 body {
     font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;

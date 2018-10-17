@@ -264,7 +264,6 @@
     <Compile Include="Models\StateOfPlace.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModels\CheckInViewModel.cs" />
     <Compile Include="ViewModels\ParkingViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

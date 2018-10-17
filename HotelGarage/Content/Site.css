@@ -75,14 +75,20 @@ span.field-validation-error {
 
 /*outside parking overrides*/
 .card {
+    text-align:center;
     margin-right: 10px;
     margin-bottom: 10px;
     height: 180px;
     width: 170px;
 }
 
+.card-body {
+    padding: 10px;
+}
+
+
 .btn {
-    width: 130px;
+    width: 150px;
     text-align: center;
     border: none;
 }

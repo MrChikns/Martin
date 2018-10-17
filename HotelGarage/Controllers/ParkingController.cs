@@ -20,57 +20,52 @@ namespace HotelGarage.Controllers
         }
 
         public ActionResult Parking()
-        {            
-                IEnumerable<ParkingPlace> parkingPlaces = _context.ParkingPlaces
-                .Include(s => s.StateOfPlace)
-                .Include(r => r.Reservation)
-                .Include(c => c.Reservation.Car)
-                .ToList();                
-
-            return View(parkingPlaces);
-        }
-
-        public ActionResult OutsideParking()
         {
-            IList<ParkingPlace> parkingPlaces = _context.ParkingPlaces
-            .Include(s => s.StateOfPlace)
-            .Include(r => r.Reservation)
-            .Include(c => c.Reservation.Car)
-            .ToList();
-
             IList<ParkingPlaceDto> parkingPlaceDtos = new List<ParkingPlaceDto>();
 
-            foreach(var parkingPlace in _context.ParkingPlaces)
+            var parkingPlaces = _context.ParkingPlaces
+                .Include(s => s.StateOfPlace)
+                .Include(r => r.Reservation)
+                .ToList();
+
+            foreach (var parkingPlace in parkingPlaces)
             {
+                //odjezd a neregistrovan!
                 string lPlate = "", departure = "", name = "";
+                var id = parkingPlace.StateOfPlaceId;
 
                 string sOPlace = parkingPlace.StateOfPlace.Name;
+                switch (sOPlace) {
+                    case "Obsazeno":
+                        if (parkingPlace.Reservation.Departure.Date == DateTime.Today.Date)
+                            sOPlace = "Odjezd";
+                        if (parkingPlace.Reservation.Departure.Date == DateTime.Today.Date && !parkingPlace.Reservation.IsRegistered)
+                            sOPlace = "Neregistrován!";
+                        break;
+                    
+                          }
 
-                if(parkingPlace.Reservation != null)
+                if (parkingPlace.Reservation != null)
                 {
                     lPlate = parkingPlace.Reservation.LicensePlate;
                     departure = parkingPlace.Reservation.Departure.ToShortDateString();
                     name = parkingPlace.Name;
                 }
 
-                var ppDto = new ParkingPlaceDto {
+                var ppDto = new ParkingPlaceDto
+                {
                     LicensePlate = lPlate,
                     Departure = departure,
                     Name = name,
-                    StateOfPlace = sOPlace 
+                    StateOfPlace = sOPlace
                 };
 
                 parkingPlaceDtos.Add(ppDto);
             }
 
-          //  foreach (var pPlace in parkingPlaces)
-            //{ if (pPlace.Reservation == null)
-              //      pPlace.Reservation = _context.Reservations.Where(i => i.Id == 15);
-                    
-                //        } 
             return View(parkingPlaceDtos);
         }
-
+        
         public ActionResult CheckIn(ActualReservation reservation)
         {
             var parkingPlaces = _context.ParkingPlaces

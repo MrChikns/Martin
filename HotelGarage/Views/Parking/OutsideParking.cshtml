@@ -1,0 +1,373 @@
+﻿@model IList<HotelGarage.Dtos.ParkingPlaceDto>
+
+@{
+    ViewBag.Title = "Náhled garáže";
+}
+
+<h2>Venkovní Parkoviště</h2>
+<br />
+
+
+<div class="container">
+    
+                <div class="row">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@Model[12].LicensePlate</h5>
+                            <p class="card-text">
+                                @Model[12].Name<br>
+                                @Model[12].Departure
+                            </p>
+                            <a href="#" class="btn btn-primary">@Model[12].StateOfPlace</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@Model[13].LicensePlate</h5>
+                            <p class="card-text">
+                                @Model[13].Name<br>
+                                @Model[13].Departure
+                            </p>
+                            <a href="#" class="btn btn-primary">@Model[13].StateOfPlace</a>
+                        </div>
+                    </div><div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@Model[14].LicensePlate</h5>
+                            <p class="card-text">
+                                @Model[14].Name<br>
+                                @Model[14].Departure
+                            </p>
+                            <a href="#" class="btn btn-primary">@Model[14].StateOfPlace</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@Model[15].LicensePlate</h5>
+                            <p class="card-text">
+                                @Model[15].Name<br>
+                                @Model[15].Departure
+                            </p>
+                            <a href="#" class="btn btn-primary">@Model[15].StateOfPlace</a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@Model[19].LicensePlate</h5>
+                            <p class="card-text">
+                                @Model[19].Name<br>
+                                @Model[19].Departure
+                            </p>
+                            <a href="#" class="btn btn-primary">@Model[19].StateOfPlace</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@Model[21].LicensePlate</h5>
+                            <p class="card-text">
+                                @Model[21].Name<br>
+                                @Model[21].Departure
+                            </p>
+                            <a href="#" class="btn btn-primary">@Model[21].StateOfPlace</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@Model[22].LicensePlate</h5>
+                            <p class="card-text">
+                                @Model[22].Name<br>
+                                @Model[22].Departure
+                            </p>
+                            <a href="#" class="btn btn-primary">@Model[22].StateOfPlace</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@Model[24].LicensePlate</h5>
+                            <p class="card-text">
+                                @Model[24].Name<br>
+                                @Model[24].Departure
+                            </p>
+                            <a href="#" class="btn btn-primary">@Model[24].StateOfPlace</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@Model[16].LicensePlate</h5>
+                            <p class="card-text">
+                                @Model[16].Name<br>
+                                @Model[16].Departure
+                            </p>
+                            <a href="#" class="btn btn-primary">@Model[16].StateOfPlace</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="parkovaciMistoPrazdne">
+                    </div>
+                    <div class="parkovaciMistoPrazdne">
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@Model[23].LicensePlate</h5>
+                            <p class="card-text">
+                                @Model[23].Name<br>
+                                @Model[23].Departure
+                            </p>
+                            <a href="#" class="btn btn-primary">@Model[23].StateOfPlace</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@Model[25].LicensePlate</h5>
+                            <p class="card-text">
+                                @Model[25].Name<br>
+                                @Model[25].Departure
+                            </p>
+                            <a href="#" class="btn btn-primary">@Model[25].StateOfPlace</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@Model[17].LicensePlate</h5>
+                            <p class="card-text">
+                                @Model[17].Name<br>
+                                @Model[17].Departure
+                            </p>
+                            <a href="#" class="btn btn-primary">@Model[17].StateOfPlace</a>
+                        </div>
+                    </div>
+                </div>
+
+        <div class="row">
+            <div class="parkovaciMistoPrazdne">
+            </div>
+            <div class="parkovaciMistoPrazdne">
+            </div>
+            <div class="parkovaciMistoPrazdne">
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@Model[26].LicensePlate</h5>
+                    <p class="card-text">
+                        @Model[26].Name<br>
+                        @Model[26].Departure
+                    </p>
+                    <a href="#" class="btn btn-primary">@Model[26].StateOfPlace</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@Model[18].LicensePlate</h5>
+                    <p class="card-text">
+                        @Model[18].Name<br>
+                        @Model[18].Departure
+                    </p>
+                    <a href="#" class="btn btn-primary">@Model[18].StateOfPlace</a>
+                </div>
+            </div>
+        </div>
+    
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Model[20].LicensePlate</h5>
+                <p class="card-text">
+                    @Model[20].Name<br>
+                    @Model[20].Departure
+                </p>
+                <a href="#" class="btn btn-primary">@Model[20].StateOfPlace</a>
+            </div>
+        </div>
+        <div class="parkovaciMistoPrazdne">
+        </div>
+        <div class="parkovaciMistoPrazdne">
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Model[27].LicensePlate</h5>
+                <p class="card-text">
+                    @Model[27].Name<br>
+                    @Model[27].Departure
+                </p>
+                <a href="#" class="btn btn-primary">@Model[27].StateOfPlace</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+<br /><br />
+
+<h2>Garáž</h2>
+<br />
+<div class="container">
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+               
+                    <h5 class="card-title">@Model[11].LicensePlate</h5>
+                    <p class="card-text">
+                        @Model[11].Name<br>
+                        @Model[11].Departure
+                    </p>
+                    <a href="#" class="btn btn-primary">@Model[11].StateOfPlace</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Model[10].LicensePlate</h5>
+                <p class="card-text">
+                    @Model[10].Name<br>
+                    @Model[10].Departure
+                </p>
+                <a href="#" class="btn btn-primary">@Model[10].StateOfPlace</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Model[9].LicensePlate</h5>
+                <p class="card-text">
+                    @Model[9].Name<br>
+                    @Model[9].Departure
+                </p>
+                <a href="#" class="btn btn-primary">@Model[9].StateOfPlace</a>
+            </div>
+        </div>
+        <div class="parkovaciMistoPrazdne">
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Model[0].LicensePlate</h5>
+                <p class="card-text">
+                    @Model[0].Name<br>
+                    @Model[0].Departure
+                </p>
+                <a href="#" class="btn btn-primary">@Model[0].StateOfPlace</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Model[8].LicensePlate</h5>
+                <p class="card-text">
+                    @Model[8].Name<br>
+                    @Model[8].Departure
+                </p>
+                <a href="#" class="btn btn-primary">@Model[8].StateOfPlace</a>
+            </div>
+        </div>
+        <div class="parkovaciMistoPrazdne">
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Model[1].LicensePlate</h5>
+                <p class="card-text">
+                    @Model[1].Name<br>
+                    @Model[1].Departure
+                </p>
+                <a href="#" class="btn btn-primary">@Model[1].StateOfPlace</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Model[7].LicensePlate</h5>
+                <p class="card-text">
+                    @Model[7].Name<br>
+                    @Model[7].Departure
+                </p>
+                <a href="#" class="btn btn-primary">@Model[7].StateOfPlace</a>
+            </div>
+        </div>
+        <div class="parkovaciMistoPrazdne">
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Model[2].LicensePlate</h5>
+                <p class="card-text">
+                    @Model[2].Name<br>
+                    @Model[2].Departure
+                </p>
+                <a href="#" class="btn btn-primary">@Model[2].StateOfPlace</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Model[6].LicensePlate</h5>
+                <p class="card-text">
+                    @Model[6].Name<br>
+                    @Model[6].Departure
+                </p>
+                <a href="#" class="btn btn-primary">@Model[6].StateOfPlace</a>
+            </div>
+        </div>
+        <div class="parkovaciMistoPrazdne">
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Model[3].LicensePlate</h5>
+                <p class="card-text">
+                    @Model[3].Name<br>
+                    @Model[3].Departure
+                </p>
+                <a href="#" class="btn btn-primary">@Model[3].StateOfPlace</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Model[5].LicensePlate</h5>
+                <p class="card-text">
+                    @Model[5].Name<br>
+                    @Model[5].Departure
+                </p>
+                <a href="#" class="btn btn-primary">@Model[5].StateOfPlace</a>
+            </div>
+        </div>
+        <div class="parkovaciMistoPrazdne">
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Model[4].LicensePlate</h5>
+                <p class="card-text">
+                    @Model[4].Name<br>
+                    @Model[4].Departure
+                </p>
+                <a href="#" class="btn btn-primary">@Model[4].StateOfPlace</a>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.ActionLink("Check In",
+"CheckIn",
+"Reservations",
+new { parkplace = "DOPLN" },
+new { @class = "btn btn-primary btn-sm", type = "submit", style = "margin-left:10px" })
+<br />
+
+
+@Html.ActionLink("Nová Rezervace",
+    "Create",
+    "Reservations",
+    new { Reservations = Model },
+    new { @class = "btn btn-primary", type = "submit" })

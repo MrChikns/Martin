@@ -73,3 +73,21 @@ span.field-validation-error {
     font-size: 14px;
 }
 
+/*outside parking overrides*/
+.card {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    height: 180px;
+    width: 170px;
+}
+
+.btn {
+    width: 130px;
+    text-align: center;
+    border: none;
+}
+
+.parkovaciMistoPrazdne {
+    width: 180px;
+}
+

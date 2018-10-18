@@ -30,17 +30,17 @@ span.field-validation-error {
 
 /* bootstrap overrides */
 .navbar-inverse {
-    background-color: #204d74;
-    border-color: #204d74;
+    background-color: #0069d9;
+    border-color: #0069d9;
 }
 
 
 .navbar-inverse .navbar-nav > li > a {
-    color: #DCDDE8;
+    color: #FFF;
 }
 
 .navbar-inverse .navbar-brand {
-    color: #DCDDE8;
+    color: #FFF;
 }
 
 .navbar-brand {
@@ -53,11 +53,7 @@ span.field-validation-error {
 }
 
 .nav > li > a:hover, .navbar-brand:hover, #logoutForm > ul > li > a:hover {
-    color: #FFF;
-}
-
-.btn{
-    border-radius:10px;
+    color: #f8f9fa;
 }
 
 body {
@@ -72,25 +68,29 @@ label {
 span.field-validation-error {
     font-size: 14px;
 }
-
-/*outside parking overrides*/
 .card {
-    text-align:center;
     margin-right: 10px;
     margin-bottom: 10px;
     height: 180px;
     width: 170px;
 }
 
-.card-body {
-    padding: 10px;
-}
-
-
 .btn {
-    width: 150px;
+    width: 130px;
     text-align: center;
     border: none;
+}
+
+.parkovaciMistoZLeva {
+    width: 540px;
+}
+
+.btn-success {
+    margin-top: 48px
+}
+
+.btn-light {
+    margin-top: 48px
 }
 
 .parkovaciMistoPrazdne {

@@ -30,11 +30,12 @@ namespace HotelGarage.Controllers
 
             foreach (var parkingPlace in parkingPlaces)
             {
-                //odjezd a neregistrovan!
-                string lPlate = "", departure = "", name = "";
-                var id = parkingPlace.StateOfPlaceId;
+                
 
+                //prepsani textu do buttonu - odjezd nebo neregistrovan! + volno pro staff
                 string sOPlace = parkingPlace.StateOfPlace.Name;
+                var id = parkingPlaces.IndexOf(parkingPlace);
+
                 switch (sOPlace) {
                     case "Obsazeno":
                         if (parkingPlace.Reservation.Departure.Date == DateTime.Today.Date)
@@ -42,8 +43,14 @@ namespace HotelGarage.Controllers
                         if (parkingPlace.Reservation.Departure.Date == DateTime.Today.Date && !parkingPlace.Reservation.IsRegistered)
                             sOPlace = "Neregistrován!";
                         break;
-                    
-                          }
+                    case "Volno":
+                        if (id >= 19)
+                            sOPlace = "Volno Staff";
+                            break;
+                }
+
+                //vypneni prazne rezervace pro view
+                string lPlate = "", departure = "", name = "";
 
                 if (parkingPlace.Reservation != null)
                 {

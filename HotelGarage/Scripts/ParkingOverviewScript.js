@@ -9,4 +9,10 @@
         if($(this).text() === 'Volno Staff')$(this).addClass('btn btn-light');
     });
 
+    $(document).on("click", ".js-sOPChange", function (e) {
+        bootbox.alert("Hello world!", function () {
+            console.log("Alert Callback");
+        });
+    });
+
 });

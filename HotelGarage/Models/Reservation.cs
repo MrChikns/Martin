@@ -26,24 +26,12 @@ namespace HotelGarage.Models
         public DateTime Departure { get; set; }
 
         [Required]
-        public bool IsRegistered{ get; set; }
+        public bool IsRegistered { get; set; }
 
         public int ParkingPlaceId { get; set; }
 
+        public StateOfReservation StateOfReservation { get; set; }
     }
 
-    public class ActualReservation : Reservation
-    {
-
-    }
-
-    public class InhouseReservation : Reservation
-    {
-
-    }
-
-    public class PastReservation : Reservation
-    {
-
-    }
+    
 }

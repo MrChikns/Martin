@@ -1,5 +1,4 @@
 ﻿using HotelGarage.Models;
-using HotelGarage.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +24,7 @@ namespace HotelGarage.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ActualReservation reservation)
+        public ActionResult Create(Reservation reservation)
         {
                         
 
@@ -43,7 +42,7 @@ namespace HotelGarage.Controllers
             }
 
             reservation.Car = car;
-            _context.ActualReservations.Add(reservation);
+            _context.Reservations.Add(reservation);
             _context.SaveChanges();
 
             return RedirectToAction("Parking", "Parking");
@@ -51,33 +50,32 @@ namespace HotelGarage.Controllers
 
         public ActionResult CheckIn(int parkPlace)
         {
-            var res = new InhouseReservation() { ParkingPlaceId = parkPlace };
+            var res = new Reservation() { ParkingPlaceId = parkPlace };
 
             return View(res);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CheckIn(InhouseReservation reservation)
+        public ActionResult CheckIn(string licencePlate)
         {
-            var parkingPlace = _context.ParkingPlaces.First(p => p.Id == reservation.ParkingPlaceId);
+            var parkingPlace = _context.ParkingPlaces.First(l => l.Reservation.LicensePlate == licencePlate);
 
-            Car car = _context.Cars.FirstOrDefault(c => c.LicensePlate == reservation.LicensePlate);
+            Car car = _context.Cars.FirstOrDefault(c => c.LicensePlate == licencePlate);
 
             if (car == null)
             {
-                car = new Car { LicensePlate = reservation.LicensePlate };
+                car = new Car { LicensePlate = licencePlate };
                 _context.Cars.Add(car);
             }
 
-            reservation.Car = car;
 
             //parkingPlace.Reservation = parkPlace.Reservation;
 
-            _context.InhouseReservations.Add(reservation);
-            parkingPlace.Reservation = reservation;
+//            _context.InhouseReservations.Add(reservation);
+  //          parkingPlace.Reservation = reservation;
             
-            _context.SaveChanges();
+    //        _context.SaveChanges();
             
                 
             return RedirectToAction("Parking", "Parking");

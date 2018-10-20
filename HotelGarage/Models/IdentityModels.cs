@@ -24,9 +24,7 @@ namespace HotelGarage.Models
         public DbSet<Car> Cars { get; set; }
         public DbSet<ParkingPlace> ParkingPlaces { get; set; }
         public DbSet<StateOfPlace> StatesOfPlace { get; set; }
-        public DbSet<ActualReservation> ActualReservations { get; set; }
-        public DbSet<InhouseReservation> InhouseReservations { get; set; }
-        public DbSet<PastReservation> PastReservations { get; set; }
+        public DbSet<StateOfReservation> StateOfReservations { get; set; }
 
 
         public ApplicationDbContext()

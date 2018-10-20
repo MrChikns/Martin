@@ -5,7 +5,6 @@ using System.Linq;
 using System.Data.Entity;
 using System.Web;
 using System.Web.Mvc;
-using HotelGarage.ViewModels;
 using HotelGarage.Dtos;
 
 namespace HotelGarage.Controllers
@@ -49,8 +48,8 @@ namespace HotelGarage.Controllers
                             break;
                 }
 
-                //vypneni prazne rezervace pro view
-                string lPlate = "", departure = "", name = "";
+                //vypneni rezervace pro prázné parkovací místo
+                string lPlate = "", departure = "", name = parkingPlace.Name;
 
                 if (parkingPlace.Reservation != null)
                 {
@@ -73,7 +72,7 @@ namespace HotelGarage.Controllers
             return View(parkingPlaceDtos);
         }
         
-        public ActionResult CheckIn(ActualReservation reservation)
+        public ActionResult CheckIn(Reservation reservation)
         {
             var parkingPlaces = _context.ParkingPlaces
                 .Include(s => s.StateOfPlace)

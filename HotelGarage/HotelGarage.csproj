@@ -258,6 +258,10 @@
     <Compile Include="Migrations\201810201608193_addStateOfReservationToModelAndPopulateItsStates.Designer.cs">
       <DependentUpon>201810201608193_addStateOfReservationToModelAndPopulateItsStates.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810201707422_stateOfReservationModelChange.cs" />
+    <Compile Include="Migrations\201810201707422_stateOfReservationModelChange.Designer.cs">
+      <DependentUpon>201810201707422_stateOfReservationModelChange.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Car.cs" />
@@ -419,6 +423,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810201608193_addStateOfReservationToModelAndPopulateItsStates.resx">
       <DependentUpon>201810201608193_addStateOfReservationToModelAndPopulateItsStates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810201707422_stateOfReservationModelChange.resx">
+      <DependentUpon>201810201707422_stateOfReservationModelChange.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

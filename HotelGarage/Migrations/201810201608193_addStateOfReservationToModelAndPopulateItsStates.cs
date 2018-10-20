@@ -21,7 +21,7 @@ namespace HotelGarage.Migrations
             AddForeignKey("dbo.Reservations", "StateOfReservation_Id", "dbo.StateOfReservations", "Id");
             DropColumn("dbo.Reservations", "Discriminator");
 
-            Sql("INSERT INTO StateOfReservations (State) VALUES ('Arrival')");
+            Sql("INSERT INTO StateOfReservations (State) VALUES ('Reserved')");
             Sql("INSERT INTO StateOfReservations (State) VALUES ('Inhouse')");
             Sql("INSERT INTO StateOfReservations (State) VALUES ('Departed')");
             Sql("INSERT INTO StateOfReservations (State) VALUES ('Cancelled')");

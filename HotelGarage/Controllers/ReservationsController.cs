@@ -26,8 +26,6 @@ namespace HotelGarage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Reservation reservation)
         {
-                        
-
             if (!ModelState.IsValid)
             {
                 return View("Create", reservation);
@@ -42,6 +40,8 @@ namespace HotelGarage.Controllers
             }
 
             reservation.Car = car;
+            reservation.StateOfReservationId = StateOfReservation.Reserved;
+
             _context.Reservations.Add(reservation);
             _context.SaveChanges();
 

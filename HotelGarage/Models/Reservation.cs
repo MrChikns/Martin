@@ -31,6 +31,8 @@ namespace HotelGarage.Models
         public int ParkingPlaceId { get; set; }
 
         public StateOfReservation StateOfReservation { get; set; }
+
+        public byte StateOfReservationId { get; set; }
     }
 
     

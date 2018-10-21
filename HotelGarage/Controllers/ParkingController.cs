@@ -76,31 +76,20 @@ namespace HotelGarage.Controllers
                 parkingPlaceDtos.Add(ppDto);
             }
 
+            // vypsani dnesnich rezervaci
+            var today = DateTime.Today.Date;
             var todaysReservations = _context.Reservations
-                .Where(a => a.Arrival == DateTime.Today)
+                .Where(a => DbFunctions.TruncateTime(a.Arrival) == today
+                    && a.StateOfReservationId == StateOfReservation.Reserved)
                 .ToList();
 
-            //rucni naplneni seznamu pro testovani
-            var res = _context.Reservations.First();
-            todaysReservations.Add(res);
-            todaysReservations.Add(res);
-            todaysReservations.Add(res);
-            todaysReservations.Add(res);
-            todaysReservations.Add(res);
-            todaysReservations.Add(res);
-            todaysReservations.Add(res);
-            todaysReservations.Add(res); todaysReservations.Add(res);
-            todaysReservations.Add(res);
-            todaysReservations.Add(res);
-            todaysReservations.Add(res);
-
-
+            
             // prirazeni do parking view
             var viewModel = new ParkingViewModel
             {
                 ParkingPlaceDtos = parkingPlaceDtos,
                 TodaysReservations = todaysReservations
-            };
+            }; 
 
             return View(viewModel);
         }
@@ -111,10 +100,9 @@ namespace HotelGarage.Controllers
 
             if (pPlace.StateOfPlaceId == StateOfPlace.Reserved)
             {
-                //nacteni objektu z kontextu
                 Reservation res = _context.Reservations.First(r => r.Id == reservationId);
 
-                //nastaveni stavu parking place na obsazeno
+                res.StateOfReservationId = StateOfReservation.Inhouse;
                 pPlace.StateOfPlaceId = StateOfPlace.Occupied;
 
                 pPlace.Reservation = res;

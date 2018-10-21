@@ -11,7 +11,8 @@ namespace HotelGarage.Dtos
         public int? ReservationId { get; set; }
         public string LicensePlate { get; set; }
         public string Departure { get; set; }
-        public string Name { get; set; }
+        public string PPlaceName { get; set; }
+        public string GuestName { get; set; }
         public string StateOfPlace { get; set; }
     }
 }

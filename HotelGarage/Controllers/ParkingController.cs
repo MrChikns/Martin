@@ -50,14 +50,14 @@ namespace HotelGarage.Controllers
                 }
 
                 //vypneni rezervace pro prázné parkovací místo
-                string lPlate = "", departure = "", name = parkingPlace.Name;
+                string lPlate = "", departure = "", pPName = parkingPlace.Name;
                 int? resId = null;
 
                 if (parkingPlace.Reservation != null)
                 {
                     lPlate = parkingPlace.Reservation.LicensePlate;
                     departure = parkingPlace.Reservation.Departure.ToShortDateString();
-                    name = parkingPlace.Name;
+                    pPName = parkingPlace.Name;
                     resId = parkingPlace.Reservation.Id;
                 }
 
@@ -67,7 +67,7 @@ namespace HotelGarage.Controllers
                     ReservationId = resId,
                     LicensePlate = lPlate,
                     Departure = departure,
-                    Name = name,
+                    PPlaceName = pPName,
                     StateOfPlace = sOPlace
                 };
 
@@ -81,6 +81,7 @@ namespace HotelGarage.Controllers
             var todaysReservations = _context.Reservations
                 .Where(a => DbFunctions.TruncateTime(a.Arrival) == today
                     && a.StateOfReservationId == StateOfReservation.Reserved)
+                    .Include(c => c.Car)
                 .ToList();
 
             

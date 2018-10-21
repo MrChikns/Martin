@@ -5,6 +5,9 @@
 }
 
 <h2>Nová rezervace</h2>
+
+@DateTime.Now.ToString("yyyy-MM-ddThh:mm");
+<p>2014-01-02T11:42</p>
 <br />
 @using (Html.BeginForm("Create", "Reservations"))
 {
@@ -19,12 +22,14 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(r => r.Arrival, "Příjezd")
-        @Html.TextBoxFor(r => r.Arrival, new { @class = "form-control" })
+        @Html.TextBoxFor(r => r.Arrival, new { @class = "form-control", type = "datetime-local",
+            @Value = DateTime.Now.ToString("yyyy-MM-ddTHH:mm")})
         @Html.ValidationMessageFor(r => r.Arrival)
     </div>
     <div class="form-group">
         @Html.LabelFor(r => r.Departure, "Odjezd")
-        @Html.TextBoxFor(r => r.Departure, new { @class = "form-control" })
+        @Html.TextBoxFor(r => r.Departure, new { @class = "form-control", type = "datetime-local",
+            @Value = DateTime.Now.AddDays(1).ToString("yyyy-MM-ddT12:00")})
         @Html.ValidationMessageFor(r => r.Departure)
     </div>
     <div class="form-group form-inline">

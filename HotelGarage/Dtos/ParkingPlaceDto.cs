@@ -7,6 +7,8 @@ namespace HotelGarage.Dtos
 {
     public class ParkingPlaceDto
     {
+        public int Id { get; set; }
+        public int? ReservationId { get; set; }
         public string LicensePlate { get; set; }
         public string Departure { get; set; }
         public string Name { get; set; }

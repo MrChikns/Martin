@@ -75,14 +75,14 @@ span.field-validation-error {
     width: 170px;
 }
 
-a.btn {
-    width: 130px;
-    text-align: center;
-    border: none;
+.card-body {
+    padding: 10px;
 }
 
-.parkovaciMistoZLeva {
-    width: 540px;
+a.btn {
+    width: 148px;
+    text-align: center;
+    border: none;
 }
 
 .btn-success {
@@ -97,3 +97,8 @@ a.btn {
     width: 180px;
 }
 
+.sOPActionLink > a {
+    font-size: 14px;
+    font-weight: bold;
+    padding: 6px 4px;
+}

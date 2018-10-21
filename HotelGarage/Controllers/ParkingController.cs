@@ -51,16 +51,20 @@ namespace HotelGarage.Controllers
 
                 //vypneni rezervace pro prázné parkovací místo
                 string lPlate = "", departure = "", name = parkingPlace.Name;
+                int? resId = null;
 
                 if (parkingPlace.Reservation != null)
                 {
                     lPlate = parkingPlace.Reservation.LicensePlate;
                     departure = parkingPlace.Reservation.Departure.ToShortDateString();
                     name = parkingPlace.Name;
+                    resId = parkingPlace.Id;
                 }
 
                 var ppDto = new ParkingPlaceDto
                 {
+                    Id = parkingPlace.Id,
+                    ReservationId = resId,
                     LicensePlate = lPlate,
                     Departure = departure,
                     Name = name,

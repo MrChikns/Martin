@@ -91,7 +91,7 @@ namespace HotelGarage.Controllers
             todaysReservations.Add(res);
 
 
-
+            // prirazeni do parking view
             var viewModel = new ParkingViewModel
             {
                 ParkingPlaceDtos = parkingPlaceDtos,
@@ -101,13 +101,21 @@ namespace HotelGarage.Controllers
             return View(viewModel);
         }
         
-        public ActionResult CheckIn(Reservation reservation)
+        public ActionResult CheckIn(int pPlaceId, int reservationId)
         {
-            var parkingPlaces = _context.ParkingPlaces
-                .Include(s => s.StateOfPlace)
-                .ToList();
+            //nacteni objektu z kontextu
+            Reservation res = _context.Reservations.First(r => r.Id == reservationId);
+            ParkingPlace pPlace = _context.ParkingPlaces.First(p => p.Id == pPlaceId);
 
-            return View(parkingPlaces);
+            //nastaveni stavu parking place na obsazeno
+            pPlace.StateOfPlaceId = StateOfPlace.Occupied;
+
+            pPlace.Reservation = res;
+
+            _context.SaveChanges();
+
+
+            return RedirectToAction("Parking");
         }
     }
 }

@@ -30,7 +30,8 @@
                 </p>
                 <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[13].StateOfPlace</a>
             </div>
-        </div><div class="card">
+        </div>
+        <div class="card">
             <div class="card-body">
                 <h5 class="card-title">@Model.ParkingPlaceDtos[14].LicensePlate</h5>
                 <p class="card-text">
@@ -371,8 +372,8 @@
 
 @Html.ActionLink("Check In",
 "CheckIn",
-"Reservations",
-new { parkplace = "DOPLN" },
+"Parking",
+new { pPlaceId = 14, reservationId = 18},
 new { @class = "btn btn-primary" })
 <br />
 

@@ -75,7 +75,7 @@ span.field-validation-error {
     width: 170px;
 }
 
-.btn {
+a.btn {
     width: 130px;
     text-align: center;
     border: none;

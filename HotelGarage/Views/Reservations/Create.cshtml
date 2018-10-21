@@ -5,9 +5,6 @@
 }
 
 <h2>Nová rezervace</h2>
-
-@DateTime.Now.ToString("yyyy-MM-ddThh:mm");
-<p>2014-01-02T11:42</p>
 <br />
 @using (Html.BeginForm("Create", "Reservations"))
 {
@@ -18,7 +15,7 @@
         @Html.ValidationMessageFor(r => r.LicensePlate)
     </div>
     <div class="form-group">
-        @Html.ActionLink("Nové Auto", "Create", "Cars", new { Cars = Model }, new { @class = "btn btn-primary", type = "submit" })
+        @Html.ActionLink("Nové Auto", "Create", "Cars", new { Cars = Model }, new { type = "submit", @class = "btn btn-primary" })
     </div>
     <div class="form-group">
         @Html.LabelFor(r => r.Arrival, "Příjezd")

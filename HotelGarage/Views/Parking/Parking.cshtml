@@ -1,4 +1,4 @@
-﻿@model IList<HotelGarage.Dtos.ParkingPlaceDto>
+﻿@model HotelGarage.ViewModels.ParkingViewModel
 
 @{
     ViewBag.Title = "Náhled garáže";
@@ -13,41 +13,41 @@
     <div class="row">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Model[12].LicensePlate</h5>
+                <h5 class="card-title">@Model.ParkingPlaceDtos[12].LicensePlate</h5>
                 <p class="card-text">
-                    @Model[12].Name<br>
-                    @Model[12].Departure
+                    @Model.ParkingPlaceDtos[12].Name<br>
+                    @Model.ParkingPlaceDtos[12].Departure
                 </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[12].StateOfPlace</a>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[12].StateOfPlace</a>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Model[13].LicensePlate</h5>
+                <h5 class="card-title">@Model.ParkingPlaceDtos[13].LicensePlate</h5>
                 <p class="card-text">
-                    @Model[13].Name<br>
-                    @Model[13].Departure
+                    @Model.ParkingPlaceDtos[13].Name<br>
+                    @Model.ParkingPlaceDtos[13].Departure
                 </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[13].StateOfPlace</a>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[13].StateOfPlace</a>
             </div>
         </div><div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Model[14].LicensePlate</h5>
+                <h5 class="card-title">@Model.ParkingPlaceDtos[14].LicensePlate</h5>
                 <p class="card-text">
-                    @Model[14].Name<br>
-                    @Model[14].Departure
+                    @Model.ParkingPlaceDtos[14].Name<br>
+                    @Model.ParkingPlaceDtos[14].Departure
                 </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[14].StateOfPlace</a>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[14].StateOfPlace</a>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Model[15].LicensePlate</h5>
+                <h5 class="card-title">@Model.ParkingPlaceDtos[15].LicensePlate</h5>
                 <p class="card-text">
-                    @Model[15].Name<br>
-                    @Model[15].Departure
+                    @Model.ParkingPlaceDtos[15].Name<br>
+                    @Model.ParkingPlaceDtos[15].Departure
                 </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[15].StateOfPlace</a>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[15].StateOfPlace</a>
             </div>
         </div>
 
@@ -57,89 +57,52 @@
 
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Model[19].LicensePlate</h5>
+                <h5 class="card-title">@Model.ParkingPlaceDtos[19].LicensePlate</h5>
                 <p class="card-text">
-                    @Model[19].Name<br>
-                    @Model[19].Departure
+                    @Model.ParkingPlaceDtos[19].Name<br>
+                    @Model.ParkingPlaceDtos[19].Departure
                 </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[19].StateOfPlace</a>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[19].StateOfPlace</a>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Model[21].LicensePlate</h5>
+                <h5 class="card-title">@Model.ParkingPlaceDtos[21].LicensePlate</h5>
                 <p class="card-text">
-                    @Model[21].Name<br>
-                    @Model[21].Departure
+                    @Model.ParkingPlaceDtos[21].Name<br>
+                    @Model.ParkingPlaceDtos[21].Departure
                 </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[21].StateOfPlace</a>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[21].StateOfPlace</a>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Model[22].LicensePlate</h5>
+                <h5 class="card-title">@Model.ParkingPlaceDtos[22].LicensePlate</h5>
                 <p class="card-text">
-                    @Model[22].Name<br>
-                    @Model[22].Departure
+                    @Model.ParkingPlaceDtos[22].Name<br>
+                    @Model.ParkingPlaceDtos[22].Departure
                 </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[22].StateOfPlace</a>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[22].StateOfPlace</a>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Model[24].LicensePlate</h5>
+                <h5 class="card-title">@Model.ParkingPlaceDtos[24].LicensePlate</h5>
                 <p class="card-text">
-                    @Model[24].Name<br>
-                    @Model[24].Departure
+                    @Model.ParkingPlaceDtos[24].Name<br>
+                    @Model.ParkingPlaceDtos[24].Departure
                 </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[24].StateOfPlace</a>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[24].StateOfPlace</a>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Model[16].LicensePlate</h5>
+                <h5 class="card-title">@Model.ParkingPlaceDtos[16].LicensePlate</h5>
                 <p class="card-text">
-                    @Model[16].Name<br>
-                    @Model[16].Departure
+                    @Model.ParkingPlaceDtos[16].Name<br>
+                    @Model.ParkingPlaceDtos[16].Departure
                 </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[16].StateOfPlace</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="parkovaciMistoPrazdne">
-        </div>
-        <div class="parkovaciMistoPrazdne">
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">@Model[23].LicensePlate</h5>
-                <p class="card-text">
-                    @Model[23].Name<br>
-                    @Model[23].Departure
-                </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[23].StateOfPlace</a>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">@Model[25].LicensePlate</h5>
-                <p class="card-text">
-                    @Model[25].Name<br>
-                    @Model[25].Departure
-                </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[25].StateOfPlace</a>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">@Model[17].LicensePlate</h5>
-                <p class="card-text">
-                    @Model[17].Name<br>
-                    @Model[17].Departure
-                </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[17].StateOfPlace</a>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[16].StateOfPlace</a>
             </div>
         </div>
     </div>
@@ -149,26 +112,63 @@
         </div>
         <div class="parkovaciMistoPrazdne">
         </div>
-        <div class="parkovaciMistoPrazdne">
-        </div>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Model[26].LicensePlate</h5>
+                <h5 class="card-title">@Model.ParkingPlaceDtos[23].LicensePlate</h5>
                 <p class="card-text">
-                    @Model[26].Name<br>
-                    @Model[26].Departure
+                    @Model.ParkingPlaceDtos[23].Name<br>
+                    @Model.ParkingPlaceDtos[23].Departure
                 </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[26].StateOfPlace</a>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[23].StateOfPlace</a>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Model[18].LicensePlate</h5>
+                <h5 class="card-title">@Model.ParkingPlaceDtos[25].LicensePlate</h5>
                 <p class="card-text">
-                    @Model[18].Name<br>
-                    @Model[18].Departure
+                    @Model.ParkingPlaceDtos[25].Name<br>
+                    @Model.ParkingPlaceDtos[25].Departure
                 </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[18].StateOfPlace</a>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[25].StateOfPlace</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Model.ParkingPlaceDtos[17].LicensePlate</h5>
+                <p class="card-text">
+                    @Model.ParkingPlaceDtos[17].Name<br>
+                    @Model.ParkingPlaceDtos[17].Departure
+                </p>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[17].StateOfPlace</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="parkovaciMistoPrazdne">
+        </div>
+        <div class="parkovaciMistoPrazdne">
+        </div>
+        <div class="parkovaciMistoPrazdne">
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Model.ParkingPlaceDtos[26].LicensePlate</h5>
+                <p class="card-text">
+                    @Model.ParkingPlaceDtos[26].Name<br>
+                    @Model.ParkingPlaceDtos[26].Departure
+                </p>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[26].StateOfPlace</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Model.ParkingPlaceDtos[18].LicensePlate</h5>
+                <p class="card-text">
+                    @Model.ParkingPlaceDtos[18].Name<br>
+                    @Model.ParkingPlaceDtos[18].Departure
+                </p>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[18].StateOfPlace</a>
             </div>
         </div>
     </div>
@@ -176,12 +176,12 @@
     <div class="row">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Model[20].LicensePlate</h5>
+                <h5 class="card-title">@Model.ParkingPlaceDtos[20].LicensePlate</h5>
                 <p class="card-text">
-                    @Model[20].Name<br>
-                    @Model[20].Departure
+                    @Model.ParkingPlaceDtos[20].Name<br>
+                    @Model.ParkingPlaceDtos[20].Departure
                 </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[20].StateOfPlace</a>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[20].StateOfPlace</a>
             </div>
         </div>
         <div class="parkovaciMistoPrazdne">
@@ -190,12 +190,12 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Model[27].LicensePlate</h5>
+                <h5 class="card-title">@Model.ParkingPlaceDtos[27].LicensePlate</h5>
                 <p class="card-text">
-                    @Model[27].Name<br>
-                    @Model[27].Departure
+                    @Model.ParkingPlaceDtos[27].Name<br>
+                    @Model.ParkingPlaceDtos[27].Departure
                 </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[27].StateOfPlace</a>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[27].StateOfPlace</a>
             </div>
         </div>
     </div>
@@ -210,12 +210,35 @@
         <div class="card">
             <div class="card-body">
 
-                <h5 class="card-title">@Model[11].LicensePlate</h5>
+                <h5 class="card-title">@Model.ParkingPlaceDtos[11].LicensePlate</h5>
                 <p class="card-text">
-                    @Model[11].Name<br>
-                    @Model[11].Departure
+                    @Model.ParkingPlaceDtos[11].Name<br>
+                    @Model.ParkingPlaceDtos[11].Departure
                 </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[11].StateOfPlace</a>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[11].StateOfPlace</a>
+            </div>
+        </div>
+        <div class="parkovaciMistoPrazdne">
+        </div>
+        <div class="parkovaciMistoPrazdne">
+        </div>
+        <div>
+            @foreach (var reservation in Model.TodaysReservations)
+            {      
+                @reservation.LicensePlate;<br />}
+        </div>
+    </div>
+    
+
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Model.ParkingPlaceDtos[10].LicensePlate</h5>
+                <p class="card-text">
+                    @Model.ParkingPlaceDtos[10].Name<br>
+                    @Model.ParkingPlaceDtos[10].Departure
+                </p>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[10].StateOfPlace</a>
             </div>
         </div>
     </div>
@@ -223,37 +246,24 @@
     <div class="row">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Model[10].LicensePlate</h5>
+                <h5 class="card-title">@Model.ParkingPlaceDtos[9].LicensePlate</h5>
                 <p class="card-text">
-                    @Model[10].Name<br>
-                    @Model[10].Departure
+                    @Model.ParkingPlaceDtos[9].Name<br>
+                    @Model.ParkingPlaceDtos[9].Departure
                 </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[10].StateOfPlace</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">@Model[9].LicensePlate</h5>
-                <p class="card-text">
-                    @Model[9].Name<br>
-                    @Model[9].Departure
-                </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[9].StateOfPlace</a>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[9].StateOfPlace</a>
             </div>
         </div>
         <div class="parkovaciMistoPrazdne">
         </div>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Model[0].LicensePlate</h5>
+                <h5 class="card-title">@Model.ParkingPlaceDtos[0].LicensePlate</h5>
                 <p class="card-text">
-                    @Model[0].Name<br>
-                    @Model[0].Departure
+                    @Model.ParkingPlaceDtos[0].Name<br>
+                    @Model.ParkingPlaceDtos[0].Departure
                 </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[0].StateOfPlace</a>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[0].StateOfPlace</a>
             </div>
         </div>
     </div>
@@ -261,24 +271,24 @@
     <div class="row">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Model[8].LicensePlate</h5>
+                <h5 class="card-title">@Model.ParkingPlaceDtos[8].LicensePlate</h5>
                 <p class="card-text">
-                    @Model[8].Name<br>
-                    @Model[8].Departure
+                    @Model.ParkingPlaceDtos[8].Name<br>
+                    @Model.ParkingPlaceDtos[8].Departure
                 </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[8].StateOfPlace</a>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[8].StateOfPlace</a>
             </div>
         </div>
         <div class="parkovaciMistoPrazdne">
         </div>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Model[1].LicensePlate</h5>
+                <h5 class="card-title">@Model.ParkingPlaceDtos[1].LicensePlate</h5>
                 <p class="card-text">
-                    @Model[1].Name<br>
-                    @Model[1].Departure
+                    @Model.ParkingPlaceDtos[1].Name<br>
+                    @Model.ParkingPlaceDtos[1].Departure
                 </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[1].StateOfPlace</a>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[1].StateOfPlace</a>
             </div>
         </div>
     </div>
@@ -286,24 +296,24 @@
     <div class="row">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Model[7].LicensePlate</h5>
+                <h5 class="card-title">@Model.ParkingPlaceDtos[7].LicensePlate</h5>
                 <p class="card-text">
-                    @Model[7].Name<br>
-                    @Model[7].Departure
+                    @Model.ParkingPlaceDtos[7].Name<br>
+                    @Model.ParkingPlaceDtos[7].Departure
                 </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[7].StateOfPlace</a>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[7].StateOfPlace</a>
             </div>
         </div>
         <div class="parkovaciMistoPrazdne">
         </div>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Model[2].LicensePlate</h5>
+                <h5 class="card-title">@Model.ParkingPlaceDtos[2].LicensePlate</h5>
                 <p class="card-text">
-                    @Model[2].Name<br>
-                    @Model[2].Departure
+                    @Model.ParkingPlaceDtos[2].Name<br>
+                    @Model.ParkingPlaceDtos[2].Departure
                 </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[2].StateOfPlace</a>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[2].StateOfPlace</a>
             </div>
         </div>
     </div>
@@ -311,24 +321,24 @@
     <div class="row">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Model[6].LicensePlate</h5>
+                <h5 class="card-title">@Model.ParkingPlaceDtos[6].LicensePlate</h5>
                 <p class="card-text">
-                    @Model[6].Name<br>
-                    @Model[6].Departure
+                    @Model.ParkingPlaceDtos[6].Name<br>
+                    @Model.ParkingPlaceDtos[6].Departure
                 </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[6].StateOfPlace</a>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[6].StateOfPlace</a>
             </div>
         </div>
         <div class="parkovaciMistoPrazdne">
         </div>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Model[3].LicensePlate</h5>
+                <h5 class="card-title">@Model.ParkingPlaceDtos[3].LicensePlate</h5>
                 <p class="card-text">
-                    @Model[3].Name<br>
-                    @Model[3].Departure
+                    @Model.ParkingPlaceDtos[3].Name<br>
+                    @Model.ParkingPlaceDtos[3].Departure
                 </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[3].StateOfPlace</a>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[3].StateOfPlace</a>
             </div>
         </div>
     </div>
@@ -336,24 +346,24 @@
     <div class="row">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Model[5].LicensePlate</h5>
+                <h5 class="card-title">@Model.ParkingPlaceDtos[5].LicensePlate</h5>
                 <p class="card-text">
-                    @Model[5].Name<br>
-                    @Model[5].Departure
+                    @Model.ParkingPlaceDtos[5].Name<br>
+                    @Model.ParkingPlaceDtos[5].Departure
                 </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[5].StateOfPlace</a>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[5].StateOfPlace</a>
             </div>
         </div>
         <div class="parkovaciMistoPrazdne">
         </div>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Model[4].LicensePlate</h5>
+                <h5 class="card-title">@Model.ParkingPlaceDtos[4].LicensePlate</h5>
                 <p class="card-text">
-                    @Model[4].Name<br>
-                    @Model[4].Departure
+                    @Model.ParkingPlaceDtos[4].Name<br>
+                    @Model.ParkingPlaceDtos[4].Departure
                 </p>
-                <a href="javascript:void()" class="js-sOPChange">@Model[4].StateOfPlace</a>
+                <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[4].StateOfPlace</a>
             </div>
         </div>
     </div>

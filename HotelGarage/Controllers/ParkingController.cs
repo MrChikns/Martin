@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Web;
 using System.Web.Mvc;
 using HotelGarage.Dtos;
+using HotelGarage.ViewModels;
 
 namespace HotelGarage.Controllers
 {
@@ -66,10 +67,38 @@ namespace HotelGarage.Controllers
                     StateOfPlace = sOPlace
                 };
 
+                
+
                 parkingPlaceDtos.Add(ppDto);
             }
 
-            return View(parkingPlaceDtos);
+            var todaysReservations = _context.Reservations
+                .Where(a => a.Arrival == DateTime.Today)
+                .ToList();
+
+            //rucni naplneni seznamu pro testovani
+            var res = _context.Reservations.First();
+            todaysReservations.Add(res);
+            todaysReservations.Add(res);
+            todaysReservations.Add(res);
+            todaysReservations.Add(res);
+            todaysReservations.Add(res);
+            todaysReservations.Add(res);
+            todaysReservations.Add(res);
+            todaysReservations.Add(res); todaysReservations.Add(res);
+            todaysReservations.Add(res);
+            todaysReservations.Add(res);
+            todaysReservations.Add(res);
+
+
+
+            var viewModel = new ParkingViewModel
+            {
+                ParkingPlaceDtos = parkingPlaceDtos,
+                TodaysReservations = todaysReservations
+            };
+
+            return View(viewModel);
         }
         
         public ActionResult CheckIn(Reservation reservation)

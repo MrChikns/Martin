@@ -58,7 +58,7 @@ namespace HotelGarage.Controllers
                     lPlate = parkingPlace.Reservation.LicensePlate;
                     departure = parkingPlace.Reservation.Departure.ToShortDateString();
                     name = parkingPlace.Name;
-                    resId = parkingPlace.Id;
+                    resId = parkingPlace.Reservation.Id;
                 }
 
                 var ppDto = new ParkingPlaceDto
@@ -107,16 +107,20 @@ namespace HotelGarage.Controllers
         
         public ActionResult CheckIn(int pPlaceId, int reservationId)
         {
-            //nacteni objektu z kontextu
-            Reservation res = _context.Reservations.First(r => r.Id == reservationId);
             ParkingPlace pPlace = _context.ParkingPlaces.First(p => p.Id == pPlaceId);
 
-            //nastaveni stavu parking place na obsazeno
-            pPlace.StateOfPlaceId = StateOfPlace.Occupied;
+            if (pPlace.StateOfPlaceId == StateOfPlace.Reserved)
+            {
+                //nacteni objektu z kontextu
+                Reservation res = _context.Reservations.First(r => r.Id == reservationId);
 
-            pPlace.Reservation = res;
+                //nastaveni stavu parking place na obsazeno
+                pPlace.StateOfPlaceId = StateOfPlace.Occupied;
 
-            _context.SaveChanges();
+                pPlace.Reservation = res;
+
+                _context.SaveChanges();
+            }
 
 
             return RedirectToAction("Parking");

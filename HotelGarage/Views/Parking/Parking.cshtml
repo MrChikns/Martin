@@ -20,8 +20,13 @@
                 </p>
                 <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[12].StateOfPlace</a>
                 <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[12].Id>
-                    <a class="nav-link" href="#">Check In</a>
                     <a class="nav-link" href="#">Reserve</a>
+                    @Html.ActionLink("Check In",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link" })
                 </nav>
             </div>
         </div>

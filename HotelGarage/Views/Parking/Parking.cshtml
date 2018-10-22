@@ -20,7 +20,8 @@
                 </p>
                 <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[12].StateOfPlace</a>
                 <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[12].Id>
-                    <a class="nav-link" href="#">Reserve</a>
+                    <a href="javascript:void()" class="nav-link js-sOPChange">Reserve</a>
+
                     @Html.ActionLink("Check In",
                         "CheckIn",
                         "Parking",
@@ -388,8 +389,11 @@
                 </div>
             </div>
         </div>
-
+        
         <div class="col-auto">
+            <br /><br />
+            <h2>Rezervace na dnešek</h2>
+            <br />
             <div>
                 @foreach (var reservation in Model.TodaysReservations)
                 {
@@ -400,27 +404,33 @@
                             Host: @reservation.Car.GuestsName
                         </div>
                         <div class="">
-                            @Html.ActionLink("Check In",
-                                "CheckIn",
-                                "Parking",
-                                new { pPlaceId = reservation.ParkingPlaceId,
-                                    reservationId = reservation.Id},
-                                new { @class = "nav-link" })
+                            <div class="input-group" style="margin-top:10px">
+                                @Html.DropDownListFor(r => r.ParkingPlaceId, new SelectList(Model.FreeParkingPlaces), new {@class="custom-select", @id="inputGroupSelect04", value = reservation.ParkingPlaceId })
+                                <div class="input-group-append">
+                                    <button id="select-link" data-id='@reservation.Id'
+                                            class="btn btn-primary select-link" type="submit">
+                                        Přiřadit Nove
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
 
-                            @Html.ActionLink("Přiřadit",
-                                "CheckIn",
-                                "Parking",
-                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
-                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
-                                new { @class = "nav-link" })
+                                <div style="text-align:center">
+                                    @Html.ActionLink("Check In",
+                                        "CheckIn",
+                                        "Parking",
+                                        new { pPlaceId = reservation.ParkingPlaceId,
+                                            reservationId = reservation.Id},
+                                        new { @class = "nav-link"})
+                                </div>
+                            </div>
                         </div>
                     </div>
                 }
             </div>
-        </div>
     </div>
     </div>
-
+</div>
 @Html.ActionLink("Check In",
 "CheckIn",
 "Parking",

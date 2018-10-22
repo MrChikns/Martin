@@ -9,9 +9,31 @@
         if($(this).text() === 'Volno Staff')$(this).addClass('btn btn-light');
     });
 
+    $('.select-link').on("click",function () {
+        //reservation id
+        var resId = $(this).attr('data-id');
+        var pPName = $('#inputGroupSelect04 :selected').text();
+        url = '@Url.Action("Reserve", "Parking")';
+        var model = { ParkingPlaceName: pPName, ReservationId: resId };
+        
+
+        $.ajax({
+            type: "POST",
+            url: "/Parking/Reserve",
+            data: { ParkingPlaceName: pPName, ReservationId: resId },
+            success: function (data) {
+                alert("poslano");
+            },
+            error: function (data) {
+                alert("posrano");
+            }
+        });
+
+    });
+
     $(document).on("click", ".js-sOPChange", function (e) {
         var dialog = bootbox.dialog({
-            title: 'A custom dialog with buttons and callbacks',
+            title: 'Vyberte najíždějící rezervaci anebo vytvořte novou.',
             message: "<p>This dialog has buttons. Each button has it's own callback function.</p>",
             buttons: {
                 cancel: {

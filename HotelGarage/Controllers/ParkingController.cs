@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using HotelGarage.Dtos;
 using HotelGarage.ViewModels;
+using System.Web.UI.WebControls;
 
 namespace HotelGarage.Controllers
 {
@@ -84,12 +85,19 @@ namespace HotelGarage.Controllers
                     .Include(c => c.Car)
                 .ToList();
 
-            
+
+            // naplneni seznamu volnych mist pro rezervaci
+            var freePlacesList = _context.ParkingPlaces
+                .Where(s => s.StateOfPlaceId == StateOfPlace.Free)
+                .Select(n => n.Name)
+                .ToList();
+
             // prirazeni do parking view
             var viewModel = new ParkingViewModel
             {
                 ParkingPlaceDtos = parkingPlaceDtos,
-                TodaysReservations = todaysReservations
+                TodaysReservations = todaysReservations,
+                FreeParkingPlaces = freePlacesList
             }; 
 
             return View(viewModel);
@@ -112,6 +120,27 @@ namespace HotelGarage.Controllers
             }
 
 
+            return RedirectToAction("Parking");
+        }
+
+        public class ReserveDto
+        {
+            public int ResId { get; set; }
+            public int PPlace { get; set; }
+        }
+
+        [HttpPost]
+        public ActionResult Reserve(string ParkingPlaceName, int ReservationId)
+        {
+
+            ParkingPlace pPlace = _context.ParkingPlaces.First(p => p.Name == ParkingPlaceName);
+            Reservation reservation = _context.Reservations.First(r => r.Id == ReservationId);
+
+            pPlace.Reservation = reservation;
+            reservation.ParkingPlaceId = pPlace.Id;
+
+            _context.SaveChanges();
+            
             return RedirectToAction("Parking");
         }
     }

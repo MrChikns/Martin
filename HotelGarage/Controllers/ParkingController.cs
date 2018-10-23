@@ -40,10 +40,13 @@ namespace HotelGarage.Controllers
 
                 switch (sOPlace) {
                     case "Obsazeno":
+                        if (!parkingPlace.Reservation.IsRegistered)
+                        {
+                            sOPlace = "Neregistrován!";
+                            break;
+                        }
                         if (parkingPlace.Reservation.Departure.Date == DateTime.Today.Date)
                             sOPlace = "Odjezd";
-                        if (parkingPlace.Reservation.Departure.Date == DateTime.Today.Date && !parkingPlace.Reservation.IsRegistered)
-                            sOPlace = "Neregistrován!";
                         break;
                     case "Volno":
                         if (id >= 19)
@@ -142,8 +145,9 @@ namespace HotelGarage.Controllers
                 Reservation res = _context.Reservations.First(r => r.Id == reservationId);
 
                 res.StateOfReservationId = StateOfReservation.Inhouse;
+
                 pPlace.StateOfPlaceId = StateOfPlace.Occupied;
-                pPlace.StateOfPlace = _context.StatesOfPlace.First(s => s.Id == StateOfPlace.Occupied);
+//                pPlace.StateOfPlace = _context.StatesOfPlace.First(s => s.Id == StateOfPlace.Occupied);
                 
 
                 pPlace.Reservation = res;
@@ -153,12 +157,6 @@ namespace HotelGarage.Controllers
 
 
             return RedirectToAction("Parking");
-        }
-
-        public class ReserveDto
-        {
-            public int ResId { get; set; }
-            public int PPlace { get; set; }
         }
 
         [HttpPost]

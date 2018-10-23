@@ -11,12 +11,11 @@
 
     $('.select-link').on("click",function () {
         //reservation id
-        var resId = $(this).attr('data-id');
-        var pPName = $('#inputGroupSelect04 :selected').text();
+        var vId = $(this).attr('value-id');
+        var resId = $('button[value-id="' + vId + '"]').attr('data-id');
+        var pPName = $('select[value-id="' + vId + '"]').val();
         url = '@Url.Action("Reserve", "Parking")';
         var model = { ParkingPlaceName: pPName, ReservationId: resId };
-        
-
         $.ajax({
             type: "POST",
             url: "/Parking/Reserve",
@@ -29,6 +28,10 @@
             }
         });
 
+    });
+
+    $(document).ajaxStop(function () {
+        window.location.reload();
     });
 
     $(document).on("click", ".js-sOPChange", function (e) {

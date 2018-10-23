@@ -395,26 +395,29 @@
             <h2>Rezervace na dnešek</h2>
             <br />
             <div>
+                @{int i = 0;}
                 @foreach (var reservation in Model.TodaysReservations)
                 {
                     <div class="row">
                         <div class="alert alert-warning " role="alert">
                             SPZ: @reservation.LicensePlate;<br />
-                            Místo: @reservation.ParkingPlaceId<br />
+                            Místo: @reservation.<br />
                             Host: @reservation.Car.GuestsName
                         </div>
                         <div class="">
                             <div class="input-group" style="margin-top:10px">
-                                @Html.DropDownListFor(r => r.ParkingPlaceId, new SelectList(Model.FreeParkingPlaces), new {@class="custom-select", @id="inputGroupSelect04", value = reservation.ParkingPlaceId })
+                                @Html.DropDownListFor(r => r.ParkingPlaceId,
+                                    new SelectList(Model.FreeParkingPlaces),
+                                    new {@class="custom-select", @id="inputGroupSelect04",
+                                        value = reservation.ParkingPlaceId, value_id=i })
                                 <div class="input-group-append">
                                     <button id="select-link" data-id='@reservation.Id'
-                                            class="btn btn-primary select-link" type="submit">
+                                            class="btn btn-primary select-link" type="submit" value-id='@i'>
                                         Přiřadit Nove
                                     </button>
                                 </div>
                             </div>
                             <div>
-
                                 <div style="text-align:center">
                                     @Html.ActionLink("Check In",
                                         "CheckIn",
@@ -426,6 +429,7 @@
                             </div>
                         </div>
                     </div>
+                    i++;
                 }
             </div>
     </div>

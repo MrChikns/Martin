@@ -400,13 +400,13 @@
                 {
                     <div class="row">
                         <div class="alert alert-warning " role="alert">
-                            SPZ: @reservation.LicensePlate;<br />
-                            Místo: @reservation.<br />
-                            Host: @reservation.Car.GuestsName
+                            SPZ: @reservation.CarLicensePlate;<br />
+                            Místo: @reservation.ParkingPlaceName<br />
+                            Host: @reservation.CarGuestsName
                         </div>
                         <div class="">
                             <div class="input-group" style="margin-top:10px">
-                                @Html.DropDownListFor(r => r.ParkingPlaceId,
+                                @Html.DropDownListFor(r => r.ParkingPlaceName,
                                     new SelectList(Model.FreeParkingPlaces),
                                     new {@class="custom-select", @id="inputGroupSelect04",
                                         value = reservation.ParkingPlaceId, value_id=i })

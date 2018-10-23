@@ -11,11 +11,12 @@ namespace HotelGarage.ViewModels
 {
     public class ParkingViewModel
     {
+        // parking places
         public IList<ParkingPlaceDto> ParkingPlaceDtos { get; set; }
 
-        public IList<Reservation> TodaysReservations { get; set; }
+        // arriving reservations
+        public IList<ArrivingReservationDto> TodaysReservations { get; set; }
         public IEnumerable<string> FreeParkingPlaces { get; set; }
-        public int ReservationId { get; set; }
-        public int ParkingPlaceId { get; set; }
+        public int ParkingPlaceName { get; set; }
     }
 }

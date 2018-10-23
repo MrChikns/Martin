@@ -28,7 +28,8 @@ namespace HotelGarage.Controllers
                 .Include(s => s.StateOfPlace)
                 .Include(r => r.Reservation)
                 .ToList();
-
+            
+            // prirazeni do listu parkingPlaceDtos
             foreach (var parkingPlace in parkingPlaces)
             {
                 
@@ -50,7 +51,7 @@ namespace HotelGarage.Controllers
                             break;
                 }
 
-                //vypneni rezervace pro prázné parkovací místo
+                //vypneni rezervace 
                 string lPlate = "", departure = "", pPName = parkingPlace.Name;
                 int? resId = null;
 
@@ -77,6 +78,9 @@ namespace HotelGarage.Controllers
                 parkingPlaceDtos.Add(ppDto);
             }
 
+
+            IList<ArrivingReservationDto> arrivingReservationDtos = new List<ArrivingReservationDto>();
+
             // vypsani dnesnich rezervaci
             var today = DateTime.Today.Date;
             var todaysReservations = _context.Reservations
@@ -85,6 +89,32 @@ namespace HotelGarage.Controllers
                     .Include(c => c.Car)
                 .ToList();
 
+            // prirazeni do listu arrivingReservationDtos
+            foreach (var reservation in todaysReservations)
+            {
+                int id = reservation.Id, parkingPlaceId = reservation.Id;
+                string carLicensePlate = reservation.Car.LicensePlate, 
+                    carGuestsName = reservation.Car.GuestsName, 
+                    parkingPlaceName = "Nepřiřazeno";
+
+                // inicializace prazdneho parkovaciho mista
+                if (reservation.ParkingPlaceId != 0)
+                {
+                    parkingPlaceName = _context.ParkingPlaces
+                        .First(p => p.Id == reservation.ParkingPlaceId).Name;
+                }
+
+                var aRDto = new ArrivingReservationDto
+                {
+                    Id = id,
+                    CarLicensePlate = carLicensePlate,
+                    CarGuestsName = carGuestsName,
+                    ParkingPlaceId = parkingPlaceId,
+                    ParkingPlaceName = parkingPlaceName
+                };
+
+                arrivingReservationDtos.Add(aRDto);
+            }
 
             // naplneni seznamu volnych mist pro rezervaci
             var freePlacesList = _context.ParkingPlaces
@@ -96,7 +126,7 @@ namespace HotelGarage.Controllers
             var viewModel = new ParkingViewModel
             {
                 ParkingPlaceDtos = parkingPlaceDtos,
-                TodaysReservations = todaysReservations,
+                TodaysReservations = arrivingReservationDtos,
                 FreeParkingPlaces = freePlacesList
             }; 
 

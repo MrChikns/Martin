@@ -143,6 +143,8 @@ namespace HotelGarage.Controllers
 
                 res.StateOfReservationId = StateOfReservation.Inhouse;
                 pPlace.StateOfPlaceId = StateOfPlace.Occupied;
+                pPlace.StateOfPlace = _context.StatesOfPlace.First(s => s.Id == StateOfPlace.Occupied);
+                
 
                 pPlace.Reservation = res;
 
@@ -168,6 +170,8 @@ namespace HotelGarage.Controllers
 
             pPlace.Reservation = reservation;
             reservation.ParkingPlaceId = pPlace.Id;
+            pPlace.StateOfPlaceId = StateOfPlace.Reserved;
+            pPlace.StateOfPlace = _context.StatesOfPlace.First(s => s.Id == StateOfPlace.Reserved);
 
             _context.SaveChanges();
             

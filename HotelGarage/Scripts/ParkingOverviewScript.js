@@ -9,6 +9,10 @@
         if($(this).text() === 'Volno Staff')$(this).addClass('btn btn-light');
     });
 
+    $('input[data-id="spz-visible"]').on('keyup', function () {
+        $('input[data-id="spz-hidden"]').val($(this).val());
+    });
+
     $('.select-link').on("click",function () {
         //reservation id
         var vId = $(this).attr('value-id');
@@ -29,6 +33,8 @@
         });
 
     });
+
+       
 
     $(document).ajaxStop(function () {
         window.location.reload();

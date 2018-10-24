@@ -1,4 +1,5 @@
 ﻿using HotelGarage.Models;
+using HotelGarage.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,61 +25,40 @@ namespace HotelGarage.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Reservation reservation)
+        public ActionResult Create(NewReservationViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
-                return View("Create", reservation);
+                return View("Create", viewModel);
             }
 
-            Car car = _context.Cars.FirstOrDefault(c => c.LicensePlate == reservation.LicensePlate);
+            Car car = _context.Cars.FirstOrDefault(c => c.LicensePlate == viewModel.Car.LicensePlate);
 
             if (car == null)
             {
-                car = new Car { LicensePlate = reservation.LicensePlate };
+                car = new Car { LicensePlate = viewModel.Car.LicensePlate ,
+                    CarModel = viewModel.Car.CarModel,
+                    GuestsName = viewModel.Car.GuestsName,
+                    GuestRoomNumber = viewModel.Car.GuestRoomNumber,
+                    PricePerNight = viewModel.Car.PricePerNight,
+                    IsEmployee = viewModel.Car.IsEmployee
+                };
                 _context.Cars.Add(car);
             }
 
-            reservation.Car = car;
-            reservation.StateOfReservationId = StateOfReservation.Reserved;
+            viewModel.Reservation.Car = car;
+            viewModel.Reservation.StateOfReservationId = StateOfReservation.Reserved;
 
-            _context.Reservations.Add(reservation);
+            _context.Reservations.Add(viewModel.Reservation);
             _context.SaveChanges();
 
             return RedirectToAction("Parking", "Parking");
         }
 
-        public ActionResult CheckIn(int parkPlace)
+        public ActionResult CheckIn()
         {
-            var res = new Reservation() { ParkingPlaceId = parkPlace };
 
-            return View(res);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CheckIn(string licencePlate)
-        {
-            var parkingPlace = _context.ParkingPlaces.First(l => l.Reservation.LicensePlate == licencePlate);
-
-            Car car = _context.Cars.FirstOrDefault(c => c.LicensePlate == licencePlate);
-
-            if (car == null)
-            {
-                car = new Car { LicensePlate = licencePlate };
-                _context.Cars.Add(car);
-            }
-
-
-            //parkingPlace.Reservation = parkPlace.Reservation;
-
-//            _context.InhouseReservations.Add(reservation);
-  //          parkingPlace.Reservation = reservation;
-            
-    //        _context.SaveChanges();
-            
-                
-            return RedirectToAction("Parking", "Parking");
+            return View();
         }
 
     }

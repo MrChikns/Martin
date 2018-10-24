@@ -68,6 +68,13 @@ label {
 span.field-validation-error {
     font-size: 14px;
 }
+
+input[type="radio"], input[type="checkbox"]
+{
+    margin-left:5px;
+    zoom:1.5;
+}
+
 .card {
     margin-right: 10px;
     margin-bottom: 10px;

@@ -1,4 +1,4 @@
-﻿@model HotelGarage.ViewModels.NewReservationViewModel
+﻿@model HotelGarage.Models.Reservation
 @{
     ViewBag.Title = "Nová rezervace";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,29 +10,29 @@
 {
     @Html.AntiForgeryToken();
     <div class="form-group">
-        @Html.LabelFor(c => c.Reservation.LicensePlate, "Státní Poznávací Značka")
-        @Html.TextBoxFor(c => c.Reservation.LicensePlate, new { @class = "form-control SPZbox", autofocus = "autofocus", @Value = "Doplňte", data_id = "spz-visible"})
-        @Html.ValidationMessageFor(c => c.Reservation.LicensePlate)
+        @Html.LabelFor(c => c.LicensePlate, "Státní Poznávací Značka")
+        @Html.TextBoxFor(c => c.LicensePlate, new { @class = "form-control SPZbox", autofocus = "autofocus", @Value = "Doplňte", data_id = "spz-visible"})
+        @Html.ValidationMessageFor(c => c.LicensePlate)
     </div>
     <div class="form-group">
         @Html.TextBoxFor(c => c.Car.LicensePlate, new { @class = "form-control", autofocus = "autofocus", @Value = "Doplňte", data_id = "spz-hidden", style="display:none;"})
     </div>
     <div class="form-group">
-        @Html.LabelFor(r => r.Reservation.Arrival, "Příjezd")
-        @Html.TextBoxFor(r => r.Reservation.Arrival, new { @class = "form-control", type = "datetime-local",
+        @Html.LabelFor(r => r.Arrival, "Příjezd")
+        @Html.TextBoxFor(r => r.Arrival, new { @class = "form-control", type = "datetime-local",
             @Value = DateTime.Now.ToString("yyyy-MM-ddTHH:mm")})
-        @Html.ValidationMessageFor(r => r.Reservation.Arrival)
+        @Html.ValidationMessageFor(r => r.Arrival)
     </div>
     <div class="form-group">
-        @Html.LabelFor(r => r.Reservation.Departure, "Odjezd")
-        @Html.TextBoxFor(r => r.Reservation.Departure, new { @class = "form-control", type = "datetime-local",
+        @Html.LabelFor(r => r.Departure, "Odjezd")
+        @Html.TextBoxFor(r => r.Departure, new { @class = "form-control", type = "datetime-local",
             @Value = DateTime.Now.AddDays(1).ToString("yyyy-MM-ddT12:00")})
-        @Html.ValidationMessageFor(r => r.Reservation.Departure)
+        @Html.ValidationMessageFor(r => r.Departure)
     </div>
     <div class="form-group form-inline">
-        @Html.LabelFor(r => r.Reservation.IsRegistered, "Je Registrovaná?")
-        @Html.CheckBoxFor(r => r.Reservation.IsRegistered, new { @class = "form-control" })
-        @Html.ValidationMessageFor(r => r.Reservation.IsRegistered)
+        @Html.LabelFor(r => r.IsRegistered, "Je Registrovaná?")
+        @Html.CheckBoxFor(r => r.IsRegistered, new { @class = "form-control" })
+        @Html.ValidationMessageFor(r => r.IsRegistered)
     </div>
 
     <div class="form-group">

@@ -163,8 +163,21 @@ namespace HotelGarage.Controllers
         public ActionResult Reserve(string ParkingPlaceName, int ReservationId)
         {
 
-            ParkingPlace pPlace = _context.ParkingPlaces.First(p => p.Name == ParkingPlaceName);
-            Reservation reservation = _context.Reservations.First(r => r.Id == ReservationId);
+            var pPlace = _context.ParkingPlaces.First(p => p.Name == ParkingPlaceName);
+            var reservation = _context.Reservations.First(r => r.Id == ReservationId);
+
+            // presunuti rezervace z predchoziho prirazeneho mista(pokud uz byla nekde prirazena)
+            if (reservation.ParkingPlaceId != 0)
+            {
+                var previousPPlace = _context.ParkingPlaces.First(p => p.Id == reservation.ParkingPlaceId);
+
+                previousPPlace.StateOfPlaceId = StateOfPlace.Free;
+                previousPPlace.Reservation = null;
+                previousPPlace.StateOfPlace = _context.StatesOfPlace.First(s => s.Id == StateOfPlace.Free);
+            }
+
+
+            
 
             pPlace.Reservation = reservation;
             reservation.ParkingPlaceId = pPlace.Id;

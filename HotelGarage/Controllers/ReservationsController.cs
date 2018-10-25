@@ -25,7 +25,7 @@ namespace HotelGarage.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(NewReservationViewModel viewModel)
+        public ActionResult Create(Reservation viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -46,10 +46,10 @@ namespace HotelGarage.Controllers
                 _context.Cars.Add(car);
             }
 
-            viewModel.Reservation.Car = car;
-            viewModel.Reservation.StateOfReservationId = StateOfReservation.Reserved;
+            viewModel.Car = car;
+            viewModel.StateOfReservationId = StateOfReservation.Reserved;
 
-            _context.Reservations.Add(viewModel.Reservation);
+            _context.Reservations.Add(viewModel);
             _context.SaveChanges();
 
             return RedirectToAction("Parking", "Parking");

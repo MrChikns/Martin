@@ -1,69 +1,50 @@
 ﻿$(document).ready(function () {
-
-    var i = 0;
-
+      
+    // prepsani stavu parkovaciho mista a skryti nepotrebnych akci pro stav parkovaciho mista
     $('div.card-body>a').each(function () {
-        i = $(this).closest("nav").attr("id");    
-
         if ($(this).text() === 'Volno')
         {            
             $(this).addClass('btn btn-success');
-
-            $(this).next().children(".js-checkout").hide();
-            $(this).next().children(".js-checkin").hide();
-            $(this).next().children(".js-upravit").hide();
+            $(this).next().children(".js-checkout, .js-checkin, .js-upravit").hide();
         }
 
         if ($(this).text() === 'Obsazeno')
         {
             $(this).addClass('btn btn-primary');
-
-            $(this).next().children(".js-checkin").hide();
-            $(this).next().children(".js-reserve").hide();
+            $(this).next().children(".js-checkin, .js-reserve").hide();
         }
 
         if ($(this).text() === 'Rezervováno')
         {
             $(this).addClass('btn btn-warning');
-
-            $(this).next().children(".js-checkout").hide();
-            $(this).next().children(".js-reserve").hide();
+            $(this).next().children(".js-checkout, .js-reserve").hide();
         }
 
         if ($(this).text() === 'Neregistrován!')
         {
             $(this).addClass('btn btn-danger');
-
-            $(this).next().children(".js-checkout").hide();
-            $(this).next().children(".js-checkin").hide();
-            $(this).next().children(".js-reserve").hide();
+            $(this).next().children(".js-checkout, .js-checkin, .js-reserve").hide();
         }
 
         if ($(this).text() === 'Odjezd')
         {
             $(this).addClass('btn btn-warning');
-
-            $(this).next().children(".js-checkin").hide();
-            $(this).next().children(".js-reserve").hide();
+            $(this).next().children(".js-checkin, .js-reserve").hide();
         }
 
         if ($(this).text() === 'Volno Staff')
         {
             $(this).addClass('btn btn-light');
-
-            $(this).next().children(".js-checkout").hide();
-            $(this).next().children(".js-checkin").hide();
-            $(this).next().children(".js-upravit").hide();
+            $(this).next().children(".js-checkout, .js-checkin, .js-upravit").hide();
         }
-
-        i = i + 1;
     });
 
-    
+    // vyplneni SPZ z jineho okna aby byl vracen kompletni viewModel
     $('input[data-id="spz-visible"]').on('keyup', function () {
         $('input[data-id="spz-hidden"]').val($(this).val());
     });
 
+    // prirazeni najizdejici reservace na parkovaci misto
     $('.select-link').on("click",function () {
         //reservation id
         var vId = $(this).attr('value-id');
@@ -82,15 +63,14 @@
                 alert("posrano");
             }
         });
-
     });
 
-       
-
+    // obnoveni stranky po ajax callu do controlleru
     $(document).ajaxStop(function () {
         window.location.reload();
     });
 
+    // SMAZAT? modal window pri kliknuti na stav parkovaciho mista
     $(document).on("click", ".js-sOPChange", function (e) {
         var dialog = bootbox.dialog({
             title: 'Vyberte najíždějící rezervaci anebo vytvořte novou.',

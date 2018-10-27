@@ -1,14 +1,65 @@
 ﻿$(document).ready(function () {
 
+    var i = 0;
+
     $('div.card-body>a').each(function () {
-        if ($(this).text() === 'Volno')$(this).addClass('btn btn-success'); 
-        if($(this).text() === 'Obsazeno')$(this).addClass('btn btn-primary');
-        if($(this).text() === 'Rezervováno')$(this).addClass('btn btn-warning');
-        if($(this).text() === 'Neregistrován!')$(this).addClass('btn btn-danger');
-        if($(this).text() === 'Odjezd')$(this).addClass('btn btn-warning');
-        if($(this).text() === 'Volno Staff')$(this).addClass('btn btn-light');
+        i = $(this).closest("nav").attr("id");    
+
+        if ($(this).text() === 'Volno')
+        {            
+            $(this).addClass('btn btn-success');
+
+            $(this).next().children(".js-checkout").hide();
+            $(this).next().children(".js-checkin").hide();
+            $(this).next().children(".js-upravit").hide();
+        }
+
+        if ($(this).text() === 'Obsazeno')
+        {
+            $(this).addClass('btn btn-primary');
+
+            $(this).next().children(".js-checkin").hide();
+            $(this).next().children(".js-reserve").hide();
+        }
+
+        if ($(this).text() === 'Rezervováno')
+        {
+            $(this).addClass('btn btn-warning');
+
+            $(this).next().children(".js-checkout").hide();
+            $(this).next().children(".js-reserve").hide();
+        }
+
+        if ($(this).text() === 'Neregistrován!')
+        {
+            $(this).addClass('btn btn-danger');
+
+            $(this).next().children(".js-checkout").hide();
+            $(this).next().children(".js-checkin").hide();
+            $(this).next().children(".js-reserve").hide();
+        }
+
+        if ($(this).text() === 'Odjezd')
+        {
+            $(this).addClass('btn btn-warning');
+
+            $(this).next().children(".js-checkin").hide();
+            $(this).next().children(".js-reserve").hide();
+        }
+
+        if ($(this).text() === 'Volno Staff')
+        {
+            $(this).addClass('btn btn-light');
+
+            $(this).next().children(".js-checkout").hide();
+            $(this).next().children(".js-checkin").hide();
+            $(this).next().children(".js-upravit").hide();
+        }
+
+        i = i + 1;
     });
 
+    
     $('input[data-id="spz-visible"]').on('keyup', function () {
         $('input[data-id="spz-hidden"]').val($(this).val());
     });

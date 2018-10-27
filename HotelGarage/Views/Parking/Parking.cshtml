@@ -20,14 +20,34 @@
                 </p>
                 <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[12].StateOfPlace</a>
                 <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[12].Id>
-                    <a href="javascript:void()" class="nav-link js-sOPChange">Reserve</a>
-
-                    @Html.ActionLink("Check In",
+                    @Html.ActionLink("Reserve",
                         "CheckIn",
                         "Parking",
                         new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
                             reservationId = Model.ParkingPlaceDtos[12].ReservationId },
-                        new { @class = "nav-link" })
+                        new { @class = "nav-link js-reserve" })
+
+                    @Html.ActionLink("Check In",
+                        "CheckIn",
+                        "Parking",
+                        new
+                        {  pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                           reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-checkin" })
+
+                    @Html.ActionLink("Upravit",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-upravit" })
+
+                    @Html.ActionLink("Check Out",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-checkout" })
                 </nav>
             </div>
         </div>
@@ -40,8 +60,34 @@
                 </p>
                 <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[13].StateOfPlace</a>
                 <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[13].Id>
-                    <a class="nav-link" href="#">Check In</a>
-                    <a class="nav-link disabled" href="#">Upravit</a>
+                    @Html.ActionLink("Reserve",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[13].Id,
+                            reservationId = Model.ParkingPlaceDtos[13].ReservationId },
+                        new { @class = "nav-link js-reserve" })
+
+                    @Html.ActionLink("Check In",
+                        "CheckIn",
+                        "Parking",
+                        new
+                        {  pPlaceId = Model.ParkingPlaceDtos[13].Id,
+                           reservationId = Model.ParkingPlaceDtos[13].ReservationId },
+                        new { @class = "nav-link js-checkin" })
+
+                    @Html.ActionLink("Upravit",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[13].Id,
+                            reservationId = Model.ParkingPlaceDtos[13].ReservationId },
+                        new { @class = "nav-link js-upravit" })
+
+                    @Html.ActionLink("Check Out",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[13].Id,
+                            reservationId = Model.ParkingPlaceDtos[13].ReservationId },
+                        new { @class = "nav-link js-checkout" })
                 </nav>
             </div>
         </div>
@@ -54,8 +100,34 @@
                 </p>
                 <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[14].StateOfPlace</a>
                 <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[14].Id>
-                    <a class="nav-link" href="#">Upravit</a>
-                    <a class="nav-link disabled" href="#">Check Out</a>
+                    @Html.ActionLink("Reserve",
+                       "CheckIn",
+                       "Parking",
+                       new { pPlaceId = Model.ParkingPlaceDtos[14].Id,
+                           reservationId = Model.ParkingPlaceDtos[14].ReservationId },
+                       new { @class = "nav-link js-reserve" })
+
+                    @Html.ActionLink("Check In",
+                        "CheckIn",
+                        "Parking",
+                        new
+                        {  pPlaceId = Model.ParkingPlaceDtos[14].Id,
+                           reservationId = Model.ParkingPlaceDtos[14].ReservationId },
+                        new { @class = "nav-link js-checkin" })
+
+                    @Html.ActionLink("Upravit",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[14].Id,
+                            reservationId = Model.ParkingPlaceDtos[14].ReservationId },
+                        new { @class = "nav-link js-upravit" })
+
+                    @Html.ActionLink("Check Out",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[14].Id,
+                            reservationId = Model.ParkingPlaceDtos[14].ReservationId },
+                        new { @class = "nav-link js-checkout" })
                 </nav>
             </div>
         </div>
@@ -68,8 +140,34 @@
                 </p>
                 <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[15].StateOfPlace</a>
                 <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[15].Id>
-                    <a class="nav-link" href="#">Upravit</a>
-                    <a class="nav-link disabled" href="#">Check Out</a>
+                    @Html.ActionLink("Reserve",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[15].Id,
+                            reservationId = Model.ParkingPlaceDtos[15].ReservationId },
+                        new { @class = "nav-link js-reserve" })
+
+                    @Html.ActionLink("Check In",
+                        "CheckIn",
+                        "Parking",
+                        new
+                        {  pPlaceId = Model.ParkingPlaceDtos[15].Id,
+                           reservationId = Model.ParkingPlaceDtos[15].ReservationId },
+                        new { @class = "nav-link js-checkin" })
+
+                    @Html.ActionLink("Upravit",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[15].Id,
+                            reservationId = Model.ParkingPlaceDtos[15].ReservationId },
+                        new { @class = "nav-link js-upravit" })
+
+                    @Html.ActionLink("Check Out",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[15].Id,
+                            reservationId = Model.ParkingPlaceDtos[15].ReservationId },
+                        new { @class = "nav-link js-checkout" })
                 </nav>
             </div>
         </div>
@@ -86,6 +184,36 @@
                     @Model.ParkingPlaceDtos[19].Departure
                 </p>
                 <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[19].StateOfPlace</a>
+                <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[15].Id>
+                    @Html.ActionLink("Reserve",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[19].Id,
+                            reservationId = Model.ParkingPlaceDtos[19].ReservationId },
+                        new { @class = "nav-link js-reserve" })
+
+                    @Html.ActionLink("Check In",
+                        "CheckIn",
+                        "Parking",
+                        new
+                        {  pPlaceId = Model.ParkingPlaceDtos[19].Id,
+                           reservationId = Model.ParkingPlaceDtos[19].ReservationId },
+                        new { @class = "nav-link js-checkin" })
+
+                    @Html.ActionLink("Upravit",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[19].Id,
+                            reservationId = Model.ParkingPlaceDtos[19].ReservationId },
+                        new { @class = "nav-link js-upravit" })
+
+                    @Html.ActionLink("Check Out",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[19].Id,
+                            reservationId = Model.ParkingPlaceDtos[19].ReservationId },
+                        new { @class = "nav-link js-checkout" })
+                </nav>
             </div>
         </div>
         <div class="card">
@@ -96,6 +224,36 @@
                     @Model.ParkingPlaceDtos[21].Departure
                 </p>
                 <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[21].StateOfPlace</a>
+                <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[15].Id>
+                    @Html.ActionLink("Reserve",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-reserve" })
+
+                    @Html.ActionLink("Check In",
+                        "CheckIn",
+                        "Parking",
+                        new
+                        {  pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                           reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-checkin" })
+
+                    @Html.ActionLink("Upravit",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-upravit" })
+
+                    @Html.ActionLink("Check Out",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-checkout" })
+                </nav>
             </div>
         </div>
         <div class="card">
@@ -106,6 +264,36 @@
                     @Model.ParkingPlaceDtos[22].Departure
                 </p>
                 <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[22].StateOfPlace</a>
+                <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[15].Id>
+                    @Html.ActionLink("Reserve",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-reserve" })
+
+                    @Html.ActionLink("Check In",
+                        "CheckIn",
+                        "Parking",
+                        new
+                        {  pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                           reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-checkin" })
+
+                    @Html.ActionLink("Upravit",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-upravit" })
+
+                    @Html.ActionLink("Check Out",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-checkout" })
+                </nav>
             </div>
         </div>
         <div class="card">
@@ -116,6 +304,36 @@
                     @Model.ParkingPlaceDtos[24].Departure
                 </p>
                 <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[24].StateOfPlace</a>
+                <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[15].Id>
+                    @Html.ActionLink("Reserve",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-reserve" })
+
+                    @Html.ActionLink("Check In",
+                        "CheckIn",
+                        "Parking",
+                        new
+                        {  pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                           reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-checkin" })
+
+                    @Html.ActionLink("Upravit",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-upravit" })
+
+                    @Html.ActionLink("Check Out",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-checkout" })
+                </nav>
             </div>
         </div>
         <div class="card">
@@ -126,6 +344,36 @@
                     @Model.ParkingPlaceDtos[16].Departure
                 </p>
                 <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[16].StateOfPlace</a>
+                <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[15].Id>
+                    @Html.ActionLink("Reserve",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-reserve" })
+
+                    @Html.ActionLink("Check In",
+                        "CheckIn",
+                        "Parking",
+                        new
+                        {  pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                           reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-checkin" })
+
+                    @Html.ActionLink("Upravit",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-upravit" })
+
+                    @Html.ActionLink("Check Out",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-checkout" })
+                </nav>
             </div>
         </div>
     </div>
@@ -143,6 +391,36 @@
                     @Model.ParkingPlaceDtos[23].Departure
                 </p>
                 <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[23].StateOfPlace</a>
+                <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[15].Id>
+                    @Html.ActionLink("Reserve",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-reserve" })
+
+                    @Html.ActionLink("Check In",
+                        "CheckIn",
+                        "Parking",
+                        new
+                        {  pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                           reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-checkin" })
+
+                    @Html.ActionLink("Upravit",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-upravit" })
+
+                    @Html.ActionLink("Check Out",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-checkout" })
+                </nav>
             </div>
         </div>
         <div class="card">
@@ -153,6 +431,36 @@
                     @Model.ParkingPlaceDtos[25].Departure
                 </p>
                 <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[25].StateOfPlace</a>
+                <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[15].Id>
+                    @Html.ActionLink("Reserve",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-reserve" })
+
+                    @Html.ActionLink("Check In",
+                        "CheckIn",
+                        "Parking",
+                        new
+                        {  pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                           reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-checkin" })
+
+                    @Html.ActionLink("Upravit",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-upravit" })
+
+                    @Html.ActionLink("Check Out",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-checkout" })
+                </nav>
             </div>
         </div>
         <div class="card">
@@ -163,6 +471,36 @@
                     @Model.ParkingPlaceDtos[17].Departure
                 </p>
                 <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[17].StateOfPlace</a>
+                <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[15].Id>
+                    @Html.ActionLink("Reserve",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-reserve" })
+
+                    @Html.ActionLink("Check In",
+                        "CheckIn",
+                        "Parking",
+                        new
+                        {  pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                           reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-checkin" })
+
+                    @Html.ActionLink("Upravit",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-upravit" })
+
+                    @Html.ActionLink("Check Out",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-checkout" })
+                </nav>
             </div>
         </div>
     </div>
@@ -182,6 +520,36 @@
                     @Model.ParkingPlaceDtos[26].Departure
                 </p>
                 <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[26].StateOfPlace</a>
+                <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[15].Id>
+                    @Html.ActionLink("Reserve",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-reserve" })
+
+                    @Html.ActionLink("Check In",
+                        "CheckIn",
+                        "Parking",
+                        new
+                        {  pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                           reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-checkin" })
+
+                    @Html.ActionLink("Upravit",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-upravit" })
+
+                    @Html.ActionLink("Check Out",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-checkout" })
+                </nav>
             </div>
         </div>
         <div class="card">
@@ -192,6 +560,36 @@
                     @Model.ParkingPlaceDtos[18].Departure
                 </p>
                 <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[18].StateOfPlace</a>
+                <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[15].Id>
+                    @Html.ActionLink("Reserve",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-reserve" })
+
+                    @Html.ActionLink("Check In",
+                        "CheckIn",
+                        "Parking",
+                        new
+                        {  pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                           reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-checkin" })
+
+                    @Html.ActionLink("Upravit",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-upravit" })
+
+                    @Html.ActionLink("Check Out",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-checkout" })
+                </nav>
             </div>
         </div>
     </div>
@@ -205,6 +603,36 @@
                     @Model.ParkingPlaceDtos[20].Departure
                 </p>
                 <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[20].StateOfPlace</a>
+                <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[15].Id>
+                    @Html.ActionLink("Reserve",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-reserve" })
+
+                    @Html.ActionLink("Check In",
+                        "CheckIn",
+                        "Parking",
+                        new
+                        {  pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                           reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-checkin" })
+
+                    @Html.ActionLink("Upravit",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-upravit" })
+
+                    @Html.ActionLink("Check Out",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-checkout" })
+                </nav>
             </div>
         </div>
         <div class="parkovaciMistoPrazdne">
@@ -219,6 +647,36 @@
                     @Model.ParkingPlaceDtos[27].Departure
                 </p>
                 <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[27].StateOfPlace</a>
+                <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[15].Id>
+                    @Html.ActionLink("Reserve",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-reserve" })
+
+                    @Html.ActionLink("Check In",
+                        "CheckIn",
+                        "Parking",
+                        new
+                        {  pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                           reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-checkin" })
+
+                    @Html.ActionLink("Upravit",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-upravit" })
+
+                    @Html.ActionLink("Check Out",
+                        "CheckIn",
+                        "Parking",
+                        new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                            reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                        new { @class = "nav-link js-checkout" })
+                </nav>
             </div>
         </div>
     </div>
@@ -241,6 +699,36 @@
                             @Model.ParkingPlaceDtos[11].Departure
                         </p>
                         <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[11].StateOfPlace</a>
+                        <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[15].Id>
+                            @Html.ActionLink("Reserve",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-reserve" })
+
+                            @Html.ActionLink("Check In",
+                                "CheckIn",
+                                "Parking",
+                                new
+                                {  pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                   reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-checkin" })
+
+                            @Html.ActionLink("Upravit",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-upravit" })
+
+                            @Html.ActionLink("Check Out",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-checkout" })
+                        </nav>
                     </div>
                 </div>
                 <div class="parkovaciMistoPrazdne">
@@ -260,6 +748,36 @@
                             @Model.ParkingPlaceDtos[10].Departure
                         </p>
                         <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[10].StateOfPlace</a>
+                        <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[15].Id>
+                            @Html.ActionLink("Reserve",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-reserve" })
+
+                            @Html.ActionLink("Check In",
+                                "CheckIn",
+                                "Parking",
+                                new
+                                {  pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                   reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-checkin" })
+
+                            @Html.ActionLink("Upravit",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-upravit" })
+
+                            @Html.ActionLink("Check Out",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-checkout" })
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -273,6 +791,36 @@
                             @Model.ParkingPlaceDtos[9].Departure
                         </p>
                         <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[9].StateOfPlace</a>
+                        <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[15].Id>
+                            @Html.ActionLink("Reserve",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-reserve" })
+
+                            @Html.ActionLink("Check In",
+                                "CheckIn",
+                                "Parking",
+                                new
+                                {  pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                   reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-checkin" })
+
+                            @Html.ActionLink("Upravit",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-upravit" })
+
+                            @Html.ActionLink("Check Out",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-checkout" })
+                        </nav>
                     </div>
                 </div>
                 <div class="parkovaciMistoPrazdne">
@@ -285,6 +833,36 @@
                             @Model.ParkingPlaceDtos[0].Departure
                         </p>
                         <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[0].StateOfPlace</a>
+                        <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[15].Id>
+                            @Html.ActionLink("Reserve",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-reserve" })
+
+                            @Html.ActionLink("Check In",
+                                "CheckIn",
+                                "Parking",
+                                new
+                                {  pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                   reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-checkin" })
+
+                            @Html.ActionLink("Upravit",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-upravit" })
+
+                            @Html.ActionLink("Check Out",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-checkout" })
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -298,6 +876,36 @@
                             @Model.ParkingPlaceDtos[8].Departure
                         </p>
                         <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[8].StateOfPlace</a>
+                        <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[15].Id>
+                            @Html.ActionLink("Reserve",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-reserve" })
+
+                            @Html.ActionLink("Check In",
+                                "CheckIn",
+                                "Parking",
+                                new
+                                {  pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                   reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-checkin" })
+
+                            @Html.ActionLink("Upravit",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-upravit" })
+
+                            @Html.ActionLink("Check Out",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-checkout" })
+                        </nav>
                     </div>
                 </div>
                 <div class="parkovaciMistoPrazdne">
@@ -310,6 +918,36 @@
                             @Model.ParkingPlaceDtos[1].Departure
                         </p>
                         <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[1].StateOfPlace</a>
+                        <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[15].Id>
+                            @Html.ActionLink("Reserve",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-reserve" })
+
+                            @Html.ActionLink("Check In",
+                                "CheckIn",
+                                "Parking",
+                                new
+                                {  pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                   reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-checkin" })
+
+                            @Html.ActionLink("Upravit",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-upravit" })
+
+                            @Html.ActionLink("Check Out",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-checkout" })
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -323,6 +961,36 @@
                             @Model.ParkingPlaceDtos[7].Departure
                         </p>
                         <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[7].StateOfPlace</a>
+                        <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[15].Id>
+                            @Html.ActionLink("Reserve",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-reserve" })
+
+                            @Html.ActionLink("Check In",
+                                "CheckIn",
+                                "Parking",
+                                new
+                                {  pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                   reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-checkin" })
+
+                            @Html.ActionLink("Upravit",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-upravit" })
+
+                            @Html.ActionLink("Check Out",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-checkout" })
+                        </nav>
                     </div>
                 </div>
                 <div class="parkovaciMistoPrazdne">
@@ -335,6 +1003,36 @@
                             @Model.ParkingPlaceDtos[2].Departure
                         </p>
                         <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[2].StateOfPlace</a>
+                        <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[15].Id>
+                            @Html.ActionLink("Reserve",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-reserve" })
+
+                            @Html.ActionLink("Check In",
+                                "CheckIn",
+                                "Parking",
+                                new
+                                {  pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                   reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-checkin" })
+
+                            @Html.ActionLink("Upravit",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-upravit" })
+
+                            @Html.ActionLink("Check Out",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-checkout" })
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -348,6 +1046,36 @@
                             @Model.ParkingPlaceDtos[6].Departure
                         </p>
                         <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[6].StateOfPlace</a>
+                        <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[15].Id>
+                            @Html.ActionLink("Reserve",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-reserve" })
+
+                            @Html.ActionLink("Check In",
+                                "CheckIn",
+                                "Parking",
+                                new
+                                {  pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                   reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-checkin" })
+
+                            @Html.ActionLink("Upravit",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-upravit" })
+
+                            @Html.ActionLink("Check Out",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-checkout" })
+                        </nav>
                     </div>
                 </div>
                 <div class="parkovaciMistoPrazdne">
@@ -360,6 +1088,36 @@
                             @Model.ParkingPlaceDtos[3].Departure
                         </p>
                         <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[3].StateOfPlace</a>
+                        <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[15].Id>
+                            @Html.ActionLink("Reserve",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-reserve" })
+
+                            @Html.ActionLink("Check In",
+                                "CheckIn",
+                                "Parking",
+                                new
+                                {  pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                   reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-checkin" })
+
+                            @Html.ActionLink("Upravit",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-upravit" })
+
+                            @Html.ActionLink("Check Out",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-checkout" })
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -373,6 +1131,36 @@
                             @Model.ParkingPlaceDtos[5].Departure
                         </p>
                         <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[5].StateOfPlace</a>
+                        <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[15].Id>
+                            @Html.ActionLink("Reserve",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-reserve" })
+
+                            @Html.ActionLink("Check In",
+                                "CheckIn",
+                                "Parking",
+                                new
+                                {  pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                   reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-checkin" })
+
+                            @Html.ActionLink("Upravit",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-upravit" })
+
+                            @Html.ActionLink("Check Out",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-checkout" })
+                        </nav>
                     </div>
                 </div>
                 <div class="parkovaciMistoPrazdne">
@@ -385,6 +1173,36 @@
                             @Model.ParkingPlaceDtos[4].Departure
                         </p>
                         <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceDtos[4].StateOfPlace</a>
+                        <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.ParkingPlaceDtos[15].Id>
+                            @Html.ActionLink("Reserve",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-reserve" })
+
+                            @Html.ActionLink("Check In",
+                                "CheckIn",
+                                "Parking",
+                                new
+                                {  pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                   reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-checkin" })
+
+                            @Html.ActionLink("Upravit",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-upravit" })
+
+                            @Html.ActionLink("Check Out",
+                                "CheckIn",
+                                "Parking",
+                                new { pPlaceId = Model.ParkingPlaceDtos[12].Id,
+                                    reservationId = Model.ParkingPlaceDtos[12].ReservationId },
+                                new { @class = "nav-link js-checkout" })
+                        </nav>
                     </div>
                 </div>
             </div>

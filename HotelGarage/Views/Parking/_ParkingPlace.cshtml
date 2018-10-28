@@ -22,12 +22,11 @@
                reservationId = Model.ReservationId },
             new { @class = "nav-link js-checkin" })
 
-        @*@Html.ActionLink("Upravit",
-            "CheckIn",
-            "Parking",
-            new { pPlaceId = Model.Id,
-                reservationId = Model.ReservationId },
-            new { @class = "nav-link js-upravit" })*@
+        @Html.ActionLink("Upravit",
+            "Update",
+            "Reservations",
+            new { resId = Model.ReservationId},
+            new { @class = "nav-link js-upravit" })
 
         @Html.ActionLink("Check Out",
             "CheckOut",

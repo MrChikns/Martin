@@ -11,17 +11,29 @@
     @Html.AntiForgeryToken();
     <div class="form-group">
         @Html.LabelFor(c => c.LicensePlate, "Státní Poznávací Značka")
-        @Html.TextBoxFor(c => c.LicensePlate, new { @class = "form-control SPZbox", autofocus = "autofocus", @Value = "Doplňte", data_id = "spz-visible"})
+        @Html.TextBoxFor(c => c.LicensePlate, new { @class = "form-control SPZbox", autofocus = "autofocus", @Value = "Doplňte", data_id = "spz-visible" })
         @Html.ValidationMessageFor(c => c.LicensePlate)
     </div>
     <div class="form-group">
-        @Html.TextBoxFor(c => c.Car.LicensePlate, new { @class = "form-control", autofocus = "autofocus", @Value = "Doplňte", data_id = "spz-hidden", style="display:none;"})
+        @Html.TextBoxFor(c => c.Car.LicensePlate, new { @class = "form-control", autofocus = "autofocus", @Value = "Doplňte", data_id = "spz-hidden", style = "display:none;" })
+    </div>
+      <div class="form-group">
+        @Html.TextBoxFor(c => c.ParkingPlaceId, new { @class = "form-control", autofocus = "autofocus", @Value = Model.ParkingPlaceId, style = "display:none;" })
     </div>
     <div class="form-group">
         @Html.LabelFor(r => r.Arrival, "Příjezd")
-        @Html.TextBoxFor(r => r.Arrival, new { @class = "form-control", type = "datetime-local",
+        @if (Model.ParkingPlaceId != 0)
+        {
+            @Html.TextBoxFor(r => r.Arrival, new { @class = "form-control", type = "datetime-local",
+            @Value = DateTime.Now.ToString("yyyy-MM-ddTHH:mm"), @readonly = "readonly" })
+            @Html.ValidationMessageFor(r => r.Arrival)
+        }
+        else
+        {
+            @Html.TextBoxFor(r => r.Arrival, new { @class = "form-control", type = "datetime-local",
             @Value = DateTime.Now.ToString("yyyy-MM-ddTHH:mm")})
-        @Html.ValidationMessageFor(r => r.Arrival)
+            @Html.ValidationMessageFor(r => r.Arrival)
+        }
     </div>
     <div class="form-group">
         @Html.LabelFor(r => r.Departure, "Odjezd")
@@ -67,7 +79,7 @@
 @section scripts
 {
     @Scripts.Render("~/bundles/jqueryval")
-    
+
 }
 
 

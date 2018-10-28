@@ -18,9 +18,11 @@ namespace HotelGarage.Controllers
         }
 
         // Cars form
-        public ActionResult Create()
+        public ActionResult Create(int? pPlaceId)
         {
-            return View();
+            var res = new Reservation() { ParkingPlaceId = (pPlaceId != null) ? (int)pPlaceId :  0 };
+
+            return View(res);
         }
 
         [HttpPost]
@@ -33,7 +35,7 @@ namespace HotelGarage.Controllers
             }
 
             Car car = _context.Cars.FirstOrDefault(c => c.LicensePlate == viewModel.Car.LicensePlate);
-
+            
             if (car == null)
             {
                 car = new Car { LicensePlate = viewModel.Car.LicensePlate ,
@@ -44,6 +46,20 @@ namespace HotelGarage.Controllers
                     IsEmployee = viewModel.Car.IsEmployee
                 };
                 _context.Cars.Add(car);
+            }
+
+            // prirazeni k parkovacimu mistu pouze pokud je prijezd dnes
+            if (viewModel.Arrival.DayOfYear == DateTime.Today.DayOfYear)
+            {
+                var pPlace = _context.ParkingPlaces.First(p => p.Id == viewModel.ParkingPlaceId);
+                pPlace.Reservation = viewModel;
+                pPlace.StateOfPlaceId = StateOfPlace.Reserved;
+                pPlace.StateOfPlace = _context.StatesOfPlace.First(s => s.Id == StateOfPlace.Reserved);
+            }
+            else
+            {
+                //vymazani pPlace Id, protoze prijezd neni dnes
+                viewModel.ParkingPlaceId = 0;
             }
 
             viewModel.Car = car;

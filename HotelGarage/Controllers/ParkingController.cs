@@ -159,6 +159,23 @@ namespace HotelGarage.Controllers
             return RedirectToAction("Parking");
         }
 
+        public ActionResult CheckOut(int pPlaceId)
+        {
+            ParkingPlace pPlace = _context.ParkingPlaces.Include(r => r.Reservation).First(p => p.Id == pPlaceId);
+            Reservation reservation = pPlace.Reservation;
+
+            reservation.Departure = DateTime.Now;
+            reservation.ParkingPlaceId = 0;
+            reservation.StateOfReservationId = StateOfReservation.Departed;
+
+            pPlace.Reservation = null;
+            pPlace.StateOfPlaceId = StateOfPlace.Free;
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Parking");
+        }
+
         [HttpPost]
         public ActionResult Reserve(string ParkingPlaceName, int ReservationId)
         {

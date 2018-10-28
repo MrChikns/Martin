@@ -121,16 +121,16 @@ div.col-auto > div > div.alert {
     padding: 0.5rem 0.75rem;
 }
 
-.odkaz-prijezd{
-    font-size:17px;
-    font-weight: 700;
+.odkaz-prijezd {
+    color: #533f03;
+    font-size:20px;
 }
 .btn-outline-primary{
     background-color:white;
 }
 .custom-select {
-    border: 1px solid #007bff;
-    color: #007bff;
+    border: 1px solid #212529;
+    color: #212529;
 }
 
 .input-group {

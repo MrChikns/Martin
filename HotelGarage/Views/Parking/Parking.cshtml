@@ -165,21 +165,21 @@
                 @{int i = 0;}
                 @foreach (var reservation in Model.TodaysReservations)
                 {
-                    <div class="row alert alert-primary">
+                    <div class="row alert alert-warning">
                         <div class="alert-prijezd">
                             SPZ: @reservation.CarLicensePlate<br />
-                            Místo: @reservation.ParkingPlaceName<br />
+                            <div class="js-pPlacePrijezd">Místo: @reservation.ParkingPlaceName<br /></div>
                             Host: @reservation.CarGuestsName
                         </div>
                         <div>
                             <div class="input-group">
                                 @Html.DropDownListFor(r => r.ParkingPlaceName,
                                     new SelectList(Model.FreeParkingPlaces),
-                                    new {@class="custom-select", @id="inputGroupSelect04",
+                                    new {@class= "custom-select", @id="inputGroupSelect04",
                                         value = reservation.ParkingPlaceId, value_id=i })
                                 <div class="input-group-append">
                                     <button id="select-link" data-id='@reservation.Id'
-                                            class="select-link btn btn-outline-primary" type="submit" value-id='@i'>
+                                            class="btn btn-warning select-link" type="submit" value-id='@i'>
                                         Přiřadit Místo
                                     </button>
                                 </div>
@@ -199,7 +199,7 @@
                                         "Parking",
                                         new { pPlaceId = reservation.ParkingPlaceId,
                                             reservationId = reservation.Id},
-                                        new { @class = "nav-link odkaz-prijezd"})
+                                        new { @class = "nav-link odkaz-prijezd" })
                                 </div>
                             </div>
                         </div>

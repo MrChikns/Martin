@@ -39,6 +39,11 @@
         }
     });
 
+    // zvyrazneni neprirazeneho mista u najizdejici rezervace
+    $('div.alert-prijezd').each(function () {
+        $(this).children(".js-pPlacePrijezd:contains('Nepřiřazeno')").addClass("alert-link");
+    });
+
     // vyplneni SPZ z jineho okna aby byl vracen kompletni viewModel
     $('input[data-id="spz-visible"]').on('keyup', function () {
         $('input[data-id="spz-hidden"]').val($(this).val());

@@ -74,7 +74,6 @@ namespace HotelGarage.Controllers
             else
             {
                 // update rezervace
-
                 reservation = _context.Reservations.First(r => r.Id == viewModel.Id);
 
                 reservation.Arrival = viewModel.Arrival;
@@ -84,24 +83,24 @@ namespace HotelGarage.Controllers
                 reservation.ParkingPlaceId = viewModel.ParkingPlaceId;
                 reservation.StateOfReservationId = viewModel.StateOfReservationId;
                 reservation.Car = viewModel.Car;
+            }
 
-                var pPlace = _context.ParkingPlaces.First(p => p.Id == viewModel.ParkingPlaceId);
-                
-                //if (viewModel.Arrival.DayOfYear == DateTime.Today.DayOfYear)
-                //{
-                //    pPlace.Reservation = viewModel;
-                //    pPlace.StateOfPlaceId = StateOfPlace.Reserved;
-                //    pPlace.StateOfPlace = _context.StatesOfPlace.First(s => s.Id == StateOfPlace.Reserved);
-                //}
-
-                //pokud prijezd neni dnes - vymazani parkovaciho mista
-                if (reservation.Arrival.DayOfYear != DateTime.Today.DayOfYear)
-                {
-                    reservation.ParkingPlaceId = 0;
-                    pPlace.Reservation = null;
-                    pPlace.StateOfPlace = _context.StatesOfPlace.First(s => s.Id == StateOfPlace.Free);
-                }
-            }            
+            // prirazeni 
+            var pPlace = _context.ParkingPlaces.First(p => p.Id == viewModel.ParkingPlaceId);
+            // pokud je prijezd dnes - nastaveni parkovaciho mista
+            if (viewModel.Arrival.DayOfYear == DateTime.Today.DayOfYear)
+            {
+                pPlace.Reservation = viewModel;
+                pPlace.StateOfPlaceId = StateOfPlace.Reserved;
+                pPlace.StateOfPlace = _context.StatesOfPlace.First(s => s.Id == StateOfPlace.Reserved);
+            }
+            //pokud prijezd neni dnes - vymazani parkovaciho mista
+            else
+            {
+                reservation.ParkingPlaceId = 0;
+                pPlace.Reservation = null;
+                pPlace.StateOfPlace = _context.StatesOfPlace.First(s => s.Id == StateOfPlace.Free);
+            }
 
             _context.SaveChanges();
 

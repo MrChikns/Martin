@@ -28,12 +28,14 @@ span.field-validation-error {
     font-weight: bold;
 }
 
+.alert-prijezd {
+    width:205px;
+}
 /* bootstrap overrides */
 .navbar-inverse {
     background-color: #0069d9;
     border-color: #0069d9;
 }
-
 
 .navbar-inverse .navbar-nav > li > a {
     color: #FFF;
@@ -114,3 +116,24 @@ a.btn {
 {
     margin-left : 5px;
 }
+
+div.col-auto > div > div.alert {
+    padding: 0.5rem 0.75rem;
+}
+
+.odkaz-prijezd{
+    font-size:17px;
+    font-weight: 700;
+}
+.btn-outline-primary{
+    background-color:white;
+}
+.custom-select {
+    border: 1px solid #007bff;
+    color: #007bff;
+}
+
+.input-group {
+    margin-top: 10px;
+}
+

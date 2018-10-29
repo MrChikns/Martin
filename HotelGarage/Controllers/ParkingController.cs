@@ -95,7 +95,7 @@ namespace HotelGarage.Controllers
             // prirazeni do listu arrivingReservationDtos
             foreach (var reservation in todaysReservations)
             {
-                int id = reservation.Id, parkingPlaceId = reservation.Id;
+                int id = reservation.Id, parkingPlaceId = reservation.ParkingPlaceId;
                 string carLicensePlate = reservation.Car.LicensePlate, 
                     carGuestsName = reservation.Car.GuestsName, 
                     parkingPlaceName = "Nepřiřazeno";
@@ -138,12 +138,14 @@ namespace HotelGarage.Controllers
         
         public ActionResult CheckIn(int pPlaceId, int reservationId)
         {
+            Reservation res = _context.Reservations.First(r => r.Id == reservationId);
+            if(res.Arrival.Date != DateTime.Today.Date)
+            { return RedirectToAction("Parking"); }
+
             ParkingPlace pPlace = _context.ParkingPlaces.First(p => p.Id == pPlaceId);
 
             if (pPlace.StateOfPlaceId == StateOfPlace.Reserved)
             {
-                Reservation res = _context.Reservations.First(r => r.Id == reservationId);
-
                 res.StateOfReservationId = StateOfReservation.Inhouse;
                 res.Arrival = DateTime.Now;
 

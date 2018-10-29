@@ -184,14 +184,13 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="row justify-content-center" >
-                                <div >
+                            <div class="row justify-content-center">
+                                <div>
                                     @Html.ActionLink("Upravit",
-                                        "CheckIn",
-                                        "Parking",
-                                        new { pPlaceId = reservation.ParkingPlaceId,
-                                            reservationId = reservation.Id},
-                                        new { @class = "nav-link odkaz-prijezd" })
+                                    "Update",
+                                    "Reservations",
+                                    new { resId = reservation.Id},
+                                    new { @class = "nav-link odkaz-prijezd" })
                                 </div>
                                 <div style="text-align:center">
                                     @Html.ActionLink("Check In",
@@ -207,19 +206,6 @@
                     i++;
                 }
             </div>
-    </div>
+        </div>
     </div>
 </div>
-@Html.ActionLink("Check In",
-"CheckIn",
-"Parking",
-new { pPlaceId = 14, reservationId = 18},
-new { @class = "btn btn-primary" })
-<br />
-
-
-@Html.ActionLink("Nová Rezervace",
-    "Create",
-    "Reservations",
-    new { Reservations = Model },
-    new { @class = "btn btn-primary"})

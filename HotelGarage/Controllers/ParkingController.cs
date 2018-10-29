@@ -145,6 +145,7 @@ namespace HotelGarage.Controllers
                 Reservation res = _context.Reservations.First(r => r.Id == reservationId);
 
                 res.StateOfReservationId = StateOfReservation.Inhouse;
+                res.Arrival = DateTime.Now;
 
                 pPlace.StateOfPlaceId = StateOfPlace.Occupied;
 //                pPlace.StateOfPlace = _context.StatesOfPlace.First(s => s.Id == StateOfPlace.Occupied);

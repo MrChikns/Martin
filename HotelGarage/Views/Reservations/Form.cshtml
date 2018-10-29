@@ -11,7 +11,7 @@
     @Html.AntiForgeryToken();
     <div class="form-group">
         @Html.LabelFor(c => c.LicensePlate, "Státní Poznávací Značka")
-        @Html.TextBoxFor(c => c.LicensePlate, new { @class = "form-control SPZbox", autofocus = "autofocus", data_id = "spz-visible" })
+        @Html.TextBoxFor(c => c.LicensePlate, new { @class = "form-control SPZbox", autofocus = "autofocus", data_id = "spz-visible", placeholder = "Doplňte SPZ nebo jméno" })
         @Html.ValidationMessageFor(c => c.LicensePlate)
     </div>
     <div class="form-group">
@@ -25,7 +25,7 @@
         @if (Model.StateOfReservationId == 2)
         {
             @Html.TextBoxFor(r => r.Arrival, new { @class = "form-control", type = "datetime-local",
-            @Value = DateTime.Now.ToString("yyyy-MM-ddTHH:mm"), @readonly = "readonly" })
+            @Value = Model.Arrival.ToString("yyyy-MM-ddTHH:mm"), @readonly = "readonly" })
             @Html.ValidationMessageFor(r => r.Arrival)
         }
         else

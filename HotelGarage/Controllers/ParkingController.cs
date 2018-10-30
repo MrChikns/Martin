@@ -76,7 +76,7 @@ namespace HotelGarage.Controllers
                     }
 
                     lPlate = parkingPlace.Reservation.LicensePlate;
-                    departure = parkingPlace.Reservation.Departure.ToShortDateString();
+                    departure = parkingPlace.Reservation.Departure.ToLongDateString();
                     arrival = parkingPlace.Reservation.Arrival.ToLongDateString();
                     resId = parkingPlace.Reservation.Id;
                 }
@@ -97,7 +97,8 @@ namespace HotelGarage.Controllers
                     CarTypeBootbox = pPCar.Replace(" ", "_"),
                     PricePerNightBootbox = pPPrice,
                     LicensePlateBootbox = lPlate.Replace(" ", "_"),
-                    EmployeeBootbox = zam
+                    EmployeeBootbox = zam,
+                    ParkPlaceShortLicensePlate = (lPlate.Length > 20) ? lPlate.Substring(0, 20) : lPlate
                 };
 
                 parkingPlaceDtos.Add(ppDto);

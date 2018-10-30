@@ -23,5 +23,7 @@ namespace HotelGarage.Dtos
         public int? PricePerNightBootbox { get; internal set; }
         public string LicensePlateBootbox { get; internal set; }
         public string EmployeeBootbox { get; internal set; }
+
+        public string ParkPlaceShortLicensePlate { get; internal set; }
     }
 }

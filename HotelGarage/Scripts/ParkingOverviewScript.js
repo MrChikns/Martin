@@ -60,8 +60,7 @@
         $.ajax({
             type: "POST",
             url: "/Parking/Reserve",
-            data: { ParkingPlaceName: pPName, ReservationId: resId },
-
+            data: { ParkingPlaceName: pPName, ReservationId: resId }
         });
     });
 
@@ -87,19 +86,19 @@
         var typAuta= $(this).prev().attr("data-bbox-typAuta");
 
         var dialog = bootbox.dialog({
-            title: 'SPZ' + spz,
-            message: "Příjezd: " + prijezd +
-                "<br>Odjezd: " + odjezd +
-                "<br>Pokoj: " + pokoj +
-                "<br>"+ zamestnanec + ": " + jmeno +
-                "<br>Cena: " + cena +
-                "<br>Zaměstnanec: " + zamestnanec +
-                "<br>Typ Auta: " + typAuta,
+            title: "<div style=\"margin-left:15px\">SPZ: "  + spz + "</div>",
+            message: 
+                "<div class= 'container'>" + "<div class=\"row\"><div class=\"col-sm-4\" style=\"text-align:right\">" +
+                "Příjezd: <br> Odjezd: <br>Pokoj: <br>" + zamestnanec +
+                ": <br>Cena: <br>Typ Auta: " +
+                "</div ><div class=\"col-sm\">" + prijezd + "<br>" + odjezd + "<br>" + pokoj +
+                    "<br>" + jmeno + "<br>" + cena + "<br>" + typAuta + "</div ></div ></div > "
+                ,
             buttons: {
                 
                 ok: {
                     label: "Zavřít",
-                    className: 'btn-info',                    
+                    className: 'btn-info'
                 }
             }
         });

@@ -43,7 +43,7 @@ namespace HotelGarage.Controllers
             {
                 return View("Form", viewModel);
             }
-
+            
             // prirazeni auta pokud jiz existuje
             var car = _context.Cars.FirstOrDefault(c => c.LicensePlate == viewModel.Car.LicensePlate);
             Reservation reservation;
@@ -87,6 +87,13 @@ namespace HotelGarage.Controllers
             //update jiz vytvorene rezervace
             else
             {
+                car.LicensePlate = viewModel.Car.LicensePlate;
+                car.CarModel = viewModel.Car.CarModel;
+                car.GuestsName = viewModel.Car.GuestsName;
+                car.GuestRoomNumber = viewModel.Car.GuestRoomNumber;
+                car.PricePerNight = viewModel.Car.PricePerNight;
+                car.IsEmployee = viewModel.Car.IsEmployee;
+
                 reservation = _context.Reservations.First(r => r.Id == viewModel.Id);
 
                 reservation.Arrival = viewModel.Arrival;
@@ -95,7 +102,7 @@ namespace HotelGarage.Controllers
                 reservation.LicensePlate = viewModel.LicensePlate;
                 reservation.ParkingPlaceId = viewModel.ParkingPlaceId;
                 reservation.StateOfReservationId = viewModel.StateOfReservationId;
-                reservation.Car = viewModel.Car;
+                reservation.Car = car;
             }
 
             // prirazeni k parkovacimu mistu

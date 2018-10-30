@@ -61,12 +61,7 @@
             type: "POST",
             url: "/Parking/Reserve",
             data: { ParkingPlaceName: pPName, ReservationId: resId },
-            success: function (data) {
-                alert("poslano");
-            },
-            error: function (data) {
-                alert("posrano");
-            }
+
         });
     });
 
@@ -75,37 +70,41 @@
         window.location.reload();
     });
 
+
+    $('div.alert-prijezd').each(function () {
+        $(this).children(".js-pPlacePrijezd:contains('Nepřiřazeno')").addClass("alert-link");
+    });
     // SMAZAT? modal window pri kliknuti na stav parkovaciho mista
     $(document).on("click", ".js-sOPChange", function (e) {
+
+        var spz = $(this).prev().attr("data-bbox-spz");
+        var prijezd = $(this).prev().attr("data-bbox-prijezd");
+        var odjezd = $(this).prev().attr("data-bbox-odjezd");
+        var pokoj = $(this).prev().attr("data-bbox-pokoj");
+        var jmeno = $(this).prev().attr("data-bbox-jmeno");
+        var cena = $(this).prev().attr("data-bbox-cena");
+        var zamestnanec = $(this).prev().attr("data-bbox-zamestnanec");
+        var typAuta= $(this).prev().attr("data-bbox-typAuta");
+
         var dialog = bootbox.dialog({
-            title: 'Vyberte najíždějící rezervaci anebo vytvořte novou.',
-            message: "<p>This dialog has buttons. Each button has it's own callback function.</p>",
+            title: 'SPZ' + spz,
+            message: "Příjezd: " + prijezd +
+                "<br>Odjezd: " + odjezd +
+                "<br>Pokoj: " + pokoj +
+                "<br>"+ zamestnanec + ": " + jmeno +
+                "<br>Cena: " + cena +
+                "<br>Zaměstnanec: " + zamestnanec +
+                "<br>Typ Auta: " + typAuta,
             buttons: {
-                cancel: {
-                    label: "cancel!",
-                    className: 'btn-danger',
-                    callback: function () {
-                        Example.show('Custom cancel clicked');
-                        return;
-                    }
-                },
-                noclose: {
-                    label: "I don't close modal!",
-                    className: 'btn-warning',
-                    callback: function () {
-                        Example.show('Custom button clicked');
-                        return false;
-                    }
-                },
+                
                 ok: {
-                    label: "custom OK!",
-                    className: 'btn-info',
-                    callback: function () {
-                        Example.show('Custom OK clicked');
-                    }
+                    label: "Zavřít",
+                    className: 'btn-info',                    
                 }
             }
         });
+
+        
     });
 
 });

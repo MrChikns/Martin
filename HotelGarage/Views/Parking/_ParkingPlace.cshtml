@@ -2,7 +2,10 @@
 
 <div class="card-body">
     <p class="card-title">@Model.LicensePlate</p>
-    <p class="card-text">
+    <p class="card-text" data-bbox-prijezd=@Model.ArrivalBootbox data-bbox-odjezd=@Model.DepartureBootbox 
+       data-bbox-pokoj=@Model.RoomBootbox data-bbox-jmeno=@Model.NameBootbox 
+       data-bbox-cena=@Model.PricePerNightBootbox data-bbox-spz=@Model.LicensePlateBootbox 
+       data-bbox-typAuta=@Model.CarTypeBootbox data-bbox-zamestnanec=@Model.EmployeeBootbox>
         @Model.PPlaceName<br>
         odj: @Model.Departure
     </p>

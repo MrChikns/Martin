@@ -28,11 +28,13 @@ namespace HotelGarage.Controllers
                 .Include(s => s.StateOfPlace)
                 .Include(r => r.Reservation)
                 .ToList();
-            
+
+            var cars = _context.Cars.ToList();
+
             // prirazeni do listu parkingPlaceDtos
             foreach (var parkingPlace in parkingPlaces)
             {
-                
+
 
                 //prepsani textu do buttonu - odjezd nebo neregistrovan! + volno pro staff
                 string sOPlace = parkingPlace.StateOfPlace.Name;
@@ -51,18 +53,31 @@ namespace HotelGarage.Controllers
                     case "Volno":
                         if (id >= 19)
                             sOPlace = "Volno Staff";
-                            break;
+                        break;
                 }
 
                 //vypneni rezervace 
-                string lPlate = "", departure = "", pPName = parkingPlace.Name;
-                int? resId = null;
+                string lPlate = "", departure = "", arrival= "", pPName = parkingPlace.Name, 
+                    pPGName = "", pPCar = "", zam = "";
+                int? resId = null, pPPrice = null, pPRoom = null;
+                Car car = null;
 
                 if (parkingPlace.Reservation != null)
                 {
+                    car = cars.FirstOrDefault(c => c.LicensePlate == parkingPlace.Reservation.LicensePlate);
+
+                    if (car != null)
+                    {
+                        pPGName = (car.GuestsName == null) ? "Nevyplněno" : car.GuestsName;
+                        pPRoom = (car.GuestRoomNumber == null) ? 0 : car.GuestRoomNumber;
+                        pPCar = (car.CarModel == null) ? "Nevyplněno" : car.CarModel;
+                        pPPrice = (car.PricePerNight == null) ? 0 : car.PricePerNight;
+                        zam = (car.IsEmployee == true) ? "Zaměstnanec" : "Host"; 
+                    }
+
                     lPlate = parkingPlace.Reservation.LicensePlate;
                     departure = parkingPlace.Reservation.Departure.ToShortDateString();
-                    pPName = parkingPlace.Name;
+                    arrival = parkingPlace.Reservation.Arrival.ToLongDateString();
                     resId = parkingPlace.Reservation.Id;
                 }
 
@@ -73,10 +88,17 @@ namespace HotelGarage.Controllers
                     LicensePlate = lPlate,
                     Departure = departure,
                     PPlaceName = pPName,
-                    StateOfPlace = sOPlace
-                };
+                    StateOfPlace = sOPlace,
 
-                
+                    DepartureBootbox = departure.Replace(" ", "_"),
+                    ArrivalBootbox = arrival.Replace(" ", "_"),
+                    NameBootbox = pPGName.Replace(" ", "_"),
+                    RoomBootbox = pPRoom,
+                    CarTypeBootbox = pPCar.Replace(" ", "_"),
+                    PricePerNightBootbox = pPPrice,
+                    LicensePlateBootbox = lPlate.Replace(" ", "_"),
+                    EmployeeBootbox = zam
+                };
 
                 parkingPlaceDtos.Add(ppDto);
             }

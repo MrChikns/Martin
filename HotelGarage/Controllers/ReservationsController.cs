@@ -44,40 +44,39 @@ namespace HotelGarage.Controllers
                 return View("Form", viewModel);
             }
             
-            // prirazeni auta pokud jiz existuje
+            // prirazeni auta pokud jiz existuje a nastaveni jeho atributu
             var car = _context.Cars.FirstOrDefault(c => c.LicensePlate == viewModel.Car.LicensePlate);
-            Reservation reservation;
+            if (car == null)
+            {
+                car = new Car
+                {
+                    LicensePlate = viewModel.Car.LicensePlate,
+                    CarModel = viewModel.Car.CarModel,
+                    GuestsName = viewModel.Car.GuestsName,
+                    GuestRoomNumber = viewModel.Car.GuestRoomNumber,
+                    PricePerNight = viewModel.Car.PricePerNight,
+                    IsEmployee = viewModel.Car.IsEmployee
+                };
 
+                _context.Cars.Add(car);
+            }
+            // update auta
+            else
+            {
+                car.LicensePlate = viewModel.Car.LicensePlate;
+                car.CarModel = viewModel.Car.CarModel;
+                car.GuestsName = viewModel.Car.GuestsName;
+                car.GuestRoomNumber = viewModel.Car.GuestRoomNumber;
+                car.PricePerNight = viewModel.Car.PricePerNight;
+                car.IsEmployee = viewModel.Car.IsEmployee;
+            }
+
+
+            Reservation reservation;
             // vytvoreni rezervace
             if (viewModel.Id == 0)
             {
                 reservation = viewModel;
-
-                // vytvoreni auta pro novou rezervaci
-                if (car == null)
-                {
-                    car = new Car
-                    {
-                        LicensePlate = viewModel.Car.LicensePlate,
-                        CarModel = viewModel.Car.CarModel,
-                        GuestsName = viewModel.Car.GuestsName,
-                        GuestRoomNumber = viewModel.Car.GuestRoomNumber,
-                        PricePerNight = viewModel.Car.PricePerNight,
-                        IsEmployee = viewModel.Car.IsEmployee
-                    };
-
-                    _context.Cars.Add(car);
-                }
-                // update auta
-                else
-                {
-                    car.LicensePlate = viewModel.Car.LicensePlate;
-                    car.CarModel = viewModel.Car.CarModel;
-                    car.GuestsName = viewModel.Car.GuestsName;
-                    car.GuestRoomNumber = viewModel.Car.GuestRoomNumber;
-                    car.PricePerNight = viewModel.Car.PricePerNight;
-                    car.IsEmployee = viewModel.Car.IsEmployee;
-                }
 
                 reservation.Car = car;
                 reservation.StateOfReservationId = StateOfReservation.Reserved;
@@ -87,22 +86,16 @@ namespace HotelGarage.Controllers
             //update jiz vytvorene rezervace
             else
             {
-                car.LicensePlate = viewModel.Car.LicensePlate;
-                car.CarModel = viewModel.Car.CarModel;
-                car.GuestsName = viewModel.Car.GuestsName;
-                car.GuestRoomNumber = viewModel.Car.GuestRoomNumber;
-                car.PricePerNight = viewModel.Car.PricePerNight;
-                car.IsEmployee = viewModel.Car.IsEmployee;
-
-                reservation = _context.Reservations.First(r => r.Id == viewModel.Id);
+               reservation = _context.Reservations.First(r => r.Id == viewModel.Id);
 
                 reservation.Arrival = viewModel.Arrival;
                 reservation.Departure = viewModel.Departure;
                 reservation.IsRegistered = viewModel.IsRegistered;
                 reservation.LicensePlate = viewModel.LicensePlate;
                 reservation.ParkingPlaceId = viewModel.ParkingPlaceId;
-                reservation.StateOfReservationId = viewModel.StateOfReservationId;
+                
                 reservation.Car = car;
+                reservation.StateOfReservationId = viewModel.StateOfReservationId;
             }
 
             // prirazeni k parkovacimu mistu

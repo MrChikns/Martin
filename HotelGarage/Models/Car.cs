@@ -28,6 +28,19 @@ namespace HotelGarage.Models
         
         public bool IsEmployee { get; set; }
 
+        public Car() { }
+
+        public Car(string licensePlate, string carModel, string guestsName, 
+            int? guestRoomNumber, int? pricePerNight, bool isEmployee)
+        {
+            LicensePlate = licensePlate;
+            CarModel = carModel;
+            GuestsName = guestsName;
+            GuestRoomNumber = guestRoomNumber;
+            PricePerNight = pricePerNight;
+            IsEmployee = isEmployee;
+        }
+
 
     }
 }

@@ -18,5 +18,13 @@ namespace HotelGarage.ViewModels
         public IList<ArrivingReservationDto> TodaysReservations { get; set; }
         public IList<string> FreeParkingPlaces { get; set; }
         public int ParkingPlaceName { get; set; }
+
+        public ParkingViewModel(IList<ParkingPlaceDto> parkingPlaceDtos,
+            IList<ArrivingReservationDto> arrivingReservationDtos, List<string> freePlacesList)
+        {
+            this.ParkingPlaceDtos = parkingPlaceDtos;
+            this.TodaysReservations = arrivingReservationDtos;
+            this.FreeParkingPlaces = freePlacesList;
+        }
     }
 }

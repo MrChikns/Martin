@@ -31,6 +31,19 @@ namespace HotelGarage.Models
         public int ParkingPlaceId { get; set; }
 
         public byte StateOfReservationId { get; set; }
+
+        internal void CheckOut()
+        {
+            this.Departure = DateTime.Now;
+            this.ParkingPlaceId = 0;
+            this.StateOfReservationId = StateOfReservation.Departed;
+        }
+
+        internal void CheckIn()
+        {
+            this.StateOfReservationId = StateOfReservation.Inhouse;
+            this.Arrival = DateTime.Now;
+        }
     }
 
     

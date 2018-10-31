@@ -14,8 +14,15 @@ namespace HotelGarage.Dtos
 
         public int ParkingPlaceId { get; set; }
         public string ParkingPlaceName { get; set; }
-        
-        
-        
+
+        public ArrivingReservationDto(int id, string carLicensePlate,
+           string carGuestsName, int parkingPlaceId, string parkingPlaceName)
+        {
+            Id = id;
+            CarLicensePlate = carLicensePlate;
+            CarGuestsName = carGuestsName;
+            ParkingPlaceId = parkingPlaceId;
+            ParkingPlaceName = parkingPlaceName;
+        }
     }
 }

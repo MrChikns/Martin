@@ -48,15 +48,8 @@ namespace HotelGarage.Controllers
             var car = _context.Cars.FirstOrDefault(c => c.LicensePlate == viewModel.Car.LicensePlate);
             if (car == null)
             {
-                car = new Car
-                {
-                    LicensePlate = viewModel.Car.LicensePlate,
-                    CarModel = viewModel.Car.CarModel,
-                    GuestsName = viewModel.Car.GuestsName,
-                    GuestRoomNumber = viewModel.Car.GuestRoomNumber,
-                    PricePerNight = viewModel.Car.PricePerNight,
-                    IsEmployee = viewModel.Car.IsEmployee
-                };
+                car = new Car(viewModel.Car.LicensePlate, viewModel.Car.CarModel, viewModel.Car.GuestsName,
+                    viewModel.Car.GuestRoomNumber, viewModel.Car.PricePerNight, viewModel.Car.IsEmployee);
 
                 _context.Cars.Add(car);
             }
@@ -71,13 +64,11 @@ namespace HotelGarage.Controllers
                 car.IsEmployee = viewModel.Car.IsEmployee;
             }
 
-
             Reservation reservation;
             // vytvoreni rezervace
             if (viewModel.Id == 0)
             {
                 reservation = viewModel;
-
                 reservation.Car = car;
                 reservation.StateOfReservationId = StateOfReservation.Reserved;
 
@@ -87,15 +78,13 @@ namespace HotelGarage.Controllers
             else
             {
                reservation = _context.Reservations.First(r => r.Id == viewModel.Id);
-
-                reservation.Arrival = viewModel.Arrival;
-                reservation.Departure = viewModel.Departure;
-                reservation.IsRegistered = viewModel.IsRegistered;
-                reservation.LicensePlate = viewModel.LicensePlate;
-                reservation.ParkingPlaceId = viewModel.ParkingPlaceId;
-                
-                reservation.Car = car;
-                reservation.StateOfReservationId = viewModel.StateOfReservationId;
+               reservation.Arrival = viewModel.Arrival;
+               reservation.Departure = viewModel.Departure;
+               reservation.IsRegistered = viewModel.IsRegistered;
+               reservation.LicensePlate = viewModel.LicensePlate;
+               reservation.ParkingPlaceId = viewModel.ParkingPlaceId;
+               reservation.Car = car;
+               reservation.StateOfReservationId = viewModel.StateOfReservationId;
             }
 
             // prirazeni k parkovacimu mistu
@@ -112,9 +101,7 @@ namespace HotelGarage.Controllers
                      if (reservation.StateOfReservationId == StateOfReservation.Reserved
                         && reservation.Arrival.DayOfYear == DateTime.Today.DayOfYear)
                     {
-                        pPlace.Reservation = reservation;
-                        pPlace.StateOfPlaceId = StateOfPlace.Reserved;
-                        pPlace.StateOfPlace = _context.StatesOfPlace.First(s => s.Id == StateOfPlace.Reserved);
+                        pPlace.Reserve(_context.StatesOfPlace.First(s => s.Id == StateOfPlace.Reserved), reservation);
                     }
                     // ostatni pripady prirazeni prazdneho mista
                     else

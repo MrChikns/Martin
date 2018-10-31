@@ -8,16 +8,22 @@ using System.Web.Mvc;
 using HotelGarage.Dtos;
 using HotelGarage.ViewModels;
 using System.Web.UI.WebControls;
+using System.Collections.ObjectModel;
 
 namespace HotelGarage.Controllers
 {
     public class ParkingController : Controller
     {
         private ApplicationDbContext _context;
+        private StateOfPlace freePlaceState, employeePlaceState, occupiedPlaceState, reservedPlaceState;
 
         public ParkingController()
         {
             _context = new ApplicationDbContext();
+            freePlaceState = _context.StatesOfPlace.First(s => s.Id == StateOfPlace.Free);
+            employeePlaceState = _context.StatesOfPlace.First(s => s.Id == StateOfPlace.Employee);
+            occupiedPlaceState = _context.StatesOfPlace.First(s => s.Id == StateOfPlace.Occupied);
+            reservedPlaceState = _context.StatesOfPlace.First(s => s.Id == StateOfPlace.Reserved);
         }
 
         public ActionResult Parking()
@@ -34,83 +40,50 @@ namespace HotelGarage.Controllers
             // prirazeni do listu parkingPlaceDtos
             foreach (var parkingPlace in parkingPlaces)
             {
-
-
                 //prepsani textu do buttonu - odjezd nebo neregistrovan! + volno pro staff
-                string sOPlace = parkingPlace.StateOfPlace.Name;
-                var id = parkingPlaces.IndexOf(parkingPlace);
-
-                switch (sOPlace) {
-                    case "Obsazeno":
-                        if (!parkingPlace.Reservation.IsRegistered)
-                        {
-                            sOPlace = "Neregistrován!";
-                            break;
-                        }
-                        if (parkingPlace.Reservation.Departure.Date == DateTime.Today.Date)
-                            sOPlace = "Odjezd";
-                        break;
-                    case "Volno":
-                        if (id >= 19)
-                            sOPlace = "Volno Staff";
-                        break;
-                }
+                string stateOfPlaceName = ParkingPlace.AssignStateOfPlaceName(parkingPlace.StateOfPlace.Name,
+                    parkingPlace, parkingPlaces.IndexOf(parkingPlace));
 
                 //vypneni rezervace 
-                string lPlate = "", departure = "", arrival= "", pPName = parkingPlace.Name, 
-                    pPGName = "", pPCar = "", zam = "";
+                string licensePlate = "", departure = "", arrival = "", pPlaceName = parkingPlace.Name,
+                    pPlaceGuestsName = "", pPlaceCar = "", isEmployee = "";
                 int? resId = null, pPPrice = null, pPRoom = null;
                 Car car = null;
 
+
+
+                // pokud je potreba vyplnit rezervaci do parkovaciho mista
                 if (parkingPlace.Reservation != null)
                 {
                     car = cars.FirstOrDefault(c => c.LicensePlate == parkingPlace.Reservation.LicensePlate);
 
                     if (car != null)
                     {
-                        pPGName = (car.GuestsName == null) ? "Nevyplněno" : car.GuestsName;
+                        pPlaceGuestsName = (car.GuestsName == null) ? "Nevyplněno" : car.GuestsName;
                         pPRoom = (car.GuestRoomNumber == null) ? 0 : car.GuestRoomNumber;
-                        pPCar = (car.CarModel == null) ? "Nevyplněno" : car.CarModel;
+                        pPlaceCar = (car.CarModel == null) ? "Nevyplněno" : car.CarModel;
                         pPPrice = (car.PricePerNight == null) ? 0 : car.PricePerNight;
-                        zam = (car.IsEmployee == true) ? "Zaměstnanec" : "Host"; 
+                        isEmployee = (car.IsEmployee == true) ? "Zaměstnanec" : "Host";
                     }
 
-                    lPlate = parkingPlace.Reservation.LicensePlate;
+                    licensePlate = parkingPlace.Reservation.LicensePlate;
                     departure = parkingPlace.Reservation.Departure.ToLongDateString();
                     arrival = parkingPlace.Reservation.Arrival.ToLongDateString();
                     resId = parkingPlace.Reservation.Id;
                 }
 
-                var ppDto = new ParkingPlaceDto
-                {
-                    Id = parkingPlace.Id,
-                    ReservationId = resId,
-                    LicensePlate = lPlate,
-                    Departure = departure,
-                    PPlaceName = pPName,
-                    StateOfPlace = sOPlace,
-
-                    DepartureBootbox = departure.Replace(" ", "_"),
-                    ArrivalBootbox = arrival.Replace(" ", "_"),
-                    NameBootbox = pPGName.Replace(" ", "_"),
-                    RoomBootbox = pPRoom,
-                    CarTypeBootbox = pPCar.Replace(" ", "_"),
-                    PricePerNightBootbox = pPPrice,
-                    LicensePlateBootbox = lPlate.Replace(" ", "_"),
-                    EmployeeBootbox = zam,
-                    ParkPlaceShortLicensePlate = (lPlate.Length > 20) ? lPlate.Substring(0, 20) : lPlate
-                };
+                var ppDto = new ParkingPlaceDto(parkingPlace.Id, resId, licensePlate,
+                    departure, pPlaceName, stateOfPlaceName, arrival, pPlaceGuestsName,
+                    pPRoom, pPlaceCar, pPPrice, isEmployee);
 
                 parkingPlaceDtos.Add(ppDto);
             }
 
-
             IList<ArrivingReservationDto> arrivingReservationDtos = new List<ArrivingReservationDto>();
 
             // vypsani dnesnich rezervaci
-            var today = DateTime.Today.Date;
             var todaysReservations = _context.Reservations
-                .Where(a => DbFunctions.TruncateTime(a.Arrival) == today
+                .Where(a => DbFunctions.TruncateTime(a.Arrival) == DateTime.Today.Date
                     && a.StateOfReservationId == StateOfReservation.Reserved)
                     .Include(c => c.Car)
                 .ToList();
@@ -118,10 +91,7 @@ namespace HotelGarage.Controllers
             // prirazeni do listu arrivingReservationDtos
             foreach (var reservation in todaysReservations)
             {
-                int id = reservation.Id, parkingPlaceId = reservation.ParkingPlaceId;
-                string carLicensePlate = reservation.Car.LicensePlate, 
-                    carGuestsName = reservation.Car.GuestsName, 
-                    parkingPlaceName = "Nepřiřazeno";
+                var parkingPlaceName = "Nepřiřazeno";
 
                 // inicializace prazdneho parkovaciho mista
                 if (reservation.ParkingPlaceId != 0)
@@ -130,14 +100,8 @@ namespace HotelGarage.Controllers
                         .First(p => p.Id == reservation.ParkingPlaceId).Name;
                 }
 
-                var aRDto = new ArrivingReservationDto
-                {
-                    Id = id,
-                    CarLicensePlate = carLicensePlate,
-                    CarGuestsName = carGuestsName,
-                    ParkingPlaceId = parkingPlaceId,
-                    ParkingPlaceName = parkingPlaceName
-                };
+                var aRDto = new ArrivingReservationDto(reservation.Id, reservation.Car.LicensePlate,
+                    reservation.Car.GuestsName, reservation.ParkingPlaceId, parkingPlaceName);
 
                 arrivingReservationDtos.Add(aRDto);
             }
@@ -149,53 +113,37 @@ namespace HotelGarage.Controllers
                 .ToList();
 
             // prirazeni do parking view
-            var viewModel = new ParkingViewModel
-            {
-                ParkingPlaceDtos = parkingPlaceDtos,
-                TodaysReservations = arrivingReservationDtos,
-                FreeParkingPlaces = freePlacesList
-            }; 
+            var viewModel = new ParkingViewModel(
+                parkingPlaceDtos, arrivingReservationDtos, freePlacesList); 
 
             return View(viewModel);
         }
         
         public ActionResult CheckIn(int pPlaceId, int reservationId)
         {
-            Reservation res = _context.Reservations.First(r => r.Id == reservationId);
-            if(res.Arrival.Date != DateTime.Today.Date)
-            { return RedirectToAction("Parking"); }
+            var reservation = _context.Reservations.First(r => r.Id == reservationId);
+            var pPlace = _context.ParkingPlaces.First(p => p.Id == pPlaceId);
 
-            ParkingPlace pPlace = _context.ParkingPlaces.First(p => p.Id == pPlaceId);
+            if (reservation.Arrival.Date != DateTime.Today.Date)
+                return RedirectToAction("Parking");
 
             if (pPlace.StateOfPlaceId == StateOfPlace.Reserved)
             {
-                res.StateOfReservationId = StateOfReservation.Inhouse;
-                res.Arrival = DateTime.Now;
-
-                pPlace.StateOfPlaceId = StateOfPlace.Occupied;
-//                pPlace.StateOfPlace = _context.StatesOfPlace.First(s => s.Id == StateOfPlace.Occupied);
-                
-
-                pPlace.Reservation = res;
+                reservation.CheckIn();
+                pPlace.Occupy(occupiedPlaceState, reservation);
 
                 _context.SaveChanges();
             }
-
 
             return RedirectToAction("Parking");
         }
 
         public ActionResult CheckOut(int pPlaceId)
         {
-            ParkingPlace pPlace = _context.ParkingPlaces.Include(r => r.Reservation).First(p => p.Id == pPlaceId);
-            Reservation reservation = pPlace.Reservation;
+            var pPlace = _context.ParkingPlaces.Include(r => r.Reservation).First(p => p.Id == pPlaceId);
 
-            reservation.Departure = DateTime.Now;
-            reservation.ParkingPlaceId = 0;
-            reservation.StateOfReservationId = StateOfReservation.Departed;
-
-            pPlace.Reservation = null;
-            pPlace.StateOfPlaceId = StateOfPlace.Free;
+            pPlace.Reservation.CheckOut();
+            pPlace.Release(freePlaceState);
 
             _context.SaveChanges();
 
@@ -205,7 +153,6 @@ namespace HotelGarage.Controllers
         [HttpPost]
         public ActionResult Reserve(string ParkingPlaceName, int ReservationId)
         {
-
             var pPlace = _context.ParkingPlaces.First(p => p.Name == ParkingPlaceName);
             var reservation = _context.Reservations.First(r => r.Id == ReservationId);
 
@@ -213,19 +160,11 @@ namespace HotelGarage.Controllers
             if (reservation.ParkingPlaceId != 0)
             {
                 var previousPPlace = _context.ParkingPlaces.First(p => p.Id == reservation.ParkingPlaceId);
-
-                previousPPlace.StateOfPlaceId = StateOfPlace.Free;
-                previousPPlace.Reservation = null;
-                previousPPlace.StateOfPlace = _context.StatesOfPlace.First(s => s.Id == StateOfPlace.Free);
+                previousPPlace.Release(freePlaceState);
             }
 
-
-            
-
-            pPlace.Reservation = reservation;
             reservation.ParkingPlaceId = pPlace.Id;
-            pPlace.StateOfPlaceId = StateOfPlace.Reserved;
-            pPlace.StateOfPlace = _context.StatesOfPlace.First(s => s.Id == StateOfPlace.Reserved);
+            pPlace.Reserve(reservedPlaceState, reservation);
 
             _context.SaveChanges();
             

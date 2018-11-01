@@ -43,7 +43,12 @@
     </div>
     <div class="form-group form-inline">
         @Html.LabelFor(r => r.IsRegistered, "Je Registrovaná?")
-        @Html.CheckBoxFor(r => r.IsRegistered, new { @class = "form-control" })
+        @if (Model.StateOfReservationId == 2)
+        {
+            @Html.CheckBoxFor(r => r.IsRegistered, new { @class = "form-control" })}
+        else
+        {
+            @Html.CheckBoxFor(r => r.IsRegistered, new { @class = "form-control", @disabled = "disabled" })}
         @Html.ValidationMessageFor(r => r.IsRegistered)
     </div>
 

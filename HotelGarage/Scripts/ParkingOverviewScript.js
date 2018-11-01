@@ -69,21 +69,22 @@
         window.location.reload();
     });
 
-
+    // zvyrazneni neprirazeneho mista u najezdovych rezervaci
     $('div.alert-prijezd').each(function () {
         $(this).children(".js-pPlacePrijezd:contains('Nepřiřazeno')").addClass("alert-link");
     });
-    // SMAZAT? modal window pri kliknuti na stav parkovaciho mista
+
+    // modal window pri kliknuti na stav parkovaciho mista
     $(document).on("click", ".js-sOPChange", function (e) {
 
-        var spz = $(this).prev().attr("data-bbox-spz");
-        var prijezd = $(this).prev().attr("data-bbox-prijezd");
-        var odjezd = $(this).prev().attr("data-bbox-odjezd");
-        var pokoj = $(this).prev().attr("data-bbox-pokoj");
-        var jmeno = $(this).prev().attr("data-bbox-jmeno");
-        var cena = $(this).prev().attr("data-bbox-cena");
-        var zamestnanec = $(this).prev().attr("data-bbox-zamestnanec");
-        var typAuta= $(this).prev().attr("data-bbox-typAuta");
+        var spz = $(this).prev().attr("data-bbox-spz").replace(/_/g," ");
+        var prijezd = $(this).prev().attr("data-bbox-prijezd").replace(/_/g, " ");
+        var odjezd = $(this).prev().attr("data-bbox-odjezd").replace(/_/g, " ");
+        var pokoj = $(this).prev().attr("data-bbox-pokoj").replace(/_/g, " ");
+        var jmeno = $(this).prev().attr("data-bbox-jmeno").replace(/_/g, " ");
+        var cena = $(this).prev().attr("data-bbox-cena").replace(/_/g, " ");
+        var zamestnanec = $(this).prev().attr("data-bbox-zamestnanec").replace(/_/g, " ");
+        var typAuta = $(this).prev().attr("data-bbox-typAuta").replace(/_/g, " ");
 
         var dialog = bootbox.dialog({
             title: "<div style=\"margin-left:15px\">SPZ: "  + spz + "</div>",

@@ -45,9 +45,9 @@ namespace HotelGarage.Controllers
                     parkingPlace, parkingPlaces.IndexOf(parkingPlace));
 
                 //vypneni rezervace 
-                string licensePlate = "", departure = "", arrival = "", pPlaceName = parkingPlace.Name,
-                    pPlaceGuestsName = "", pPlaceCar = "", isEmployee = "";
-                int? resId = null, pPPrice = null, pPRoom = null;
+                string licensePlate = " ", departure = " ", arrival = " ", pPlaceName = parkingPlace.Name,
+                    pPlaceGuestsName = " ", pPlaceCar = " ", isEmployee = " ";
+                int? resId = 0, pPPrice = 0, pPRoom = 0;
                 Car car = null;
 
 

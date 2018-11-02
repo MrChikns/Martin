@@ -60,5 +60,12 @@ namespace HotelGarage.Models
             this.StateOfPlace = occupiedPlaceState;
             this.Reservation = reservation;
         }
+
+        internal void Free(StateOfPlace stateOfPlace, Reservation reservation)
+        {
+            reservation.ParkingPlaceId = 0;
+            this.Reservation = null;
+            this.StateOfPlace = StateOfPlace;
+        }
     }
 }

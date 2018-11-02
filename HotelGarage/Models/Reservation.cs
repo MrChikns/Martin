@@ -32,6 +32,20 @@ namespace HotelGarage.Models
 
         public byte StateOfReservationId { get; set; }
 
+        public Reservation()
+        { }
+
+        public Reservation(string licensePlate ,DateTime arrival, DateTime departure, bool isRegistered, int parkingPlaceId, Car car)
+        {
+            LicensePlate = licensePlate;
+            Arrival = arrival;
+            Departure = departure;
+            IsRegistered = isRegistered;
+            ParkingPlaceId = parkingPlaceId;
+            Car = car;
+            StateOfReservationId = StateOfReservation.Reserved;
+        }
+
         internal void CheckOut()
         {
             this.Departure = DateTime.Now;
@@ -43,6 +57,17 @@ namespace HotelGarage.Models
         {
             this.StateOfReservationId = StateOfReservation.Inhouse;
             this.Arrival = DateTime.Now;
+        }
+
+        internal void Update(Reservation updated, Car car)
+        {
+            this.Arrival = updated.Arrival;
+            this.Departure = updated.Departure;
+            this.IsRegistered = updated.IsRegistered;
+            this.LicensePlate = updated.LicensePlate;
+            this.ParkingPlaceId = updated.ParkingPlaceId;
+            this.Car = car;
+            this.StateOfReservationId = updated.StateOfReservationId;
         }
     }
 

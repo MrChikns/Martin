@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace HotelGarage.Models
 {
@@ -41,6 +42,14 @@ namespace HotelGarage.Models
             IsEmployee = isEmployee;
         }
 
-
+        internal void Update(Reservation reservation)
+        {
+            this.LicensePlate = reservation.Car.LicensePlate;
+            this.CarModel = reservation.Car.CarModel;
+            this.GuestsName = reservation.Car.GuestsName;
+            this.GuestRoomNumber = reservation.Car.GuestRoomNumber;
+            this.PricePerNight = reservation.Car.PricePerNight;
+            this.IsEmployee = reservation.Car.IsEmployee;
+        }
     }
 }

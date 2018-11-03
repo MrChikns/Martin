@@ -52,6 +52,7 @@ span.field-validation-error {
 
 .nav-link {
     font-size: 20px;
+    padding: 0.5rem 0.3rem;
 }
 
 .nav > li > a:hover, .navbar-brand:hover, #logoutForm > ul > li > a:hover {
@@ -133,5 +134,9 @@ div.col-auto > div > div.alert {
 
 .input-group {
     margin-top: 10px;
+}
+
+.justify-content-center {
+    padding-right: 10px;
 }
 

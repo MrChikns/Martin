@@ -4,7 +4,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Nová rezervace</h2>
+@if (Model.Id == 0){ <h2>Nová Rezervace</h2>}
+else {<h2>Upravit Rezervaci</h2> }
 <br />
 @using (Html.BeginForm("Save", "Reservations"))
 {

@@ -18,7 +18,7 @@ namespace HotelGarage.Repositories
 
         public Reservation GetReservation(int reservationId)
         {
-            return _context.Reservations.First(r => r.Id == reservationId);
+            return _context.Reservations.FirstOrDefault(r => r.Id == reservationId);
         }
         
         public Reservation GetReservationCar(int reservationId)
@@ -35,5 +35,13 @@ namespace HotelGarage.Repositories
                 .ToList();
         }
 
+        public List<Reservation> GetNoShowReservationsCar()
+        {
+            return _context.Reservations
+                .Where(a => DbFunctions.TruncateTime(a.Arrival) < DateTime.Today.Date
+                    && a.StateOfReservationId == StateOfReservation.Reserved)
+                    .Include(c => c.Car)
+                .ToList();
+        }
     }
 }

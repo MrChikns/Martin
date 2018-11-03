@@ -18,12 +18,12 @@ namespace HotelGarage.Repositories
 
         public ParkingPlace GetParkingPlace(string ParkingPlaceName)
         {
-            return _context.ParkingPlaces.First(p => p.Name == ParkingPlaceName);
+            return _context.ParkingPlaces.FirstOrDefault(p => p.Name == ParkingPlaceName);
         }
 
         public ParkingPlace GetParkingPlace(int pPlaceId)
         {
-            return _context.ParkingPlaces.First(p => p.Id == pPlaceId);
+            return _context.ParkingPlaces.FirstOrDefault(p => p.Id == pPlaceId);
         }
 
         public ParkingPlace GetParkingPlaceReservation(int pPlaceId)

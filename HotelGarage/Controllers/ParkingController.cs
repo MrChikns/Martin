@@ -35,7 +35,6 @@ namespace HotelGarage.Controllers
         public ActionResult Parking()
         {
             IList<ParkingPlaceDto> parkingPlaceDtos = new List<ParkingPlaceDto>();
-            // prirazeni do listu vsech parkingPlaceDtos
             foreach (var parkingPlace in _parkingPlaceRepository.GetParkingPlacesStateOfPlaceReservation())
             {
 
@@ -62,8 +61,7 @@ namespace HotelGarage.Controllers
                 parkingPlaceDtos.Add(ppDto);
             }
 
-            IList<ArrivingReservationDto> arrivingReservationDtos = new List<ArrivingReservationDto>();
-            // prirazeni do listu arrivingReservationDtos
+            IList<ReservationDto> arrivingReservationDtos = new List<ReservationDto>();
             foreach (var reservation in _reservationRepository.GetTodaysReservationsCar())
             {
                 string parkingPlaceName;
@@ -73,12 +71,30 @@ namespace HotelGarage.Controllers
                 else
                     parkingPlaceName = "Nepřiřazeno";
 
-                arrivingReservationDtos.Add(new ArrivingReservationDto(reservation.Id, reservation.Car.LicensePlate,
-                    reservation.Car.GuestsName, reservation.ParkingPlaceId, parkingPlaceName));
+                arrivingReservationDtos.Add(new ReservationDto(reservation.Id, reservation.Car.LicensePlate,
+                    reservation.Car.GuestsName, reservation.ParkingPlaceId, parkingPlaceName, 
+                    reservation.Arrival.ToShortDateString()));
             }
 
+            IList<ReservationDto> noShowReservationDtos = new List<ReservationDto>();
+            foreach (var reservation in _reservationRepository.GetNoShowReservationsCar())
+            {
+                //asi smazat
+                string parkingPlaceName;
+
+                if (reservation.ParkingPlaceId != 0)
+                    parkingPlaceName = _parkingPlaceRepository.GetParkingPlace(reservation).Name;
+                else
+                    parkingPlaceName = "Nepřiřazeno";
+
+                noShowReservationDtos.Add(new ReservationDto(reservation.Id, reservation.Car.LicensePlate,
+                    reservation.Car.GuestsName, reservation.ParkingPlaceId, parkingPlaceName, 
+                    reservation.Arrival.ToShortDateString()));
+            }
+
+
             return View(new ParkingViewModel(
-                parkingPlaceDtos, arrivingReservationDtos, _parkingPlaceRepository.GetNamesOfFreeParkingPlaces()));
+                parkingPlaceDtos, arrivingReservationDtos,noShowReservationDtos , _parkingPlaceRepository.GetNamesOfFreeParkingPlaces()));
         }
 
         

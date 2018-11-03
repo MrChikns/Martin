@@ -6,48 +6,54 @@ using System.Linq;
 using System.Data.Entity;
 using System.Web;
 using System.Web.Mvc;
+using HotelGarage.Repositories;
 
 namespace HotelGarage.Controllers
 {
     public class ReservationsController : Controller
     {
         private ApplicationDbContext _context;
+        private readonly CarRepository _carRepository;
+        private readonly ReservationRepository _reservationRepository;
+        private readonly ParkingPlaceRepository _parkingPlaceRepository;
+        private readonly StateOfPlaceRepository _stateOfPlaceRepository;
 
         public ReservationsController()
         {
             _context = new ApplicationDbContext();
+            _carRepository = new CarRepository(_context);
+            _reservationRepository = new ReservationRepository(_context);
+            _parkingPlaceRepository = new ParkingPlaceRepository(_context);
+            _stateOfPlaceRepository = new StateOfPlaceRepository(_context);
         }
 
         // nova rezervace
         public ActionResult Create(int? pPlaceId)
         {
-            var res = new Reservation() { ParkingPlaceId = (pPlaceId != null) 
-                ? (int)pPlaceId :  0, StateOfReservationId = StateOfReservation.Reserved};
-
-            return View("Form", res);
+            return View("Form", new Reservation() {ParkingPlaceId = (pPlaceId != null) ? 
+                (int)pPlaceId : 0, StateOfReservationId = StateOfReservation.Reserved});
         }
 
         // update rezervace
         public ActionResult Update(int resId)
         {
-            var res = _context.Reservations.Include(c => c.Car).First(r => r.Id == resId);
-
-            return View("Form", res);
+            return View("Form", _reservationRepository.GetReservationCar(resId));
         }
-    
+
+
         // ulozeni nove nebo upravovane rezervace a auta
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save(Reservation viewModel)
         {
-            // prirazeni auta a rezervace pokud jiz existuji a nastaveni jejich atributu
-            var reservation = _context.Reservations.FirstOrDefault(r => r.Id == viewModel.Id); ;
-            var car = _context.Cars.FirstOrDefault(c => c.LicensePlate == viewModel.Car.LicensePlate);
-
             if (!ModelState.IsValid)
                 return View("Form", viewModel);
 
-            // pridani auta do DB anebo update
+            // prirazeni auta a rezervace pokud jiz existuji a nastaveni jejich atributu
+            var reservation = _reservationRepository.GetReservation(viewModel.Id);
+            var car = _carRepository.GetCar(viewModel);
+
+            // vytvoreni auta anebo update
             if (car == null)
             {
                 car = new Car(viewModel.Car.LicensePlate, viewModel.Car.CarModel, viewModel.Car.GuestsName,
@@ -66,22 +72,23 @@ namespace HotelGarage.Controllers
 
                 _context.Reservations.Add(reservation);
             }
-            else 
+            else
                 reservation.Update(viewModel, car);
 
             // prirazeni k parkovacimu mistu
-            var pPlace = _context.ParkingPlaces.Include(s => s.StateOfPlace).FirstOrDefault(p => p.Id == reservation.ParkingPlaceId);
+            var pPlace = _parkingPlaceRepository.GetParkingPlaceStateOfPlace(reservation);
 
             // pokud je prirazene parkovaci misto a rezervace neni inhouse
             if (reservation.ParkingPlaceId != 0 && reservation.StateOfReservationId != StateOfReservation.Inhouse)
-            {                
+            {
+
                 // prirazeni k mistu rezervace a nastaveni mista na rezervovano
                 if (reservation.StateOfReservationId == StateOfReservation.Reserved
                     && reservation.Arrival.DayOfYear == DateTime.Today.DayOfYear)
-                    pPlace.Reserve(_context.StatesOfPlace.First(s => s.Id == StateOfPlace.Reserved), reservation);
+                    pPlace.Reserve(_stateOfPlaceRepository.GetReservedStateOfPlace(), reservation);
                 // anebo prirazeni prazdneho park. mista
                 else
-                    pPlace.Free(_context.StatesOfPlace.First(s => s.Id == StateOfPlace.Free), reservation);
+                    pPlace.Free(_stateOfPlaceRepository.GetFreeStateOfPlace(), reservation);
             }
             _context.SaveChanges();
 

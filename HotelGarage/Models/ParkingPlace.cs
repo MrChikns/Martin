@@ -41,6 +41,7 @@ namespace HotelGarage.Models
 
         internal void Release(StateOfPlace freePlace)
         {
+            this.Reservation.ParkingPlaceId = 0;
             this.Reservation = null;
             this.StateOfPlaceId = StateOfPlace.Free;
             this.StateOfPlace = freePlace;
@@ -48,13 +49,15 @@ namespace HotelGarage.Models
 
         internal void Reserve(StateOfPlace reservedPlace, Reservation reservation)
         {
-            this.Reservation = reservation;
+            reservation.ParkingPlaceId = this.Id;
             this.StateOfPlaceId = StateOfPlace.Reserved;
             this.StateOfPlace = reservedPlace;
+            this.Reservation = reservation;
         }
 
         internal void Occupy(StateOfPlace occupiedPlaceState, Reservation reservation)
         {
+            reservation.ParkingPlaceId = this.Id;
             this.StateOfPlaceId = StateOfPlace.Occupied;
             this.StateOfPlace = occupiedPlaceState;
             this.Reservation = reservation;
@@ -63,8 +66,9 @@ namespace HotelGarage.Models
         internal void Free(StateOfPlace stateOfPlace, Reservation reservation)
         {
             reservation.ParkingPlaceId = 0;
-            this.Reservation = null;
+            this.StateOfPlaceId = StateOfPlace.Free;
             this.StateOfPlace = StateOfPlace;
+            this.Reservation = null;
         }
     }
 }

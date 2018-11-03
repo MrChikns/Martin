@@ -32,8 +32,7 @@ namespace HotelGarage.Models
 
         public byte StateOfReservationId { get; set; }
 
-        public Reservation()
-        { }
+        public Reservation() { }
 
         public Reservation(string licensePlate ,DateTime arrival, DateTime departure, bool isRegistered, int parkingPlaceId, Car car)
         {

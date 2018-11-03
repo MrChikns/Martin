@@ -35,46 +35,20 @@ namespace HotelGarage.Controllers
                 .Include(r => r.Reservation)
                 .ToList();
 
-            var cars = _context.Cars.ToList();
-
-            // prirazeni do listu parkingPlaceDtos
+            // prirazeni do listu vsech parkingPlaceDtos
             foreach (var parkingPlace in parkingPlaces)
             {
-                //prepsani textu do buttonu - odjezd nebo neregistrovan! + volno pro staff
-                string stateOfPlaceName = ParkingPlace.AssignStateOfPlaceName(parkingPlace.StateOfPlace.Name,
-                    parkingPlace, parkingPlaces.IndexOf(parkingPlace));
-
-                //vypneni rezervace 
-                string licensePlate = " ", departure = " ", arrival = " ", pPlaceName = parkingPlace.Name,
-                    pPlaceGuestsName = " ", pPlaceCar = " ", isEmployee = " ";
-                int? resId = 0, pPPrice = 0, pPRoom = 0;
-                Car car = null;
-
-
+                //predvyplneni pro prázdné parkovací místo 
+                var ppDto = new ParkingPlaceDto(parkingPlace.Id, 0, " ", " ", parkingPlace.Name,
+                    ParkingPlace.AssignStateOfPlaceName(parkingPlace, parkingPlaces.IndexOf(parkingPlace)),
+                    " ", " ", 0, " ", 0, "Host");
 
                 // pokud je potreba vyplnit rezervaci do parkovaciho mista
                 if (parkingPlace.Reservation != null)
                 {
-                    car = cars.FirstOrDefault(c => c.LicensePlate == parkingPlace.Reservation.LicensePlate);
-
-                    if (car != null)
-                    {
-                        pPlaceGuestsName = (car.GuestsName == null) ? "Nevyplněno" : car.GuestsName;
-                        pPRoom = (car.GuestRoomNumber == null) ? 0 : car.GuestRoomNumber;
-                        pPlaceCar = (car.CarModel == null) ? "Nevyplněno" : car.CarModel;
-                        pPPrice = (car.PricePerNight == null) ? 0 : car.PricePerNight;
-                        isEmployee = (car.IsEmployee == true) ? "Zaměstnanec" : "Host";
-                    }
-
-                    licensePlate = parkingPlace.Reservation.LicensePlate;
-                    departure = parkingPlace.Reservation.Departure.ToLongDateString();
-                    arrival = parkingPlace.Reservation.Arrival.ToLongDateString();
-                    resId = parkingPlace.Reservation.Id;
+                    ppDto.AssignCar(_context.Cars.FirstOrDefault(c => c.LicensePlate == parkingPlace.Reservation.LicensePlate));
+                    ppDto.AssignReservation(parkingPlace);
                 }
-
-                var ppDto = new ParkingPlaceDto(parkingPlace.Id, resId, licensePlate,
-                    departure, pPlaceName, stateOfPlaceName, arrival, pPlaceGuestsName,
-                    pPRoom, pPlaceCar, pPPrice, isEmployee);
 
                 parkingPlaceDtos.Add(ppDto);
             }
@@ -112,11 +86,8 @@ namespace HotelGarage.Controllers
                 .Select(n => n.Name)
                 .ToList();
 
-            // prirazeni do parking view
-            var viewModel = new ParkingViewModel(
-                parkingPlaceDtos, arrivingReservationDtos, freePlacesList); 
-
-            return View(viewModel);
+            return View(new ParkingViewModel(
+                parkingPlaceDtos, arrivingReservationDtos, freePlacesList));
         }
         
         public ActionResult CheckIn(int pPlaceId, int reservationId)

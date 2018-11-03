@@ -18,13 +18,12 @@ namespace HotelGarage.Dtos
 
         public string DepartureBootbox { get; set; }
         public string ArrivalBootbox { get; internal set; }
-        public string NameBootbox { get; internal set; }
-        public int? RoomBootbox { get; internal set; }
-        public string CarTypeBootbox { get; internal set; }
+        public string GuestNameBootbox { get; internal set; }
+        public int? RoomNumberBootbox { get; internal set; }
+        public string CarModelBootbox { get; internal set; }
         public int? PricePerNightBootbox { get; internal set; }
         public string LicensePlateBootbox { get; internal set; }
-        public string EmployeeBootbox { get; internal set; }
-
+        public string IsEmployeeBootbox { get; internal set; }
         public string ParkPlaceShortLicensePlate { get; internal set; }
 
         public ParkingPlaceDto(int parkingPlaceId, int? resId, string licensePlate,
@@ -40,13 +39,34 @@ namespace HotelGarage.Dtos
 
             DepartureBootbox = departure.Replace(" ", "_");
             ArrivalBootbox = arrival.Replace(" ", "_");
-            NameBootbox = pPlaceGuestsName.Replace(" ", "_");
-            RoomBootbox = pPRoom;
-            CarTypeBootbox = pPlaceCar.Replace(" ", "_");
+            GuestNameBootbox = pPlaceGuestsName.Replace(" ", "_");
+            RoomNumberBootbox = pPRoom;
+            CarModelBootbox = pPlaceCar.Replace(" ", "_");
             PricePerNightBootbox = pPPrice;
             LicensePlateBootbox = licensePlate.Replace(" ", "_");
-            EmployeeBootbox = isEmployee;
-            ParkPlaceShortLicensePlate = (licensePlate.Length > 20) ? licensePlate.Substring(0, 20) : licensePlate;
+            IsEmployeeBootbox = isEmployee;
+        }
+
+        internal void AssignCar(Car car)
+        {
+            if (car != null)
+            {
+                this.GuestNameBootbox = (car.GuestsName == null) ? "Nevyplněno" : car.GuestsName.Replace(" ", "_");
+                this.RoomNumberBootbox = (car.GuestRoomNumber == null) ? 0 : car.GuestRoomNumber;
+                this.CarModelBootbox = (car.CarModel == null) ? "Nevyplněno" : car.CarModel.Replace(" ", "_");
+                this.PricePerNightBootbox = (car.PricePerNight == null) ? 0 : car.PricePerNight;
+                this.IsEmployeeBootbox = (car.IsEmployee == true) ? "Zaměstnanec" : "Host";
+            }
+        }
+
+        internal void AssignReservation(ParkingPlace parkingPlace)
+        {
+            this.LicensePlate = parkingPlace.Reservation.LicensePlate;
+            this.LicensePlateBootbox = parkingPlace.Reservation.LicensePlate.Replace(" ", "_");
+            this.Departure = parkingPlace.Reservation.Departure.ToShortDateString();
+            this.DepartureBootbox = parkingPlace.Reservation.Departure.ToShortDateString().Replace(" ", "_");
+            this.ArrivalBootbox = parkingPlace.Reservation.Arrival.ToShortDateString().Replace(" ", "_"); ;
+            this.ReservationId = parkingPlace.Reservation.Id;
         }
     }
 }

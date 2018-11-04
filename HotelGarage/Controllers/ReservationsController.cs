@@ -44,7 +44,6 @@ namespace HotelGarage.Controllers
         public ActionResult Delete(int resId)
         {
             var reservation = _reservationRepository.GetReservationCar(resId);
-            //var parkingPlace = ;
 
             reservation.Cancel(_parkingPlaceRepository.GetParkingPlace(reservation.ParkingPlaceId) 
                 , _stateOfPlaceRepository.GetFreeStateOfPlace());
@@ -91,15 +90,14 @@ namespace HotelGarage.Controllers
             // prirazeni k parkovacimu mistu
             var pPlace = _parkingPlaceRepository.GetParkingPlaceStateOfPlace(reservation);
 
-            // pokud je prirazene parkovaci misto a rezervace neni inhouse
+            // pokud je parkovaci misto prirazene a rezervace neni inhouse
             if (reservation.ParkingPlaceId != 0 && reservation.StateOfReservationId != StateOfReservation.Inhouse)
             {
-
                 // prirazeni k mistu rezervace a nastaveni mista na rezervovano
                 if (reservation.StateOfReservationId == StateOfReservation.Reserved
                     && reservation.Arrival.DayOfYear == DateTime.Today.DayOfYear)
                     pPlace.Reserve(_stateOfPlaceRepository.GetReservedStateOfPlace(), reservation);
-                // anebo prirazeni prazdneho park. mista
+                // anebo nastaveni prazdneho park. mista
                 else
                     pPlace.Free(_stateOfPlaceRepository.GetFreeStateOfPlace(), reservation);
             }

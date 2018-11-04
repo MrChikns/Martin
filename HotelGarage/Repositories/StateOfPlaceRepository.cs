@@ -15,11 +15,6 @@ namespace HotelGarage.Repositories
             _context = context;
         }
 
-        public List<StateOfPlace> GetStatesOfPlace()
-        {
-            return _context.StatesOfPlace.ToList();
-        }
-
         public StateOfPlace GetFreeStateOfPlace()
         {
             return _context.StatesOfPlace.First(s => s.Id == StateOfPlace.Free);

@@ -1,11 +1,21 @@
 ﻿@model HotelGarage.Models.Reservation
 @{
-    ViewBag.Title = "Nová rezervace";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if (Model.Id == 0){ <h2>Nová Rezervace</h2>}
-else {<h2>Upravit Rezervaci</h2> }
+@{string arrival = null, header = null;
+    if (Model.Id == 0)
+    { arrival = DateTime.Now.ToString("yyyy-MM-ddTHH:mm");
+        header = "Nová Rezervace";
+    }
+    else
+    {
+        arrival = Model.Arrival.ToString("yyyy-MM-ddTHH:mm");
+        header = "Upravit Rezervaci";
+    }
+}
+
+<h2>@header</h2>
 <br />
 @using (Html.BeginForm("Save", "Reservations"))
 {
@@ -26,15 +36,12 @@ else {<h2>Upravit Rezervaci</h2> }
         @if (Model.StateOfReservationId == 2)
         {
             @Html.TextBoxFor(r => r.Arrival, new { @class = "form-control", type = "datetime-local",
-            @Value = Model.Arrival.ToString("yyyy-MM-ddTHH:mm"), @readonly = "readonly" })
-            @Html.ValidationMessageFor(r => r.Arrival)
-        }
+                @Value = arrival, disabled = "disabled" })}
         else
         {
-            @Html.TextBoxFor(r => r.Arrival, new { @class = "form-control", type = "datetime-local",
-            @Value = DateTime.Now.ToString("yyyy-MM-ddTHH:mm")})
-            @Html.ValidationMessageFor(r => r.Arrival)
+            @Html.TextBoxFor(r => r.Arrival, new { @class = "form-control", type = "datetime-local", @Value = arrival})
         }
+        @Html.ValidationMessageFor(r => r.Arrival)
     </div>
     <div class="form-group">
         @Html.LabelFor(r => r.Departure, "Odjezd")
@@ -52,7 +59,6 @@ else {<h2>Upravit Rezervaci</h2> }
             @Html.CheckBoxFor(r => r.IsRegistered, new { @class = "form-control", @disabled = "disabled" })}
         @Html.ValidationMessageFor(r => r.IsRegistered)
     </div>
-
     <div class="form-group">
         @Html.LabelFor(c => c.Car.CarModel, "Typ Auta")
         @Html.TextBoxFor(c => c.Car.CarModel, new { @class = "form-control" })

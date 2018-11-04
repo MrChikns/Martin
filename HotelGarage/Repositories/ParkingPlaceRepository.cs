@@ -41,11 +41,12 @@ namespace HotelGarage.Repositories
             return _context.ParkingPlaces.Include(s => s.StateOfPlace).FirstOrDefault(p => p.Id == reservation.ParkingPlaceId);
         }
 
-        public List<ParkingPlace> GetParkingPlacesStateOfPlaceReservation()
+        public List<ParkingPlace> GetParkingPlacesStateOfPlaceReservationCar()
         {
             return _context.ParkingPlaces
                 .Include(s => s.StateOfPlace)
                 .Include(r => r.Reservation)
+                .Include(c => c.Reservation.Car)
                 .ToList();
         }
 

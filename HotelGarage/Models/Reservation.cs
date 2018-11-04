@@ -68,6 +68,14 @@ namespace HotelGarage.Models
             this.Car = car;
             this.StateOfReservationId = updated.StateOfReservationId;
         }
+
+        internal void Cancel(ParkingPlace parkingPlace, StateOfPlace freePlace)
+        {
+            if(parkingPlace != null)
+                parkingPlace.Release(freePlace);
+            
+            this.StateOfReservationId = StateOfReservation.Cancelled;
+        }
     }
 
     

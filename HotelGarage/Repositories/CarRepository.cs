@@ -20,9 +20,9 @@ namespace HotelGarage.Repositories
             return _context.Cars.FirstOrDefault(c => c.LicensePlate == parkingPlace.Reservation.LicensePlate);
         }
 
-        public Car GetCar(Reservation viewModel)
+        public Car GetCar(Reservation reservation)
         {
-            return _context.Cars.FirstOrDefault(c => c.LicensePlate == viewModel.Car.LicensePlate);
+            return _context.Cars.FirstOrDefault(c => c.LicensePlate == reservation.Car.LicensePlate);
         }
     }
 }

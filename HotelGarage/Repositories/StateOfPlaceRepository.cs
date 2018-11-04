@@ -29,5 +29,10 @@ namespace HotelGarage.Repositories
         {
             return _context.StatesOfPlace.First(s => s.Id == StateOfPlace.Reserved);
         }
+
+        public StateOfPlace GetOccupiedStateOfPlace()
+        {
+            return _context.StatesOfPlace.First(s => s.Id == StateOfPlace.Occupied);
+        }
     }
 }

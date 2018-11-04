@@ -40,6 +40,19 @@ namespace HotelGarage.Controllers
             return View("Form", _reservationRepository.GetReservationCar(resId));
         }
 
+        // zruseni rezervace
+        public ActionResult Delete(int resId)
+        {
+            var reservation = _reservationRepository.GetReservationCar(resId);
+            //var parkingPlace = ;
+
+            reservation.Cancel(_parkingPlaceRepository.GetParkingPlace(reservation.ParkingPlaceId) 
+                , _stateOfPlaceRepository.GetFreeStateOfPlace());
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Parking", "Parking");
+        }
 
         // ulozeni nove nebo upravovane rezervace a auta
         [HttpPost]

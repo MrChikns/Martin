@@ -16,7 +16,6 @@ namespace HotelGarage.Controllers
     public class ParkingController : Controller
     {
         private ApplicationDbContext _context;
-        private List<StateOfPlace> listOfPlaceStates;
         private readonly ParkingPlaceRepository _parkingPlaceRepository;
         private readonly ReservationRepository _reservationRepository;
         private readonly CarRepository _carRepository;
@@ -29,19 +28,19 @@ namespace HotelGarage.Controllers
             _parkingPlaceRepository = new ParkingPlaceRepository(_context);
             _reservationRepository = new ReservationRepository(_context);
             _carRepository = new CarRepository(_context);
-            listOfPlaceStates = _stateOfPlaceRepository.GetStatesOfPlace();
         }
 
         public ActionResult Parking()
         {
             IList<ParkingPlaceDto> parkingPlaceDtos = new List<ParkingPlaceDto>();
-            foreach (var parkingPlace in _parkingPlaceRepository.GetParkingPlacesStateOfPlaceReservation())
+
+            var parkingPlaces = _parkingPlaceRepository.GetParkingPlacesStateOfPlaceReservationCar();
+            foreach (var parkingPlace in parkingPlaces)
             {
 
                 //predvyplneni pro prázdné parkovací místo 
                 var ppDto = new ParkingPlaceDto(parkingPlace.Id, 0, " ", " ", parkingPlace.Name,
-                    ParkingPlace.AssignStateOfPlaceName(parkingPlace, 
-                    _parkingPlaceRepository.GetParkingPlacesStateOfPlaceReservation().IndexOf(parkingPlace)),
+                    ParkingPlace.AssignStateOfPlaceName(parkingPlace, parkingPlaces.IndexOf(parkingPlace)),
                     " ", " ", 0, " ", 0, "Host");
 
                 // pokud je potreba vyplnit rezervaci do parkovaciho mista
@@ -50,7 +49,12 @@ namespace HotelGarage.Controllers
                     //vyrazeni rezervaci z minuleho dne anebo prirazeni rezervace do parkovaciho mista
                     if (parkingPlace.Reservation.Arrival.Date != DateTime.Today.Date
                         && parkingPlace.Reservation.StateOfReservationId == StateOfReservation.Reserved)
-                        parkingPlace.Release(listOfPlaceStates.First(s => s.Id == StateOfPlace.Free));
+                    {
+                        var res = parkingPlace.Reservation;
+                        parkingPlace.Release(_stateOfPlaceRepository.GetFreeStateOfPlace());
+                        _context.SaveChanges();
+
+                    }
                     else
                     {
                         ppDto.AssignCar(_carRepository.GetCar(parkingPlace));
@@ -109,7 +113,7 @@ namespace HotelGarage.Controllers
             {
                 reservation.CheckIn();
                 _parkingPlaceRepository.GetParkingPlace(pPlaceId)
-                    .Occupy(listOfPlaceStates.First(s => s.Id == StateOfPlace.Occupied), reservation);
+                    .Occupy(_stateOfPlaceRepository.GetOccupiedStateOfPlace(), reservation);
 
                 _context.SaveChanges();
             }
@@ -123,7 +127,7 @@ namespace HotelGarage.Controllers
             var pPlace = _parkingPlaceRepository.GetParkingPlaceReservation(pPlaceId);
 
             pPlace.Reservation.CheckOut();
-            pPlace.Release(listOfPlaceStates.First(s => s.Id == StateOfPlace.Free));
+            pPlace.Release(_stateOfPlaceRepository.GetFreeStateOfPlace());
 
             _context.SaveChanges();
 
@@ -139,10 +143,10 @@ namespace HotelGarage.Controllers
             if (reservation.ParkingPlaceId != 0)
             {
                 _parkingPlaceRepository.GetParkingPlace(reservation)
-                    .Release(listOfPlaceStates.First(s => s.Id == StateOfPlace.Free));
+                    .Release(_stateOfPlaceRepository.GetFreeStateOfPlace());
             }
             _parkingPlaceRepository.GetParkingPlace(ParkingPlaceName)
-                .Reserve(listOfPlaceStates.First(s => s.Id == StateOfPlace.Reserved), reservation);
+                .Reserve(_stateOfPlaceRepository.GetReservedStateOfPlace(), reservation);
 
             _context.SaveChanges();
 

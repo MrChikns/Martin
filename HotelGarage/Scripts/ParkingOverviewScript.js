@@ -11,7 +11,7 @@
         if ($(this).text() === 'Obsazeno')
         {
             $(this).addClass('btn btn-primary');
-            $(this).next().children(".js-checkin, .js-reserve").hide();
+            $(this).next().children(".js-checkin, .js-reserve, .js-checkout").hide();
         }
 
         if ($(this).text() === 'Rezervováno')
@@ -22,13 +22,13 @@
 
         if ($(this).text() === 'Neregistrován!')
         {
-            $(this).addClass('btn btn-danger');
+            $(this).addClass('btn btn-secondary');
             $(this).next().children(".js-checkout, .js-checkin, .js-reserve").hide();
         }
 
         if ($(this).text() === 'Odjezd')
         {
-            $(this).addClass('btn btn-warning');
+            $(this).addClass('btn btn-danger');
             $(this).next().children(".js-checkin, .js-reserve").hide();
         }
 
@@ -48,6 +48,12 @@
     $('input[data-id="spz-visible"]').on('keyup', function () {
         $('input[data-id="spz-hidden"]').val($(this).val());
     });
+
+    // obarveni policka s registraci rezervace
+    if ($('#IsRegistered').attr('checked') === "checked") { $('#isRegisteredDiv').addClass('alert alert-success'); }
+    else { $('#isRegisteredDiv').addClass('alert alert-warning'); }
+    // prepinani barvy pri kliknuti
+    $('#IsRegistered').on("click", function () { $('#isRegisteredDiv').toggleClass('alert-warning alert-success'); });
 
     // prirazeni najizdejici reservace na parkovaci misto
     $('.select-link').on("click",function () {
@@ -84,6 +90,7 @@
         var jmeno = $(this).prev().attr("data-bbox-jmeno").replace(/_/g, " ");
         var cena = $(this).prev().attr("data-bbox-cena").replace(/_/g, " ");
         var zamestnanec = $(this).prev().attr("data-bbox-zamestnanec").replace(/_/g, " ");
+        var jeRegistrovan = $(this).prev().attr("data-bbox-jeRegistrovan").replace(/_/g, " ");
         var typAuta = $(this).prev().attr("data-bbox-typAuta").replace(/_/g, " ");
 
         var dialog = bootbox.dialog({
@@ -91,9 +98,9 @@
             message: 
                 "<div class= 'container'>" + "<div class=\"row\"><div class=\"col-sm-4\" style=\"text-align:right\">" +
                 "Příjezd: <br> Odjezd: <br>Pokoj: <br>" + zamestnanec +
-                ": <br>Cena: <br>Typ Auta: " +
+                ": <br>Registrován?: <br>Cena: <br>Typ Auta: " +
                 "</div ><div class=\"col-sm\">" + prijezd + "<br>" + odjezd + "<br>" + pokoj +
-                    "<br>" + jmeno + "<br>" + cena + "<br>" + typAuta + "</div ></div ></div > "
+                "<br>" + jmeno + "<br>" + jeRegistrovan + "<br>" + cena + "<br>" + typAuta + "</div ></div ></div > "
                 ,
             buttons: {
                 
@@ -103,8 +110,5 @@
                 }
             }
         });
-
-        
     });
-
 });

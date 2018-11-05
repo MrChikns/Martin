@@ -138,10 +138,9 @@ namespace HotelGarage.Controllers
             var parkingPlaces = _parkingPlaceRepository.GetParkingPlacesStateOfPlaceReservationCar();
             foreach (var parkingPlace in parkingPlaces)
             {
-
                 //predvyplneni pro prázdné parkovací místo 
-                var ppDto = new ParkingPlaceDto(parkingPlace.Id, 0, " ", " ", parkingPlace.Name,
-                    ParkingPlace.AssignStateOfPlaceName(parkingPlace, parkingPlaces.IndexOf(parkingPlace)),
+                var ppDto = new ParkingPlaceDto(parkingPlace.Id, 0, " ", false ," ", parkingPlace.Name,
+                    ParkingPlace.AssignStateOfPlaceName(parkingPlace),
                     " ", " ", 0, " ", 0, "Host");
 
                 // pokud je potreba vyplnit rezervaci do parkovaciho mista

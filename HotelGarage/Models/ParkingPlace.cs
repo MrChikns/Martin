@@ -18,25 +18,27 @@ namespace HotelGarage.Models
 
         public StateOfPlace StateOfPlace { get; set; }
 
-        public static string AssignStateOfPlaceName(ParkingPlace parkingPlace, int staffPPlaceId)
+        public static string AssignStateOfPlaceName(ParkingPlace parkingPlace)
         {
+            string parkingPlaceName = parkingPlace.StateOfPlace.Name;
+
             switch (parkingPlace.StateOfPlace.Name)
             {
                 case "Obsazeno":
                     if (!parkingPlace.Reservation.IsRegistered)
                     {
-                        parkingPlace.StateOfPlace.Name = "Neregistrován!";
+                        parkingPlaceName = "Neregistrován!";
                         break;
                     }
                     if (parkingPlace.Reservation.Departure.Date == DateTime.Today.Date)
-                        parkingPlace.StateOfPlace.Name = "Odjezd";
+                        parkingPlaceName = "Odjezd";
                     break;
                 case "Volno":
-                    if (staffPPlaceId >= 19)
-                        parkingPlace.StateOfPlace.Name = "Volno Staff";
+                    if (parkingPlace.Id >= 19)
+                        parkingPlaceName = "Volno Staff";
                     break;
             }
-            return parkingPlace.StateOfPlace.Name;
+            return parkingPlaceName;
         }
 
         internal void Release(StateOfPlace freePlace)

@@ -253,8 +253,8 @@
                                         "CheckIn",
                                         "Parking",
                                         new { pPlaceId = reservation.ParkingPlaceId,
-                                            reservationId = reservation.Id},
-                                        new { @class = "nav-link odkaz-prijezd" })
+                                            reservationId = reservation.Id},(reservation.ParkingPlaceName == "Nepřiřazeno")?
+                                        new { @class = "nav-link odkaz-prijezd disabled",  @onclick = "javascript:return false;" } : (object)new { @class = "nav-link odkaz-prijezd" })
                                 </div>
                             </div>
                         </div>

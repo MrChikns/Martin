@@ -24,9 +24,10 @@ namespace HotelGarage.Dtos
         public int? PricePerNightBootbox { get; internal set; }
         public string LicensePlateBootbox { get; internal set; }
         public string IsEmployeeBootbox { get; internal set; }
+        public string IsRegisteredBootbox { get; internal set; }
         public string ParkPlaceShortLicensePlate { get; internal set; }
 
-        public ParkingPlaceDto(int parkingPlaceId, int? resId, string licensePlate,
+        public ParkingPlaceDto(int parkingPlaceId, int? resId, string licensePlate, bool isRegistered,
             string departure, string pPlaceName, string stateOfPlaceName, string arrival,
             string pPlaceGuestsName, int? pPRoom, string pPlaceCar, int? pPPrice, string isEmployee)
         {
@@ -38,6 +39,7 @@ namespace HotelGarage.Dtos
             StateOfPlace = stateOfPlaceName;
 
             DepartureBootbox = departure.Replace(" ", "_");
+            IsRegisteredBootbox = (isRegistered)?"Ano":"Ne!"; 
             ArrivalBootbox = arrival.Replace(" ", "_");
             GuestNameBootbox = pPlaceGuestsName.Replace(" ", "_");
             RoomNumberBootbox = pPRoom;
@@ -67,6 +69,7 @@ namespace HotelGarage.Dtos
             this.DepartureBootbox = parkingPlace.Reservation.Departure.ToShortDateString().Replace(" ", "_");
             this.ArrivalBootbox = parkingPlace.Reservation.Arrival.ToShortDateString().Replace(" ", "_"); ;
             this.ReservationId = parkingPlace.Reservation.Id;
+            this.IsRegisteredBootbox = (parkingPlace.Reservation.IsRegistered)?"Ano":"Ne!";
         }
     }
 }

@@ -30,8 +30,13 @@ namespace HotelGarage.Controllers
         // nova rezervace
         public ActionResult Create(int? pPlaceId)
         {
-            return View("Form", new Reservation() {ParkingPlaceId = (pPlaceId != null) ? 
-                (int)pPlaceId : 0, StateOfReservationId = StateOfReservation.Reserved});
+            return View("Form", new Reservation()
+            {
+                ParkingPlaceId = (pPlaceId != null) ? (int)pPlaceId : 0,
+                StateOfReservationId = StateOfReservation.Reserved,
+                Arrival = DateTime.Now,
+                Departure = DateTime.Now.AddDays(1)
+            });
         }
 
         // update rezervace

@@ -80,6 +80,29 @@
         $(this).children(".js-pPlacePrijezd:contains('Nepřiřazeno')").addClass("alert-link");
     });
 
+    // modal pro potvrzeni checkoutu rezervace
+    $(document).on("click", ".js-checkout", function (e) {
+        var id = $(this).parent().attr('Id');
+        var spz = $(this).parent().prev().prev().attr('data-bbox-spz'); 
+
+        var dialog = bootbox.dialog({
+            title: spz,
+            message:
+                "<div class=\"row alert alert-warning\"><div class=\"nav-link\">Chcete ukončit pobyt?</div>" +
+                "<a class=\"nav-link js-checkout\" href=\"/Parking/CheckOut?pPlaceId=" + id + "\">Check Out</a></div>" +
+            "<div class=\"row alert alert-warning\"><div class=\"nav-link\">Dočasný výjezd?</div>" +
+                "<a class=\"nav-link js-checkout\" href=\"/Parking/CheckOut?pPlaceId=" + id + "\">Výjezd</a></div>"
+            ,
+            buttons: {
+
+                ok: {
+                    label: "Zavřít",
+                    className: 'btn-info'
+                }
+            }
+        });
+    });
+
     // modal window pri kliknuti na stav parkovaciho mista
     $(document).on("click", ".js-sOPChange", function (e) {
 
@@ -94,7 +117,7 @@
         var typAuta = $(this).prev().attr("data-bbox-typAuta").replace(/_/g, " ");
 
         var dialog = bootbox.dialog({
-            title: "<div style=\"margin-left:15px\">SPZ: "  + spz + "</div>",
+            title: spz,
             message: 
                 "<div class= 'container'>" + "<div class=\"row\"><div class=\"col-sm-4\" style=\"text-align:right\">" +
                 "Příjezd: <br> Odjezd: <br>Pokoj: <br>" + zamestnanec +

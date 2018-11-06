@@ -31,6 +31,10 @@ span.field-validation-error {
 .alert-prijezd {
     width:205px;
 }
+
+.modal-title {
+    margin-left : 20px;
+}
 /* bootstrap overrides */
 .navbar-inverse {
     background-color: #0069d9;

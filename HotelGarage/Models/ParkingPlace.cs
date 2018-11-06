@@ -34,7 +34,7 @@ namespace HotelGarage.Models
                         parkingPlaceName = "Odjezd";
                     break;
                 case "Volno":
-                    if (parkingPlace.Id >= 19)
+                    if (parkingPlace.Id > 19)
                         parkingPlaceName = "Volno Staff";
                     break;
             }

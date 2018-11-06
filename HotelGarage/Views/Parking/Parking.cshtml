@@ -1,7 +1,7 @@
 ﻿@model HotelGarage.ViewModels.ParkingViewModel
 
 @{
-    ViewBag.Title = "Náhled garáže";
+    ViewBag.Title = "Náhled parkování";
 }
 
 <h2>Venkovní Parkoviště</h2>
@@ -157,6 +157,8 @@
             </div>
         </div>
         <div class="col-auto">
+            @if (Model.NoShowReservations.Count != 0)
+            {
             <h2>No Show rezervace</h2>
             <br />
             <div>
@@ -172,10 +174,14 @@
                         <div>
                             <div class="input-group justify-content-center">
                                     @Html.DropDownListFor(r => r.ParkingPlaceName,
-                                        new SelectList(Model.FreeParkingPlaces),
-                                        new {@class= "custom-select disabled", @id="inputGroupSelect04",
-                                            value = reservation.ParkingPlaceId, disabled = "disabled"
-                                        })
+                             new SelectList(Model.FreeParkingPlaces),
+                             new
+                             {
+                                 @class = "custom-select disabled",
+                                 @id = "inputGroupSelect04",
+                                 value = reservation.ParkingPlaceId,
+                                 disabled = "disabled"
+                             })
                                     <div class="input-group-append">
                                         <button id="select-link" data-id='@reservation.Id'
                                                 class="btn btn-warning select-link" type="submit" disabled="disabled">
@@ -186,25 +192,25 @@
                             <div class="row justify-content-center">
                                 <div>
                                     @Html.ActionLink("Upravit",
-                                    "Update",
-                                    "Reservations",
-                                    new { resId = reservation.Id},
-                                    new { @class = "nav-link odkaz-prijezd" })
+                         "Update",
+                         "Reservations",
+                         new { resId = reservation.Id },
+                         new { @class = "nav-link odkaz-prijezd" })
                                 </div>
                                 <div class="nav-link">|</div>
                                 <div style="text-align:center">
                                     @Html.ActionLink("Smazat",
-                                        "Delete",
-                                        "Reservations",
-                                        new { resId = reservation.Id},
-                                        new { @class = "nav-link odkaz-prijezd" })
+                             "Delete",
+                             "Reservations",
+                             new { resId = reservation.Id },
+                             new { @class = "nav-link odkaz-prijezd" })
                                 </div>
                             </div>
                         </div>
                     </div>
                 }
             </div>
-            <br />
+            <br />}
             <h2>Rezervace na dnešek</h2>
             <br />
             <div>

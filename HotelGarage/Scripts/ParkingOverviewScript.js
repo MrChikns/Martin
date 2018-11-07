@@ -11,7 +11,7 @@
         if ($(this).text() === 'Obsazeno')
         {
             $(this).addClass('btn btn-primary');
-            $(this).next().children(".js-checkin, .js-reserve, .js-checkout").hide();
+            $(this).next().children(".js-checkin, .js-reserve").hide();
         }
 
         if ($(this).text() === 'Rezervováno')
@@ -52,6 +52,7 @@
     // obarveni policka s registraci rezervace
     if ($('#IsRegistered').attr('checked') === "checked") { $('#isRegisteredDiv').addClass('alert alert-success'); }
     else { $('#isRegisteredDiv').addClass('alert alert-warning'); }
+
     // prepinani barvy pri kliknuti
     $('#IsRegistered').on("click", function () { $('#isRegisteredDiv').toggleClass('alert-warning alert-success'); });
 
@@ -85,20 +86,23 @@
         var id = $(this).parent().attr('Id');
         var spz = $(this).parent().prev().prev().attr('data-bbox-spz'); 
 
+        var msgCO = "<div class=\"row alert alert-warning\"><div class=\"nav-link\">Chcete ukončit pobyt?</div>" +
+            "<a class=\"nav-link js-checkout\" href=\"/Parking/CheckOut?pPlaceId=" + id + "\">Check Out</a></div>";
+        var msgVyjezd = "<div class=\"row alert alert-warning\"><div class=\"nav-link\">Dočasný výjezd?</div>" +
+            "<a class=\"nav-link js-checkout\" href=\"/Parking/CheckOut?pPlaceId=" + id + "\">Výjezd</a></div>";
+
+        var odjezd = $(this).parent().prev().prev().attr('data-bbox-odjezd'); 
+        var d = new Date();
+        var date = d.getDate();
+        var month = d.getMonth()+1;
+        var year = d.getFullYear();
+        date = date + "._" + month + "._" + year;
+
         var dialog = bootbox.dialog({
             title: spz,
-            message:
-                "<div class=\"row alert alert-warning\"><div class=\"nav-link\">Chcete ukončit pobyt?</div>" +
-                "<a class=\"nav-link js-checkout\" href=\"/Parking/CheckOut?pPlaceId=" + id + "\">Check Out</a></div>" +
-            "<div class=\"row alert alert-warning\"><div class=\"nav-link\">Dočasný výjezd?</div>" +
-                "<a class=\"nav-link js-checkout\" href=\"/Parking/CheckOut?pPlaceId=" + id + "\">Výjezd</a></div>"
-            ,
+            message: (date === odjezd) ? msgCO : msgCO + msgVyjezd,
             buttons: {
-
-                ok: {
-                    label: "Zavřít",
-                    className: 'btn-info'
-                }
+                ok: { label: "Zavřít", className: 'btn-info' }
             }
         });
     });

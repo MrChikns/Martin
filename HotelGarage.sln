@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelGarage", "HotelGarage\HotelGarage.csproj", "{D16B8E08-3A8D-41E3-9A28-297C33DA19FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelGarage.UnitTests", "HotelGarage.UnitTests\HotelGarage.UnitTests.csproj", "{AE26D8C5-9D30-4E06-8F3F-CC1EEDE43BFE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D16B8E08-3A8D-41E3-9A28-297C33DA19FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D16B8E08-3A8D-41E3-9A28-297C33DA19FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D16B8E08-3A8D-41E3-9A28-297C33DA19FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE26D8C5-9D30-4E06-8F3F-CC1EEDE43BFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE26D8C5-9D30-4E06-8F3F-CC1EEDE43BFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE26D8C5-9D30-4E06-8F3F-CC1EEDE43BFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE26D8C5-9D30-4E06-8F3F-CC1EEDE43BFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

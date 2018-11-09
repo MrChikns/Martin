@@ -22,6 +22,17 @@ namespace HotelGarage.Models
         {
             string parkingPlaceName = parkingPlace.StateOfPlace.Name;
 
+
+            switch (parkingPlace.StateOfPlace.Name){
+                case "Volno":
+                case "Obsazeno":
+                case "Rezervováno":
+                case "Zaměstnanec":
+                    break;
+                default:
+                    throw new ArgumentException("Jmeno parkovaciho mista musi byt jedno z prednastavenych jmen v databazi!");
+            }
+
             switch (parkingPlace.StateOfPlace.Name)
             {
                 case "Obsazeno":
@@ -41,7 +52,7 @@ namespace HotelGarage.Models
             return parkingPlaceName;
         }
 
-        internal void Release(StateOfPlace freePlace)
+        public void Release(StateOfPlace freePlace)
         {
             this.Reservation.ParkingPlaceId = 0;
             this.Reservation = null;

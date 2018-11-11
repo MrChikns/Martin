@@ -45,20 +45,20 @@ namespace HotelGarage.Models
             StateOfReservationId = StateOfReservation.Reserved;
         }
 
-        internal void CheckOut()
+        public void CheckOut()
         {
             this.Departure = DateTime.Now;
             this.ParkingPlaceId = 0;
             this.StateOfReservationId = StateOfReservation.Departed;
         }
 
-        internal void CheckIn()
+        public void CheckIn()
         {
             this.StateOfReservationId = StateOfReservation.Inhouse;
             this.Arrival = DateTime.Now;
         }
 
-        internal void Update(Reservation updated, Car car)
+        public void Update(Reservation updated, Car car)
         {
             this.Arrival = updated.Arrival;
             this.Departure = updated.Departure;
@@ -69,7 +69,7 @@ namespace HotelGarage.Models
             this.StateOfReservationId = updated.StateOfReservationId;
         }
 
-        internal void Cancel(ParkingPlace parkingPlace, StateOfPlace freePlace)
+        public void Cancel(ParkingPlace parkingPlace, StateOfPlace freePlace)
         {
             if(parkingPlace != null)
                 parkingPlace.Release(freePlace);

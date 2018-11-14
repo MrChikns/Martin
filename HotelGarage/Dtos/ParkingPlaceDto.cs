@@ -1,4 +1,5 @@
 ﻿using HotelGarage.Models;
+using HotelGarage.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,5 +72,48 @@ namespace HotelGarage.Dtos
             this.ReservationId = parkingPlace.Reservation.Id;
             this.IsRegisteredBootbox = (parkingPlace.Reservation.IsRegistered)?"Ano":"Ne!";
         }
+
+        public static List<ParkingPlaceDto> GetParkingPlaceDtos(ParkingPlaceRepository parkingPlaceRepository, 
+            StateOfPlaceRepository stateOfPlaceRepository, CarRepository carRepository,ApplicationDbContext context)
+        {
+            var dtoList = new List<ParkingPlaceDto>();
+            var parkingPlaces = parkingPlaceRepository.GetParkingPlacesStateOfPlaceReservationCar();
+            foreach (var parkingPlace in parkingPlaces)
+            {
+                //predvyplneni pro prázdné parkovací místo 
+                var ppDto = new ParkingPlaceDto(parkingPlace.Id, 0, " ", false, " ", parkingPlace.Name,
+                    ParkingPlace.AssignStateOfPlaceName(parkingPlace),
+                    " ", " ", 0, " ", 0, "Host");
+
+                // pokud je potreba vyplnit rezervaci do parkovaciho mista
+                if (parkingPlace.Reservation != null)
+                {
+                    if (parkingPlace.Reservation.Departure < DateTime.Today.Date)
+                    {
+                        parkingPlace.Reservation.UpdateCheckout();
+                        ppDto.StateOfPlace = ParkingPlace.AssignStateOfPlaceName(parkingPlace);
+                        context.SaveChanges();
+                    }
+
+                    //vyrazeni rezervaci z minuleho dne anebo prirazeni rezervace do parkovaciho mista
+                    if (parkingPlace.Reservation.Arrival.Date != DateTime.Today.Date
+                        && parkingPlace.Reservation.StateOfReservationId == StateOfReservation.Reserved)
+                    {
+                        var res = parkingPlace.Reservation;
+                        parkingPlace.Release(stateOfPlaceRepository.GetFreeStateOfPlace());
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        ppDto.AssignCar(carRepository.GetCar(parkingPlace));
+                        ppDto.AssignReservation(parkingPlace);
+                    }
+                }
+                dtoList.Add(ppDto);
+            }
+            return dtoList;
+        }
+
+
     }
 }

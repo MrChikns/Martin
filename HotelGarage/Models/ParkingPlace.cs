@@ -41,7 +41,7 @@ namespace HotelGarage.Models
                         parkingPlaceName = "Neregistrován!";
                         break;
                     }
-                    if (parkingPlace.Reservation.Departure.Date == DateTime.Today.Date)
+                    if (parkingPlace.Reservation.Departure.Date <= DateTime.Today.Date)
                         parkingPlaceName = "Odjezd";
                     break;
                 case "Volno":

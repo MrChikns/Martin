@@ -206,7 +206,7 @@
     <Compile Include="Controllers\ParkingController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ReservationsController.cs" />
-    <Compile Include="Dtos\ArrivingReservationDto.cs" />
+    <Compile Include="Dtos\ReservationDto.cs" />
     <Compile Include="Dtos\ParkingPlaceDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

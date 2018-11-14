@@ -76,6 +76,12 @@ namespace HotelGarage.Models
             
             this.StateOfReservationId = StateOfReservation.Cancelled;
         }
+
+        public void UpdateCheckout()
+        {
+            this.Departure = DateTime.Today.Date + new TimeSpan(12,0,0);
+            this.IsRegistered = false;
+        }
     }
 
     

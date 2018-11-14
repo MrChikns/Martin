@@ -27,15 +27,16 @@ namespace HotelGarage.Controllers
             _stateOfPlaceRepository = new StateOfPlaceRepository(_context);
             _parkingPlaceRepository = new ParkingPlaceRepository(_context);
             _reservationRepository = new ReservationRepository(_context);
-            _carRepository = new CarRepository(_context);
+            _carRepository = new CarRepository(_context);                              
         }
 
         public ActionResult Parking()
         {
             return View(new ParkingViewModel(
-                GetParkingPlaceDtos(), 
-                GetArrivingReservations(), 
-                GetNoShowReservations(), 
+                ParkingPlaceDto.GetParkingPlaceDtos(_parkingPlaceRepository,_stateOfPlaceRepository,
+                    _carRepository,_context), 
+                ReservationDto.GetArrivingReservations(_reservationRepository,_parkingPlaceRepository), 
+                ReservationDto.GetNoShowReservations(_reservationRepository, _parkingPlaceRepository), 
                 _parkingPlaceRepository.GetNamesOfFreeParkingPlaces()));
         }
 
@@ -88,82 +89,6 @@ namespace HotelGarage.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("Parking");
-        }
-
-        //method for Parking
-        private IList<ReservationDto> GetNoShowReservations()
-        {
-            var nSResDtos = new List<ReservationDto>();
-            foreach (var reservation in _reservationRepository.GetNoShowReservationsCar())
-            {
-                //asi smazat
-                string parkingPlaceName;
-
-                if (reservation.ParkingPlaceId != 0)
-                    parkingPlaceName = _parkingPlaceRepository.GetParkingPlace(reservation).Name;
-                else
-                    parkingPlaceName = "Nepřiřazeno";
-
-                nSResDtos.Add(new ReservationDto(reservation.Id, reservation.Car.LicensePlate,
-                    reservation.Car.GuestsName, reservation.ParkingPlaceId, parkingPlaceName,
-                    reservation.Arrival.ToShortDateString()));
-            }
-            return nSResDtos;
-        }
-
-        //method for Parking
-        private IList<ReservationDto> GetArrivingReservations()
-        {
-            var arrivingResDtos = new List<ReservationDto>();
-            foreach (var reservation in _reservationRepository.GetTodaysReservationsCar())
-            {
-                string parkingPlaceName;
-
-                if (reservation.ParkingPlaceId != 0)
-                    parkingPlaceName = _parkingPlaceRepository.GetParkingPlace(reservation).Name;
-                else
-                    parkingPlaceName = "Nepřiřazeno";
-
-                arrivingResDtos.Add(new ReservationDto(reservation.Id, reservation.Car.LicensePlate,
-                    reservation.Car.GuestsName, reservation.ParkingPlaceId, parkingPlaceName,
-                    reservation.Arrival.ToShortDateString()));
-            }
-            return arrivingResDtos;
-        }
-
-        //method for Parking
-        private List<ParkingPlaceDto> GetParkingPlaceDtos()
-        {
-            var dtoList = new List<ParkingPlaceDto>();
-            var parkingPlaces = _parkingPlaceRepository.GetParkingPlacesStateOfPlaceReservationCar();
-            foreach (var parkingPlace in parkingPlaces)
-            {
-                //predvyplneni pro prázdné parkovací místo 
-                var ppDto = new ParkingPlaceDto(parkingPlace.Id, 0, " ", false ," ", parkingPlace.Name,
-                    ParkingPlace.AssignStateOfPlaceName(parkingPlace),
-                    " ", " ", 0, " ", 0, "Host");
-
-                // pokud je potreba vyplnit rezervaci do parkovaciho mista
-                if (parkingPlace.Reservation != null)
-                {
-                    //vyrazeni rezervaci z minuleho dne anebo prirazeni rezervace do parkovaciho mista
-                    if (parkingPlace.Reservation.Arrival.Date != DateTime.Today.Date
-                        && parkingPlace.Reservation.StateOfReservationId == StateOfReservation.Reserved)
-                    {
-                        var res = parkingPlace.Reservation;
-                        parkingPlace.Release(_stateOfPlaceRepository.GetFreeStateOfPlace());
-                        _context.SaveChanges();
-
-                    }
-                    else
-                    {
-                        ppDto.AssignCar(_carRepository.GetCar(parkingPlace));
-                        ppDto.AssignReservation(parkingPlace);
-                    }
-                }
-                dtoList.Add(ppDto);
-            }
-            return dtoList;
         }
     }
 }

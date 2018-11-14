@@ -42,7 +42,7 @@ namespace HotelGarage.Models
             IsEmployee = isEmployee;
         }
 
-        internal void Update(Reservation reservation)
+        public void Update(Reservation reservation)
         {
             this.LicensePlate = reservation.Car.LicensePlate;
             this.CarModel = reservation.Car.CarModel;

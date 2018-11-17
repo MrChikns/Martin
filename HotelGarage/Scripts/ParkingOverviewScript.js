@@ -89,7 +89,7 @@
         var msgCO = "<div class=\"row alert alert-warning\"><div class=\"nav-link\">Chcete ukončit pobyt?</div>" +
             "<a class=\"nav-link js-checkout\" href=\"/Parking/CheckOut?pPlaceId=" + id + "\">Check Out</a></div>";
         var msgVyjezd = "<div class=\"row alert alert-warning\"><div class=\"nav-link\">Dočasný výjezd?</div>" +
-            "<a class=\"nav-link js-checkout\" href=\"/Parking/CheckOut?pPlaceId=" + id + "\">Výjezd</a></div>";
+            "<a class=\"nav-link js-checkout\" href=\"/Parking/TemporaryLeave?pPlaceId=" + id + "\">Výjezd</a></div>";
 
         var odjezd = $(this).parent().prev().prev().attr('data-bbox-odjezd'); 
         var d = new Date();

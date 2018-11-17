@@ -13,12 +13,13 @@ namespace HotelGarage.Dtos
         public string CarLicensePlate { get; set; }
         public string CarGuestsName { get; set; }
         public string Arrival { get; set; }
+        public byte StateOfReservationId { get; set; }
 
         public int ParkingPlaceId { get; set; }
         public string ParkingPlaceName { get; set; }
 
         public ReservationDto(int id, string carLicensePlate,
-           string carGuestsName, int parkingPlaceId, string parkingPlaceName, string arrival)
+           string carGuestsName, int parkingPlaceId, string parkingPlaceName, string arrival, byte stateOfRes)
         {
             Id = id;
             CarLicensePlate = carLicensePlate;
@@ -26,6 +27,7 @@ namespace HotelGarage.Dtos
             ParkingPlaceId = parkingPlaceId;
             ParkingPlaceName = parkingPlaceName;
             Arrival = arrival;
+            StateOfReservationId = stateOfRes;
         }
 
         public static IList<ReservationDto> GetArrivingReservations(ReservationRepository reservationRepository, 
@@ -43,7 +45,7 @@ namespace HotelGarage.Dtos
 
                 arrivingResDtos.Add(new ReservationDto(reservation.Id, reservation.Car.LicensePlate,
                     reservation.Car.GuestsName, reservation.ParkingPlaceId, parkingPlaceName,
-                    reservation.Arrival.ToShortDateString()));
+                    reservation.Arrival.ToShortDateString(),reservation.StateOfReservationId));
             }
             return arrivingResDtos;
         }
@@ -64,7 +66,7 @@ namespace HotelGarage.Dtos
 
                 nSResDtos.Add(new ReservationDto(reservation.Id, reservation.Car.LicensePlate,
                     reservation.Car.GuestsName, reservation.ParkingPlaceId, parkingPlaceName,
-                    reservation.Arrival.ToShortDateString()));
+                    reservation.Arrival.ToShortDateString(),reservation.StateOfReservationId));
             }
             return nSResDtos;
         }

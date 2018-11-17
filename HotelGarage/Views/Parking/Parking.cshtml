@@ -251,7 +251,10 @@
                                         "Delete",
                                         "Reservations",
                                         new { resId = reservation.Id},
-                                        new { @class = "nav-link odkaz-prijezd" })
+                                            // kontrola zda nejde o docasne vyjetou rezervaci
+                                            (reservation.StateOfReservationId == 5)?
+                                                new { @class = "nav-link odkaz-prijezd disabled", @onclick = "javascript:return false;" } :
+                                                (object)new { @class = "nav-link odkaz-prijezd" })
                                 </div>
                                 <div class="nav-link">|</div>
                                 <div style="text-align:center">
@@ -260,7 +263,8 @@
                                         "Parking",
                                         new { pPlaceId = reservation.ParkingPlaceId,
                                             reservationId = reservation.Id},(reservation.ParkingPlaceName == "Nepřiřazeno")?
-                                        new { @class = "nav-link odkaz-prijezd disabled",  @onclick = "javascript:return false;" } : (object)new { @class = "nav-link odkaz-prijezd" })
+                                                new { @class = "nav-link odkaz-prijezd disabled",  @onclick = "javascript:return false;" } 
+                                                : (object)new { @class = "nav-link odkaz-prijezd" })
                                 </div>
                             </div>
                         </div>

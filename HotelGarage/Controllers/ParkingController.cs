@@ -44,7 +44,8 @@ namespace HotelGarage.Controllers
         {
             var reservation = _reservationRepository.GetReservation(reservationId);
 
-            if (reservation.Arrival.Date != DateTime.Today.Date)
+            if (reservation.Arrival.Date != DateTime.Today.Date 
+                && reservation.StateOfReservationId != StateOfReservation.TemporaryLeave)
                 return RedirectToAction("Parking");
 
             if (_parkingPlaceRepository.GetParkingPlace(pPlaceId).StateOfPlaceId == StateOfPlace.Reserved)
@@ -66,6 +67,18 @@ namespace HotelGarage.Controllers
 
             pPlace.Reservation.CheckOut();
             pPlace.Release(_stateOfPlaceRepository.GetFreeStateOfPlace());
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Parking");
+        }
+
+        public ActionResult TemporaryLeave(int pPlaceId)
+        {
+            var pPlace = _parkingPlaceRepository.GetParkingPlaceReservation(pPlaceId);
+
+            pPlace.Reservation.TemporaryLeave();
+            pPlace.Reserve(_stateOfPlaceRepository.GetReservedStateOfPlace(), pPlace.Reservation);
 
             _context.SaveChanges();
 

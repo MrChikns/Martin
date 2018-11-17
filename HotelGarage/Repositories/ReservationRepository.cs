@@ -29,8 +29,9 @@ namespace HotelGarage.Repositories
         public List<Reservation> GetTodaysReservationsCar()
         {
             return _context.Reservations
-                .Where(a => DbFunctions.TruncateTime(a.Arrival) == DateTime.Today.Date
-                    && a.StateOfReservationId == StateOfReservation.Reserved)
+                .Where(a => (DbFunctions.TruncateTime(a.Arrival) == DateTime.Today.Date
+                         && a.StateOfReservationId == StateOfReservation.Reserved)
+                    ||(a.StateOfReservationId == StateOfReservation.TemporaryLeave))
                     .Include(c => c.Car)
                 .ToList();
         }

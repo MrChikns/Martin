@@ -9,5 +9,6 @@
         public static readonly byte Inhouse = 2;
         public static readonly byte Departed = 3;
         public static readonly byte Cancelled = 4;
+        public static readonly byte TemporaryLeave = 5;
     }
 }

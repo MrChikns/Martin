@@ -34,7 +34,8 @@ namespace HotelGarage.Models
 
         public Reservation() { }
 
-        public Reservation(string licensePlate ,DateTime arrival, DateTime departure, bool isRegistered, int parkingPlaceId, Car car)
+        public Reservation(string licensePlate ,DateTime arrival, DateTime departure, 
+            bool isRegistered, int parkingPlaceId, Car car)
         {
             LicensePlate = licensePlate;
             Arrival = arrival;
@@ -52,10 +53,18 @@ namespace HotelGarage.Models
             this.StateOfReservationId = StateOfReservation.Departed;
         }
 
+        public void TemporaryLeave()
+        {
+            this.StateOfReservationId = StateOfReservation.TemporaryLeave;
+        }
+
         public void CheckIn()
         {
+            if(this.StateOfReservationId != StateOfReservation.TemporaryLeave)
+                this.Arrival = DateTime.Now;
+
             this.StateOfReservationId = StateOfReservation.Inhouse;
-            this.Arrival = DateTime.Now;
+            
         }
 
         public void Update(Reservation updated, Car car)

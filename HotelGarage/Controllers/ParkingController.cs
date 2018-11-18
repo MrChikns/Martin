@@ -36,7 +36,8 @@ namespace HotelGarage.Controllers
                 ParkingPlaceDto.GetParkingPlaceDtos(_parkingPlaceRepository,_stateOfPlaceRepository,
                     _carRepository,_context), 
                 ReservationDto.GetArrivingReservations(_reservationRepository,_parkingPlaceRepository), 
-                ReservationDto.GetNoShowReservations(_reservationRepository, _parkingPlaceRepository), 
+                ReservationDto.GetNoShowReservations(_reservationRepository, _parkingPlaceRepository),
+                ReservationDto.GetInhouseReservations(_reservationRepository, _parkingPlaceRepository),
                 _parkingPlaceRepository.GetNamesOfFreeParkingPlaces()));
         }
 
@@ -96,8 +97,17 @@ namespace HotelGarage.Controllers
                 _parkingPlaceRepository.GetParkingPlace(reservation)
                     .Release(_stateOfPlaceRepository.GetFreeStateOfPlace());
             }
-            _parkingPlaceRepository.GetParkingPlace(ParkingPlaceName)
-                .Reserve(_stateOfPlaceRepository.GetReservedStateOfPlace(), reservation);
+
+            if (reservation.StateOfReservationId == StateOfReservation.Inhouse)
+            {
+                _parkingPlaceRepository.GetParkingPlace(ParkingPlaceName)
+                .MoveInhouseReservation(_stateOfPlaceRepository.GetOccupiedStateOfPlace(), reservation);
+            }
+            else
+            {
+                _parkingPlaceRepository.GetParkingPlace(ParkingPlaceName)
+                    .Reserve(_stateOfPlaceRepository.GetReservedStateOfPlace(), reservation);
+            }
 
             _context.SaveChanges();
 

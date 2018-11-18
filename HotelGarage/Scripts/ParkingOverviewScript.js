@@ -56,12 +56,14 @@
     // prepinani barvy pri kliknuti
     $('#IsRegistered').on("click", function () { $('#isRegisteredDiv').toggleClass('alert-warning alert-success'); });
 
-    // prirazeni najizdejici reservace na parkovaci misto
-    $('.select-link').on("click",function () {
+    // prirazeni rezervace na parkovaci misto
+    $('.select-link').on("click", function () {
         //reservation id
         var vId = $(this).attr('value-id');
-        var resId = $('button[value-id="' + vId + '"]').attr('data-id');
-        var pPName = $('select[value-id="' + vId + '"]').val();
+        var btnType = $(this).attr('buttonType');
+        var resId = $('button[value-id="' + vId + '"][buttonType="' + btnType + '"]').attr('data-id');
+        var pPName = $('select[value-id="' + vId + '"][buttonType="' + btnType + '"]').val();
+
         url = '@Url.Action("Reserve", "Parking")';
         var model = { ParkingPlaceName: pPName, ReservationId: resId };
         $.ajax({
@@ -80,31 +82,39 @@
     $('div.alert-prijezd').each(function () {
         $(this).children(".js-pPlacePrijezd:contains('Nepřiřazeno')").addClass("alert-link");
     });
+    
+    $('a.isregistered').each(function () {
+        if ($(this).attr('isregistered') === 'False') {
+            $(this).addClass("disabled");
+        }
+    });
 
     // modal pro potvrzeni checkoutu rezervace
     $(document).on("click", ".js-checkout", function (e) {
-        var id = $(this).parent().attr('Id');
-        var spz = $(this).parent().prev().prev().attr('data-bbox-spz'); 
+        if ($(this).attr('isregistered') === 'False') { return false; }
+        else {var id = $(this).parent().attr('Id');
+            var spz = $(this).parent().prev().prev().attr('data-bbox-spz');
 
-        var msgCO = "<div class=\"row alert alert-warning\"><div class=\"nav-link\">Chcete ukončit pobyt?</div>" +
-            "<a class=\"nav-link js-checkout\" href=\"/Parking/CheckOut?pPlaceId=" + id + "\">Check Out</a></div>";
-        var msgVyjezd = "<div class=\"row alert alert-warning\"><div class=\"nav-link\">Dočasný výjezd?</div>" +
-            "<a class=\"nav-link js-checkout\" href=\"/Parking/TemporaryLeave?pPlaceId=" + id + "\">Výjezd</a></div>";
+            var msgCO = "<div class=\"row alert alert-warning\"><div class=\"nav-link\">Chcete ukončit pobyt?</div>" +
+                "<a class=\"nav-link js-checkout\" href=\"/Parking/CheckOut?pPlaceId=" + id + "\">Check Out</a></div>";
+            var msgVyjezd = "<div class=\"row alert alert-warning\"><div class=\"nav-link\">Dočasný výjezd?</div>" +
+                "<a class=\"nav-link js-checkout\" href=\"/Parking/TemporaryLeave?pPlaceId=" + id + "\">Výjezd</a></div>";
 
-        var odjezd = $(this).parent().prev().prev().attr('data-bbox-odjezd'); 
-        var d = new Date();
-        var date = d.getDate();
-        var month = d.getMonth()+1;
-        var year = d.getFullYear();
-        date = date + "._" + month + "._" + year;
+            var odjezd = $(this).parent().prev().prev().attr('data-bbox-odjezd');
+            var d = new Date();
+            var date = d.getDate();
+            var month = d.getMonth() + 1;
+            var year = d.getFullYear();
+            date = date + "._" + month + "._" + year;
 
-        var dialog = bootbox.dialog({
-            title: spz,
-            message: (date === odjezd) ? msgCO : msgCO + msgVyjezd,
-            buttons: {
-                ok: { label: "Zavřít", className: 'btn-info' }
-            }
-        });
+            var dialog = bootbox.dialog({
+                title: spz,
+                message: date === odjezd ? msgCO : msgCO + msgVyjezd,
+                buttons: {
+                    ok: { label: "Zavřít", className: 'btn-info' }
+                }
+            });
+        }
     });
 
     // modal window pri kliknuti na stav parkovaciho mista

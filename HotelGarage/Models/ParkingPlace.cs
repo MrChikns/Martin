@@ -68,6 +68,14 @@ namespace HotelGarage.Models
             this.Reservation = reservation;
         }
 
+        public void MoveInhouseReservation(StateOfPlace inhousePlace, Reservation reservation)
+        {
+            reservation.ParkingPlaceId = this.Id;
+            this.StateOfPlaceId = StateOfPlace.Occupied;
+            this.StateOfPlace = inhousePlace;
+            this.Reservation = reservation;
+        }
+
         public void Occupy(StateOfPlace occupiedPlaceState, Reservation reservation)
         {
             reservation.ParkingPlaceId = this.Id;

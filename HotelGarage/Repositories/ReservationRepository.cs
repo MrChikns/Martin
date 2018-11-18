@@ -44,5 +44,13 @@ namespace HotelGarage.Repositories
                     .Include(c => c.Car)
                 .ToList();
         }
+        
+        public List<Reservation> GetInhouseReservationsCar()
+        {
+            return _context.Reservations
+                .Where(a => a.StateOfReservationId == StateOfReservation.Inhouse)
+                .Include(c => c.Car)
+                .ToList();
+        }
     }
 }

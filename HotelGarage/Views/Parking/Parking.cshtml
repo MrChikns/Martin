@@ -12,7 +12,7 @@
 
     <div class="row">
         <div class="card">
-            @Html.Partial("_ParkingPlace",Model.ParkingPlaceDtos[12])
+            @Html.Partial("_ParkingPlace", Model.ParkingPlaceDtos[12])
         </div>
         <div class="card">
             @Html.Partial("_ParkingPlace", Model.ParkingPlaceDtos[13])
@@ -159,29 +159,29 @@
         <div class="col-auto">
             @if (Model.NoShowReservations.Count != 0)
             {
-            <h2>No Show rezervace</h2>
-            <br />
-            <div>
-                @foreach (var reservation in Model.NoShowReservations)
-                {
-                    <div class="row alert alert-danger">
-                        <div class="alert-prijezd">
-                            SPZ: @reservation.CarLicensePlate<br />
-                            <div class="js-pPlacePrijezd">Místo: @reservation.ParkingPlaceName<br /></div>
-                            Host: @reservation.CarGuestsName<br />
-                            Příjezd: @reservation.Arrival
-                        </div>
-                        <div>
-                            <div class="input-group justify-content-center">
+                <h2>No Show rezervace</h2>
+                <br />
+                <div>
+                    @foreach (var reservation in Model.NoShowReservations)
+                    {
+                        <div class="row alert alert-danger">
+                            <div class="alert-prijezd">
+                                SPZ: @reservation.CarLicensePlate<br />
+                                <div class="js-pPlacePrijezd">Místo: @reservation.ParkingPlaceName<br /></div>
+                                Host: @reservation.CarGuestsName<br />
+                                Příjezd: @reservation.Arrival
+                            </div>
+                            <div>
+                                <div class="input-group justify-content-center">
                                     @Html.DropDownListFor(r => r.ParkingPlaceName,
-                             new SelectList(Model.FreeParkingPlaces),
-                             new
-                             {
-                                 @class = "custom-select disabled",
-                                 @id = "inputGroupSelect04",
-                                 value = reservation.ParkingPlaceId,
-                                 disabled = "disabled"
-                             })
+new SelectList(Model.FreeParkingPlaces),
+new
+{
+    @class = "custom-select disabled",
+    @id = "inputGroupSelect04",
+    value = reservation.ParkingPlaceId,
+    disabled = "disabled"
+})
                                     <div class="input-group-append">
                                         <button id="select-link" data-id='@reservation.Id'
                                                 class="btn btn-warning select-link" type="submit" disabled="disabled">
@@ -189,89 +189,148 @@
                                         </button>
                                     </div>
                                 </div>
-                            <div class="row justify-content-center">
-                                <div>
-                                    @Html.ActionLink("Upravit",
-                         "Update",
-                         "Reservations",
-                         new { resId = reservation.Id },
-                         new { @class = "nav-link odkaz-prijezd" })
-                                </div>
-                                <div class="nav-link">|</div>
-                                <div style="text-align:center">
-                                    @Html.ActionLink("Smazat",
-                             "Delete",
-                             "Reservations",
-                             new { resId = reservation.Id },
-                             new { @class = "nav-link odkaz-prijezd" })
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
-            <br />}
-            <h2>Rezervace na dnešek</h2>
-            <br />
-            <div>
-                @{int i = 0;}
-                @foreach (var reservation in Model.TodaysReservations)
-                {
-                    <div class="row alert alert-warning">
-                        <div class="alert-prijezd">
-                            SPZ: @reservation.CarLicensePlate<br />
-                            <div class="js-pPlacePrijezd">Místo: @reservation.ParkingPlaceName<br /></div>
-                            Host: @reservation.CarGuestsName<br />
-                            Příjezd: @reservation.Arrival
-                        </div>
-                        <div>
-                            <div class="input-group justify-content-center">
-                                @Html.DropDownListFor(r => r.ParkingPlaceName,
-                                    new SelectList(Model.FreeParkingPlaces),
-                                    new {@class= "custom-select", @id="inputGroupSelect04",
-                                        value = reservation.ParkingPlaceId, value_id=i })
-                                <div class="input-group-append">
-                                    <button id="select-link" data-id='@reservation.Id'
-                                            class="btn btn-warning select-link" type="submit" value-id='@i'>
-                                        Přiřadit Místo
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="row justify-content-center">
-                                <div>
-                                    @Html.ActionLink("Upravit",
-                                    "Update",
-                                    "Reservations",
-                                    new { resId = reservation.Id},
-                                    new { @class = "nav-link odkaz-prijezd" })
-                                </div>
-                                <div class="nav-link">|</div>
-                                <div style="text-align:center">
-                                    @Html.ActionLink("Smazat",
-                                        "Delete",
-                                        "Reservations",
-                                        new { resId = reservation.Id},
-                                            // kontrola zda nejde o docasne vyjetou rezervaci
-                                            (reservation.StateOfReservationId == 5)?
-                                                new { @class = "nav-link odkaz-prijezd disabled", @onclick = "javascript:return false;" } :
-                                                (object)new { @class = "nav-link odkaz-prijezd" })
-                                </div>
-                                <div class="nav-link">|</div>
-                                <div style="text-align:center">
-                                    @Html.ActionLink("Check In",
-                                        "CheckIn",
-                                        "Parking",
-                                        new { pPlaceId = reservation.ParkingPlaceId,
-                                            reservationId = reservation.Id},(reservation.ParkingPlaceName == "Nepřiřazeno")?
-                                                new { @class = "nav-link odkaz-prijezd disabled",  @onclick = "javascript:return false;" } 
-                                                : (object)new { @class = "nav-link odkaz-prijezd" })
+                                <div class="row justify-content-center">
+                                    <div>
+                                        @Html.ActionLink("Upravit",
+"Update",
+"Reservations",
+new { resId = reservation.Id },
+new { @class = "nav-link odkaz-prijezd" })
+                                    </div>
+                                    <div class="nav-link">|</div>
+                                    <div style="text-align:center">
+                                        @Html.ActionLink("Smazat",
+"Delete",
+"Reservations",
+new { resId = reservation.Id },
+new { @class = "nav-link odkaz-prijezd" })
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    i++;
-                }
-            </div>
+                    }
+                </div>
+                <br />}
+            @if (Model.TodaysReservations.Count != 0)
+            {
+                <h2>Rezervace na dnešek</h2>
+                <br />
+                <div>
+                    @{int i = 0;}
+                    @foreach (var reservation in Model.TodaysReservations)
+                    {
+                        <div class="row alert alert-warning">
+                            <div class="alert-prijezd">
+                                SPZ: @reservation.CarLicensePlate<br />
+                                <div class="js-pPlacePrijezd">Místo: @reservation.ParkingPlaceName<br /></div>
+                                Host: @reservation.CarGuestsName<br />
+                                Příjezd: @reservation.Arrival
+                            </div>
+                            <div>
+                                <div class="input-group justify-content-center">
+                                    @Html.DropDownListFor(r => r.ParkingPlaceName,
+         new SelectList(Model.FreeParkingPlaces),
+         new { @class = "custom-select", @id = "inputGroupSelect04",
+             value = reservation.ParkingPlaceId, value_id = i,
+             buttonType = "arriving" })
+                                    <div class="input-group-append">
+                                        <button id="select-link" data-id='@reservation.Id'
+                                                class="btn btn-warning select-link" type="submit" value-id='@i'
+                                                buttonType="arriving">
+                                            Přiřadit Místo
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div>
+                                        @Html.ActionLink("Upravit",
+                                             "Update",
+                                             "Reservations",
+                                             new { resId = reservation.Id },
+                                             new { @class = "nav-link odkaz-prijezd" })
+                                    </div>
+                                    <div class="nav-link">|</div>
+                                    <div style="text-align:center">
+                                        @Html.ActionLink("Smazat",
+                                             "Delete",
+                                             "Reservations",
+                                             new { resId = reservation.Id },
+                                                 // kontrola zda nejde o docasne vyjetou rezervaci
+                                                 (reservation.StateOfReservationId == 5) ?
+                                                     new { @class = "nav-link odkaz-prijezd disabled", @onclick = "javascript:return false;" } :
+                                                     (object)new { @class = "nav-link odkaz-prijezd" })
+                                    </div>
+                                    <div class="nav-link">|</div>
+                                    <div style="text-align:center">
+                                        @Html.ActionLink("Check In",
+                                             "CheckIn",
+                                             "Parking",
+                                             new { pPlaceId = reservation.ParkingPlaceId,
+                                                 reservationId = reservation.Id }, (reservation.ParkingPlaceName == "Nepřiřazeno") ?
+                                                     new { @class = "nav-link odkaz-prijezd disabled", @onclick = "javascript:return false;" }
+                                                     : (object)new { @class = "nav-link odkaz-prijezd" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        i++;
+                    }
+                </div>
+                <br />}
+            @if (Model.InHouseReservations.Count != 0)
+            {
+                <h2>Zaparkovaná auta</h2>
+                <br />
+                <div>
+                    @{int i = 0;}
+                    @foreach (var reservation in Model.InHouseReservations)
+                    {
+                        <div class="row alert alert-primary">
+                            <div class="alert-prijezd">
+                                SPZ: @reservation.CarLicensePlate<br />
+                                <div class="js-pPlacePrijezd">Místo: @reservation.ParkingPlaceName<br /></div>
+                                Host: @reservation.CarGuestsName<br />
+                                Příjezd: @reservation.Arrival
+                            </div>
+                            <div>
+                                <div class="input-group justify-content-center">
+                                    @Html.DropDownListFor(r => r.ParkingPlaceName,
+                                       new SelectList(Model.FreeParkingPlaces),
+                                       new
+                                       {
+                                           @class = "custom-select",
+                                           @id = "inputGroupSelect04",
+                                           value = reservation.ParkingPlaceId,
+                                           value_id = i,
+                                           buttonType = "inhouse"
+                                       })
+                                    <div class="input-group-append">
+                                        <button id="select-link" data-id='@reservation.Id'
+                                                class="btn btn-warning select-link" type="submit" value-id='@i'
+                                                buttonType="inhouse">
+                                            Přiřadit Místo
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div>
+                                        @Html.ActionLink("Upravit",
+                                           "Update",
+                                           "Reservations",
+                                           new { resId = reservation.Id },
+                                           new { @class = "nav-link odkaz-prijezd" })
+                                    </div>
+                                    <div class="nav-link">|</div>
+                                    <div style="text-align:center" id=@reservation.ParkingPlaceId>
+                                        <a href="javascript:void()" class="nav-link odkaz-prijezd js-checkout isregistered" isregistered=@reservation.IsRegistered.ToString()>Check Out</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        i++;
+                    }
+                </div>
+                <br />}
         </div>
     </div>
 </div>

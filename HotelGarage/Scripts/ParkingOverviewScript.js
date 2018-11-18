@@ -1,5 +1,7 @@
 ﻿$(document).ready(function () {
-      
+    // datatable rezervaci
+    $('#example').DataTable();
+
     // prepsani stavu parkovaciho mista a skryti nepotrebnych akci pro stav parkovaciho mista
     $('div.card-body>a').each(function () {
         if ($(this).text() === 'Volno')

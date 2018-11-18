@@ -52,5 +52,17 @@ namespace HotelGarage.Repositories
                 .Include(c => c.Car)
                 .ToList();
         }
+
+        public List<Reservation> GetAllReservationsCar()
+        {
+            return _context.Reservations
+                .Include(c => c.Car)
+                .ToList();
+        }
+
+        public string GetStateOfReservationName(int id)
+        {
+            return _context.StateOfReservations.First(s => s.Id == id).State;
+        }
     }
 }

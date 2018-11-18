@@ -57,5 +57,10 @@ namespace HotelGarage.Repositories
                 .Select(n => n.Name)
                 .ToList();
         }
+
+        public string GetParkingPlaceName(int id)
+        {
+            return _context.ParkingPlaces.First(p => p.Id == id).Name;
+        }
     }
 }

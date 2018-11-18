@@ -7,13 +7,13 @@ namespace HotelGarage.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class addNewStateOfReservationIntoDb : IMigrationMetadata
+    public sealed partial class renameStateOfReservationStates : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addNewStateOfReservationIntoDb));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(renameStateOfReservationStates));
         
         string IMigrationMetadata.Id
         {
-            get { return "201811171848238_addNewStateOfPlaceIntoDb"; }
+            get { return "201811182142080_renameStateOfReservationStates"; }
         }
         
         string IMigrationMetadata.Source

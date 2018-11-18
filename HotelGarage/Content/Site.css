@@ -59,6 +59,10 @@ span.field-validation-error {
     padding: 0.5rem 0.3rem;
 }
 
+.nav-item {
+    margin-left: 10px;
+}
+
 .nav > li > a:hover, .navbar-brand:hover, #logoutForm > ul > li > a:hover {
     color: #f8f9fa;
 }

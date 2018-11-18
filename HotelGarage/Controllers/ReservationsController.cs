@@ -7,6 +7,7 @@ using System.Data.Entity;
 using System.Web;
 using System.Web.Mvc;
 using HotelGarage.Repositories;
+using HotelGarage.Dtos;
 
 namespace HotelGarage.Controllers
 {
@@ -25,6 +26,13 @@ namespace HotelGarage.Controllers
             _reservationRepository = new ReservationRepository(_context);
             _parkingPlaceRepository = new ParkingPlaceRepository(_context);
             _stateOfPlaceRepository = new StateOfPlaceRepository(_context);
+        }
+
+        // prehled rezervaci
+        public ActionResult List()
+        {
+            return View("List", ReservationListDto.GetAllReservationDtos(_reservationRepository,
+                _parkingPlaceRepository));
         }
 
         // nova rezervace

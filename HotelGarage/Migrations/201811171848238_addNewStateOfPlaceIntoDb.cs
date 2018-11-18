@@ -3,7 +3,7 @@ namespace HotelGarage.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class addNewStateOfPlaceIntoDb : DbMigration
+    public partial class addNewStateOfReservationIntoDb : DbMigration
     {
         public override void Up()
         {

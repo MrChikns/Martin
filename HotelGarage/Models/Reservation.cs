@@ -84,6 +84,7 @@ namespace HotelGarage.Models
                 parkingPlace.Release(freePlace);
             
             this.StateOfReservationId = StateOfReservation.Cancelled;
+            this.Car.PricePerNight = null;
         }
 
         public void UpdateCheckout()

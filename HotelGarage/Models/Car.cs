@@ -51,5 +51,29 @@ namespace HotelGarage.Models
             this.PricePerNight = reservation.Car.PricePerNight;
             this.IsEmployee = reservation.Car.IsEmployee;
         }
+
+        public string CalculateTotalPrice(DateTime arrivalDate, DateTime departureDate, int? pricePerNight)
+        {
+            if (pricePerNight == null)
+            {
+                return "Nevyplněno";
+            }
+
+            if (departureDate.Year > arrivalDate.Year)
+            {
+                var daysToEndOfYear = (DateTime.IsLeapYear(arrivalDate.Year) ? 366 : 365)-arrivalDate.DayOfYear;
+
+                return ((daysToEndOfYear + departureDate.DayOfYear) * pricePerNight).ToString();
+            }
+
+            var numberOfDays = departureDate.DayOfYear - arrivalDate.DayOfYear;
+
+            if (numberOfDays == 0)
+            {
+                return pricePerNight.ToString();
+            }
+
+            return (numberOfDays * pricePerNight).ToString();
+        }
     }
 }

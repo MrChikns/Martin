@@ -18,12 +18,11 @@ namespace HotelGarage.Models
 
         public StateOfPlace StateOfPlace { get; set; }
 
-        public static string AssignStateOfPlaceName(ParkingPlace parkingPlace)
+        public string AssignStateOfPlaceName()
         {
-            string parkingPlaceName = parkingPlace.StateOfPlace.Name;
+            string parkingPlaceName = this.StateOfPlace.Name;
 
-
-            switch (parkingPlace.StateOfPlace.Name){
+            switch (this.StateOfPlace.Name){
                 case "Volno":
                 case "Obsazeno":
                 case "Rezervováno":
@@ -33,19 +32,19 @@ namespace HotelGarage.Models
                     throw new ArgumentException("Jmeno parkovaciho mista musi byt jedno z prednastavenych jmen v databazi!");
             }
 
-            switch (parkingPlace.StateOfPlace.Name)
+            switch (this.StateOfPlace.Name)
             {
                 case "Obsazeno":
-                    if (!parkingPlace.Reservation.IsRegistered)
+                    if (!this.Reservation.IsRegistered)
                     {
                         parkingPlaceName = "Neregistrován!";
                         break;
                     }
-                    if (parkingPlace.Reservation.Departure.Date <= DateTime.Today.Date)
+                    if (this.Reservation.Departure.Date <= DateTime.Today.Date)
                         parkingPlaceName = "Odjezd";
                     break;
                 case "Volno":
-                    if (parkingPlace.Id > 19)
+                    if (this.Id > 19)
                         parkingPlaceName = "Volno Staff";
                     break;
             }

@@ -148,3 +148,7 @@ div.col-auto > div > div.alert {
     padding-right: 10px;
 }
 
+.bootbox .modal-header {
+    display: block;
+}
+

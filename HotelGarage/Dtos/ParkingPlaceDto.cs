@@ -28,35 +28,34 @@ namespace HotelGarage.Dtos
         public string IsRegisteredBootbox { get; internal set; }
         public string ParkPlaceShortLicensePlate { get; internal set; }
 
-        public ParkingPlaceDto(int parkingPlaceId, int? resId, string licensePlate, bool isRegistered,
-            string departure, string pPlaceName, string stateOfPlaceName, string arrival,
-            string pPlaceGuestsName, int? pPRoom, string pPlaceCar, int? pPPrice, string isEmployee)
+        //constructor for initial empty parkingplace
+        public ParkingPlaceDto(ParkingPlace parkingPlace)
         {
-            Id = parkingPlaceId;
-            ReservationId = resId;
-            LicensePlate = licensePlate;
-            Departure = departure;
-            PPlaceName = pPlaceName;
-            StateOfPlace = stateOfPlaceName;
+            Id = parkingPlace.Id;
+            ReservationId = 0;
+            LicensePlate = " ";
+            Departure = " ";
+            PPlaceName = parkingPlace.Name;
+            StateOfPlace = parkingPlace.AssignStateOfPlaceName();
 
-            DepartureBootbox = departure.Replace(" ", "_");
-            IsRegisteredBootbox = (isRegistered)?"Ano":"Ne!"; 
-            ArrivalBootbox = arrival.Replace(" ", "_");
-            GuestNameBootbox = pPlaceGuestsName.Replace(" ", "_");
-            RoomNumberBootbox = pPRoom;
-            CarModelBootbox = pPlaceCar.Replace(" ", "_");
-            PricePerNightBootbox = pPPrice;
-            LicensePlateBootbox = licensePlate.Replace(" ", "_");
-            IsEmployeeBootbox = isEmployee;
+            DepartureBootbox = " ";
+            IsRegisteredBootbox = "Ne!";
+            ArrivalBootbox = " ";
+            GuestNameBootbox = " ";
+            RoomNumberBootbox = 0;
+            CarModelBootbox = " ";
+            PricePerNightBootbox = 0;
+            LicensePlateBootbox = " ";
+            IsEmployeeBootbox = "Host";
         }
 
         internal void AssignCar(Car car)
         {
             if (car != null)
             {
-                this.GuestNameBootbox = (car.GuestsName == null) ? "Nevyplněno" : car.GuestsName.Replace(" ", "_");
+                this.GuestNameBootbox = (car.GuestsName == null) ? "Nevyplněno" : car.GuestsName;
                 this.RoomNumberBootbox = (car.GuestRoomNumber == null) ? 0 : car.GuestRoomNumber;
-                this.CarModelBootbox = (car.CarModel == null) ? "Nevyplněno" : car.CarModel.Replace(" ", "_");
+                this.CarModelBootbox = (car.CarModel == null) ? "Nevyplněno" : car.CarModel;
                 this.PricePerNightBootbox = (car.PricePerNight == null) ? 0 : car.PricePerNight;
                 this.IsEmployeeBootbox = (car.IsEmployee == true) ? "Zaměstnanec" : "Host";
             }
@@ -65,10 +64,10 @@ namespace HotelGarage.Dtos
         internal void AssignReservation(ParkingPlace parkingPlace)
         {
             this.LicensePlate = parkingPlace.Reservation.LicensePlate;
-            this.LicensePlateBootbox = parkingPlace.Reservation.LicensePlate.Replace(" ", "_");
+            this.LicensePlateBootbox = parkingPlace.Reservation.LicensePlate;
             this.Departure = parkingPlace.Reservation.Departure.ToShortDateString();
-            this.DepartureBootbox = parkingPlace.Reservation.Departure.ToShortDateString().Replace(" ", "_");
-            this.ArrivalBootbox = parkingPlace.Reservation.Arrival.ToShortDateString().Replace(" ", "_"); ;
+            this.DepartureBootbox = parkingPlace.Reservation.Departure.ToShortDateString();
+            this.ArrivalBootbox = parkingPlace.Reservation.Arrival.ToShortDateString();
             this.ReservationId = parkingPlace.Reservation.Id;
             this.IsRegisteredBootbox = (parkingPlace.Reservation.IsRegistered)?"Ano":"Ne!";
         }
@@ -81,9 +80,7 @@ namespace HotelGarage.Dtos
             foreach (var parkingPlace in parkingPlaces)
             {
                 //predvyplneni pro prázdné parkovací místo 
-                var ppDto = new ParkingPlaceDto(parkingPlace.Id, 0, " ", false, " ", parkingPlace.Name,
-                    ParkingPlace.AssignStateOfPlaceName(parkingPlace),
-                    " ", " ", 0, " ", 0, "Host");
+                var ppDto = new ParkingPlaceDto(parkingPlace);
 
                 // pokud je potreba vyplnit rezervaci do parkovaciho mista
                 if (parkingPlace.Reservation != null)
@@ -91,7 +88,7 @@ namespace HotelGarage.Dtos
                     if (parkingPlace.Reservation.Departure < DateTime.Today.Date)
                     {
                         parkingPlace.Reservation.UpdateCheckout();
-                        ppDto.StateOfPlace = ParkingPlace.AssignStateOfPlaceName(parkingPlace);
+                        ppDto.StateOfPlace = parkingPlace.AssignStateOfPlaceName();
                         context.SaveChanges();
                     }
 

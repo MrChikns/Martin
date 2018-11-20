@@ -1,4 +1,5 @@
-﻿using HotelGarage.Repositories;
+﻿using HotelGarage.Models;
+using HotelGarage.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,23 +14,24 @@ namespace HotelGarage.Dtos
         public string CarLicensePlate { get; set; }
         public string CarGuestsName { get; set; }
         public string Arrival { get; set; }
+        public string Departure { get; set; }
         public byte StateOfReservationId { get; set; }
         public bool IsRegistered { get; set; }
 
         public int ParkingPlaceId { get; set; }
         public string ParkingPlaceName { get; set; }
 
-        public ReservationDto(int id, string carLicensePlate, string carGuestsName, int parkingPlaceId, 
-            string parkingPlaceName, string arrival, byte stateOfRes, bool isRegistered)
+        public ReservationDto(Reservation reservation, string parkingPlaceName)
         {
-            Id = id;
-            CarLicensePlate = carLicensePlate;
-            CarGuestsName = carGuestsName;
-            ParkingPlaceId = parkingPlaceId;
+            Id = reservation.Id;
+            CarLicensePlate = reservation.LicensePlate;
+            CarGuestsName = reservation.Car.GuestsName;
+            ParkingPlaceId = reservation.ParkingPlaceId;
             ParkingPlaceName = parkingPlaceName;
-            Arrival = arrival;
-            StateOfReservationId = stateOfRes;
-            IsRegistered = isRegistered;
+            Arrival = reservation.Arrival.ToShortDateString();
+            Departure = reservation.Departure.ToShortDateString();
+            StateOfReservationId = reservation.StateOfReservationId;
+            IsRegistered = reservation.IsRegistered;
         }
 
         public static IList<ReservationDto> GetArrivingReservations(ReservationRepository reservationRepository, 
@@ -45,9 +47,7 @@ namespace HotelGarage.Dtos
                 else
                     parkingPlaceName = "Nepřiřazeno";
 
-                arrivingResDtos.Add(new ReservationDto(reservation.Id, reservation.Car.LicensePlate,
-                    reservation.Car.GuestsName, reservation.ParkingPlaceId, parkingPlaceName,
-                    reservation.Arrival.ToShortDateString(),reservation.StateOfReservationId,reservation.IsRegistered));
+                arrivingResDtos.Add(new ReservationDto(reservation, parkingPlaceName));
             }
             return arrivingResDtos;
         }
@@ -66,9 +66,7 @@ namespace HotelGarage.Dtos
                 else
                     parkingPlaceName = "Nepřiřazeno";
 
-                nSResDtos.Add(new ReservationDto(reservation.Id, reservation.Car.LicensePlate,
-                    reservation.Car.GuestsName, reservation.ParkingPlaceId, parkingPlaceName,
-                    reservation.Arrival.ToShortDateString(),reservation.StateOfReservationId,reservation.IsRegistered));
+                nSResDtos.Add(new ReservationDto(reservation, parkingPlaceName));
             }
             return nSResDtos;
         }
@@ -79,10 +77,8 @@ namespace HotelGarage.Dtos
             var inhouseResDtos = new List<ReservationDto>();
             foreach (var reservation in reservationRepository.GetInhouseReservationsCar())
             {
-                inhouseResDtos.Add(new ReservationDto(reservation.Id, reservation.Car.LicensePlate,
-                    reservation.Car.GuestsName, reservation.ParkingPlaceId, 
-                    parkingPlaceRepository.GetParkingPlace(reservation).Name,
-                    reservation.Arrival.ToShortDateString(), reservation.StateOfReservationId,reservation.IsRegistered));
+                inhouseResDtos.Add(new ReservationDto(reservation, 
+                    parkingPlaceRepository.GetParkingPlace(reservation).Name));
             }
             return inhouseResDtos;
         }

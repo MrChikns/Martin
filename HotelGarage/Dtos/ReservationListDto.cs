@@ -1,4 +1,5 @@
-﻿using HotelGarage.Repositories;
+﻿using HotelGarage.Models;
+using HotelGarage.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,20 +21,23 @@ namespace HotelGarage.Dtos
         public string ParkingPlaceName { get; set; }
         public string IsEmployee { get; set; }
 
-        public ReservationListDto(string guestsName, string arrival, string departure, string guestRoomNumber,
-            string totalPrice, string reservationState, string licensePlate, string carModel,
-            string parkingPlaceName, string isEmployee)
+        public ReservationListDto(Reservation reservation, ReservationRepository reservationRepository,
+            ParkingPlaceRepository parkingPlaceRepository)
         {
-            GuestsName = guestsName;
-            Arrival = arrival;
-            Departure = departure;
-            GuestRoomNumber = guestRoomNumber;
-            TotalPrice = totalPrice;
-            ReservationState = reservationState;
-            LicensePlate = licensePlate;
-            CarModel = carModel;
-            ParkingPlaceName = parkingPlaceName;
-            IsEmployee = isEmployee;
+            var nevyplneno = "Nevyplněno";
+
+            GuestsName = (reservation.Car.GuestsName == null) ? nevyplneno : reservation.Car.GuestsName;
+            Arrival = reservation.Arrival.ToString("yyyy.MM.dd hh:mm");
+            Departure = reservation.Departure.ToString("yyyy.MM.dd hh:mm");
+            GuestRoomNumber = (reservation.Car.GuestRoomNumber == null) ? 
+                nevyplneno : reservation.Car.GuestRoomNumber.ToString();
+            TotalPrice = reservation.Car.CalculateTotalPrice(reservation.Arrival, 
+                reservation.Departure, reservation.Car.PricePerNight);
+            ReservationState = reservationRepository.GetStateOfReservationName(reservation.StateOfReservationId);
+            LicensePlate = reservation.LicensePlate;
+            CarModel = (reservation.Car.CarModel == null) ? nevyplneno : reservation.Car.CarModel;
+            ParkingPlaceName = (reservation.ParkingPlaceId == 0) ? nevyplneno : parkingPlaceRepository.GetParkingPlaceName(reservation.ParkingPlaceId);
+            IsEmployee = (reservation.Car.IsEmployee) ? "Zaměstnanec" : "Host";
         }
 
         public static IList<ReservationListDto> GetAllReservationDtos(ReservationRepository reservationRepository,
@@ -43,17 +47,7 @@ namespace HotelGarage.Dtos
 
             foreach (var res in reservationRepository.GetAllReservationsCar())
             {
-                var nevyplneno = "Nevyplněno";
-                var name = (res.Car.GuestsName == null) ? nevyplneno : res.Car.GuestsName;
-                string totalPrice = res.Car.CalculateTotalPrice(res.Arrival, res.Departure, res.Car.PricePerNight);
-                var guestRoomNumber = (res.Car.GuestRoomNumber == null) ? nevyplneno : res.Car.GuestRoomNumber.ToString();
-                var carModel = (res.Car.CarModel == null) ? nevyplneno : res.Car.CarModel;
-                var reservationState = reservationRepository.GetStateOfReservationName(res.StateOfReservationId);
-                var parkingPlaceName = (res.ParkingPlaceId == 0) ? nevyplneno : parkingPlaceRepository.GetParkingPlaceName(res.ParkingPlaceId);
-
-                allResListDto.Add(new ReservationListDto(name, res.Arrival.ToString("yyyy.MM.dd hh:mm"),
-                    res.Departure.ToString("yyyy.MM.dd hh:mm"), guestRoomNumber, totalPrice, reservationState,
-                    res.LicensePlate, carModel, parkingPlaceName, (res.Car.IsEmployee) ? "Zaměstnanec" : "Host"));
+                allResListDto.Add(new ReservationListDto(res,reservationRepository,parkingPlaceRepository));
             }
             return allResListDto;
         }

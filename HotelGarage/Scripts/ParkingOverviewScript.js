@@ -85,35 +85,48 @@
         $(this).children(".js-pPlacePrijezd:contains('Nepřiřazeno')").addClass("alert-link");
     });
     
-    $('a.isregistered').each(function () {
+    $('a.odkaz-prijezd').each(function () {
         if ($(this).attr('isregistered') === 'False') {
             $(this).addClass("disabled");
         }
     });
 
     // modal pro potvrzeni checkoutu rezervace
-    $(document).on("click", ".js-checkout", function (e) {
-        if ($(this).attr('isregistered') === 'False') { return false; }
-        else {var id = $(this).parent().attr('Id');
-            var spz = $(this).parent().prev().prev().attr('data-bbox-spz');
+    $(document).on("click", "a.js-checkout", function (e) {
+        if ($(this).attr('isregistered') === 'False') {
+            return false;
+        }
+        else {
+            var id = $(this).parent().attr('Id');
+            var spz;
 
-            var msgCO = "<div class=\"row alert alert-warning\"><div class=\"nav-link\">Chcete ukončit pobyt?</div>" +
+            if ($(this).hasClass("odkaz-prijezd")) {
+                spz = "SPZ:  " + $(this).attr('data-bbox-spz');
+                var odjezd = $(this).parent().prev().prev().attr('data-bbox-odjezd');
+            }
+            else {
+                spz = "SPZ:  " + $(this).parent().prev().prev().attr('data-bbox-spz');
+                var odjezd = $(this).parent().prev().prev().attr('data-bbox-odjezd');
+            }
+
+            var msgCheckOut = "<div class=\"row alert alert-primary\"><div class=\"nav-link\">Chcete ukončit pobyt?</div>" +
                 "<a class=\"nav-link js-checkout\" href=\"/Parking/CheckOut?pPlaceId=" + id + "\">Check Out</a></div>";
-            var msgVyjezd = "<div class=\"row alert alert-warning\"><div class=\"nav-link\">Dočasný výjezd?</div>" +
+
+            var msgVyjezd = "<div class=\"row alert alert-primary\"><div class=\"nav-link\">Dočasný výjezd?</div>" +
                 "<a class=\"nav-link js-checkout\" href=\"/Parking/TemporaryLeave?pPlaceId=" + id + "\">Výjezd</a></div>";
 
-            var odjezd = $(this).parent().prev().prev().attr('data-bbox-odjezd');
+            
             var d = new Date();
             var date = d.getDate();
             var month = d.getMonth() + 1;
             var year = d.getFullYear();
-            date = date + "._" + month + "._" + year;
+            date = date + ". " + month + ". " + year;
 
             var dialog = bootbox.dialog({
                 title: spz,
-                message: date === odjezd ? msgCO : msgCO + msgVyjezd,
+                message: date === odjezd ? msgCheckOut : msgCheckOut + msgVyjezd,
                 buttons: {
-                    ok: { label: "Zavřít", className: 'btn-info' }
+                    ok: { label: "Zavřít", className: 'btn-primary' }
                 }
             });
         }

@@ -2,11 +2,11 @@
 
 <div class="card-body">
     <p class="card-title" >@Model.LicensePlate</p>
-    <p class="card-text" data-bbox-prijezd=@Model.ArrivalBootbox data-bbox-odjezd=@Model.DepartureBootbox 
-       data-bbox-pokoj=@Model.RoomNumberBootbox data-bbox-jmeno=@Model.GuestNameBootbox
-       data-bbox-cena=@Model.PricePerNightBootbox data-bbox-spz=@Model.LicensePlateBootbox 
-       data-bbox-typAuta=@Model.CarModelBootbox data-bbox-zamestnanec=@Model.IsEmployeeBootbox
-       data-bbox-jeRegistrovan=@Model.IsRegisteredBootbox>
+    <p class="card-text" data-bbox-prijezd="@Model.ArrivalBootbox" data-bbox-odjezd="@Model.DepartureBootbox" 
+       data-bbox-pokoj="@Model.RoomNumberBootbox" data-bbox-jmeno="@Model.GuestNameBootbox"
+       data-bbox-cena="@Model.PricePerNightBootbox" data-bbox-spz="@Model.LicensePlateBootbox" 
+       data-bbox-typAuta="@Model.CarModelBootbox" data-bbox-zamestnanec="@Model.IsEmployeeBootbox"
+       data-bbox-jeRegistrovan="@Model.IsRegisteredBootbox">
         @Model.PPlaceName<br>
         odj: @Model.Departure
     </p>
@@ -18,7 +18,7 @@
 
         @Html.ActionLink("Check In", "CheckIn", "Parking",
             new {  pPlaceId = Model.Id, reservationId = Model.ReservationId },
-            new { @class = "nav-link js-checkin" })
+            new { @class = "nav-link js-checkin", @onclick = "return confirm('Opravdu chcete rezervaci ubytovat?')" })
 
         @Html.ActionLink("Upravit", "Update", "Reservations",
             new { resId = Model.ReservationId},

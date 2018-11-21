@@ -2,6 +2,18 @@
     // datatable rezervaci
     $('#example').DataTable();
 
+    // kontrola prijezdu pri vytvareni rezervace - zda je odjezd az po prijezdu
+    $('.js-res-save-btn').on("click", function (event) {
+        var arrival = $('#Arrival').val();
+        var departure = $('#Departure').val();
+
+        if (arrival > departure) {
+            alert("Datum odjezdu musí být po datu příjezdu!");
+            event.preventDefault();
+        }
+    });
+
+
     // prepsani stavu parkovaciho mista a skryti nepotrebnych akci pro stav parkovaciho mista
     $('div.card-body>a').each(function () {
         if ($(this).text() === 'Volno')
@@ -46,7 +58,7 @@
         $(this).children(".js-pPlacePrijezd:contains('Nepřiřazeno')").addClass("alert-link");
     });
 
-    // vyplneni SPZ z jineho okna aby byl vracen kompletni viewModel
+    // vyplneni SPZ z jineho textboxu aby byl vracen kompletni viewModel
     $('input[data-id="spz-visible"]').on('keyup', function () {
         $('input[data-id="spz-hidden"]').val($(this).val());
     });
@@ -99,14 +111,15 @@
         else {
             var id = $(this).parent().attr('Id');
             var spz;
+            var odjezd;
 
             if ($(this).hasClass("odkaz-prijezd")) {
                 spz = "SPZ:  " + $(this).attr('data-bbox-spz');
-                var odjezd = $(this).parent().prev().prev().attr('data-bbox-odjezd');
+                odjezd = $(this).parent().prev().prev().attr('data-bbox-odjezd');
             }
             else {
                 spz = "SPZ:  " + $(this).parent().prev().prev().attr('data-bbox-spz');
-                var odjezd = $(this).parent().prev().prev().attr('data-bbox-odjezd');
+                odjezd = $(this).parent().prev().prev().attr('data-bbox-odjezd');
             }
 
             var msgCheckOut = "<div class=\"row alert alert-primary\"><div class=\"nav-link\">Chcete ukončit pobyt?</div>" +
@@ -150,7 +163,7 @@
             message: 
                 "<div class= 'container'>" + "<div class=\"row\"><div class=\"col-sm-4\" style=\"text-align:right\">" +
                 "Příjezd: <br> Odjezd: <br>Pokoj: <br>" + zamestnanec +
-                ": <br>Registrován?: <br>Cena: <br>Typ Auta: " +
+                ": <br>Registrován: <br>Cena: <br>Typ Auta: " +
                 "</div ><div class=\"col-sm\">" + prijezd + "<br>" + odjezd + "<br>" + pokoj +
                 "<br>" + jmeno + "<br>" + jeRegistrovan + "<br>" + cena + "<br>" + typAuta + "</div ></div ></div > "
                 ,

@@ -22,7 +22,7 @@
     <div class="form-group">
         @Html.LabelFor(r => r.Arrival, "Příjezd")
         @Html.TextBoxFor(r => r.Arrival, (Model.StateOfReservationId == 2 ||
-            Model.StateOfReservationId == 5) ? // kontrola na rezervace ubytovane anebo vyjete pobytove
+            Model.StateOfReservationId == 5) ? // kontrola zda je rezervace najezdova anebo vyjeta pobytova
             (object)new { @class = "form-control", type = "datetime-local",
                 @Value = Model.Arrival.ToString("yyyy-MM-ddTHH:mm"),
                 @readonly = "readonly"
@@ -70,7 +70,7 @@
     </div>
     <div class="row">
         <input type="button" value="Zrušit" class="btn btn-outline-primary mx-3" onclick='location.href="@Url.Action("Parking", "Parking")"'>
-        <button type="submit" class="btn btn-primary">Uložit</button>
+        <button type="submit" class="btn btn-primary js-res-save-btn">Uložit</button>
     </div>
 }
 

@@ -20,9 +20,9 @@ namespace HotelGarage.Dtos
         public string DepartureBootbox { get; set; }
         public string ArrivalBootbox { get; internal set; }
         public string GuestNameBootbox { get; internal set; }
-        public int? RoomNumberBootbox { get; internal set; }
+        public string RoomNumberBootbox { get; internal set; }
         public string CarModelBootbox { get; internal set; }
-        public int? PricePerNightBootbox { get; internal set; }
+        public string PricePerNightBootbox { get; internal set; }
         public string LicensePlateBootbox { get; internal set; }
         public string IsEmployeeBootbox { get; internal set; }
         public string IsRegisteredBootbox { get; internal set; }
@@ -39,12 +39,12 @@ namespace HotelGarage.Dtos
             StateOfPlace = parkingPlace.AssignStateOfPlaceName();
 
             DepartureBootbox = " ";
-            IsRegisteredBootbox = "Ne!";
+            IsRegisteredBootbox = " ";
             ArrivalBootbox = " ";
             GuestNameBootbox = " ";
-            RoomNumberBootbox = 0;
+            RoomNumberBootbox = " ";
             CarModelBootbox = " ";
-            PricePerNightBootbox = 0;
+            PricePerNightBootbox = " ";
             LicensePlateBootbox = " ";
             IsEmployeeBootbox = "Host";
         }
@@ -54,9 +54,9 @@ namespace HotelGarage.Dtos
             if (car != null)
             {
                 this.GuestNameBootbox = (car.GuestsName == null) ? "Nevyplněno" : car.GuestsName;
-                this.RoomNumberBootbox = (car.GuestRoomNumber == null) ? 0 : car.GuestRoomNumber;
+                this.RoomNumberBootbox = (car.GuestRoomNumber == null) ? "Nevyplněno" : car.GuestRoomNumber.ToString();
                 this.CarModelBootbox = (car.CarModel == null) ? "Nevyplněno" : car.CarModel;
-                this.PricePerNightBootbox = (car.PricePerNight == null) ? 0 : car.PricePerNight;
+                this.PricePerNightBootbox = (car.PricePerNight == null) ? "Nevyplněno" : car.PricePerNight.ToString();
                 this.IsEmployeeBootbox = (car.IsEmployee == true) ? "Zaměstnanec" : "Host";
             }
         }
@@ -85,6 +85,7 @@ namespace HotelGarage.Dtos
                 // pokud je potreba vyplnit rezervaci do parkovaciho mista
                 if (parkingPlace.Reservation != null)
                 {
+                    // pokud auto prebydli noc, prestoze melo odjet, posune se jeho datum odjezdu
                     if (parkingPlace.Reservation.Departure < DateTime.Today.Date)
                     {
                         parkingPlace.Reservation.UpdateCheckout();

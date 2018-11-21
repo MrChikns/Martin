@@ -1,6 +1,13 @@
 ﻿$(document).ready(function () {
     // datatable rezervaci
-    $('#example').DataTable();
+    $('#example').DataTable({
+        columnDefs: [
+            {
+                targets: [0, 1, 2],
+                className: 'mdl-data-table__cell--non-numeric'
+            }
+        ]
+    });
 
     // kontrola prijezdu pri vytvareni rezervace - zda je odjezd az po prijezdu
     $('.js-res-save-btn').on("click", function (event) {

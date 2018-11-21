@@ -10,7 +10,8 @@ namespace HotelGarage
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/jquery.dataTables.min.js"));
+                        "~/Scripts/jquery.dataTables.min.js",
+                        "~/Scripts/dataTables.material.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -28,7 +29,9 @@ namespace HotelGarage
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/dataTables.bootstrap4.min.css",
+                      //"~/Content/dataTables.bootstrap4.min.css",
+                      "~/Content/material.min.css",
+                      "~/Content/dataTables.material.min.css",
                       "~/Content/site.css"));
         }
     }

@@ -4,9 +4,7 @@
     ViewBag.Title = "Náhled parkování";
 }
 
-<h2>Venkovní Parkoviště</h2>
-<br />
-
+<h4>Venkovní Parkoviště</h4>
 
 <div class="container">
 
@@ -84,13 +82,12 @@
     </div>
 
 </div>
-<br /><br /><br />
+<br />
 
 <div class="container">
     <div class="row">
         <div class="col-auto">
-            <h2>Garáž</h2>
-            <br />
+            <h4>Garáž</h4>
             <div class="row">
                 <div class="card">
                     @Html.Partial("_ParkingPlace", Model.ParkingPlaceDtos[11])
@@ -159,8 +156,7 @@
         <div class="col-auto">
             @if (Model.NoShowReservations.Count != 0)
             {
-                <h2>No Show rezervace</h2>
-                <br />
+                <h4>No Show rezervace</h4>
                 <div>
                     @foreach (var reservation in Model.NoShowReservations)
                     {
@@ -215,8 +211,7 @@
                 <br />}
             @if (Model.TodaysReservations.Count != 0)
             {
-                <h2>Rezervace na dnešek</h2>
-                <br />
+                <h4>Rezervace na dnešek</h4>
                 <div>
                     @{int i = 0;}
                     @foreach (var reservation in Model.TodaysReservations)
@@ -283,8 +278,7 @@
                 <br />}
             @if (Model.InHouseReservations.Count != 0)
             {
-                <h2>Zaparkovaná auta</h2>
-                <br />
+                <h4>Zaparkovaná auta</h4>
                 <div>
                     @{int i = 0;}
                     @foreach (var reservation in Model.InHouseReservations)

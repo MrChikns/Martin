@@ -3,8 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@((Model.Id == 0) ? "Nová Rezervace" : "Upravit Rezervaci")</h2>
-<br />
+<h4>@((Model.Id == 0) ? "Nová Rezervace" : "Upravit Rezervaci")</h4>
 @using (Html.BeginForm("Save", "Reservations"))
 {
     @Html.AntiForgeryToken();

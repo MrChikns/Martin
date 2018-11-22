@@ -25,6 +25,7 @@ namespace HotelGarage.Dtos
         public string PricePerNightBootbox { get; internal set; }
         public string LicensePlateBootbox { get; internal set; }
         public string IsEmployeeBootbox { get; internal set; }
+        public string NoteBootBox { get; private set; }
         public string IsRegisteredBootbox { get; internal set; }
         public string ParkPlaceShortLicensePlate { get; internal set; }
 
@@ -47,6 +48,7 @@ namespace HotelGarage.Dtos
             PricePerNightBootbox = " ";
             LicensePlateBootbox = " ";
             IsEmployeeBootbox = "Host";
+            NoteBootBox = " ";
         }
 
         internal void AssignCar(Car car)
@@ -58,6 +60,7 @@ namespace HotelGarage.Dtos
                 this.CarModelBootbox = (car.CarModel == null) ? "Nevyplněno" : car.CarModel;
                 this.PricePerNightBootbox = (car.PricePerNight == null) ? "Nevyplněno" : car.PricePerNight.ToString();
                 this.IsEmployeeBootbox = (car.IsEmployee == true) ? "Zaměstnanec" : "Host";
+                this.NoteBootBox = (car.Note == null) ? "Nevyplněno" : car.Note;
             }
         }
 

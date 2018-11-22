@@ -29,10 +29,14 @@ namespace HotelGarage.Models
         
         public bool IsEmployee { get; set; }
 
+        [StringLength(100)]
+        [Display(Name = "Poznámka")]
+        public string Note { get; set; }
+
         public Car() { }
 
         public Car(string licensePlate, string carModel, string guestsName, 
-            int? guestRoomNumber, int? pricePerNight, bool isEmployee)
+            int? guestRoomNumber, int? pricePerNight, bool isEmployee, string note)
         {
             LicensePlate = licensePlate;
             CarModel = carModel;
@@ -40,6 +44,7 @@ namespace HotelGarage.Models
             GuestRoomNumber = guestRoomNumber;
             PricePerNight = pricePerNight;
             IsEmployee = isEmployee;
+            Note = note;
         }
 
         public void Update(Reservation reservation)
@@ -50,6 +55,7 @@ namespace HotelGarage.Models
             this.GuestRoomNumber = reservation.Car.GuestRoomNumber;
             this.PricePerNight = reservation.Car.PricePerNight;
             this.IsEmployee = reservation.Car.IsEmployee;
+            this.Note = reservation.Car.Note;
         }
 
         public string CalculateTotalPrice(DateTime arrivalDate, DateTime departureDate, int? pricePerNight)

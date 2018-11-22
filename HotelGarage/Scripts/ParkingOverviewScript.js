@@ -164,15 +164,17 @@
         var zamestnanec = $(this).prev().attr("data-bbox-zamestnanec").replace(/_/g, " ");
         var jeRegistrovan = $(this).prev().attr("data-bbox-jeRegistrovan").replace(/_/g, " ");
         var typAuta = $(this).prev().attr("data-bbox-typAuta").replace(/_/g, " ");
+        var poznamka = $(this).prev().attr("data-bbox-poznamka").replace(/_/g, " ");
 
         var dialog = bootbox.dialog({
             title: spz,
             message: 
                 "<div class= 'container'>" + "<div class=\"row\"><div class=\"col-sm-4\" style=\"text-align:right\">" +
                 "Příjezd: <br> Odjezd: <br>Pokoj: <br>" + zamestnanec +
-                ": <br>Registrován: <br>Cena: <br>Typ Auta: " +
+                ": <br>Registrován: <br>Cena: <br>Typ Auta: <br>Poznámka: " +
                 "</div ><div class=\"col-sm\">" + prijezd + "<br>" + odjezd + "<br>" + pokoj +
-                "<br>" + jmeno + "<br>" + jeRegistrovan + "<br>" + cena + "<br>" + typAuta + "</div ></div ></div > "
+                "<br>" + jmeno + "<br>" + jeRegistrovan + "<br>" + cena + "<br>" + typAuta + "<br>" +
+                poznamka + "</div ></div ></div > "
                 ,
             buttons: {
                 

@@ -167,7 +167,7 @@
                                 Host: @reservation.CarGuestsName<br />
                                 Příjezd: @reservation.Arrival
                             </div>
-                            <div>
+                            <div class="ml-auto">
                                 <div class="input-group justify-content-center">
                                     @Html.DropDownListFor(r => r.ParkingPlaceName,
                                         new SelectList(Model.FreeParkingPlaces),
@@ -223,7 +223,7 @@
                                 Host: @reservation.CarGuestsName<br />
                                 Příjezd: @reservation.Arrival
                             </div>
-                            <div>
+                            <div class="ml-auto">
                                 <div class="input-group justify-content-center">
                                     @Html.DropDownListFor(r => r.ParkingPlaceName,
                                          new SelectList(Model.FreeParkingPlaces),
@@ -290,7 +290,7 @@
                                 Host: @reservation.CarGuestsName<br />
                                 Příjezd: @reservation.Arrival
                             </div>
-                            <div>
+                            <div class="ml-auto">
                                 <div class="input-group justify-content-center">
                                     @Html.DropDownListFor(r => r.ParkingPlaceName,
                                        new SelectList(Model.FreeParkingPlaces),
@@ -320,7 +320,7 @@
                                     </div>
                                     <div class="nav-link">|</div>
                                     <div style="text-align:center" id=@reservation.ParkingPlaceId>
-                                        <a href="javascript:void()" class="nav-link js-checkout odkaz-prijezd" 
+                                        <a href="javascript:void()" class="nav-link js-checkout odkaz-prijezd"
                                            isregistered="@reservation.IsRegistered.ToString()"
                                            data-bbox-spz="@reservation.CarLicensePlate"
                                            data-bbox-odjezd="@reservation.Departure">Check Out</a>

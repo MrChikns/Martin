@@ -82,7 +82,8 @@ namespace HotelGarage.Controllers
             if (car == null)
             {
                 car = new Car(viewModel.Car.LicensePlate, viewModel.Car.CarModel, viewModel.Car.GuestsName,
-                      viewModel.Car.GuestRoomNumber, viewModel.Car.PricePerNight, viewModel.Car.IsEmployee);
+                      viewModel.Car.GuestRoomNumber, viewModel.Car.PricePerNight, viewModel.Car.IsEmployee, 
+                      viewModel.Car.Note);
 
                 _context.Cars.Add(car);
             }

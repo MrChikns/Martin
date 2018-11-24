@@ -62,6 +62,8 @@ namespace HotelGarage.Models
         {
             if(this.StateOfReservationId != StateOfReservation.TemporaryLeave)
                 this.Arrival = DateTime.Now;
+            if (this.Car.IsEmployee)
+                this.IsRegistered = true;
 
             this.StateOfReservationId = StateOfReservation.Inhouse;
             

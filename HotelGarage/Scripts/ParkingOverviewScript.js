@@ -64,6 +64,14 @@ $(document).ready(function () {
         }
     });
 
+    $(".card-title").each(function () {
+        if ($(this).next().attr("data-bbox-zamestnanec") === 'Zaměstnanec'
+            && $(this).next().next().hasClass("btn-primary") === true)
+        {
+            $(this).next().next().toggleClass('btn-primary btn-outline-success');
+        }
+    });
+
     // zvyrazneni neprirazeneho mista u najizdejici rezervace
     $('div.alert-prijezd').each(function () {
         $(this).children(".js-pPlacePrijezd:contains('Nepřiřazeno')").addClass("alert-link");

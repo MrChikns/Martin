@@ -49,7 +49,7 @@ namespace HotelGarage.Dtos
 
                 arrivingResDtos.Add(new ReservationDto(reservation, parkingPlaceName));
             }
-            return arrivingResDtos;
+            return arrivingResDtos.OrderBy(o => o.ParkingPlaceId).ToList();
         }
 
         public static IList<ReservationDto> GetNoShowReservations(ReservationRepository reservationRepository,
@@ -68,7 +68,7 @@ namespace HotelGarage.Dtos
 
                 nSResDtos.Add(new ReservationDto(reservation, parkingPlaceName));
             }
-            return nSResDtos;
+            return nSResDtos.OrderBy(o => o.Arrival).ToList();
         }
         
         public static IList<ReservationDto> GetInhouseReservations(ReservationRepository reservationRepository,
@@ -80,7 +80,8 @@ namespace HotelGarage.Dtos
                 inhouseResDtos.Add(new ReservationDto(reservation, 
                     parkingPlaceRepository.GetParkingPlace(reservation).Name));
             }
-            return inhouseResDtos;
+
+            return inhouseResDtos.OrderBy(o => o.ParkingPlaceId).ToList();
         }
     }
 }

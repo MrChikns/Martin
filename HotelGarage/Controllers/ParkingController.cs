@@ -43,7 +43,7 @@ namespace HotelGarage.Controllers
 
         public ActionResult CheckIn(int pPlaceId, int reservationId)
         {
-            var reservation = _reservationRepository.GetReservation(reservationId);
+            var reservation = _reservationRepository.GetReservationCar(reservationId);
 
             if (reservation.Arrival.Date != DateTime.Today.Date 
                 && reservation.StateOfReservationId != StateOfReservation.TemporaryLeave)

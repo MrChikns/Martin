@@ -2,13 +2,14 @@
 
 <div class="card-body">
     <p class="card-title">@Model.LicensePlate</p>
-    <p class="card-text" data-bbox-prijezd="@Model.ArrivalBootbox" data-bbox-odjezd="@Model.DepartureBootbox" 
+    <p class="card-text" data-bbox-prijezd="@Model.ArrivalBootbox" data-bbox-odjezd="@Model.DepartureBootbox"
        data-bbox-pokoj="@Model.RoomNumberBootbox" data-bbox-jmeno="@Model.GuestNameBootbox"
-       data-bbox-cena="@Model.PricePerNightBootbox" data-bbox-spz="@Model.LicensePlateBootbox" 
+       data-bbox-cena="@Model.PricePerNightBootbox" data-bbox-spz="@Model.LicensePlateBootbox"
        data-bbox-typAuta="@Model.CarModelBootbox" data-bbox-zamestnanec="@Model.IsEmployeeBootbox"
        data-bbox-jeRegistrovan="@Model.IsRegisteredBootbox" data-bbox-poznamka="@Model.NoteBootBox">
         @Model.PPlaceName<br>
-        odj: @Model.Departure
+        @((Model.GuestNameBootbox.Length > 15)?Model.GuestNameBootbox.Substring(0, 15):"")<br>
+        Odj: @Model.Departure
     </p>
     <a href="javascript:void()" class="js-sOPChange">@Model.StateOfPlace</a>
     <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.Id>

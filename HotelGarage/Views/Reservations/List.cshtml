@@ -6,7 +6,43 @@
 }
 
 <h4>Přehled Rezervací</h4>
-
+<p>
+    Filtrovat můžete tlačítkem níže podle data příjezdu, odjezdu nebo data pobytu podle zadaných hodnot. 
+    Vyhledávat dále můžete v políčku search ze všech zobrazených záznamů z jakéhokoliv sloupce. 
+    Můžete vyplnit i více slov z různých sloupců a tím více upřesníte výběr.
+</p>
+<div class="row ml-auto">
+    <p>
+        Filtrovat podle:&nbsp;
+    </p>
+    <div class="btn-group-sm btn-group-toggle" data-toggle="buttons" id="optionRange">
+        <label class="btn btn-outline-secondary active" id="optionArrival">
+            <input type="radio" name="optionArrival" autocomplete="off"> Příjezdu
+        </label>
+        <label class="btn btn-outline-secondary" id="optionDeparture">
+            <input type="radio" name="optionDeparture" autocomplete="off"> Odjezdu
+        </label>
+        <label class="btn btn-outline-secondary" id="optionStay">
+            <input type="radio" name="optionStay" autocomplete="off"> Pobytu
+        </label>
+    </div>
+    <p>
+        &nbsp; Od
+    </p>
+    <label>
+        @Html.TextBox("min", DateTime.Now.ToString("yyyy-MM-dd"), new { @class = "form-control form-control-sm", type = "date", id = "min" })
+    </label>
+    <p>
+        &nbsp; Do
+    </p>
+    <label>
+        @Html.TextBox("max", DateTime.Now.ToString("yyyy-MM-dd"), new { @class = "form-control form-control-sm", type = "date", id = "max" })
+    </label>
+    <div class="btn-group-sm">
+        &nbsp;
+        <button class="btn btn-secondary" id="filterBtn">Filtruj</button>
+    </div>
+</div>
 <table id="example" class="mdl-data-table" style="width:100%">
     <thead>
         <tr>
@@ -25,18 +61,18 @@
     <tbody>
         @foreach (var res in Model)
         {
-        <tr>
-            <td>@res.GuestsName</td>
-            <td>@res.Arrival</td>
-            <td>@res.Departure</td>
-            <td>@res.GuestRoomNumber</td>
-            <td>@res.TotalPrice</td>
-            <td>@res.ReservationState</td>
-            <td>@res.LicensePlate</td>
-            <td>@res.CarModel</td>
-            <td>@res.ParkingPlaceName</td>
-            <td>@res.IsEmployee</td>
-        </tr>
+            <tr>
+                <td>@res.GuestsName</td>
+                <td>@res.Arrival</td>
+                <td>@res.Departure</td>
+                <td>@res.GuestRoomNumber</td>
+                <td>@res.TotalPrice</td>
+                <td>@res.ReservationState</td>
+                <td>@res.LicensePlate</td>
+                <td>@res.CarModel</td>
+                <td>@res.ParkingPlaceName</td>
+                <td>@res.IsEmployee</td>
+            </tr>
         }
     </tbody>
     <tfoot>

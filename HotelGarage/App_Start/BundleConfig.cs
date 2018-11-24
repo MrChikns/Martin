@@ -11,6 +11,7 @@ namespace HotelGarage
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/jquery.dataTables.min.js",
+                        "~/Scripts/range_dates.js",                        
                         "~/Scripts/dataTables.material.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -22,7 +23,6 @@ namespace HotelGarage
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                        "~/Scripts/popper.js",
                         "~/Scripts/bootbox.min.js",
                         "~/Scripts/dataTables.bootstrap4.min.js",
                         "~/Scripts/bootstrap.js"));

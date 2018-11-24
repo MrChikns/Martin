@@ -1,6 +1,7 @@
-﻿$(document).ready(function () {
+﻿
+$(document).ready(function () {
     // datatable rezervaci
-    $('#example').DataTable({
+    var table = $('#example').DataTable({
         columnDefs: [
             {
                 targets: [0, 1, 2],
@@ -8,6 +9,9 @@
             }
         ]
     });
+
+    // Add event listeners to range filtering inputs
+    $("#filterBtn").on("click", function () { table.draw(); });
 
     // kontrola prijezdu pri vytvareni rezervace - zda je odjezd az po prijezdu
     $('.js-res-save-btn').on("click", function (event) {

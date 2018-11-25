@@ -8,11 +8,14 @@ namespace HotelGarage
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+            bundles.Add(new ScriptBundle("~/bundles/lib").Include(
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/jquery.dataTables.min.js",
                         "~/Scripts/range_dates.js",                        
-                        "~/Scripts/dataTables.material.min.js"));
+                        "~/Scripts/dataTables.material.min.js",
+                        "~/Scripts/dataTables.bootstrap4.min.js",
+                        "~/Scripts/bootbox.min.js",
+                        "~/Scripts/bootstrap.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -22,17 +25,12 @@ namespace HotelGarage
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                        "~/Scripts/bootbox.min.js",
-                        "~/Scripts/dataTables.bootstrap4.min.js",
-                        "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      //"~/Content/dataTables.bootstrap4.min.css",
                       "~/Content/material.min.css",
                       "~/Content/dataTables.material.min.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.less"));
         }
     }
 }

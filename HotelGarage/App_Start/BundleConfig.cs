@@ -8,10 +8,14 @@ namespace HotelGarage
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            bundles.Add(new ScriptBundle("~/bundles/app").Include(
+                        "~/Scripts/app/app.js",
+                        "~/Scripts/app/range_dates.js"
+                ));
+
             bundles.Add(new ScriptBundle("~/bundles/lib").Include(
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/jquery.dataTables.min.js",
-                        "~/Scripts/range_dates.js",                        
                         "~/Scripts/dataTables.material.min.js",
                         "~/Scripts/dataTables.bootstrap4.min.js",
                         "~/Scripts/bootbox.min.js",

@@ -18,7 +18,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="nav navbar-nav"> 
+            <ul class="nav navbar-nav">
                 <li class="nav-item">
                     @Html.ActionLink("Nová rezervace", "Create", "Reservations", null, new { @class = "nav-link " })
                 </li>
@@ -42,7 +42,7 @@
     </div>
 
     @Scripts.Render("~/bundles/lib")
+    @Scripts.Render("~/bundles/app")
     @RenderSection("scripts", required: false)
-    @Scripts.Render("~/Scripts/ParkingOverviewScript.js")
 </body>
 </html>

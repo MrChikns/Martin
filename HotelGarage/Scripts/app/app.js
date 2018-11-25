@@ -1,5 +1,8 @@
 ﻿
 $(document).ready(function () {
+    //
+    // res list =>
+    //
     // datatable rezervaci
     var table = $('#example').DataTable({
         columnDefs: [
@@ -10,9 +13,12 @@ $(document).ready(function () {
         ]
     });
 
-    // Add event listeners to range filtering inputs
+    //aktivace filtru z nastavenych dat
     $("#filterBtn").on("click", function () { table.draw(); });
 
+    //
+    // res form =>
+    //
     // kontrola prijezdu pri vytvareni rezervace - zda je odjezd az po prijezdu
     $('.js-res-save-btn').on("click", function (event) {
         var arrival = $('#Arrival').val();
@@ -24,6 +30,45 @@ $(document).ready(function () {
         }
     });
 
+    // prepinani barvy pri kliknuti na checkbox
+    $('#IsRegistered').on("click", function () { $('#isRegisteredDiv').toggleClass('alert-warning alert-success'); });
+
+    // doplneni SPZ z textboxu aby byl vracen kompletni viewModel
+    $('input[data-id="spz-visible"]').on('keyup', function () {
+        $('input[data-id="spz-hidden"]').val($(this).val());
+    });
+
+    //
+    // main parking place =>
+    //
+    // zvyrazneni neprirazeneho mista u najizdejici rezervace
+    $('div.alert-prijezd').each(function () {
+        $(this).children(".js-pPlacePrijezd:contains('Nepřiřazeno')").addClass("alert-link");
+    });
+
+    // vypnuti checkinu pro neprirazene rezervace
+    $('a.odkaz-prijezd').each(function () {
+        if ($(this).attr('isregistered') === 'False') {
+            $(this).addClass("disabled");
+        }
+    });
+
+    // prirazeni rezervace na parkovaci misto
+    $('.select-link').on("click", function () {
+        //reservation id
+        var vId = $(this).attr('value-id');
+        var btnType = $(this).attr('buttonType');
+        var resId = $('button[value-id="' + vId + '"][buttonType="' + btnType + '"]').attr('data-id');
+        var pPName = $('select[value-id="' + vId + '"][buttonType="' + btnType + '"]').val();
+
+        url = '@Url.Action("Reserve", "Parking")';
+        var model = { ParkingPlaceName: pPName, ReservationId: resId };
+        $.ajax({
+            type: "POST",
+            url: "/Parking/Reserve",
+            data: { ParkingPlaceName: pPName, ReservationId: resId }
+        });
+    });
 
     // prepsani stavu parkovaciho mista a skryti nepotrebnych akci pro stav parkovaciho mista
     $('div.card-body>a').each(function () {
@@ -64,6 +109,11 @@ $(document).ready(function () {
         }
     });
 
+    // prebarveni stavu parkovaciho mista podle stavu registrace hosta
+    if ($('#IsRegistered').attr('checked') === "checked") { $('#isRegisteredDiv').addClass('alert alert-success'); }
+    else { $('#isRegisteredDiv').addClass('alert alert-warning'); }
+
+    // zmena barvy tlacitek u zamestnancu, aby je bylo mozne oddelit od normalnich hostu
     $(".card-title").each(function () {
         if ($(this).next().attr("data-bbox-zamestnanec") === 'Zaměstnanec'
             && $(this).next().next().hasClass("btn-primary") === true)
@@ -71,57 +121,12 @@ $(document).ready(function () {
             $(this).next().next().toggleClass('btn-primary btn-outline-success');
         }
     });
-
-    // zvyrazneni neprirazeneho mista u najizdejici rezervace
-    $('div.alert-prijezd').each(function () {
-        $(this).children(".js-pPlacePrijezd:contains('Nepřiřazeno')").addClass("alert-link");
-    });
-
-    // vyplneni SPZ z jineho textboxu aby byl vracen kompletni viewModel
-    $('input[data-id="spz-visible"]').on('keyup', function () {
-        $('input[data-id="spz-hidden"]').val($(this).val());
-    });
-
-    // obarveni policka s registraci rezervace
-    if ($('#IsRegistered').attr('checked') === "checked") { $('#isRegisteredDiv').addClass('alert alert-success'); }
-    else { $('#isRegisteredDiv').addClass('alert alert-warning'); }
-
-    // prepinani barvy pri kliknuti
-    $('#IsRegistered').on("click", function () { $('#isRegisteredDiv').toggleClass('alert-warning alert-success'); });
-
-    // prirazeni rezervace na parkovaci misto
-    $('.select-link').on("click", function () {
-        //reservation id
-        var vId = $(this).attr('value-id');
-        var btnType = $(this).attr('buttonType');
-        var resId = $('button[value-id="' + vId + '"][buttonType="' + btnType + '"]').attr('data-id');
-        var pPName = $('select[value-id="' + vId + '"][buttonType="' + btnType + '"]').val();
-
-        url = '@Url.Action("Reserve", "Parking")';
-        var model = { ParkingPlaceName: pPName, ReservationId: resId };
-        $.ajax({
-            type: "POST",
-            url: "/Parking/Reserve",
-            data: { ParkingPlaceName: pPName, ReservationId: resId }
-        });
-    });
-
+    
     // obnoveni stranky po ajax callu do controlleru
     $(document).ajaxStop(function () {
         window.location.reload();
     });
-
-    // zvyrazneni neprirazeneho mista u najezdovych rezervaci
-    $('div.alert-prijezd').each(function () {
-        $(this).children(".js-pPlacePrijezd:contains('Nepřiřazeno')").addClass("alert-link");
-    });
     
-    $('a.odkaz-prijezd').each(function () {
-        if ($(this).attr('isregistered') === 'False') {
-            $(this).addClass("disabled");
-        }
-    });
-
     // modal pro potvrzeni checkoutu rezervace
     $(document).on("click", "a.js-checkout", function (e) {
         if ($(this).attr('isregistered') === 'False') {

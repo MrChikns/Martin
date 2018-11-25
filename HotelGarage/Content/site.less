@@ -1,5 +1,4 @@
 ﻿/*general overrides*/
-
 body {
     font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
     margin-top: 90px;
@@ -7,15 +6,9 @@ body {
 
 a {
     color: #007bff;
-
-    .btn {
-        width: 148px;
-        text-align: center;
-        padding: 0.2rem 0.75rem;
-    }
 }
 
-p.btn {
+a.btn, p.btn {
     width: 148px;
     text-align: center;
     padding: 0.2rem 0.75rem;
@@ -43,7 +36,8 @@ label {
     font-weight: normal;
 }
 
-/*custom classes*/
+
+/* custom classes */
 .alert-prijezd {
     width: 180px;
 }
@@ -63,18 +57,19 @@ label {
     padding: 10px 4px;
 }
 
+
 /* bootstrap overrides */
 .navbar-inverse {
     background-color: #0069d9;
     border-color: #0069d9;
+}
 
-    .navbar-nav > li > a {
-        color: #FFF;
-    }
+.navbar-inverse .navbar-nav > li > a {
+    color: #FFF;
+}
 
-    .navbar-brand {
-        color: #FFF;
-    }
+.navbar-inverse .navbar-brand {
+    color: #FFF;
 }
 
 .navbar-brand {
@@ -119,10 +114,10 @@ span.field-validation-error {
     padding: 10px;
     line-height: 15px;
     margin-bottom: 5px;
+}
 
-    p {
-        line-height: 18px;
-    }
+.card-body > p {
+    line-height: 18px;
 }
 
 .card-text {
@@ -133,8 +128,6 @@ span.field-validation-error {
 .dl-horizontal dt {
     white-space: normal;
 }
-
-
 
 .custom-select {
     margin-left: 5px;
@@ -158,10 +151,18 @@ div.col-auto > div > div.alert {
     padding-right: 10px;
 }
 
-.modal-title {
-    margin-left: 20px;
-}
-
 .bootbox .modal-header {
     display: block;
+}
+
+
+
+
+
+
+
+
+
+.modal-title {
+    margin-left: 20px;
 }

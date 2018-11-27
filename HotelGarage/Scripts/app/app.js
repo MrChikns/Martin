@@ -35,9 +35,9 @@ var ReservationForm = function () {
     // kontrola prijezdu pri vytvareni rezervace - zda je odjezd az po prijezdu
     var departureAfterArrivalCheck = function (event) {
         if ($('#Arrival').val() > $('#Departure').val()) {
-            alert("Datum odjezdu musí být po datu příjezdu!");
+            alert("Odjezd musí být po příjezdu!");
             event.preventDefault();
-        };
+        }
     };
 
     // prebarveni stavu parkovaciho mista podle stavu registrace hosta
@@ -82,7 +82,7 @@ var ParkingPlace = function () {
     };
 
     var highlightTodaysReservationWithoutPPlaceAssigned = function () {
-        $(this).children(".js-pPlacePrijezd:contains('Nepřiřazeno')").addClass("alert-link")
+        $(this).children(".js-pPlacePrijezd:contains('Nepřiřazeno')").addClass("alert-link");
     };
 
     var hideCheckInBtnForReservationWithoutPPlaceAssigned = function () {
@@ -127,7 +127,8 @@ var ParkingPlace = function () {
 
     var employeeStateSetUp = function () {
         if ($(this).next().attr("data-bbox-zamestnanec") === 'Zaměstnanec'
-            && $(this).next().next().hasClass("btn-primary") === true)
+            && ($(this).next().next().hasClass("btn-primary") === true || 
+                $(this).next().next().hasClass("btn-danger") === true))
         {
             $(this).next().next().toggleClass('btn-primary btn-outline-success');
         }

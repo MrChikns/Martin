@@ -33,6 +33,9 @@ namespace HotelGarage.Models
         [Display(Name = "Poznámka")]
         public string Note { get; set; }
 
+        [Display(Name ="Počet Pobytů")]
+        public int NumberOfStays { get; private set; }
+
         public Car() { }
 
         public Car(string licensePlate, string carModel, string guestsName, 
@@ -45,6 +48,7 @@ namespace HotelGarage.Models
             PricePerNight = pricePerNight;
             IsEmployee = isEmployee;
             Note = note;
+            NumberOfStays = 0;
         }
 
         public void Update(Reservation reservation)
@@ -80,6 +84,10 @@ namespace HotelGarage.Models
             }
 
             return (numberOfDays * pricePerNight).ToString();
+        }
+
+        public void AddStay() {
+            this.NumberOfStays += 1;
         }
     }
 }

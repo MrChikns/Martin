@@ -51,6 +51,7 @@ namespace HotelGarage.Models
             this.Departure = DateTime.Now;
             this.ParkingPlaceId = 0;
             this.StateOfReservationId = StateOfReservation.Departed;
+            this.Car.AddStay();
         }
 
         public void TemporaryLeave()

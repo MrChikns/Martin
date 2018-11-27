@@ -56,23 +56,26 @@
             <th>Typ Auta</th>
             <th>Parkovací Místo</th>
             <th>Zaměstnanec</th>
+            <th>Celk. Počet Návštěv</th>
+
         </tr>
     </thead>
     <tbody>
         @foreach (var res in Model)
         {
-            <tr>
-                <td>@res.GuestsName</td>
-                <td>@res.Arrival</td>
-                <td>@res.Departure</td>
-                <td>@res.GuestRoomNumber</td>
-                <td>@res.TotalPrice</td>
-                <td>@res.ReservationState</td>
-                <td>@res.LicensePlate</td>
-                <td>@res.CarModel</td>
-                <td>@res.ParkingPlaceName</td>
-                <td>@res.IsEmployee</td>
-            </tr>
+        <tr>
+            <td>@res.GuestsName</td>
+            <td>@res.Arrival</td>
+            <td>@res.Departure</td>
+            <td>@res.GuestRoomNumber</td>
+            <td>@res.TotalPrice</td>
+            <td>@res.ReservationState</td>
+            <td>@res.LicensePlate</td>
+            <td>@res.CarModel</td>
+            <td>@res.ParkingPlaceName</td>
+            <td>@res.IsEmployee</td>
+            <td>@res.NumberOfStays</td>
+        </tr>
         }
     </tbody>
     <tfoot>
@@ -87,6 +90,7 @@
             <th>Typ Auta</th>
             <th>Parkovací Místo</th>
             <th>Zaměstnanec</th>
+            <th>Celk. Počet Návštěv</th>
         </tr>
     </tfoot>
 </table>

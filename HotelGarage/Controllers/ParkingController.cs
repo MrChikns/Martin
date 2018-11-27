@@ -64,7 +64,7 @@ namespace HotelGarage.Controllers
 
         public ActionResult CheckOut(int pPlaceId)
         {
-            var pPlace = _parkingPlaceRepository.GetParkingPlaceReservation(pPlaceId);
+            var pPlace = _parkingPlaceRepository.GetParkingPlaceReservationCar(pPlaceId);
 
             pPlace.Reservation.CheckOut();
             pPlace.Release(_stateOfPlaceRepository.GetFreeStateOfPlace());
@@ -76,7 +76,7 @@ namespace HotelGarage.Controllers
 
         public ActionResult TemporaryLeave(int pPlaceId)
         {
-            var pPlace = _parkingPlaceRepository.GetParkingPlaceReservation(pPlaceId);
+            var pPlace = _parkingPlaceRepository.GetParkingPlaceReservationCar(pPlaceId);
 
             pPlace.Reservation.TemporaryLeave();
             pPlace.Reserve(_stateOfPlaceRepository.GetReservedStateOfPlace(), pPlace.Reservation);

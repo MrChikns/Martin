@@ -20,7 +20,6 @@ var ReservationList = function () {
     };
 }();
 
-
 //
 // res form =>
 //
@@ -30,6 +29,24 @@ var ReservationForm = function () {
         $('.js-res-save-btn').on("click", departureAfterArrivalCheck);
         $('#IsRegistered').on("click", toggleBoxColor);
         $('input[data-id="spz-visible"]').on('keyup', passLicensePlaceIntoModel);
+
+        var reservations = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.whitespace,
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            prefetch: {
+                //url: '/api/reservations/',
+                url: '/api/reservations/',
+                ttl: 1 // in milliseconds
+            }
+        });
+
+        // passing in `null` for the `options` arguments will result in the default
+        // options being used
+        $('.typeahead').typeahead(null, {
+            name: 'reservations',
+            source: reservations
+        });
+       
     };
 
     // kontrola prijezdu pri vytvareni rezervace - zda je odjezd az po prijezdu

@@ -1,15 +1,7 @@
 ﻿using HotelGarage.Models;
 using HotelGarage.Repositories;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Results;
-using System.Web.Mvc;
-using System.Web.Script.Serialization;
-using HttpGetAttribute = System.Web.Mvc.HttpGetAttribute;
 
 namespace HotelGarage.Controllers.API
 {
@@ -24,9 +16,10 @@ namespace HotelGarage.Controllers.API
             _reservationRepository = new ReservationRepository(_context);
         }
 
-        public IEnumerable<Reservation> GetReservations()
+
+        public List<string> GetReservations()
         {
-            return _reservationRepository.GetReturningReservationsCars();
+            return _reservationRepository.GetLicensePlates();
         }
 
     }

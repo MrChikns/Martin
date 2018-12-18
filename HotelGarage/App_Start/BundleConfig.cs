@@ -10,8 +10,7 @@ namespace HotelGarage
         {
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
                         "~/Scripts/app/app.js",
-                        "~/Scripts/app/range_dates.js"
-                ));
+                        "~/Scripts/app/range_dates.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/lib").Include(
                         "~/Scripts/jquery-{version}.js",
@@ -19,7 +18,8 @@ namespace HotelGarage
                         "~/Scripts/dataTables.material.min.js",
                         "~/Scripts/dataTables.bootstrap4.min.js",
                         "~/Scripts/bootbox.min.js",
-                        "~/Scripts/bootstrap.js"));
+                        "~/Scripts/bootstrap.js",
+                        "~/Scripts/typeahead.bundle.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));

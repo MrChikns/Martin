@@ -48,10 +48,16 @@ namespace HotelGarage.Models
 
         public void CheckOut()
         {
-            this.Departure = DateTime.Now;
-            this.ParkingPlaceId = 0;
-            this.StateOfReservationId = StateOfReservation.Departed;
-            this.Car.AddStay();
+            if (this.StateOfReservationId == StateOfReservation.Inhouse)
+            {
+                this.Departure = DateTime.Now;
+                this.ParkingPlaceId = 0;
+                this.StateOfReservationId = StateOfReservation.Departed;
+                this.Car.AddStay();
+            }
+            else {
+                throw new ArgumentOutOfRangeException("Reservation has to be inhouse for the proper check out!");
+            }
         }
 
         public void TemporaryLeave()

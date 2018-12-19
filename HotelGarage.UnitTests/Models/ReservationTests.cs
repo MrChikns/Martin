@@ -15,13 +15,13 @@ namespace HotelGarage.UnitTests
         public void SetUp()
         {
             _reservation = new Reservation("stara", DateTime.Now.AddDays(1), DateTime.Now.AddDays(1),
-                true,1, new Car { LicensePlate = "stara" });
+                true, 1, new Car { LicensePlate = "stara" });
 
             _reservation.StateOfReservationId = StateOfReservation.Reserved;
         }
 
         [Test]
-        public void CheckOut_Reservation_ResDepSetPplaceIdZeroStateOfResDeparted()
+        public void CheckOut_ReservationIsInhouse_ResDepSetPplaceIdZeroStateOfResDeparted()
         {
             _reservation.StateOfReservationId = StateOfReservation.Inhouse;
 

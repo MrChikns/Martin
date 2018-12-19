@@ -113,7 +113,7 @@ namespace HotelGarage.Controllers
                     pPlace.Reserve(_stateOfPlaceRepository.GetReservedStateOfPlace(), reservation);
                 // anebo nastaveni prazdneho park. mista
                 else
-                    pPlace.Free(_stateOfPlaceRepository.GetFreeStateOfPlace(), reservation);
+                    pPlace.AssingnFreeParkingPlace(_stateOfPlaceRepository.GetFreeStateOfPlace(), reservation);
             }
             _context.SaveChanges();
 

@@ -64,5 +64,25 @@ namespace HotelGarage.Repositories
         {
             return _context.StateOfReservations.First(s => s.Id == id).State;
         }
+
+        public List<string> GetLicensePlates()
+        {
+            var list = new List<string>();
+
+            foreach (var res in _context.Reservations)
+            {
+                list.Add(res.LicensePlate);
+            }
+                       
+            return list;
+        }
+
+        public List<Reservation> GetReturningReservationsCars()
+        {
+            return _context.Reservations
+                .Where(c => c.Car.NumberOfStays >= 2)
+                .Include(c => c.Car)
+                .ToList();
+        }
     }
 }

@@ -83,5 +83,36 @@ namespace HotelGarage.Repositories
                 .Include(c => c.Car)
                 .ToList();
         }
+        public int GetNumberOfFreeParkingPlaces(DateTime date)
+        {
+            int totalNumberOfParkingPlaces = 19;
+
+            int numberOfOccupiedParkingPlaces = _context.Reservations
+                .Where(r =>
+                    (r.StateOfReservationId == StateOfReservation.Reserved
+                        || r.StateOfReservationId == StateOfReservation.Inhouse
+                        || r.StateOfReservationId == StateOfReservation.TemporaryLeave)
+                    && (r.Arrival.Year <= date.Year
+                        && r.Arrival.Month <= date.Month
+                        && r.Arrival.Day <= date.Day
+                        && r.Departure.Year >= date.Year
+                        && r.Departure.Month >= date.Month
+                        && r.Departure.Day > date.Day))
+                .Count();
+
+            return totalNumberOfParkingPlaces - numberOfOccupiedParkingPlaces;
+        }
+
+        public int[] GetNumbersOfFreeParkingPlacesArray()
+        {
+            int[] freeplaces = new int[7];
+
+            for (int i = 0; i < 7; i++)
+            {
+                freeplaces[i] = this.GetNumberOfFreeParkingPlaces(DateTime.Today.AddDays(i));
+            }
+
+            return freeplaces;
+        }
     }
 }

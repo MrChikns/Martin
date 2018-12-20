@@ -114,7 +114,5 @@ namespace HotelGarage.Dtos
             }
             return dtoList;
         }
-
-
     }
 }

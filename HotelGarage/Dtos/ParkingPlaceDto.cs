@@ -37,7 +37,7 @@ namespace HotelGarage.Dtos
             LicensePlate = " ";
             Departure = " ";
             PPlaceName = parkingPlace.Name;
-            StateOfPlace = parkingPlace.AssignStateOfPlaceName();
+            StateOfPlace = parkingPlace.GetStateOfPlaceName();
 
             DepartureBootbox = " ";
             IsRegisteredBootbox = " ";
@@ -91,8 +91,8 @@ namespace HotelGarage.Dtos
                     // pokud auto prebydli noc, prestoze melo odjet, posune se jeho datum odjezdu
                     if (parkingPlace.Reservation.Departure < DateTime.Today.Date)
                     {
-                        parkingPlace.Reservation.UpdateCheckout();
-                        ppDto.StateOfPlace = parkingPlace.AssignStateOfPlaceName();
+                        parkingPlace.Reservation.UpdateInhouseReservationCheckout();
+                        ppDto.StateOfPlace = parkingPlace.GetStateOfPlaceName();
                         context.SaveChanges();
                     }
 

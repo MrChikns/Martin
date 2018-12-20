@@ -18,22 +18,15 @@ namespace HotelGarage.Models
 
         public StateOfPlace StateOfPlace { get; set; }
 
-        public string AssignStateOfPlaceName()
+        public string GetStateOfPlaceName()
         {
             string parkingPlaceName = this.StateOfPlace.Name;
 
-            switch (this.StateOfPlace.Name){
-                case "Volno":
-                case "Obsazeno":
+            switch (this.StateOfPlace.Name)
+            {
                 case "Rezervováno":
                 case "Zaměstnanec":
                     break;
-                default:
-                    throw new ArgumentException("Jmeno parkovaciho mista musi byt jedno z prednastavenych jmen v databazi!");
-            }
-
-            switch (this.StateOfPlace.Name)
-            {
                 case "Obsazeno":
                     if (!this.Reservation.IsRegistered)
                     {
@@ -47,15 +40,32 @@ namespace HotelGarage.Models
                     if (this.Id > 19)
                         parkingPlaceName = "Volno Staff";
                     break;
+                default:
+                    throw new ArgumentException("Jmeno parkovaciho mista musi byt jedno z prednastavenych jmen v databazi!");
             }
             return parkingPlaceName;
+        }
+
+        public void AssignReservation(Reservation reservation)
+        {
+            Reservation = reservation;
+        }
+
+        public void AssignStateOfPlaceId(int id)
+        {
+            StateOfPlaceId = id;
+        }
+
+        public void AssignStateOfPlace(StateOfPlace stateOfPlace)
+        {
+            StateOfPlace = stateOfPlace;
         }
 
         public void Release(StateOfPlace freePlace)
         {
             if (this.StateOfPlaceId != StateOfPlace.Free)
             {
-                this.Reservation.ParkingPlaceId = 0;
+                this.Reservation.SetParkingPlaceId(0);
                 this.Reservation = null;
                 this.StateOfPlaceId = StateOfPlace.Free;
                 this.StateOfPlace = freePlace;
@@ -67,24 +77,17 @@ namespace HotelGarage.Models
 
         public void Reserve(StateOfPlace reservedPlace, Reservation reservation)
         {
-            if (reservation.ParkingPlaceId == 0 && this.StateOfPlaceId == StateOfPlace.Free)
-            {
-                reservation.ParkingPlaceId = this.Id;
+                reservation.SetParkingPlaceId(this.Id);
                 this.StateOfPlaceId = StateOfPlace.Reserved;
                 this.StateOfPlace = reservedPlace;
                 this.Reservation = reservation;
-            }
-            else {
-                throw new ArgumentOutOfRangeException("Reservation cannot have assigned parking place " +
-                    "and/or parking place has to be free!");
-            }
         }
 
         public void MoveInhouseReservation(StateOfPlace inhousePlace, Reservation reservation)
         {
             if (reservation.StateOfReservationId == StateOfReservation.Inhouse)
             {
-                reservation.ParkingPlaceId = this.Id;
+                reservation.SetParkingPlaceId(this.Id);
                 this.StateOfPlaceId = StateOfPlace.Occupied;
                 this.StateOfPlace = inhousePlace;
                 this.Reservation = reservation;
@@ -99,7 +102,6 @@ namespace HotelGarage.Models
         {
             if (this.StateOfPlaceId == StateOfPlace.Reserved && reservation.ParkingPlaceId == this.Id)
             {
-                //reservation.ParkingPlaceId = this.Id;
                 this.StateOfPlaceId = StateOfPlace.Occupied;
                 this.StateOfPlace = occupiedPlaceState;
                 this.Reservation = reservation;
@@ -112,7 +114,7 @@ namespace HotelGarage.Models
 
         public void AssingnFreeParkingPlace(StateOfPlace stateOfPlace, Reservation reservation)
         {   
-            reservation.ParkingPlaceId = 0;
+            reservation.SetParkingPlaceId(0);
             this.StateOfPlaceId = StateOfPlace.Free;
             this.StateOfPlace = stateOfPlace;
             this.Reservation = null;

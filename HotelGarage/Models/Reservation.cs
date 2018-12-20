@@ -34,6 +34,14 @@ namespace HotelGarage.Models
 
         public Reservation() { }
 
+        public Reservation(int parkingPlaceId, byte stateOfReservationId, DateTime arrival, DateTime departure)
+        {
+            ParkingPlaceId = parkingPlaceId;
+            StateOfReservationId = stateOfReservationId;
+            Arrival = arrival;
+            Departure = departure;
+        }
+
         public Reservation(string licensePlate ,DateTime arrival, DateTime departure, 
             bool isRegistered, int parkingPlaceId, Car car)
         {
@@ -44,6 +52,16 @@ namespace HotelGarage.Models
             ParkingPlaceId = parkingPlaceId;
             Car = car;
             StateOfReservationId = StateOfReservation.Reserved;
+        }
+
+        public void SetDepartureDay(DateTime date)
+        {
+            Departure = date;
+        }
+
+        public void SetParkingPlaceId(int id)
+        {
+            ParkingPlaceId = id;
         }
 
         public void CheckOut()
@@ -93,10 +111,10 @@ namespace HotelGarage.Models
                 parkingPlace.Release(freePlace);
             
             this.StateOfReservationId = StateOfReservation.Cancelled;
-            this.Car.PricePerNight = null;
+            this.Car.ResetPricePerNightToNull();
         }
 
-        public void UpdateCheckout()
+        public void UpdateInhouseReservationCheckout()
         {
             this.Departure = DateTime.Today.Date + new TimeSpan(12,0,0);
             this.IsRegistered = false;

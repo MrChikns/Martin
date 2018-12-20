@@ -79,7 +79,8 @@ namespace HotelGarage.UnitTests
         [Test]
         public void Cancel_ResHasOccupiedParkingPlace_ReleaseParkingPlaceFromReservationAndSetResToCancell()
         {
-            ParkingPlace parkingPlace = new ParkingPlace() { Reservation = _reservation,};
+            ParkingPlace parkingPlace = new ParkingPlace();
+            parkingPlace.AssignReservation(_reservation);
 
             _reservation.Cancel(parkingPlace, new StateOfPlace() { Id = 1, Name = "Volno" });
 

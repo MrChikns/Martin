@@ -38,13 +38,11 @@ namespace HotelGarage.Controllers
         // nova rezervace
         public ActionResult Create(int? pPlaceId)
         {
-            return View("Form", new Reservation()
-            {
-                ParkingPlaceId = (pPlaceId != null) ? (int)pPlaceId : 0,
-                StateOfReservationId = StateOfReservation.Reserved,
-                Arrival = DateTime.Now,
-                Departure = DateTime.Now.AddDays(1)
-            });
+            return View("Form", new Reservation( (pPlaceId != null) ? (int)pPlaceId : 0,
+                StateOfReservation.Reserved,
+                DateTime.Now,
+                DateTime.Now.AddDays(1)
+            ));
         }
 
         // update rezervace
@@ -80,24 +78,15 @@ namespace HotelGarage.Controllers
 
             // vytvoreni auta anebo update
             if (car == null)
-            {
-                car = new Car(viewModel.Car.LicensePlate, viewModel.Car.CarModel, viewModel.Car.GuestsName,
-                      viewModel.Car.GuestRoomNumber, viewModel.Car.PricePerNight, viewModel.Car.IsEmployee, 
-                      viewModel.Car.Note);
-
-                _context.Cars.Add(car);
-            }
+                _context.Cars.Add(new Car(viewModel.Car.LicensePlate, viewModel.Car.CarModel, viewModel.Car.GuestsName,
+                      viewModel.Car.GuestRoomNumber, viewModel.Car.PricePerNight, viewModel.Car.IsEmployee, viewModel.Car.Note));
             else
                 car.Update(viewModel);
 
             //vytvoreni rezervace anebo update
             if (viewModel.Id == 0)
-            {
-                reservation = new Reservation(viewModel.LicensePlate, viewModel.Arrival, viewModel.Departure,
-                    viewModel.IsRegistered, viewModel.ParkingPlaceId, car);
-
-                _context.Reservations.Add(reservation);
-            }
+                _context.Reservations.Add(new Reservation(viewModel.LicensePlate, viewModel.Arrival, viewModel.Departure,
+                    viewModel.IsRegistered, viewModel.ParkingPlaceId, car));
             else
                 reservation.Update(viewModel, car);
 

@@ -89,5 +89,10 @@ namespace HotelGarage.Models
         public void AddStay() {
             this.NumberOfStays += 1;
         }
+
+        public void ResetPricePerNightToNull()
+        {
+            this.PricePerNight = null;
+        }
     }
 }

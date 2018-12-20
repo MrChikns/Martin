@@ -1,13 +1,8 @@
-﻿using HotelGarage.Models;
-using HotelGarage.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Data.Entity;
-using System.Web;
-using System.Web.Mvc;
+﻿using HotelGarage.Dtos;
+using HotelGarage.Models;
 using HotelGarage.Repositories;
-using HotelGarage.Dtos;
+using System;
+using System.Web.Mvc;
 
 namespace HotelGarage.Controllers
 {
@@ -78,15 +73,24 @@ namespace HotelGarage.Controllers
 
             // vytvoreni auta anebo update
             if (car == null)
-                _context.Cars.Add(new Car(viewModel.Car.LicensePlate, viewModel.Car.CarModel, viewModel.Car.GuestsName,
-                      viewModel.Car.GuestRoomNumber, viewModel.Car.PricePerNight, viewModel.Car.IsEmployee, viewModel.Car.Note));
+            {
+                car = new Car(viewModel.Car.LicensePlate, viewModel.Car.CarModel, viewModel.Car.GuestsName,
+                        viewModel.Car.GuestRoomNumber, viewModel.Car.PricePerNight, viewModel.Car.IsEmployee,
+                        viewModel.Car.Note);
+
+                _context.Cars.Add(car);
+            }
             else
                 car.Update(viewModel);
 
             //vytvoreni rezervace anebo update
             if (viewModel.Id == 0)
-                _context.Reservations.Add(new Reservation(viewModel.LicensePlate, viewModel.Arrival, viewModel.Departure,
-                    viewModel.IsRegistered, viewModel.ParkingPlaceId, car));
+            {
+                reservation = new Reservation(viewModel.LicensePlate, viewModel.Arrival, viewModel.Departure,
+                    viewModel.IsRegistered, viewModel.ParkingPlaceId, car);
+
+                _context.Reservations.Add(reservation);
+            }
             else
                 reservation.Update(viewModel, car);
 

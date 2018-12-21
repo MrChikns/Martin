@@ -154,44 +154,44 @@
             </div>
         </div>
         <div class="col-auto">
-            <h4>Počet volných míst na následujících 7 dnů</h4>
+            <h4 class="text-center">Počet volných míst na dalších 7 dnů</h4>
             <div>
                 <div class="row alert alert-info">
                     <div style="margin:auto;">
                         <div class="row">
                             <div class="freeParkingPlaces">
-                                @DateTime.Today.AddDays(0).ToString("dd.MM.")<br />
+                                @DateTime.Today.AddDays(0).ToString("dd. MM.")<br />
                                 @Model.NumberOfFreeAndEmployeeOccupiedParkingPlacesArray[0].NumberOfFreePlaces
                                 (@Model.NumberOfFreeAndEmployeeOccupiedParkingPlacesArray[0].NumberOfPlacesOccupiedByEmployees)
                             </div>
                             <div class="freeParkingPlaces">
 
-                                @DateTime.Today.AddDays(1).ToString("dd.MM.")<br />
+                                @DateTime.Today.AddDays(1).ToString("dd. MM.")<br />
                                 @Model.NumberOfFreeAndEmployeeOccupiedParkingPlacesArray[1].NumberOfFreePlaces
                                 (@Model.NumberOfFreeAndEmployeeOccupiedParkingPlacesArray[1].NumberOfPlacesOccupiedByEmployees)
                             </div>
                             <div class="freeParkingPlaces">
-                                @DateTime.Today.AddDays(2).ToString("dd.MM.")<br />
+                                @DateTime.Today.AddDays(2).ToString("dd. MM.")<br />
                                 @Model.NumberOfFreeAndEmployeeOccupiedParkingPlacesArray[2].NumberOfFreePlaces
                                 (@Model.NumberOfFreeAndEmployeeOccupiedParkingPlacesArray[2].NumberOfPlacesOccupiedByEmployees)
                             </div>
                             <div class="freeParkingPlaces">
-                                @DateTime.Today.AddDays(3).ToString("dd.MM.")<br />
+                                @DateTime.Today.AddDays(3).ToString("dd. MM.")<br />
                                 @Model.NumberOfFreeAndEmployeeOccupiedParkingPlacesArray[3].NumberOfFreePlaces
                                 (@Model.NumberOfFreeAndEmployeeOccupiedParkingPlacesArray[3].NumberOfPlacesOccupiedByEmployees)
                             </div>
                             <div class="freeParkingPlaces">
-                                @DateTime.Today.AddDays(4).ToString("dd.MM.")<br />
+                                @DateTime.Today.AddDays(4).ToString("dd. MM.")<br />
                                 @Model.NumberOfFreeAndEmployeeOccupiedParkingPlacesArray[4].NumberOfFreePlaces
                                 (@Model.NumberOfFreeAndEmployeeOccupiedParkingPlacesArray[4].NumberOfPlacesOccupiedByEmployees)
                             </div>
                             <div class="freeParkingPlaces">
-                                @DateTime.Today.AddDays(5).ToString("dd.MM.")<br />
+                                @DateTime.Today.AddDays(5).ToString("dd. MM.")<br />
                                 @Model.NumberOfFreeAndEmployeeOccupiedParkingPlacesArray[5].NumberOfFreePlaces
                                 (@Model.NumberOfFreeAndEmployeeOccupiedParkingPlacesArray[5].NumberOfPlacesOccupiedByEmployees)
                             </div>
                             <div class="freeParkingPlaces">
-                                @DateTime.Today.AddDays(6).ToString("dd.MM.")<br />
+                                @DateTime.Today.AddDays(6).ToString("dd. MM.")<br />
                                 @Model.NumberOfFreeAndEmployeeOccupiedParkingPlacesArray[6].NumberOfFreePlaces
                                 (@Model.NumberOfFreeAndEmployeeOccupiedParkingPlacesArray[6].NumberOfPlacesOccupiedByEmployees)
                             </div>
@@ -200,13 +200,13 @@
                 </div>
             </div>
             <div class="text-center">
-                *místa pro staff se vůbec nepočítají do přehledu<br>
+                * nestandardní místa venku pro staff se neukazují v přehledu<br>
                 * v závorce je počet míst obsazených zaměstnanci<br>
             </div>
             <br />
             @if (Model.NoShowReservations.Count != 0)
             {
-                <h4>No Show rezervace</h4>
+                <h4 class="text-center">No Show rezervace</h4>
                 <div>
                     @foreach (var reservation in Model.NoShowReservations)
                     {
@@ -261,7 +261,7 @@
                 <br />}
             @if (Model.TodaysReservations.Count != 0)
             {
-                <h4>Rezervace na dnešek</h4>
+                <h4 class="text-center">Rezervace na dnešek</h4>
                 <div>
                     @{int i = 0;}
                     @foreach (var reservation in Model.TodaysReservations)
@@ -328,7 +328,7 @@
                 <br />}
             @if (Model.InHouseReservations.Count != 0)
             {
-                <h4>Zaparkovaná auta</h4>
+                <h4 class="text-center">Zaparkovaná auta</h4>
                 <div>
                     @{int i = 0;}
                     @foreach (var reservation in Model.InHouseReservations)

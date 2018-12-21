@@ -83,11 +83,11 @@ namespace HotelGarage.Repositories
                 .Include(c => c.Car)
                 .ToList();
         }
-        public int GetNumberOfFreeParkingPlaces(DateTime date)
+        
+        public List<Reservation> GetInhouseReservationsFromSelectedDay(DateTime date)
         {
-            int totalNumberOfParkingPlaces = 19;
-
-            int numberOfOccupiedParkingPlaces = _context.Reservations
+            return _context.Reservations
+                .Include(r => r.Car)
                 .Where(r =>
                     (r.StateOfReservationId == StateOfReservation.Reserved
                         || r.StateOfReservationId == StateOfReservation.Inhouse
@@ -98,18 +98,23 @@ namespace HotelGarage.Repositories
                         && r.Departure.Year >= date.Year
                         && r.Departure.Month >= date.Month
                         && r.Departure.Day > date.Day))
-                .Count();
-
-            return totalNumberOfParkingPlaces - numberOfOccupiedParkingPlaces;
+                .ToList();
         }
 
-        public int[] GetNumbersOfFreeParkingPlacesArray()
+        public OccupancyNumbersOfTheDay[] GetNumberOfFreeParkingPlacesAndPlacesOccupiedByEmployeesArray()
         {
-            int[] freeplaces = new int[7];
+            OccupancyNumbersOfTheDay[] freeplaces = new OccupancyNumbersOfTheDay[7];
+            var listOfReservationsForNextWeek = new List<Reservation>();
+            int totalNumberOfParkingPlaces = 19;
 
             for (int i = 0; i < 7; i++)
             {
-                freeplaces[i] = this.GetNumberOfFreeParkingPlaces(DateTime.Today.AddDays(i));
+                listOfReservationsForNextWeek = this.GetInhouseReservationsFromSelectedDay(DateTime.Today.AddDays(i));
+
+                freeplaces[i].NumberOfFreePlaces = totalNumberOfParkingPlaces - listOfReservationsForNextWeek.Count() 
+                    + listOfReservationsForNextWeek.Where(r => r.ParkingPlaceId > 19).Count(); // odecet mist ktera jsou nestandardni(staff only) stoji na nich pouze zamestnanci
+                freeplaces[i].NumberOfPlacesOccupiedByEmployees = listOfReservationsForNextWeek
+                                                                    .Where(r => r.Car.IsEmployee == true).Count();
             }
 
             return freeplaces;

@@ -321,6 +321,7 @@
     <Compile Include="Models\Car.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\OccupancyNumbersOfTheDay.cs" />
     <Compile Include="Models\ParkingPlace.cs" />
     <Compile Include="Models\Reservation.cs" />
     <Compile Include="Models\StateOfPlace.cs" />

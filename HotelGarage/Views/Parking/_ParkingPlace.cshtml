@@ -8,7 +8,7 @@
        data-bbox-typAuta="@Model.CarModelBootbox" data-bbox-zamestnanec="@Model.IsEmployeeBootbox"
        data-bbox-jeRegistrovan="@Model.IsRegisteredBootbox" data-bbox-poznamka="@Model.NoteBootBox">
         @Model.PPlaceName<br>
-        @((Model.GuestNameBootbox.Length > 15) ? Model.GuestNameBootbox.Substring(0, 15) : "")<br>
+        @((Model.GuestNameBootbox.Length > 15) ? Model.GuestNameBootbox.Substring(0, 15) : Model.GuestNameBootbox)<br>
         Odj: @Model.Departure
     </p>
     <a href="javascript:void()" class="js-sOPChange">@Model.StateOfPlace</a>

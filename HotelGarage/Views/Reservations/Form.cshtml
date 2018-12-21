@@ -48,7 +48,7 @@
         @Html.ValidationMessageFor(c => c.Car.CarModel)
     </div>
     <div class="form-group">
-        @Html.LabelFor(c => c.Car.GuestsName, "Jméno Hosta")
+        @Html.LabelFor(c => c.Car.GuestsName, "Příjmení a Jméno Hosta")
         @Html.TextBoxFor(c => c.Car.GuestsName, new { @class = "form-control", maxlength = 50 })
         @Html.ValidationMessageFor(c => c.Car.GuestsName)
     </div>

@@ -39,7 +39,7 @@ namespace HotelGarage.Controllers
                 ReservationDto.GetNoShowReservations(_reservationRepository, _parkingPlaceRepository),
                 ReservationDto.GetInhouseReservations(_reservationRepository, _parkingPlaceRepository),
                 _parkingPlaceRepository.GetNamesOfFreeParkingPlaces(),
-                _reservationRepository.GetNumbersOfFreeParkingPlacesArray()));
+                _reservationRepository.GetNumberOfFreeParkingPlacesAndPlacesOccupiedByEmployeesArray()));
         }
 
         public ActionResult CheckIn(int pPlaceId, int reservationId)

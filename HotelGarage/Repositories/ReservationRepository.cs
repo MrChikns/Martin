@@ -122,7 +122,7 @@ namespace HotelGarage.Repositories
                 freeplaces[i].NumberOfFreePlaces = totalNumberOfParkingPlaces - listOfReservationsForNextWeek.Count() 
                     + listOfReservationsForNextWeek.Where(r => r.ParkingPlaceId > 19).Count(); // odecet mist ktera jsou nestandardni(staff only) stoji na nich pouze zamestnanci
                 freeplaces[i].NumberOfPlacesOccupiedByEmployees = listOfReservationsForNextWeek
-                                                                    .Where(r => r.Car.IsEmployee == true).Count();
+                    .Where(r => r.Car.IsEmployee == true && r.ParkingPlaceId <= 19).Count(); // secteni pouze oficialnich mist, ktere zabiraji zamestnanci
             }
 
             return freeplaces;

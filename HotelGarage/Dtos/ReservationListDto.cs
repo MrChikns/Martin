@@ -1,9 +1,6 @@
 ﻿using HotelGarage.Models;
 using HotelGarage.Repositories;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace HotelGarage.Dtos
 {

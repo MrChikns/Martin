@@ -92,12 +92,8 @@ namespace HotelGarage.Repositories
                     (r.StateOfReservationId == StateOfReservation.Reserved
                         || r.StateOfReservationId == StateOfReservation.Inhouse
                         || r.StateOfReservationId == StateOfReservation.TemporaryLeave)
-                    && (r.Arrival.Year <= date.Year
-                        && r.Arrival.Month <= date.Month
-                        && r.Arrival.Day <= date.Day
-                        && r.Departure.Year >= date.Year
-                        && r.Departure.Month >= date.Month
-                        && r.Departure.Day > date.Day))
+                    && (DbFunctions.TruncateTime(r.Arrival) <= date
+                        && DbFunctions.TruncateTime(r.Departure) > date))
                 .ToList();
         }
 

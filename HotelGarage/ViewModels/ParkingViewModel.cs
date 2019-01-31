@@ -1,11 +1,7 @@
 ﻿using HotelGarage.Dtos;
 using HotelGarage.Models;
-using System;
+using HotelGarage.Repositories;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.UI.WebControls;
 
 namespace HotelGarage.ViewModels
 {
@@ -19,16 +15,18 @@ namespace HotelGarage.ViewModels
         public int ParkingPlaceName { get; set; }
         public OccupancyNumbersOfTheDay[] NumberOfFreeAndEmployeeOccupiedParkingPlacesArray { get; set; }
 
-        public ParkingViewModel(IList<ParkingPlaceDto> parkingPlaceDtos,
-            IList<ReservationDto> arrivingReservationDtos, IList<ReservationDto> noShowReservationDtos,
-            IList<ReservationDto> inHouseReservationDtos, List<string> freePlacesList, OccupancyNumbersOfTheDay[] freePPlacesArray)
+        public ParkingViewModel(ParkingPlaceRepository parkingPlaceRepository, 
+                StateOfPlaceRepository stateOfPlaceRepository, 
+                ReservationRepository reservationRepository,
+                CarRepository carRepository,
+                ApplicationDbContext context)
         {
-            this.ParkingPlaceDtos = parkingPlaceDtos;
-            this.TodaysReservations = arrivingReservationDtos;
-            this.NoShowReservations = noShowReservationDtos;
-            this.FreeParkingPlaces = freePlacesList;
-            this.InHouseReservations = inHouseReservationDtos;
-            this.NumberOfFreeAndEmployeeOccupiedParkingPlacesArray = freePPlacesArray;
+            this.ParkingPlaceDtos = ParkingPlaceDto.GetParkingPlaceDtos(parkingPlaceRepository, stateOfPlaceRepository, carRepository, context);
+            this.TodaysReservations = ReservationDto.GetArrivingReservations(reservationRepository, parkingPlaceRepository);
+            this.NoShowReservations = ReservationDto.GetNoShowReservations(reservationRepository, parkingPlaceRepository);
+            this.InHouseReservations = ReservationDto.GetInhouseReservations(reservationRepository, parkingPlaceRepository);
+            this.FreeParkingPlaces = parkingPlaceRepository.GetNamesOfFreeParkingPlaces();
+            this.NumberOfFreeAndEmployeeOccupiedParkingPlacesArray = reservationRepository.GetNumberOfFreeParkingPlacesAndPlacesOccupiedByEmployeesArray();
         }
     }
 }

@@ -28,10 +28,9 @@ namespace HotelGarage.Repositories
         public List<Reservation> GetTodaysReservationsCar()
         {
             return _context.Reservations
-                .Where(a => (DbFunctions.TruncateTime(a.Arrival) == DateTime.Today.Date
-                         && a.StateOfReservationId == StateOfReservation.Reserved)
-                    ||(a.StateOfReservationId == StateOfReservation.TemporaryLeave))
-                    .Include(c => c.Car)
+                .Where(a => (DbFunctions.TruncateTime(a.Arrival) == DateTime.Today.Date && a.StateOfReservationId == StateOfReservation.Reserved)
+                            ||(a.StateOfReservationId == StateOfReservation.TemporaryLeave))
+                .Include(c => c.Car)
                 .ToList();
         }
 
@@ -39,8 +38,8 @@ namespace HotelGarage.Repositories
         {
             return _context.Reservations
                 .Where(a => DbFunctions.TruncateTime(a.Arrival) < DateTime.Today.Date
-                    && a.StateOfReservationId == StateOfReservation.Reserved)
-                    .Include(c => c.Car)
+                            && a.StateOfReservationId == StateOfReservation.Reserved)
+                .Include(c => c.Car)
                 .ToList();
         }
         

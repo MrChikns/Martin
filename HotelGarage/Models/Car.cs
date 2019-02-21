@@ -38,7 +38,7 @@ namespace HotelGarage.Models
 
         public Car() { }
 
-        public Car(string licensePlate, string carModel, string guestsName, 
+        public Car(string licensePlate, string carModel, string guestsName,
             int? guestRoomNumber, int? pricePerNight, bool isEmployee, string note)
         {
             LicensePlate = licensePlate;
@@ -48,6 +48,18 @@ namespace HotelGarage.Models
             PricePerNight = pricePerNight;
             IsEmployee = isEmployee;
             Note = note;
+            NumberOfStays = 0;
+        }
+
+        public Car(Car car)
+        {
+            LicensePlate = car.LicensePlate;
+            CarModel = car.CarModel;
+            GuestsName = car.GuestsName;
+            GuestRoomNumber = car.GuestRoomNumber;
+            PricePerNight = car.PricePerNight;
+            IsEmployee = car.IsEmployee;
+            Note = car.Note;
             NumberOfStays = 0;
         }
 

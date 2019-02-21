@@ -39,7 +39,7 @@ namespace HotelGarage.Models
             Departure = departure;
         }
 
-        public Reservation(string licensePlate ,DateTime arrival, DateTime departure, 
+        public Reservation(string licensePlate, DateTime arrival, DateTime departure,
             bool isRegistered, int parkingPlaceId, Car car)
         {
             LicensePlate = licensePlate;
@@ -47,6 +47,17 @@ namespace HotelGarage.Models
             Departure = departure;
             IsRegistered = isRegistered;
             ParkingPlaceId = parkingPlaceId;
+            Car = car;
+            StateOfReservationId = StateOfReservation.Reserved;
+        }
+
+        public Reservation(Reservation reservation, Car car)
+        {
+            LicensePlate = reservation.LicensePlate;
+            Arrival = reservation.Arrival;
+            Departure = reservation.Departure;
+            IsRegistered = reservation.IsRegistered;
+            ParkingPlaceId = reservation.ParkingPlaceId;
             Car = car;
             StateOfReservationId = StateOfReservation.Reserved;
         }

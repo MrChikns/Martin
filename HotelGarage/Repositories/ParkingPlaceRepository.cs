@@ -26,7 +26,10 @@ namespace HotelGarage.Repositories
 
         public ParkingPlace GetParkingPlaceReservationCar(int pPlaceId)
         {
-            return _context.ParkingPlaces.Include(r => r.Reservation).Include(c => c.Reservation.Car).First(p => p.Id == pPlaceId);
+            return _context.ParkingPlaces
+                .Include(r => r.Reservation)
+                .Include(c => c.Reservation.Car)
+                .First(p => p.Id == pPlaceId);
         }
 
         public ParkingPlace GetParkingPlace(Reservation reservation)
@@ -36,7 +39,9 @@ namespace HotelGarage.Repositories
 
         public ParkingPlace GetParkingPlaceStateOfPlace(Reservation reservation)
         {
-            return _context.ParkingPlaces.Include(s => s.StateOfPlace).FirstOrDefault(p => p.Id == reservation.ParkingPlaceId);
+            return _context.ParkingPlaces
+                .Include(s => s.StateOfPlace)
+                .FirstOrDefault(p => p.Id == reservation.ParkingPlaceId);
         }
 
         public List<ParkingPlace> GetParkingPlacesStateOfPlaceReservationCar()

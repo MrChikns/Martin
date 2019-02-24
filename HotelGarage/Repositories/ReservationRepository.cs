@@ -28,10 +28,9 @@ namespace HotelGarage.Repositories
         public List<Reservation> GetTodaysReservationsCar()
         {
             return _context.Reservations
-                .Where(a => (DbFunctions.TruncateTime(a.Arrival) == DateTime.Today.Date
-                         && a.StateOfReservationId == StateOfReservation.Reserved)
-                    ||(a.StateOfReservationId == StateOfReservation.TemporaryLeave))
-                    .Include(c => c.Car)
+                .Where(a => (DbFunctions.TruncateTime(a.Arrival) == DateTime.Today.Date && a.StateOfReservationId == StateOfReservation.Reserved)
+                            ||(a.StateOfReservationId == StateOfReservation.TemporaryLeave))
+                .Include(c => c.Car)
                 .ToList();
         }
 
@@ -39,8 +38,8 @@ namespace HotelGarage.Repositories
         {
             return _context.Reservations
                 .Where(a => DbFunctions.TruncateTime(a.Arrival) < DateTime.Today.Date
-                    && a.StateOfReservationId == StateOfReservation.Reserved)
-                    .Include(c => c.Car)
+                            && a.StateOfReservationId == StateOfReservation.Reserved)
+                .Include(c => c.Car)
                 .ToList();
         }
         
@@ -92,20 +91,8 @@ namespace HotelGarage.Repositories
                     (r.StateOfReservationId == StateOfReservation.Reserved
                         || r.StateOfReservationId == StateOfReservation.Inhouse
                         || r.StateOfReservationId == StateOfReservation.TemporaryLeave)
-                    && (
-                        (r.Arrival.Year == date.Year 
-                            && r.Arrival.Month <= date.Month 
-                            && r.Arrival.Day <= date.Day
-                            && (
-                                (r.Departure.Year == date.Year 
-                                && r.Departure.Month >= date.Month
-                                && r.Departure.Day > date.Day)
-                                || (r.Departure.Year > date.Year)))
-                        ||(r.Arrival.Year < date.Year
-                            && ((r.Departure.Year == date.Year
-                                && r.Departure.Month >= date.Month
-                                && r.Departure.Day > date.Day)
-                                ||(r.Departure.Year > date.Year)))))
+                    && (DbFunctions.TruncateTime(r.Arrival) <= date
+                        && DbFunctions.TruncateTime(r.Departure) > date))
                 .ToList();
         }
 
@@ -122,7 +109,7 @@ namespace HotelGarage.Repositories
                 freeplaces[i].NumberOfFreePlaces = totalNumberOfParkingPlaces - listOfReservationsForNextWeek.Count() 
                     + listOfReservationsForNextWeek.Where(r => r.ParkingPlaceId > 19).Count(); // odecet mist ktera jsou nestandardni(staff only) stoji na nich pouze zamestnanci
                 freeplaces[i].NumberOfPlacesOccupiedByEmployees = listOfReservationsForNextWeek
-                    .Where(r => r.Car.IsEmployee == true && r.ParkingPlaceId <= 19).Count(); // secteni pouze oficialnich mist, ktere zabiraji zamestnanci
+                                                                    .Where(r => r.Car.IsEmployee == true).Count();
             }
 
             return freeplaces;

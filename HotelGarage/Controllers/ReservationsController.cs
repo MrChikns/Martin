@@ -71,13 +71,11 @@ namespace HotelGarage.Controllers
             var reservation = _reservationRepository.GetReservation(viewModel.Id);
             var car = _carRepository.GetCar(viewModel);
 
+
             // vytvoreni auta anebo update
             if (car == null)
             {
-                car = new Car(viewModel.Car.LicensePlate, viewModel.Car.CarModel, viewModel.Car.GuestsName,
-                        viewModel.Car.GuestRoomNumber, viewModel.Car.PricePerNight, viewModel.Car.IsEmployee,
-                        viewModel.Car.Note);
-
+                car = new Car(viewModel.Car);
                 _context.Cars.Add(car);
             }
             else
@@ -86,31 +84,37 @@ namespace HotelGarage.Controllers
             //vytvoreni rezervace anebo update
             if (viewModel.Id == 0)
             {
-                reservation = new Reservation(viewModel.LicensePlate, viewModel.Arrival, viewModel.Departure,
-                    viewModel.IsRegistered, viewModel.ParkingPlaceId, car);
-
+                reservation = new Reservation(viewModel, car);
                 _context.Reservations.Add(reservation);
             }
             else
                 reservation.Update(viewModel, car);
 
-            // prirazeni k parkovacimu mistu
-            var pPlace = _parkingPlaceRepository.GetParkingPlaceStateOfPlace(reservation);
+            ParkingPlaceNotAssignedAndResNotInhouseCheck(
+                reservation, 
+                _parkingPlaceRepository.GetParkingPlaceStateOfPlace(reservation), 
+                _stateOfPlaceRepository);
+            
+            _context.SaveChanges();
 
-            // pokud je parkovaci misto prirazene a rezervace neni inhouse
+            return RedirectToAction("Parking", "Parking");
+        }
+
+        public void ParkingPlaceNotAssignedAndResNotInhouseCheck(
+            Reservation reservation, 
+            ParkingPlace parkingPlace, 
+            StateOfPlaceRepository stateOfPlaceRepository)
+        {
             if (reservation.ParkingPlaceId != 0 && reservation.StateOfReservationId != StateOfReservation.Inhouse)
             {
                 // prirazeni k mistu rezervace a nastaveni mista na rezervovano
                 if (reservation.StateOfReservationId == StateOfReservation.Reserved
                     && reservation.Arrival.DayOfYear == DateTime.Today.DayOfYear)
-                    pPlace.Reserve(_stateOfPlaceRepository.GetReservedStateOfPlace(), reservation);
+                    parkingPlace.Reserve(_stateOfPlaceRepository.GetReservedStateOfPlace(), reservation);
                 // anebo nastaveni prazdneho park. mista
                 else
-                    pPlace.AssingnFreeParkingPlace(_stateOfPlaceRepository.GetFreeStateOfPlace(), reservation);
+                    parkingPlace.AssingnFreeParkingPlace(_stateOfPlaceRepository.GetFreeStateOfPlace(), reservation);
             }
-            _context.SaveChanges();
-
-            return RedirectToAction("Parking", "Parking");
         }
     }
 }

@@ -1,9 +1,6 @@
 ﻿using HotelGarage.Models;
 using HotelGarage.Repositories;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace HotelGarage.Dtos
 {
@@ -27,7 +24,7 @@ namespace HotelGarage.Dtos
         {
             var nevyplneno = "Nevyplněno";
 
-            GuestsName = (reservation.Car.GuestsName == null) ? nevyplneno : reservation.Car.GuestsName;
+            GuestsName = reservation.Car.GuestsName ?? nevyplneno;
             Arrival = reservation.Arrival.ToString("yyyy.MM.dd hh:mm");
             Departure = reservation.Departure.ToString("yyyy.MM.dd hh:mm");
             GuestRoomNumber = (reservation.Car.GuestRoomNumber == null) ? 
@@ -36,7 +33,7 @@ namespace HotelGarage.Dtos
                 reservation.Departure, reservation.Car.PricePerNight);
             ReservationState = reservationRepository.GetStateOfReservationName(reservation.StateOfReservationId);
             LicensePlate = reservation.LicensePlate;
-            CarModel = (reservation.Car.CarModel == null) ? nevyplneno : reservation.Car.CarModel;
+            CarModel = reservation.Car.CarModel ?? nevyplneno;
             ParkingPlaceName = (reservation.ParkingPlaceId == 0) ? nevyplneno : parkingPlaceRepository.GetParkingPlaceName(reservation.ParkingPlaceId);
             IsEmployee = (reservation.Car.IsEmployee) ? "Zaměstnanec" : "Host";
             NumberOfStays = reservation.Car.NumberOfStays.ToString();

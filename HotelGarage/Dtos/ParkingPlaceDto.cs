@@ -2,9 +2,6 @@
 using HotelGarage.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI.WebControls;
 
 namespace HotelGarage.Dtos
 {
@@ -29,7 +26,7 @@ namespace HotelGarage.Dtos
         public string IsRegisteredBootbox { get; internal set; }
         public string ParkPlaceShortLicensePlate { get; internal set; }
 
-        //constructor for initial empty parkingplace
+        //constructor to initialize empty parkingplace
         public ParkingPlaceDto(ParkingPlace parkingPlace)
         {
             Id = parkingPlace.Id;
@@ -55,12 +52,12 @@ namespace HotelGarage.Dtos
         {
             if (car != null)
             {
-                this.GuestNameBootbox = (car.GuestsName == null) ? "Nevyplněno" : car.GuestsName;
+                this.GuestNameBootbox = car.GuestsName ?? "Nevyplněno";
                 this.RoomNumberBootbox = (car.GuestRoomNumber == null) ? "Nevyplněno" : car.GuestRoomNumber.ToString();
-                this.CarModelBootbox = (car.CarModel == null) ? "Nevyplněno" : car.CarModel;
+                this.CarModelBootbox = car.CarModel ?? "Nevyplněno";
                 this.PricePerNightBootbox = (car.PricePerNight == null) ? "Nevyplněno" : car.PricePerNight.ToString();
                 this.IsEmployeeBootbox = (car.IsEmployee == true) ? "Zaměstnanec" : "Host";
-                this.NoteBootBox = (car.Note == null) ? "Nevyplněno" : car.Note;
+                this.NoteBootBox = car.Note ?? "Nevyplněno";
             }
         }
 

@@ -1,15 +1,9 @@
-﻿using HotelGarage.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Data.Entity;
-using System.Web;
-using System.Web.Mvc;
-using HotelGarage.Dtos;
-using HotelGarage.ViewModels;
-using System.Web.UI.WebControls;
-using System.Collections.ObjectModel;
+﻿using HotelGarage.Dtos;
+using HotelGarage.Models;
 using HotelGarage.Repositories;
+using HotelGarage.ViewModels;
+using System;
+using System.Web.Mvc;
 
 namespace HotelGarage.Controllers
 {
@@ -28,38 +22,22 @@ namespace HotelGarage.Controllers
             _stateOfPlaceRepository = new StateOfPlaceRepository(_context);
             _parkingPlaceRepository = new ParkingPlaceRepository(_context);
             _reservationRepository = new ReservationRepository(_context);
-            _carRepository = new CarRepository(_context);                              
+            _carRepository = new CarRepository(_context);
         }
 
         [AllowAnonymous]
         public ActionResult Parking()
         {
-            return View(new ParkingViewModel(
-                ParkingPlaceDto.GetParkingPlaceDtos(_parkingPlaceRepository,_stateOfPlaceRepository,
-                    _carRepository,_context), 
-                ReservationDto.GetArrivingReservations(_reservationRepository,_parkingPlaceRepository), 
-                ReservationDto.GetNoShowReservations(_reservationRepository, _parkingPlaceRepository),
-                ReservationDto.GetInhouseReservations(_reservationRepository, _parkingPlaceRepository),
-                _parkingPlaceRepository.GetNamesOfFreeParkingPlaces(),
-                _reservationRepository.GetNumberOfFreeParkingPlacesAndPlacesOccupiedByEmployeesArray()));
+            return View(new ParkingViewModel(_parkingPlaceRepository, _stateOfPlaceRepository,
+                _reservationRepository, _carRepository, _context));
         }
 
         public ActionResult CheckIn(int pPlaceId, int reservationId)
         {
             var reservation = _reservationRepository.GetReservationCar(reservationId);
 
-            if (reservation.Arrival.Date != DateTime.Today.Date 
-                && reservation.StateOfReservationId != StateOfReservation.TemporaryLeave)
-                return RedirectToAction("Parking");
-
-            if (_parkingPlaceRepository.GetParkingPlace(pPlaceId).StateOfPlaceId == StateOfPlace.Reserved)
-            {
-                reservation.CheckIn();
-                _parkingPlaceRepository.GetParkingPlace(pPlaceId)
-                    .Occupy(_stateOfPlaceRepository.GetOccupiedStateOfPlace(), reservation);
-
-                _context.SaveChanges();
-            }
+            CheckEligibilityToCheckIn(reservation);
+            CheckInAndSaveContext(pPlaceId, reservation);
 
             return RedirectToAction("Parking");
         }
@@ -94,13 +72,44 @@ namespace HotelGarage.Controllers
         {
             var reservation = _reservationRepository.GetReservation(ReservationId);
 
-            // presunuti rezervace z predchoziho prirazeneho mista(pokud uz byla nekde prirazena)
+            ReleasePreviouslyReservedPlace(reservation);
+            MoveOrDirectlyReserveParkingPlace(reservation, ParkingPlaceName);
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Parking");
+        }
+
+        public RedirectToRouteResult CheckEligibilityToCheckIn(Reservation reservation)
+        {
+            if (reservation.Arrival.Date != DateTime.Today.Date
+                && reservation.StateOfReservationId != StateOfReservation.TemporaryLeave)
+                return RedirectToAction("Parking");
+
+            return null;
+        }
+
+        public void CheckInAndSaveContext(int pPlaceId, Reservation reservation)
+        {
+            if (_parkingPlaceRepository.GetParkingPlace(pPlaceId).StateOfPlaceId == StateOfPlace.Reserved)
+            {
+                reservation.CheckIn();
+                _parkingPlaceRepository.GetParkingPlace(pPlaceId)
+                    .Occupy(_stateOfPlaceRepository.GetOccupiedStateOfPlace(), reservation);
+
+                _context.SaveChanges();
+            }
+        }
+
+        public void ReleasePreviouslyReservedPlace(Reservation reservation) {
             if (reservation.ParkingPlaceId != 0)
             {
                 _parkingPlaceRepository.GetParkingPlace(reservation)
                     .Release(_stateOfPlaceRepository.GetFreeStateOfPlace());
             }
+        }
 
+        public void MoveOrDirectlyReserveParkingPlace(Reservation reservation, string ParkingPlaceName) {
             if (reservation.StateOfReservationId == StateOfReservation.Inhouse)
             {
                 _parkingPlaceRepository.GetParkingPlace(ParkingPlaceName)
@@ -111,10 +120,6 @@ namespace HotelGarage.Controllers
                 _parkingPlaceRepository.GetParkingPlace(ParkingPlaceName)
                     .Reserve(_stateOfPlaceRepository.GetReservedStateOfPlace(), reservation);
             }
-
-            _context.SaveChanges();
-
-            return RedirectToAction("Parking");
         }
-    }
+}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using HotelGarage.Helpers;
 using HotelGarage.Models;
 using NUnit.Framework;
 
@@ -27,7 +28,7 @@ namespace HotelGarage.UnitTests
             _parkingPlace.Reservation.Id = 1;
 
             _stateOfPlace.Id = StateOfPlace.Occupied;
-            _stateOfPlace.Name = "Obsazeno";
+            _stateOfPlace.Name = Constants.OccupiedStateOfPlaceConstant;
 
             _reservation.Id = 1;
             _reservation.SetParkingPlaceId(1);
@@ -37,48 +38,48 @@ namespace HotelGarage.UnitTests
         }
 
         [Test]
-        public void AssignStateOfPlaceName_PPlaceNameIsObsazenoAndResUnregistered_Neregistrovan()
+        public void GetStateOfPlaceName_PPlaceNameIsObsazenoAndResUnregistered_Neregistrovan()
         {
             _parkingPlace.StateOfPlace.Name = _parkingPlace.GetStateOfPlaceName();
 
-            Assert.That(_parkingPlace.StateOfPlace.Name, Is.EqualTo("Neregistrován!"));
+            Assert.That(_parkingPlace.StateOfPlace.Name, Is.EqualTo(Constants.NotRegisteredStateOfPlaceConstant));
         }
 
         [Test]
-        public void AssignStateOfPlaceName_PPlaceNameIsObsazenoAndDeparturaToday_Odjezd()
+        public void GetStateOfPlaceName_PPlaceNameIsObsazenoAndDeparturaToday_Odjezd()
         {
             _reservation.IsRegistered = true;
 
             _parkingPlace.StateOfPlace.Name = _parkingPlace.GetStateOfPlaceName();
 
-            Assert.That(_parkingPlace.StateOfPlace.Name, Is.EqualTo("Odjezd"));
+            Assert.That(_parkingPlace.StateOfPlace.Name, Is.EqualTo(Constants.DepartureStateOfPlaceConstant));
         }
 
         [Test]
-        public void AssignStateOfPlaceName_PPlaceNameIsVolnoAndIdIsGreaterThan19_VolnoStaff()
+        public void GetStateOfPlaceName_PPlaceNameIsVolnoAndIdIsGreaterThan19_VolnoStaff()
         {
             _parkingPlace.Id = 20; // id mista, od ktereho parkuje staff na parkovisti
-            _stateOfPlace.Name = "Volno" ;
+            _stateOfPlace.Name = Constants.FreeStateOfPlaceConstant;
 
             _parkingPlace.StateOfPlace.Name = _parkingPlace.GetStateOfPlaceName();
 
-            Assert.That(_parkingPlace.StateOfPlace.Name, Is.EqualTo("Volno Staff"));
+            Assert.That(_parkingPlace.StateOfPlace.Name, Is.EqualTo(Constants.FreeStaffStateOfPlaceConstant));
         }
 
         [Test]
-        public void AssignStateOfPlaceName_PPlaceNameIsRezervovano_Rezervovano()
+        public void GetStateOfPlaceName_PPlaceNameIsRezervovano_Rezervovano()
         {
-            _stateOfPlace.Name = "Rezervováno";
+            _stateOfPlace.Name = Constants.ReservedStateOfPlaceConstant;
 
             _parkingPlace.StateOfPlace.Name = _parkingPlace.GetStateOfPlaceName();
 
-            Assert.That(_parkingPlace.StateOfPlace.Name, Is.EqualTo("Rezervováno"));
+            Assert.That(_parkingPlace.StateOfPlace.Name, Is.EqualTo(Constants.ReservedStateOfPlaceConstant));
         }
 
         [Test]
         public void Release_ParkingPlaceStateIsNotFreeAndReservationIsAssigned_ReservationNullAndStateOfPlaceFree()
         {
-            var freeStateOfPlace = new StateOfPlace() { Id = 1, Name = "Volno"};
+            var freeStateOfPlace = new StateOfPlace() { Id = 1, Name = Constants.FreeStateOfPlaceConstant};
             _reservation.StateOfReservationId = StateOfReservation.Inhouse;
             _parkingPlace.Release(freeStateOfPlace);
 
@@ -86,24 +87,24 @@ namespace HotelGarage.UnitTests
             Assert.That(_parkingPlace.Reservation, Is.EqualTo(null));
             Assert.That(_parkingPlace.StateOfPlaceId, Is.EqualTo(1));
             Assert.That(_parkingPlace.StateOfPlace.Id, Is.EqualTo(1));
-            Assert.That(_parkingPlace.StateOfPlace.Name, Is.EqualTo("Volno"));
+            Assert.That(_parkingPlace.StateOfPlace.Name, Is.EqualTo(Constants.FreeStateOfPlaceConstant));
         }
 
         [Test]
         public void Reserve_ParkingPlaceFreeAndReservationNotAssignedToPPlace_ReservationAssignedStateOfPlaceReserved()
         {
             _stateOfPlace.Id = StateOfPlace.Free;
-            _stateOfPlace.Name = "Volno";
+            _stateOfPlace.Name = Constants.FreeStateOfPlaceConstant;
             _parkingPlace.AssignStateOfPlaceId(StateOfPlace.Free);
 
-            var reservedStateOfPlace = new StateOfPlace() { Id = 3, Name = "Rezervováno" };
+            var reservedStateOfPlace = new StateOfPlace() { Id = 3, Name = Constants.ReservedStateOfPlaceConstant };
             var reservation = new Reservation() { Id = 5};
             reservation.SetParkingPlaceId(0);
             _parkingPlace.Reserve(reservedStateOfPlace,reservation);
 
             Assert.That(reservation.ParkingPlaceId, Is.EqualTo(1));
             Assert.That(_parkingPlace.StateOfPlace.Id, Is.EqualTo(3));
-            Assert.That(_parkingPlace.StateOfPlace.Name, Is.EqualTo("Rezervováno"));
+            Assert.That(_parkingPlace.StateOfPlace.Name, Is.EqualTo(Constants.ReservedStateOfPlaceConstant));
             Assert.That(_parkingPlace.Reservation, Is.EqualTo(reservation));
         }
 
@@ -111,19 +112,19 @@ namespace HotelGarage.UnitTests
         public void Occupy_ParkingPlaceReserved_OccupiedByReservation()
         {
             _stateOfPlace.Id = StateOfPlace.Reserved;
-            _stateOfPlace.Name = "Rezervováno";
+            _stateOfPlace.Name = Constants.ReservedStateOfPlaceConstant;
             _parkingPlace.Reservation.SetParkingPlaceId(0);
             _parkingPlace.AssignStateOfPlaceId(StateOfPlace.Reserved);
             _parkingPlace.Id = 5;
 
-            var occupiedStateOfPlace = new StateOfPlace() { Id = 2, Name = "Obsazeno" };
+            var occupiedStateOfPlace = new StateOfPlace() { Id = 2, Name = Constants.OccupiedStateOfPlaceConstant };
             var reservation = new Reservation() { Id = 5 };
             reservation.SetParkingPlaceId(5);
             _parkingPlace.Occupy(occupiedStateOfPlace, reservation);
 
             Assert.That(reservation.ParkingPlaceId, Is.EqualTo(5));
             Assert.That(_parkingPlace.StateOfPlace.Id, Is.EqualTo(2));
-            Assert.That(_parkingPlace.StateOfPlace.Name, Is.EqualTo("Obsazeno"));
+            Assert.That(_parkingPlace.StateOfPlace.Name, Is.EqualTo(Constants.OccupiedStateOfPlaceConstant));
             Assert.That(_parkingPlace.Reservation, Is.EqualTo(reservation));
         }
 
@@ -133,16 +134,16 @@ namespace HotelGarage.UnitTests
             var reservation = _reservation;
             _parkingPlace.AssignStateOfPlaceId(StateOfPlace.Reserved);
             _stateOfPlace.Id = StateOfPlace.Reserved;
-            _stateOfPlace.Name = "Rezervováno";
+            _stateOfPlace.Name = Constants.ReservedStateOfPlaceConstant;
 
-            var freeStateOfPlace = new StateOfPlace() { Id = 1, Name = "Volno" };
+            var freeStateOfPlace = new StateOfPlace() { Id = 1, Name = Constants.FreeStateOfPlaceConstant };
             _parkingPlace.AssingnFreeParkingPlace(freeStateOfPlace,reservation);
 
             Assert.That(reservation.ParkingPlaceId, Is.EqualTo(0));
             Assert.That(_parkingPlace.Reservation, Is.EqualTo(null));
             Assert.That(_parkingPlace.StateOfPlaceId, Is.EqualTo(1));
             Assert.That(_parkingPlace.StateOfPlace.Id, Is.EqualTo(1));
-            Assert.That(_parkingPlace.StateOfPlace.Name, Is.EqualTo("Volno"));
+            Assert.That(_parkingPlace.StateOfPlace.Name, Is.EqualTo(Constants.FreeStateOfPlaceConstant));
         }
     }
 }

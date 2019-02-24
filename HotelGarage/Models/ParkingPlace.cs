@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotelGarage.Helpers;
+using System;
 
 namespace HotelGarage.Models
 {
@@ -20,21 +21,21 @@ namespace HotelGarage.Models
 
             switch (this.StateOfPlace.Name)
             {
-                case "Rezervováno":
-                case "Zaměstnanec":
+                case Constants.ReservedStateOfPlaceConstant:
+                case Constants.EmployeeStateOfPlaceConstant:
                     break;
-                case "Obsazeno":
+                case Constants.OccupiedStateOfPlaceConstant:
                     if (!this.Reservation.IsRegistered)
                     {
-                        parkingPlaceName = "Neregistrován!";
+                        parkingPlaceName = Constants.NotRegisteredStateOfPlaceConstant;
                         break;
                     }
                     if (this.Reservation.Departure.Date <= DateTime.Today.Date)
-                        parkingPlaceName = "Odjezd";
+                        parkingPlaceName = Constants.DepartureStateOfPlaceConstant;
                     break;
-                case "Volno":
+                case Constants.FreeStateOfPlaceConstant:
                     if (this.Id > 19)
-                        parkingPlaceName = "Volno Staff";
+                        parkingPlaceName = Constants.FreeStaffStateOfPlaceConstant;
                     break;
                 default:
                     throw new ArgumentException("Jmeno parkovaciho mista musi byt jedno z prednastavenych jmen v databazi!");

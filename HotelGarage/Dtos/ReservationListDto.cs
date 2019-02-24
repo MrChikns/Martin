@@ -29,8 +29,9 @@ namespace HotelGarage.Dtos
             Departure = reservation.Departure.ToString("yyyy.MM.dd hh:mm");
             GuestRoomNumber = (reservation.Car.GuestRoomNumber == null) ? 
                 nevyplneno : reservation.Car.GuestRoomNumber.ToString();
-            TotalPrice = reservation.Car.CalculateTotalPrice(reservation.Arrival, 
-                reservation.Departure, reservation.Car.PricePerNight);
+            TotalPrice = reservation.Car.ReturnCalculatedTotalPriceString(
+                reservation.Car.CalculateNumberOfDays(reservation.Arrival, reservation.Departure), 
+                reservation.Car.PricePerNight);
             ReservationState = reservationRepository.GetStateOfReservationName(reservation.StateOfReservationId);
             LicensePlate = reservation.LicensePlate;
             CarModel = reservation.Car.CarModel ?? nevyplneno;

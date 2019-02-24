@@ -74,21 +74,12 @@ namespace HotelGarage.Models
             this.Note = reservation.Car.Note;
         }
 
-        public string CalculateTotalPrice(DateTime arrivalDate, DateTime departureDate, int? pricePerNight)
+        public string ReturnCalculatedTotalPriceString(int numberOfDays, int? pricePerNight)
         {
             if (pricePerNight == null)
             {
-                return "Nevyplněno";
+                return Helpers.Constants.NotFilledOutMessageConstant;
             }
-
-            if (departureDate.Year > arrivalDate.Year)
-            {
-                var daysToEndOfYear = (DateTime.IsLeapYear(arrivalDate.Year) ? 366 : 365)-arrivalDate.DayOfYear;
-
-                return ((daysToEndOfYear + departureDate.DayOfYear) * pricePerNight).ToString();
-            }
-
-            var numberOfDays = departureDate.DayOfYear - arrivalDate.DayOfYear;
 
             if (numberOfDays == 0)
             {
@@ -96,6 +87,18 @@ namespace HotelGarage.Models
             }
 
             return (numberOfDays * pricePerNight).ToString();
+        }
+
+        public int CalculateNumberOfDays(DateTime arrivalDate, DateTime departureDate)
+        {
+            var numberOfDays = (departureDate - arrivalDate).TotalDays;
+
+            if (numberOfDays < 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            
+            return (int)numberOfDays;
         }
 
         public void AddStay() {

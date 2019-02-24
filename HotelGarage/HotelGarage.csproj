@@ -236,6 +236,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Migrations\201810111011152_InitialModel.cs" />
     <Compile Include="Migrations\201810111011152_InitialModel.Designer.cs">
       <DependentUpon>201810111011152_InitialModel.cs</DependentUpon>

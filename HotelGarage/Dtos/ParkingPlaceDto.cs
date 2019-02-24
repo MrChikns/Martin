@@ -52,12 +52,14 @@ namespace HotelGarage.Dtos
         {
             if (car != null)
             {
-                this.GuestNameBootbox = car.GuestsName ?? "Nevyplněno";
-                this.RoomNumberBootbox = (car.GuestRoomNumber == null) ? "Nevyplněno" : car.GuestRoomNumber.ToString();
-                this.CarModelBootbox = car.CarModel ?? "Nevyplněno";
-                this.PricePerNightBootbox = (car.PricePerNight == null) ? "Nevyplněno" : car.PricePerNight.ToString();
+                var notFilledOut = Helpers.Constants.NotFilledOutMessageConstant;
+
+                this.GuestNameBootbox = car.GuestsName ?? notFilledOut;
+                this.RoomNumberBootbox = (car.GuestRoomNumber == null) ? notFilledOut : car.GuestRoomNumber.ToString();
+                this.CarModelBootbox = car.CarModel ?? notFilledOut;
+                this.PricePerNightBootbox = (car.PricePerNight == null) ? notFilledOut : car.PricePerNight.ToString();
                 this.IsEmployeeBootbox = (car.IsEmployee == true) ? "Zaměstnanec" : "Host";
-                this.NoteBootBox = car.Note ?? "Nevyplněno";
+                this.NoteBootBox = car.Note ?? notFilledOut;
             }
         }
 

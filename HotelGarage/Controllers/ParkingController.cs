@@ -121,5 +121,5 @@ namespace HotelGarage.Controllers
                     .Reserve(_stateOfPlaceRepository.GetReservedStateOfPlace(), reservation);
             }
         }
-}
+    }
 }

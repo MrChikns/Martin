@@ -71,7 +71,7 @@ namespace HotelGarage.Models
         {
             ParkingPlaceId = id;
         }
-
+        
         public void CheckOut()
         {
             if (this.StateOfReservationId == StateOfReservation.Inhouse)
@@ -82,7 +82,7 @@ namespace HotelGarage.Models
                 this.Car.AddStay();
             }
             else {
-                throw new ArgumentOutOfRangeException("Reservation has to be inhouse for the proper check out!");
+                throw new ArgumentOutOfRangeException("Predana rezervace, ktera neni inhouse.");
             }
         }
 
@@ -93,12 +93,21 @@ namespace HotelGarage.Models
 
         public void CheckIn()
         {
-            if(this.StateOfReservationId != StateOfReservation.TemporaryLeave)
-                this.Arrival = DateTime.Now;
-            if (this.Car.IsEmployee)
-                this.IsRegistered = true;
+            if (this.StateOfReservationId == StateOfReservation.Reserved ||
+                this.StateOfReservationId == StateOfReservation.TemporaryLeave)
+            {
+                if (this.StateOfReservationId == StateOfReservation.Reserved)
+                    this.Arrival = DateTime.Now;
 
-            this.StateOfReservationId = StateOfReservation.Inhouse;
+                if (this.Car.IsEmployee)
+                    this.IsRegistered = true;
+
+                this.StateOfReservationId = StateOfReservation.Inhouse;
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("Predana rezervace se spatnym stavem.");
+            }
             
         }
 

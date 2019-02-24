@@ -13,6 +13,7 @@ using HotelGarage.Repositories;
 
 namespace HotelGarage.Controllers
 {
+
     public class ParkingController : Controller
     {
         private ApplicationDbContext _context;
@@ -30,6 +31,7 @@ namespace HotelGarage.Controllers
             _carRepository = new CarRepository(_context);                              
         }
 
+        [AllowAnonymous]
         public ActionResult Parking()
         {
             return View(new ParkingViewModel(

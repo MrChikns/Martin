@@ -3,7 +3,7 @@ using HotelGarage.Helpers;
 using HotelGarage.Models;
 using NUnit.Framework;
 
-namespace HotelGarage.UnitTests
+namespace HotelGarage.UnitTests.Models
 {
     [TestFixture]
     public class ParkingPlaceTests
@@ -16,25 +16,12 @@ namespace HotelGarage.UnitTests
         [SetUp]
         public void SetUp()
         {
-            _stateOfPlace = new StateOfPlace();
-            _reservation = new Reservation();
-            _parkingPlace = new ParkingPlace();
+            _stateOfPlace = new StateOfPlace() { Name = Constants.OccupiedStateOfPlaceConstant };
+            _reservation = new Reservation() { Id = 1};
+            _parkingPlace = new ParkingPlace() { Id = 1};
+
             _parkingPlace.AssignStateOfPlace(_stateOfPlace);
             _parkingPlace.AssignReservation(_reservation);
-
-
-            _parkingPlace.Id = 1;
-            _parkingPlace.AssignStateOfPlaceId(StateOfPlace.Occupied);
-            _parkingPlace.Reservation.Id = 1;
-
-            _stateOfPlace.Id = StateOfPlace.Occupied;
-            _stateOfPlace.Name = Constants.OccupiedStateOfPlaceConstant;
-
-            _reservation.Id = 1;
-            _reservation.SetParkingPlaceId(1);
-            _reservation.IsRegistered = false;
-            _reservation.SetDepartureDay(DateTime.Today.Date);
-
         }
 
         [Test]
@@ -129,7 +116,16 @@ namespace HotelGarage.UnitTests
         }
 
         [Test]
-        public void Free_ParkingPlaceReserved_ReservationNullAndStateOfPlaceFree()
+        public void Occupy_WrongParametersPassed_ThrowsException()
+        {
+            StateOfPlace occupied = new StateOfPlace() { Id = StateOfPlace.Occupied, Name = Constants.OccupiedStateOfPlaceConstant };
+            var reservation = new Reservation() { Id = 5 };
+
+            Assert.That(() => _parkingPlace.Occupy(occupied, reservation), Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        [Test]
+        public void Release_ParkingPlaceNotFree_ReservationNullAndStateOfPlaceFree()
         {
             var reservation = _reservation;
             _parkingPlace.AssignStateOfPlaceId(StateOfPlace.Reserved);
@@ -144,6 +140,40 @@ namespace HotelGarage.UnitTests
             Assert.That(_parkingPlace.StateOfPlaceId, Is.EqualTo(1));
             Assert.That(_parkingPlace.StateOfPlace.Id, Is.EqualTo(1));
             Assert.That(_parkingPlace.StateOfPlace.Name, Is.EqualTo(Constants.FreeStateOfPlaceConstant));
+        }
+
+        [Test]
+        public void Release_ParkingPlaceFree_ThrowsException()
+        {
+            StateOfPlace free = new StateOfPlace() { Id = StateOfPlace.Free, Name = Constants.FreeStateOfPlaceConstant};
+            _parkingPlace.StateOfPlaceId = StateOfPlace.Free;
+
+            Assert.That(() => _parkingPlace.Release(free), Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        [Test]
+        public void MoveInhouseReservation_ReservationInHouse_SetValuesAfterMove()
+        {
+            _reservation.StateOfReservationId = StateOfReservation.Inhouse;
+
+            StateOfPlace inhouse = new StateOfPlace() { Id = StateOfPlace.Occupied, Name = Constants.OccupiedStateOfPlaceConstant };
+
+            _parkingPlace.MoveInhouseReservation(inhouse, _reservation);
+
+            Assert.That(_reservation.ParkingPlaceId, Is.EqualTo(_reservation.Id));
+            Assert.That(_parkingPlace.StateOfPlaceId, Is.EqualTo(StateOfPlace.Occupied));
+            Assert.That(_parkingPlace.StateOfPlace, Is.EqualTo(inhouse));
+            Assert.That(_parkingPlace.Reservation, Is.EqualTo(_reservation));
+        }
+
+        [Test]
+        public void MoveInhouseReservation_ReservationNotInHouse_ThrowsException()
+        {
+            _reservation.StateOfReservationId = StateOfReservation.Departed;
+
+            StateOfPlace inhouse = new StateOfPlace() { Id = StateOfPlace.Occupied, Name = Constants.OccupiedStateOfPlaceConstant};
+
+            Assert.That(() => _parkingPlace.MoveInhouseReservation(inhouse,_reservation), Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
     }
 }

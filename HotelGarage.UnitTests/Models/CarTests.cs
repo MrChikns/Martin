@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using HotelGarage.Models;
 
-namespace HotelGarage.UnitTests
+namespace HotelGarage.UnitTests.Models
 {
     [TestFixture]
     public class CarTests

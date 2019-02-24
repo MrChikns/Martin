@@ -46,78 +46,37 @@ namespace HotelGarage.UnitTests
 
         // CalculateNumberOfDays
         [Test]
-        public void CalculateNumberOfDays_WhenArrivalAfterDepartureInTheSameYear_ThrowsException()
+        [TestCase(2019,1,2,2019,1,1,0)] //WhenArrivalAfterDepartureInTheSameYear
+        [TestCase(2019,1,1,2018,1,1,1)] //WhenArrivalAfterDepartureInDifferentYears
+        public void CalculateNumberOfDays_WrongArrivalDeparturePairs_ThrowsException(
+            int arrivalYear, int arrivalMonth, int arrivalDay,
+            int departureYear, int departureMonth, int departureDay,
+            int result)
         {
-            var arrivalDate = new DateTime(2019, 1, 2);
-            var departureDate = new DateTime(2019, 1, 1);
-
-            Assert.That(() => _car.CalculateNumberOfDays(arrivalDate, departureDate), 
-                Throws.InstanceOf<ArgumentOutOfRangeException>());
-        }
-
-        [Test]
-        public void CalculateNumberOfDays_WhenArrivalAfterDepartureInDifferentYears_ThrowsException()
-        {
-            var arrivalDate = new DateTime(2019, 1, 1);
-            var departureDate = new DateTime(2018, 1, 1);
+            var arrivalDate = new DateTime(arrivalYear, arrivalMonth, arrivalDay);
+            var departureDate = new DateTime(departureYear, departureMonth, departureDay);
 
             Assert.That(() => _car.CalculateNumberOfDays(arrivalDate, departureDate),
                 Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
 
         [Test]
-        public void CalculateNumberOfDays_WhenArrivalBeforeDepartureAndInTheSameYear_ReturnsNumberOfDays()
+        [TestCase(2019, 1, 1, 2019, 1, 2, 1)] //WhenArrivalBeforeDepartureAndInTheSameYear
+        [TestCase(2019, 1, 1, 2020, 1, 1, 365)] //WhenArrivalBeforDepartureAndInDifferentYearsNoLeapYear
+        [TestCase(2019, 12, 31, 2020, 3, 1, 61)] //WhenArrivalBeforDepartureAndInDifferentYearsInLeapYear
+        [TestCase(2018, 1, 1, 2020, 1, 1, 730)] //WhenArrivalBeforeDepartureAndAtLeastTwoYearsApart
+        [TestCase(2019, 1, 1, 2019, 1, 1, 0)] //WhenArrivalAndDepartureAreSame
+        public void CalculateNumberOfDays_AcceptedArrivalDeparturePairs_ReturnsNumberOfDays(
+            int arrivalYear, int arrivalMonth, int arrivalDay,
+            int departureYear, int departureMonth, int departureDay,
+            int result)
         {
-            var arrivalDate = new DateTime(2019, 1, 1);
-            var departureDate = new DateTime(2019, 1, 2);
-
-            var calculatedNumberOfDays = _car.CalculateNumberOfDays(arrivalDate,departureDate);
-
-            Assert.That(calculatedNumberOfDays, Is.EqualTo(1));
-        }
-
-        [Test]
-        public void CalculateNumberOfDays_WhenArrivalBeforDepartureAndInDifferentYearsNoLeapYear_ReturnsNumberOfDays()
-        {
-            var arrivalDate = new DateTime(2019, 1, 1);
-            var departureDate = new DateTime(2020, 1, 1);
+            var arrivalDate = new DateTime(arrivalYear, arrivalMonth, arrivalDay);
+            var departureDate = new DateTime(departureYear, departureMonth, departureDay);
 
             var calculatedNumberOfDays = _car.CalculateNumberOfDays(arrivalDate, departureDate);
 
-            Assert.That(calculatedNumberOfDays, Is.EqualTo(365));
-        }
-
-        [Test]
-        public void CalculateNumberOfDays_WhenArrivalBeforDepartureAndInDifferentYearsInLeapYear_ReturnsNumberOfDays()
-        {
-            var arrivalDate = new DateTime(2019, 12, 31);
-            var departureDate = new DateTime(2020, 3, 1); // 1 + 31 + 29
-
-            var calculatedNumberOfDays = _car.CalculateNumberOfDays(arrivalDate, departureDate);
-
-            Assert.That(calculatedNumberOfDays, Is.EqualTo(61));
-        }
-
-        [Test]
-        public void CalculateNumberOfDays_WhenArrivalBeforeDepartureAndAtLeastTwoYearsApart_ReturnsNumberOfDays()
-        {
-            var arrivalDate = new DateTime(2018, 1, 1);
-            var departureDate = new DateTime(2020, 1, 1);
-
-            var calculatedNumberOfDays = _car.CalculateNumberOfDays(arrivalDate, departureDate);
-
-            Assert.That(calculatedNumberOfDays, Is.EqualTo(730));
-        }
-
-        [Test]
-        public void CalculateNumberOfDays_WhenArrivalAndDepartureAreSame_ReturnsNumberOfDays()
-        {
-            var arrivalDate = new DateTime(2019, 1, 1);
-            var departureDate = new DateTime(2019, 1, 1);
-
-            var calculatedNumberOfDays = _car.CalculateNumberOfDays(arrivalDate, departureDate);
-
-            Assert.That(calculatedNumberOfDays, Is.EqualTo(0));
+            Assert.That(calculatedNumberOfDays,Is.EqualTo(result));
         }
     }
 }

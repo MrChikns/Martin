@@ -43,9 +43,9 @@ namespace HotelGarage.UnitTests.Models
         }
 
         [Test]
-        public void GetStateOfPlaceName_PPlaceNameIsVolnoAndIdIsGreaterThan19_VolnoStaff()
+        public void GetStateOfPlaceName_PPlaceNameIsVolnoAndStaffOnly_VolnoStaff()
         {
-            _parkingPlace.Id = 20; // id mista, od ktereho parkuje staff na parkovisti
+            _parkingPlace.Id = Constants.NumberOfStandardParkingPlaces + 1;
             _stateOfPlace.Name = Constants.FreeStateOfPlaceConstant;
 
             _parkingPlace.StateOfPlace.Name = _parkingPlace.GetStateOfPlaceName();

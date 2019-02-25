@@ -1,10 +1,11 @@
 ﻿using System;
 using HotelGarage.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace HotelGarage.UnitTests.Controllers
 {
-    [TestClass]
+    [TestFixture]
     public class ParkingControllerTests
     {
         private ParkingController _controller;
@@ -14,7 +15,7 @@ namespace HotelGarage.UnitTests.Controllers
             _controller = new ParkingController();
         }
 
-        [TestMethod]
+        [Test]
         public void TestMethod1()
         {
         }

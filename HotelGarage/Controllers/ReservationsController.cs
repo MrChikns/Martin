@@ -33,11 +33,14 @@ namespace HotelGarage.Controllers
         // nova rezervace
         public ActionResult Create(int? pPlaceId)
         {
-            return View("Form", new Reservation( (pPlaceId != null) ? (int)pPlaceId : 0,
-                StateOfReservation.Reserved,
-                DateTime.Now,
-                DateTime.Now.AddDays(1)
-            ));
+            return View("Form", 
+                new Reservation()
+                {
+                    ParkingPlaceId = (pPlaceId != null) ? (int)pPlaceId : 0,
+                    StateOfReservationId = StateOfReservation.Reserved,
+                    Arrival = DateTime.Now,
+                    Departure = DateTime.Now.AddDays(1)
+                });
         }
 
         // update rezervace
@@ -84,7 +87,17 @@ namespace HotelGarage.Controllers
             //vytvoreni rezervace anebo update
             if (viewModel.Id == 0)
             {
-                reservation = new Reservation(viewModel, car);
+                reservation = new Reservation()
+                    {
+                        LicensePlate = viewModel.LicensePlate,
+                        Arrival = viewModel.Arrival,
+                        Departure = viewModel.Departure,
+                        IsRegistered = viewModel.IsRegistered,
+                        ParkingPlaceId = viewModel.ParkingPlaceId,
+                        Car = car,
+                        StateOfReservationId = StateOfReservation.Reserved
+                    };
+
                 _context.Reservations.Add(reservation);
             }
             else

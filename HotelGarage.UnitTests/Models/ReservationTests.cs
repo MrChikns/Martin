@@ -10,15 +10,24 @@ namespace HotelGarage.UnitTests.Models
     public class ReservationTests
     {
         Reservation _reservation;
+        string _staraSPZ;
 
         [SetUp]
         public void SetUp()
         {
-            _reservation = new Reservation("stara", DateTime.Now.AddDays(1), DateTime.Now.AddDays(1),
-                true, 1, new Car { LicensePlate = "stara" });
+            _staraSPZ = "staraSPZ";
 
-            _reservation.StateOfReservationId = StateOfReservation.Reserved;
-        }
+            _reservation = new Reservation()
+            {
+                LicensePlate = _staraSPZ,
+                Arrival = DateTime.Now.AddDays(1),
+                Departure = DateTime.Now.AddDays(1),
+                IsRegistered = true,
+                ParkingPlaceId = 1,
+                Car = new Car { LicensePlate = _staraSPZ },
+                StateOfReservationId = StateOfReservation.Reserved
+            };
+        }   
 
         [Test]
         public void CheckOut_ReservationIsNotInhouse_ThrowsArgumentOutOfRangeException()
@@ -41,7 +50,7 @@ namespace HotelGarage.UnitTests.Models
         {
             ParkingPlace parkingPlace = null;
 
-            _reservation.Cancel(parkingPlace, new StateOfPlace() { Id = 1, Name = "Volno" });
+            _reservation.Cancel(parkingPlace, new StateOfPlace() { Id = 1, Name = Helpers.Constants.FreeStateOfPlaceConstant });
 
             Assert.That(parkingPlace, Is.EqualTo(null));
             Assert.That(_reservation.StateOfReservationId, Is.EqualTo(4));
@@ -53,7 +62,7 @@ namespace HotelGarage.UnitTests.Models
             ParkingPlace parkingPlace = new ParkingPlace();
             parkingPlace.AssignReservation(_reservation);
 
-            _reservation.Cancel(parkingPlace, new StateOfPlace() { Id = 1, Name = "Volno" });
+            _reservation.Cancel(parkingPlace, new StateOfPlace() { Id = 1, Name = Helpers.Constants.FreeStateOfPlaceConstant });
 
             Assert.That(parkingPlace.Reservation, Is.EqualTo(null));
             Assert.That(_reservation.StateOfReservationId, Is.EqualTo(4));

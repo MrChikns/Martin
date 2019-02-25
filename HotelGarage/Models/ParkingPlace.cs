@@ -34,7 +34,7 @@ namespace HotelGarage.Models
                         parkingPlaceName = Constants.DepartureStateOfPlaceConstant;
                     break;
                 case Constants.FreeStateOfPlaceConstant:
-                    if (this.Id > 19)
+                    if (this.Id > Helpers.Constants.NumberOfStandardParkingPlaces)
                         parkingPlaceName = Constants.FreeStaffStateOfPlaceConstant;
                     break;
                 default:

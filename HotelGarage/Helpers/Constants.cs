@@ -9,6 +9,8 @@ namespace HotelGarage.Helpers
     {
         public const string NotFilledOutMessageConstant = "Nevyplněno";
 
+        public const int NumberOfStandardParkingPlaces = 19;
+
         public const string NotRegisteredStateOfPlaceConstant = "Neregistrován";
         public const string ReservedStateOfPlaceConstant = "Rezervováno";
         public const string EmployeeStateOfPlaceConstant = "Zaměstnanec";

@@ -29,39 +29,6 @@ namespace HotelGarage.Models
 
         public byte StateOfReservationId { get; set; }
 
-        public Reservation() { }
-
-        public Reservation(int parkingPlaceId, byte stateOfReservationId, DateTime arrival, DateTime departure)
-        {
-            ParkingPlaceId = parkingPlaceId;
-            StateOfReservationId = stateOfReservationId;
-            Arrival = arrival;
-            Departure = departure;
-        }
-
-        public Reservation(string licensePlate, DateTime arrival, DateTime departure,
-            bool isRegistered, int parkingPlaceId, Car car)
-        {
-            LicensePlate = licensePlate;
-            Arrival = arrival;
-            Departure = departure;
-            IsRegistered = isRegistered;
-            ParkingPlaceId = parkingPlaceId;
-            Car = car;
-            StateOfReservationId = StateOfReservation.Reserved;
-        }
-
-        public Reservation(Reservation reservation, Car car)
-        {
-            LicensePlate = reservation.LicensePlate;
-            Arrival = reservation.Arrival;
-            Departure = reservation.Departure;
-            IsRegistered = reservation.IsRegistered;
-            ParkingPlaceId = reservation.ParkingPlaceId;
-            Car = car;
-            StateOfReservationId = StateOfReservation.Reserved;
-        }
-
         public void SetDepartureDay(DateTime date)
         {
             Departure = date;

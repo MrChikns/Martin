@@ -1,5 +1,4 @@
-﻿using HotelGarage.Dtos;
-using HotelGarage.Models;
+﻿using HotelGarage.Models;
 using HotelGarage.Repositories;
 using HotelGarage.ViewModels;
 using System;

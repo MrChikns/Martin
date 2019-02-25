@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace HotelGarage.Helpers
+﻿namespace HotelGarage.Helpers
 {
     public static class Constants
     {
@@ -11,7 +6,7 @@ namespace HotelGarage.Helpers
 
         public const int NumberOfStandardParkingPlaces = 19;
 
-        public const string NotRegisteredStateOfPlaceConstant = "Neregistrován";
+        public const string NotRegisteredStateOfPlaceConstant = "Neregistrován!";
         public const string ReservedStateOfPlaceConstant = "Rezervováno";
         public const string EmployeeStateOfPlaceConstant = "Zaměstnanec";
         public const string OccupiedStateOfPlaceConstant = "Obsazeno";

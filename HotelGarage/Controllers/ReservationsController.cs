@@ -1,5 +1,6 @@
 ﻿using HotelGarage.Dtos;
 using HotelGarage.Models;
+using HotelGarage.Persistence;
 using HotelGarage.Repositories;
 using System;
 using System.Web.Mvc;
@@ -9,25 +10,19 @@ namespace HotelGarage.Controllers
     public class ReservationsController : Controller
     {
         private ApplicationDbContext _context;
-        private readonly CarRepository _carRepository;
-        private readonly ReservationRepository _reservationRepository;
-        private readonly ParkingPlaceRepository _parkingPlaceRepository;
-        private readonly StateOfPlaceRepository _stateOfPlaceRepository;
+        private readonly UnitOfWork _unitOfWork;
 
         public ReservationsController()
         {
             _context = new ApplicationDbContext();
-            _carRepository = new CarRepository(_context);
-            _reservationRepository = new ReservationRepository(_context);
-            _parkingPlaceRepository = new ParkingPlaceRepository(_context);
-            _stateOfPlaceRepository = new StateOfPlaceRepository(_context);
+            _unitOfWork = new UnitOfWork(_context);
         }
 
         // prehled rezervaci
         public ActionResult List()
         {
-            return View("List", ReservationListDto.GetAllReservationDtos(_reservationRepository,
-                _parkingPlaceRepository));
+            return View("List", ReservationListDto.GetAllReservationDtos(_unitOfWork.Reservations,
+                _unitOfWork.ParkingPlaces));
         }
 
         // nova rezervace
@@ -46,18 +41,18 @@ namespace HotelGarage.Controllers
         // update rezervace
         public ActionResult Update(int resId)
         {
-            return View("Form", _reservationRepository.GetReservationCar(resId));
+            return View("Form", _unitOfWork.Reservations.GetReservationCar(resId));
         }
 
         // zruseni rezervace
         public ActionResult Delete(int resId)
         {
-            var reservation = _reservationRepository.GetReservationCar(resId);
+            var reservation = _unitOfWork.Reservations.GetReservationCar(resId);
 
-            reservation.Cancel(_parkingPlaceRepository.GetParkingPlace(reservation.ParkingPlaceId) 
-                , _stateOfPlaceRepository.GetFreeStateOfPlace());
+            reservation.Cancel(_unitOfWork.ParkingPlaces.GetParkingPlace(reservation.ParkingPlaceId) 
+                , _unitOfWork.StatesOfPlaces.GetFreeStateOfPlace());
 
-            _context.SaveChanges();
+            _unitOfWork.Complete();
 
             return RedirectToAction("Parking", "Parking");
         }
@@ -71,15 +66,15 @@ namespace HotelGarage.Controllers
                 return View("Form", viewModel);
 
             // prirazeni auta a rezervace pokud jiz existuji a nastaveni jejich atributu
-            var reservation = _reservationRepository.GetReservation(viewModel.Id);
-            var car = _carRepository.GetCar(viewModel);
+            var reservation = _unitOfWork.Reservations.GetReservation(viewModel.Id);
+            var car = _unitOfWork.Cars.GetCar(viewModel);
 
 
             // vytvoreni auta anebo update
             if (car == null)
             {
                 car = new Car(viewModel.Car);
-                _context.Cars.Add(car);
+                _unitOfWork.Cars.AddCar(car);
             }
             else
                 car.Update(viewModel);
@@ -88,27 +83,27 @@ namespace HotelGarage.Controllers
             if (viewModel.Id == 0)
             {
                 reservation = new Reservation()
-                    {
-                        LicensePlate = viewModel.LicensePlate,
-                        Arrival = viewModel.Arrival,
-                        Departure = viewModel.Departure,
-                        IsRegistered = viewModel.IsRegistered,
-                        ParkingPlaceId = viewModel.ParkingPlaceId,
-                        Car = car,
-                        StateOfReservationId = StateOfReservation.Reserved
-                    };
+                {
+                    LicensePlate = viewModel.LicensePlate,
+                    Arrival = viewModel.Arrival,
+                    Departure = viewModel.Departure,
+                    IsRegistered = viewModel.IsRegistered,
+                    ParkingPlaceId = viewModel.ParkingPlaceId,
+                    Car = car,
+                    StateOfReservationId = StateOfReservation.Reserved
+                };
 
-                _context.Reservations.Add(reservation);
+                _unitOfWork.Reservations.AddReservation(reservation);
             }
             else
                 reservation.Update(viewModel, car);
 
             ParkingPlaceNotAssignedAndResNotInhouseCheck(
-                reservation, 
-                _parkingPlaceRepository.GetParkingPlaceStateOfPlace(reservation), 
-                _stateOfPlaceRepository);
-            
-            _context.SaveChanges();
+                reservation,
+                _unitOfWork.ParkingPlaces.GetParkingPlaceStateOfPlace(reservation),
+                _unitOfWork.StatesOfPlaces);
+
+            _unitOfWork.Complete();
 
             return RedirectToAction("Parking", "Parking");
         }
@@ -123,10 +118,10 @@ namespace HotelGarage.Controllers
                 // prirazeni k mistu rezervace a nastaveni mista na rezervovano
                 if (reservation.StateOfReservationId == StateOfReservation.Reserved
                     && reservation.Arrival.DayOfYear == DateTime.Today.DayOfYear)
-                    parkingPlace.Reserve(_stateOfPlaceRepository.GetReservedStateOfPlace(), reservation);
+                    parkingPlace.Reserve(_unitOfWork.StatesOfPlaces.GetReservedStateOfPlace(), reservation);
                 // anebo nastaveni prazdneho park. mista
                 else
-                    parkingPlace.AssingnFreeParkingPlace(_stateOfPlaceRepository.GetFreeStateOfPlace(), reservation);
+                    parkingPlace.AssingnFreeParkingPlace(_unitOfWork.StatesOfPlaces.GetFreeStateOfPlace(), reservation);
             }
         }
     }

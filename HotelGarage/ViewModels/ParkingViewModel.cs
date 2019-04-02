@@ -17,7 +17,7 @@ namespace HotelGarage.ViewModels
 
         public ParkingViewModel(ParkingPlaceRepository parkingPlaceRepository, 
                 StateOfPlaceRepository stateOfPlaceRepository, 
-                ReservationRepository reservationRepository,
+                IReservationRepository reservationRepository,
                 CarRepository carRepository,
                 ApplicationDbContext context)
         {

@@ -1,4 +1,5 @@
 ﻿using HotelGarage.Models;
+using HotelGarage.Persistence;
 using HotelGarage.Repositories;
 using HotelGarage.ViewModels;
 using System;
@@ -10,30 +11,29 @@ namespace HotelGarage.Controllers
     public class ParkingController : Controller
     {
         private ApplicationDbContext _context;
-        private readonly ParkingPlaceRepository _parkingPlaceRepository;
-        private readonly ReservationRepository _reservationRepository;
-        private readonly CarRepository _carRepository;
-        private readonly StateOfPlaceRepository _stateOfPlaceRepository;
+        private readonly UnitOfWork _unitOfWork;
 
         public ParkingController()
         {
             _context = new ApplicationDbContext();
-            _stateOfPlaceRepository = new StateOfPlaceRepository(_context);
-            _parkingPlaceRepository = new ParkingPlaceRepository(_context);
-            _reservationRepository = new ReservationRepository(_context);
-            _carRepository = new CarRepository(_context);
+            _unitOfWork = new UnitOfWork(_context);
         }
 
         [AllowAnonymous]
         public ActionResult Parking()
         {
-            return View(new ParkingViewModel(_parkingPlaceRepository, _stateOfPlaceRepository,
-                _reservationRepository, _carRepository, _context));
+            return View(new ParkingViewModel(_unitOfWork.ParkingPlaces, _unitOfWork.StatesOfPlaces,
+                            _unitOfWork.Reservations, _unitOfWork.Cars, _context));
         }
 
         public ActionResult CheckIn(int pPlaceId, int reservationId)
         {
-            var reservation = _reservationRepository.GetReservationCar(reservationId);
+            var reservation = _unitOfWork.Reservations.GetReservationCar(reservationId);
+
+            if(reservation == null)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
 
             CheckEligibilityToCheckIn(reservation);
             CheckInAndSaveContext(pPlaceId, reservation);
@@ -44,24 +44,24 @@ namespace HotelGarage.Controllers
 
         public ActionResult CheckOut(int pPlaceId)
         {
-            var pPlace = _parkingPlaceRepository.GetParkingPlaceReservationCar(pPlaceId);
+            var pPlace = _unitOfWork.ParkingPlaces.GetParkingPlaceReservationCar(pPlaceId);
 
             pPlace.Reservation.CheckOut();
-            pPlace.Release(_stateOfPlaceRepository.GetFreeStateOfPlace());
+            pPlace.Release(_unitOfWork.StatesOfPlaces.GetFreeStateOfPlace());
 
-            _context.SaveChanges();
+            _unitOfWork.Complete();
 
             return RedirectToAction("Parking");
         }
 
         public ActionResult TemporaryLeave(int pPlaceId)
         {
-            var pPlace = _parkingPlaceRepository.GetParkingPlaceReservationCar(pPlaceId);
+            var pPlace = _unitOfWork.ParkingPlaces.GetParkingPlaceReservationCar(pPlaceId);
 
             pPlace.Reservation.TemporaryLeave();
-            pPlace.Reserve(_stateOfPlaceRepository.GetReservedStateOfPlace(), pPlace.Reservation);
+            pPlace.Reserve(_unitOfWork.StatesOfPlaces.GetReservedStateOfPlace(), pPlace.Reservation);
 
-            _context.SaveChanges();
+            _unitOfWork.Complete();
 
             return RedirectToAction("Parking");
         }
@@ -69,12 +69,12 @@ namespace HotelGarage.Controllers
         [HttpPost]
         public ActionResult Reserve(string ParkingPlaceName, int ReservationId)
         {
-            var reservation = _reservationRepository.GetReservation(ReservationId);
+            var reservation = _unitOfWork.Reservations.GetReservation(ReservationId);
 
             ReleasePreviouslyReservedPlace(reservation);
             MoveOrDirectlyReserveParkingPlace(reservation, ParkingPlaceName);
 
-            _context.SaveChanges();
+            _unitOfWork.Complete();
 
             return RedirectToAction("Parking");
         }
@@ -90,34 +90,34 @@ namespace HotelGarage.Controllers
 
         public void CheckInAndSaveContext(int pPlaceId, Reservation reservation)
         {
-            if (_parkingPlaceRepository.GetParkingPlace(pPlaceId).StateOfPlaceId == StateOfPlace.Reserved)
+            if (_unitOfWork.ParkingPlaces.GetParkingPlace(pPlaceId).StateOfPlaceId == StateOfPlace.Reserved)
             {
                 reservation.CheckIn();
-                _parkingPlaceRepository.GetParkingPlace(pPlaceId)
-                    .Occupy(_stateOfPlaceRepository.GetOccupiedStateOfPlace(), reservation);
+                _unitOfWork.ParkingPlaces.GetParkingPlace(pPlaceId)
+                    .Occupy(_unitOfWork.StatesOfPlaces.GetOccupiedStateOfPlace(), reservation);
 
-                _context.SaveChanges();
+                _unitOfWork.Complete();
             }
         }
 
         public void ReleasePreviouslyReservedPlace(Reservation reservation) {
             if (reservation.ParkingPlaceId != 0)
             {
-                _parkingPlaceRepository.GetParkingPlace(reservation)
-                    .Release(_stateOfPlaceRepository.GetFreeStateOfPlace());
+                _unitOfWork.ParkingPlaces.GetParkingPlace(reservation)
+                    .Release(_unitOfWork.StatesOfPlaces.GetFreeStateOfPlace());
             }
         }
 
         public void MoveOrDirectlyReserveParkingPlace(Reservation reservation, string ParkingPlaceName) {
             if (reservation.StateOfReservationId == StateOfReservation.Inhouse)
             {
-                _parkingPlaceRepository.GetParkingPlace(ParkingPlaceName)
-                .MoveInhouseReservation(_stateOfPlaceRepository.GetOccupiedStateOfPlace(), reservation);
+                _unitOfWork.ParkingPlaces.GetParkingPlace(ParkingPlaceName)
+                .MoveInhouseReservation(_unitOfWork.StatesOfPlaces.GetOccupiedStateOfPlace(), reservation);
             }
             else
             {
-                _parkingPlaceRepository.GetParkingPlace(ParkingPlaceName)
-                    .Reserve(_stateOfPlaceRepository.GetReservedStateOfPlace(), reservation);
+                _unitOfWork.ParkingPlaces.GetParkingPlace(ParkingPlaceName)
+                    .Reserve(_unitOfWork.StatesOfPlaces.GetReservedStateOfPlace(), reservation);
             }
         }
     }

@@ -32,7 +32,7 @@ namespace HotelGarage.Dtos
             IsRegistered = reservation.IsRegistered;
         }
 
-        public static IList<ReservationDto> GetArrivingReservations(ReservationRepository reservationRepository, 
+        public static IList<ReservationDto> GetArrivingReservations(IReservationRepository reservationRepository, 
             ParkingPlaceRepository parkingPlaceRepository)
         {
             var arrivingResDtos = new List<ReservationDto>();
@@ -50,7 +50,7 @@ namespace HotelGarage.Dtos
             return arrivingResDtos.OrderBy(o => o.ParkingPlaceId).ToList();
         }
 
-        public static IList<ReservationDto> GetNoShowReservations(ReservationRepository reservationRepository,
+        public static IList<ReservationDto> GetNoShowReservations(IReservationRepository reservationRepository,
             ParkingPlaceRepository parkingPlaceRepository)
         {
             var nSResDtos = new List<ReservationDto>();
@@ -69,7 +69,7 @@ namespace HotelGarage.Dtos
             return nSResDtos.OrderBy(o => o.Arrival).ToList();
         }
         
-        public static IList<ReservationDto> GetInhouseReservations(ReservationRepository reservationRepository,
+        public static IList<ReservationDto> GetInhouseReservations(IReservationRepository reservationRepository,
             ParkingPlaceRepository parkingPlaceRepository)
         {
             var inhouseResDtos = new List<ReservationDto>();

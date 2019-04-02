@@ -105,7 +105,7 @@ namespace HotelGarage.Dtos
                     }
                     else
                     {
-                        ppDto.AssignCar(carRepository.GetCar(parkingPlace));
+                        ppDto.AssignCar(carRepository.GetCar(parkingPlace.Reservation));
                         ppDto.AssignReservation(parkingPlace);
                     }
                 }

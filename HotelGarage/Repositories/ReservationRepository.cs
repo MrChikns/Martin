@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace HotelGarage.Repositories
 {
-    public class ReservationRepository
+    public class ReservationRepository : IReservationRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -94,6 +94,11 @@ namespace HotelGarage.Repositories
                     && (DbFunctions.TruncateTime(r.Arrival) <= date
                         && DbFunctions.TruncateTime(r.Departure) > date))
                 .ToList();
+        }
+
+        internal void AddReservation(Reservation reservation)
+        {
+            _context.Reservations.Add(reservation);
         }
 
         public OccupancyNumbersOfTheDay[] GetNumberOfFreeParkingPlacesAndPlacesOccupiedByEmployeesArray()

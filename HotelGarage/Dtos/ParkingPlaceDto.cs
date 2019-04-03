@@ -1,4 +1,5 @@
 ﻿using HotelGarage.Models;
+using HotelGarage.Persistence;
 using HotelGarage.Repositories;
 using System;
 using System.Collections.Generic;
@@ -74,11 +75,10 @@ namespace HotelGarage.Dtos
             this.IsRegisteredBootbox = (parkingPlace.Reservation.IsRegistered)?"Ano":"Ne!";
         }
 
-        public static List<ParkingPlaceDto> GetParkingPlaceDtos(ParkingPlaceRepository parkingPlaceRepository, 
-            StateOfPlaceRepository stateOfPlaceRepository, CarRepository carRepository,ApplicationDbContext context)
+        public static List<ParkingPlaceDto> GetParkingPlaceDtos(IUnitOfWork unitOfWork)
         {
             var dtoList = new List<ParkingPlaceDto>();
-            var parkingPlaces = parkingPlaceRepository.GetParkingPlacesStateOfPlaceReservationCar();
+            var parkingPlaces = unitOfWork.ParkingPlaces.GetParkingPlacesStateOfPlaceReservationCar();
             foreach (var parkingPlace in parkingPlaces)
             {
                 //predvyplneni pro prázdné parkovací místo 
@@ -92,7 +92,7 @@ namespace HotelGarage.Dtos
                     {
                         parkingPlace.Reservation.UpdateInhouseReservationCheckout();
                         ppDto.StateOfPlace = parkingPlace.GetStateOfPlaceName();
-                        context.SaveChanges();
+                        unitOfWork.Complete();
                     }
 
                     //vyrazeni rezervaci z minuleho dne anebo prirazeni rezervace do parkovaciho mista
@@ -100,12 +100,12 @@ namespace HotelGarage.Dtos
                         && parkingPlace.Reservation.StateOfReservationId == StateOfReservation.Reserved)
                     {
                         var res = parkingPlace.Reservation;
-                        parkingPlace.Release(stateOfPlaceRepository.GetFreeStateOfPlace());
-                        context.SaveChanges();
+                        parkingPlace.Release(unitOfWork.StatesOfPlaces.GetFreeStateOfPlace());
+                        unitOfWork.Complete();
                     }
                     else
                     {
-                        ppDto.AssignCar(carRepository.GetCar(parkingPlace.Reservation));
+                        ppDto.AssignCar(unitOfWork.Cars.GetCar(parkingPlace.Reservation));
                         ppDto.AssignReservation(parkingPlace);
                     }
                 }

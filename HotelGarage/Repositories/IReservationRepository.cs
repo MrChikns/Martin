@@ -17,5 +17,6 @@ namespace HotelGarage.Repositories
         List<Reservation> GetReturningReservationsCars();
         string GetStateOfReservationName(int id);
         List<Reservation> GetTodaysReservationsCar();
+        void AddReservation(Reservation reservation);
     }
 }

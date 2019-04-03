@@ -1,4 +1,5 @@
 ﻿using HotelGarage.Models;
+using HotelGarage.Persistence;
 using HotelGarage.Repositories;
 using System.Collections.Generic;
 
@@ -19,8 +20,8 @@ namespace HotelGarage.Dtos
         public string IsEmployee { get; set; }
         public string NumberOfStays { get; set; }
 
-        public ReservationListDto(Reservation reservation, ReservationRepository reservationRepository,
-            ParkingPlaceRepository parkingPlaceRepository)
+        public ReservationListDto(Reservation reservation, IReservationRepository reservationRepository,
+            IParkingPlaceRepository parkingPlaceRepository)
         {
             var nevyplneno = "Nevyplněno";
 
@@ -40,14 +41,13 @@ namespace HotelGarage.Dtos
             NumberOfStays = reservation.Car.NumberOfStays.ToString();
         }
 
-        public static IList<ReservationListDto> GetAllReservationDtos(ReservationRepository reservationRepository,
-            ParkingPlaceRepository parkingPlaceRepository)
+        public static IList<ReservationListDto> GetAllReservationDtos(IUnitOfWork unitOfWork)
         {
             var allResListDto = new List<ReservationListDto>();
 
-            foreach (var res in reservationRepository.GetAllReservationsCar())
+            foreach (var res in unitOfWork.Reservations.GetAllReservationsCar())
             {
-                allResListDto.Add(new ReservationListDto(res,reservationRepository,parkingPlaceRepository));
+                allResListDto.Add(new ReservationListDto(res,unitOfWork.Reservations,unitOfWork.ParkingPlaces));
             }
             return allResListDto;
         }

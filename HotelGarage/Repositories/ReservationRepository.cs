@@ -96,7 +96,7 @@ namespace HotelGarage.Repositories
                 .ToList();
         }
 
-        internal void AddReservation(Reservation reservation)
+        public void AddReservation(Reservation reservation)
         {
             _context.Reservations.Add(reservation);
         }

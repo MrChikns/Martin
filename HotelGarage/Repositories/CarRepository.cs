@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace HotelGarage.Repositories
 {
-    public class CarRepository
+    public class CarRepository : ICarRepository
     {
         private ApplicationDbContext _context;
 
@@ -18,7 +18,7 @@ namespace HotelGarage.Repositories
             return _context.Cars.FirstOrDefault(c => c.LicensePlate == reservation.Car.LicensePlate);
         }
 
-        internal void AddCar(Car car)
+        public void Add(Car car)
         {
             _context.Cars.Add(car);
         }

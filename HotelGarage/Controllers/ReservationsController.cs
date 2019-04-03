@@ -9,20 +9,17 @@ namespace HotelGarage.Controllers
 {
     public class ReservationsController : Controller
     {
-        private ApplicationDbContext _context;
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ReservationsController()
+        public ReservationsController(IUnitOfWork unitOfWork)
         {
-            _context = new ApplicationDbContext();
-            _unitOfWork = new UnitOfWork(_context);
+            _unitOfWork = unitOfWork;
         }
 
         // prehled rezervaci
         public ActionResult List()
         {
-            return View("List", ReservationListDto.GetAllReservationDtos(_unitOfWork.Reservations,
-                _unitOfWork.ParkingPlaces));
+            return View("List", ReservationListDto.GetAllReservationDtos(_unitOfWork));
         }
 
         // nova rezervace
@@ -74,7 +71,7 @@ namespace HotelGarage.Controllers
             if (car == null)
             {
                 car = new Car(viewModel.Car);
-                _unitOfWork.Cars.AddCar(car);
+                _unitOfWork.Cars.Add(car);
             }
             else
                 car.Update(viewModel);
@@ -111,7 +108,7 @@ namespace HotelGarage.Controllers
         public void ParkingPlaceNotAssignedAndResNotInhouseCheck(
             Reservation reservation, 
             ParkingPlace parkingPlace, 
-            StateOfPlaceRepository stateOfPlaceRepository)
+            IStateOfPlaceRepository stateOfPlaceRepository)
         {
             if (reservation.ParkingPlaceId != 0 && reservation.StateOfReservationId != StateOfReservation.Inhouse)
             {

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace HotelGarage.Repositories
 {
-    public class ParkingPlaceRepository
+    public class ParkingPlaceRepository : IParkingPlaceRepository
     {
         private readonly ApplicationDbContext _context;
 

@@ -7,14 +7,14 @@ using System.Web;
 
 namespace HotelGarage.Persistence
 {
-    public class UnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
 
-        public ParkingPlaceRepository ParkingPlaces { get; private set; }
-        public ReservationRepository Reservations { get; private set; }
-        public StateOfPlaceRepository StatesOfPlaces { get; private set; }
-        public CarRepository Cars { get; private set; }
+        public IParkingPlaceRepository ParkingPlaces { get; private set; }
+        public IReservationRepository Reservations { get; private set; }
+        public IStateOfPlaceRepository StatesOfPlaces { get; private set; }
+        public ICarRepository Cars { get; private set; }
 
 
         public UnitOfWork(ApplicationDbContext context)

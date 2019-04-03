@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace HotelGarage.Repositories
 {
-    public class StateOfPlaceRepository
+    public class StateOfPlaceRepository : IStateOfPlaceRepository
     {
         private ApplicationDbContext _context;
 

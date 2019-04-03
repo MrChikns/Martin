@@ -10,20 +10,17 @@ namespace HotelGarage.Controllers
 
     public class ParkingController : Controller
     {
-        private ApplicationDbContext _context;
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ParkingController()
+        public ParkingController(IUnitOfWork unitOfWork)
         {
-            _context = new ApplicationDbContext();
-            _unitOfWork = new UnitOfWork(_context);
+            _unitOfWork = unitOfWork;
         }
 
         [AllowAnonymous]
         public ActionResult Parking()
         {
-            return View(new ParkingViewModel(_unitOfWork.ParkingPlaces, _unitOfWork.StatesOfPlaces,
-                            _unitOfWork.Reservations, _unitOfWork.Cars, _context));
+            return View(new ParkingViewModel(_unitOfWork));
         }
 
         public ActionResult CheckIn(int pPlaceId, int reservationId)

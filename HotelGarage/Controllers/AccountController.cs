@@ -1,4 +1,5 @@
-﻿using HotelGarage.Models;
+﻿using HotelGarage.Core.Models;
+using HotelGarage.Core.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;

@@ -5,7 +5,8 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using HotelGarage.Models;
+using HotelGarage.Core.Models;
+using HotelGarage.Core.ViewModels;
 
 namespace HotelGarage.Controllers
 {

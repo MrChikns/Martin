@@ -1,7 +1,7 @@
 ﻿using HotelGarage.Helpers;
 using System;
 
-namespace HotelGarage.Models
+namespace HotelGarage.Core.Models
 {
     public class ParkingPlace
     {

@@ -1,6 +1,7 @@
-﻿using HotelGarage.Repositories;
+﻿using HotelGarage.Core.Repositories;
+using HotelGarage.Persistence.Repositories;
 
-namespace HotelGarage.Persistence
+namespace HotelGarage.Core
 {
     public interface IUnitOfWork
     {

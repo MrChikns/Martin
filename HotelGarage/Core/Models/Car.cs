@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace HotelGarage.Models
+namespace HotelGarage.Core.Models
 {
     public class Car
     {

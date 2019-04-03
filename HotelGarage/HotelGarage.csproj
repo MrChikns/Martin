@@ -255,116 +255,117 @@
     <Compile Include="Controllers\ParkingController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ReservationsController.cs" />
-    <Compile Include="Dtos\ReservationDto.cs" />
-    <Compile Include="Dtos\ParkingPlaceDto.cs" />
-    <Compile Include="Dtos\ReservationListDto.cs" />
+    <Compile Include="Core\Models\ApplicationUser.cs" />
+    <Compile Include="Persistence\ApplicationDbContext.cs" />
+    <Compile Include="Core\Dtos\ReservationDto.cs" />
+    <Compile Include="Core\Dtos\ParkingPlaceDto.cs" />
+    <Compile Include="Core\Dtos\ReservationListDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Constants.cs" />
-    <Compile Include="Migrations\201810111011152_InitialModel.cs" />
-    <Compile Include="Migrations\201810111011152_InitialModel.Designer.cs">
+    <Compile Include="Persistence\Migrations\201810111011152_InitialModel.cs" />
+    <Compile Include="Persistence\Migrations\201810111011152_InitialModel.Designer.cs">
       <DependentUpon>201810111011152_InitialModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201810111028457_CarsAndReservationsModel.cs" />
-    <Compile Include="Migrations\201810111028457_CarsAndReservationsModel.Designer.cs">
+    <Compile Include="Persistence\Migrations\201810111028457_CarsAndReservationsModel.cs" />
+    <Compile Include="Persistence\Migrations\201810111028457_CarsAndReservationsModel.Designer.cs">
       <DependentUpon>201810111028457_CarsAndReservationsModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201810111032071_CarsAndReservationsModel1.cs" />
-    <Compile Include="Migrations\201810111032071_CarsAndReservationsModel1.Designer.cs">
+    <Compile Include="Persistence\Migrations\201810111032071_CarsAndReservationsModel1.cs" />
+    <Compile Include="Persistence\Migrations\201810111032071_CarsAndReservationsModel1.Designer.cs">
       <DependentUpon>201810111032071_CarsAndReservationsModel1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201810111949372_AddCarIdToReservationModel.cs" />
-    <Compile Include="Migrations\201810111949372_AddCarIdToReservationModel.Designer.cs">
+    <Compile Include="Persistence\Migrations\201810111949372_AddCarIdToReservationModel.cs" />
+    <Compile Include="Persistence\Migrations\201810111949372_AddCarIdToReservationModel.Designer.cs">
       <DependentUpon>201810111949372_AddCarIdToReservationModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201810112012147_LicensePlateAddedToReservationModelClass.cs" />
-    <Compile Include="Migrations\201810112012147_LicensePlateAddedToReservationModelClass.Designer.cs">
+    <Compile Include="Persistence\Migrations\201810112012147_LicensePlateAddedToReservationModelClass.cs" />
+    <Compile Include="Persistence\Migrations\201810112012147_LicensePlateAddedToReservationModelClass.Designer.cs">
       <DependentUpon>201810112012147_LicensePlateAddedToReservationModelClass.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201810112023052_EditOfCarClassAnnotations.cs" />
-    <Compile Include="Migrations\201810112023052_EditOfCarClassAnnotations.Designer.cs">
+    <Compile Include="Persistence\Migrations\201810112023052_EditOfCarClassAnnotations.cs" />
+    <Compile Include="Persistence\Migrations\201810112023052_EditOfCarClassAnnotations.Designer.cs">
       <DependentUpon>201810112023052_EditOfCarClassAnnotations.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201810112051585_EditOfCarProperties.cs" />
-    <Compile Include="Migrations\201810112051585_EditOfCarProperties.Designer.cs">
+    <Compile Include="Persistence\Migrations\201810112051585_EditOfCarProperties.cs" />
+    <Compile Include="Persistence\Migrations\201810112051585_EditOfCarProperties.Designer.cs">
       <DependentUpon>201810112051585_EditOfCarProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201810131852406_reservationLicensePlateAtributChanged.cs" />
-    <Compile Include="Migrations\201810131852406_reservationLicensePlateAtributChanged.Designer.cs">
+    <Compile Include="Persistence\Migrations\201810131852406_reservationLicensePlateAtributChanged.cs" />
+    <Compile Include="Persistence\Migrations\201810131852406_reservationLicensePlateAtributChanged.Designer.cs">
       <DependentUpon>201810131852406_reservationLicensePlateAtributChanged.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201810131926398_parkingPlaceAndItsStateModel.cs" />
-    <Compile Include="Migrations\201810131926398_parkingPlaceAndItsStateModel.Designer.cs">
+    <Compile Include="Persistence\Migrations\201810131926398_parkingPlaceAndItsStateModel.cs" />
+    <Compile Include="Persistence\Migrations\201810131926398_parkingPlaceAndItsStateModel.Designer.cs">
       <DependentUpon>201810131926398_parkingPlaceAndItsStateModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201810131953171_addNameToParkingPlacesAndPopulateItsDbTable.cs" />
-    <Compile Include="Migrations\201810131953171_addNameToParkingPlacesAndPopulateItsDbTable.Designer.cs">
+    <Compile Include="Persistence\Migrations\201810131953171_addNameToParkingPlacesAndPopulateItsDbTable.cs" />
+    <Compile Include="Persistence\Migrations\201810131953171_addNameToParkingPlacesAndPopulateItsDbTable.Designer.cs">
       <DependentUpon>201810131953171_addNameToParkingPlacesAndPopulateItsDbTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201810132053385_newReservationTypesPlusTheirTables.cs" />
-    <Compile Include="Migrations\201810132053385_newReservationTypesPlusTheirTables.Designer.cs">
+    <Compile Include="Persistence\Migrations\201810132053385_newReservationTypesPlusTheirTables.cs" />
+    <Compile Include="Persistence\Migrations\201810132053385_newReservationTypesPlusTheirTables.Designer.cs">
       <DependentUpon>201810132053385_newReservationTypesPlusTheirTables.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201810140901537_AddParkingPlaceIdToReservationModelClass.cs" />
-    <Compile Include="Migrations\201810140901537_AddParkingPlaceIdToReservationModelClass.Designer.cs">
+    <Compile Include="Persistence\Migrations\201810140901537_AddParkingPlaceIdToReservationModelClass.cs" />
+    <Compile Include="Persistence\Migrations\201810140901537_AddParkingPlaceIdToReservationModelClass.Designer.cs">
       <DependentUpon>201810140901537_AddParkingPlaceIdToReservationModelClass.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201810201608193_addStateOfReservationToModelAndPopulateItsStates.cs" />
-    <Compile Include="Migrations\201810201608193_addStateOfReservationToModelAndPopulateItsStates.Designer.cs">
+    <Compile Include="Persistence\Migrations\201810201608193_addStateOfReservationToModelAndPopulateItsStates.cs" />
+    <Compile Include="Persistence\Migrations\201810201608193_addStateOfReservationToModelAndPopulateItsStates.Designer.cs">
       <DependentUpon>201810201608193_addStateOfReservationToModelAndPopulateItsStates.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201810201707422_stateOfReservationModelChange.cs" />
-    <Compile Include="Migrations\201810201707422_stateOfReservationModelChange.Designer.cs">
+    <Compile Include="Persistence\Migrations\201810201707422_stateOfReservationModelChange.cs" />
+    <Compile Include="Persistence\Migrations\201810201707422_stateOfReservationModelChange.Designer.cs">
       <DependentUpon>201810201707422_stateOfReservationModelChange.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201810232049098_reservationModelUpdate.cs" />
-    <Compile Include="Migrations\201810232049098_reservationModelUpdate.Designer.cs">
+    <Compile Include="Persistence\Migrations\201810232049098_reservationModelUpdate.cs" />
+    <Compile Include="Persistence\Migrations\201810232049098_reservationModelUpdate.Designer.cs">
       <DependentUpon>201810232049098_reservationModelUpdate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201811171848238_addNewStateOfPlaceIntoDb.cs" />
-    <Compile Include="Migrations\201811171848238_addNewStateOfPlaceIntoDb.Designer.cs">
+    <Compile Include="Persistence\Migrations\201811171848238_addNewStateOfPlaceIntoDb.cs" />
+    <Compile Include="Persistence\Migrations\201811171848238_addNewStateOfPlaceIntoDb.Designer.cs">
       <DependentUpon>201811171848238_addNewStateOfPlaceIntoDb.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201811182142080_renameStateOfReservationStates.cs" />
-    <Compile Include="Migrations\201811182142080_renameStateOfReservationStates.Designer.cs">
+    <Compile Include="Persistence\Migrations\201811182142080_renameStateOfReservationStates.cs" />
+    <Compile Include="Persistence\Migrations\201811182142080_renameStateOfReservationStates.Designer.cs">
       <DependentUpon>201811182142080_renameStateOfReservationStates.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201811222223592_noteFiledAddedIntoCarModel.cs" />
-    <Compile Include="Migrations\201811222223592_noteFiledAddedIntoCarModel.Designer.cs">
+    <Compile Include="Persistence\Migrations\201811222223592_noteFiledAddedIntoCarModel.cs" />
+    <Compile Include="Persistence\Migrations\201811222223592_noteFiledAddedIntoCarModel.Designer.cs">
       <DependentUpon>201811222223592_noteFiledAddedIntoCarModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201811271944120_updateDatabseModelData.cs" />
-    <Compile Include="Migrations\201811271944120_updateDatabseModelData.Designer.cs">
+    <Compile Include="Persistence\Migrations\201811271944120_updateDatabseModelData.cs" />
+    <Compile Include="Persistence\Migrations\201811271944120_updateDatabseModelData.Designer.cs">
       <DependentUpon>201811271944120_updateDatabseModelData.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201811272102374_numberOfStaysIntoCarModelClass.cs" />
-    <Compile Include="Migrations\201811272102374_numberOfStaysIntoCarModelClass.Designer.cs">
+    <Compile Include="Persistence\Migrations\201811272102374_numberOfStaysIntoCarModelClass.cs" />
+    <Compile Include="Persistence\Migrations\201811272102374_numberOfStaysIntoCarModelClass.Designer.cs">
       <DependentUpon>201811272102374_numberOfStaysIntoCarModelClass.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Car.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\OccupancyNumbersOfTheDay.cs" />
-    <Compile Include="Models\ParkingPlace.cs" />
-    <Compile Include="Models\Reservation.cs" />
-    <Compile Include="Models\StateOfPlace.cs" />
-    <Compile Include="Models\StateOfReservation.cs" />
-    <Compile Include="Persistence\IUnitOfWork.cs" />
+    <Compile Include="Persistence\Migrations\Configuration.cs" />
+    <Compile Include="Core\ViewModels\AccountViewModels.cs" />
+    <Compile Include="Core\Models\Car.cs" />
+    <Compile Include="Core\ViewModels\ManageViewModels.cs" />
+    <Compile Include="Core\Models\OccupancyNumbersOfTheDay.cs" />
+    <Compile Include="Core\Models\ParkingPlace.cs" />
+    <Compile Include="Core\Models\Reservation.cs" />
+    <Compile Include="Core\Models\StateOfPlace.cs" />
+    <Compile Include="Core\Models\StateOfReservation.cs" />
+    <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Persistence\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\CarRepository.cs" />
-    <Compile Include="Repositories\ICarRepository.cs" />
-    <Compile Include="Repositories\IParkingPlaceRepository.cs" />
-    <Compile Include="Repositories\IReservationRepository.cs" />
-    <Compile Include="Repositories\IStateOfPlaceRepository.cs" />
-    <Compile Include="Repositories\ParkingPlaceRepository.cs" />
-    <Compile Include="Repositories\ReservationRepository.cs" />
-    <Compile Include="Repositories\StateOfPlaceRepository.cs" />
+    <Compile Include="Persistence\Repositories\CarRepository.cs" />
+    <Compile Include="Core\Repositories\ICarRepository.cs" />
+    <Compile Include="Core\Repositories\IParkingPlaceRepository.cs" />
+    <Compile Include="Core\Repositories\IReservationRepository.cs" />
+    <Compile Include="Core\Repositories\IStateOfPlaceRepository.cs" />
+    <Compile Include="Persistence\Repositories\ParkingPlaceRepository.cs" />
+    <Compile Include="Persistence\Repositories\ReservationRepository.cs" />
+    <Compile Include="Persistence\Repositories\StateOfPlaceRepository.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModels\ParkingViewModel.cs" />
+    <Compile Include="Core\ViewModels\ParkingViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -439,64 +440,64 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201810111011152_InitialModel.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201810111011152_InitialModel.resx">
       <DependentUpon>201810111011152_InitialModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810111028457_CarsAndReservationsModel.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201810111028457_CarsAndReservationsModel.resx">
       <DependentUpon>201810111028457_CarsAndReservationsModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810111032071_CarsAndReservationsModel1.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201810111032071_CarsAndReservationsModel1.resx">
       <DependentUpon>201810111032071_CarsAndReservationsModel1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810111949372_AddCarIdToReservationModel.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201810111949372_AddCarIdToReservationModel.resx">
       <DependentUpon>201810111949372_AddCarIdToReservationModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810112012147_LicensePlateAddedToReservationModelClass.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201810112012147_LicensePlateAddedToReservationModelClass.resx">
       <DependentUpon>201810112012147_LicensePlateAddedToReservationModelClass.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810112023052_EditOfCarClassAnnotations.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201810112023052_EditOfCarClassAnnotations.resx">
       <DependentUpon>201810112023052_EditOfCarClassAnnotations.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810112051585_EditOfCarProperties.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201810112051585_EditOfCarProperties.resx">
       <DependentUpon>201810112051585_EditOfCarProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810131852406_reservationLicensePlateAtributChanged.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201810131852406_reservationLicensePlateAtributChanged.resx">
       <DependentUpon>201810131852406_reservationLicensePlateAtributChanged.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810131926398_parkingPlaceAndItsStateModel.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201810131926398_parkingPlaceAndItsStateModel.resx">
       <DependentUpon>201810131926398_parkingPlaceAndItsStateModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810131953171_addNameToParkingPlacesAndPopulateItsDbTable.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201810131953171_addNameToParkingPlacesAndPopulateItsDbTable.resx">
       <DependentUpon>201810131953171_addNameToParkingPlacesAndPopulateItsDbTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810132053385_newReservationTypesPlusTheirTables.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201810132053385_newReservationTypesPlusTheirTables.resx">
       <DependentUpon>201810132053385_newReservationTypesPlusTheirTables.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810140901537_AddParkingPlaceIdToReservationModelClass.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201810140901537_AddParkingPlaceIdToReservationModelClass.resx">
       <DependentUpon>201810140901537_AddParkingPlaceIdToReservationModelClass.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810201608193_addStateOfReservationToModelAndPopulateItsStates.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201810201608193_addStateOfReservationToModelAndPopulateItsStates.resx">
       <DependentUpon>201810201608193_addStateOfReservationToModelAndPopulateItsStates.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810201707422_stateOfReservationModelChange.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201810201707422_stateOfReservationModelChange.resx">
       <DependentUpon>201810201707422_stateOfReservationModelChange.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810232049098_reservationModelUpdate.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201810232049098_reservationModelUpdate.resx">
       <DependentUpon>201810232049098_reservationModelUpdate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811171848238_addNewStateOfPlaceIntoDb.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201811171848238_addNewStateOfPlaceIntoDb.resx">
       <DependentUpon>201811171848238_addNewStateOfPlaceIntoDb.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811182142080_renameStateOfReservationStates.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201811182142080_renameStateOfReservationStates.resx">
       <DependentUpon>201811182142080_renameStateOfReservationStates.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811222223592_noteFiledAddedIntoCarModel.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201811222223592_noteFiledAddedIntoCarModel.resx">
       <DependentUpon>201811222223592_noteFiledAddedIntoCarModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811271944120_updateDatabseModelData.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201811271944120_updateDatabseModelData.resx">
       <DependentUpon>201811271944120_updateDatabseModelData.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811272102374_numberOfStaysIntoCarModelClass.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201811272102374_numberOfStaysIntoCarModelClass.resx">
       <DependentUpon>201811272102374_numberOfStaysIntoCarModelClass.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

@@ -1,5 +1,6 @@
-﻿using HotelGarage.Models;
-using HotelGarage.Repositories;
+﻿using HotelGarage.Core.Models;
+using HotelGarage.Persistence;
+using HotelGarage.Persistence.Repositories;
 using System.Collections.Generic;
 using System.Web.Http;
 

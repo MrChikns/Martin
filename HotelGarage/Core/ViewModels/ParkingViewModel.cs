@@ -1,10 +1,10 @@
-﻿using HotelGarage.Dtos;
-using HotelGarage.Models;
+﻿using HotelGarage.Core.Models;
 using HotelGarage.Persistence;
-using HotelGarage.Repositories;
+using HotelGarage.Persistence.Repositories;
 using System.Collections.Generic;
+using HotelGarage.Core.Dtos;
 
-namespace HotelGarage.ViewModels
+namespace HotelGarage.Core.ViewModels
 {
     public class ParkingViewModel
     {

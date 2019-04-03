@@ -6,7 +6,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using HotelGarage.Models;
+using HotelGarage.Core.Models;
+using HotelGarage.Persistence;
 
 namespace HotelGarage
 {

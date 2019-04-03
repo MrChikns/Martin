@@ -1,4 +1,4 @@
-﻿namespace HotelGarage.Models
+﻿namespace HotelGarage.Core.Models
 {
     public class StateOfPlace
     {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using HotelGarage.Models;
+using HotelGarage.Core.Models;
 
-namespace HotelGarage.Repositories
+namespace HotelGarage.Core.Repositories
 {
     public interface IReservationRepository
     {

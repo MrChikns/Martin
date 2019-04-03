@@ -1,7 +1,9 @@
-﻿using HotelGarage.Models;
+﻿using HotelGarage.Core.Models;
+using HotelGarage.Core.Repositories;
+using HotelGarage.Persistence;
 using System.Linq;
 
-namespace HotelGarage.Repositories
+namespace HotelGarage.Persistence.Repositories
 {
     public class StateOfPlaceRepository : IStateOfPlaceRepository
     {

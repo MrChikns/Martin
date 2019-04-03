@@ -4,7 +4,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
-using HotelGarage.Models;
+using HotelGarage.Core.Models;
+using HotelGarage.Persistence;
 
 namespace HotelGarage
 {

@@ -5,14 +5,15 @@ namespace HotelGarage.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<HotelGarage.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<HotelGarage.Persistence.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            MigrationsDirectory = @"Persistence\Migrations";
         }
 
-        protected override void Seed(HotelGarage.Models.ApplicationDbContext context)
+        protected override void Seed(HotelGarage.Persistence.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

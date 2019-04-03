@@ -1,7 +1,8 @@
-﻿using HotelGarage.Models;
+﻿using HotelGarage.Core;
+using HotelGarage.Core.Models;
+using HotelGarage.Core.ViewModels;
 using HotelGarage.Persistence;
-using HotelGarage.Repositories;
-using HotelGarage.ViewModels;
+using HotelGarage.Persistence.Repositories;
 using System;
 using System.Web.Mvc;
 

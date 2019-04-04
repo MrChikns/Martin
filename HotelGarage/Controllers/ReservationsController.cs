@@ -21,35 +21,43 @@ namespace HotelGarage.Controllers
         // prehled rezervaci
         public ActionResult List()
         {
-            return View("List", ReservationListDto.GetAllReservationDtos(_unitOfWork));
+            var allReservations = ReservationListDto.GetAllReservationDtos(_unitOfWork);
+
+            return View("List", allReservations);
         }
 
         // nova rezervace
         public ActionResult Create(int? pPlaceId)
         {
-            return View("Form", 
-                new Reservation()
-                {
-                    ParkingPlaceId = (pPlaceId != null) ? (int)pPlaceId : 0,
-                    StateOfReservationId = StateOfReservation.Reserved,
-                    Arrival = DateTime.Now,
-                    Departure = DateTime.Now.AddDays(1)
-                });
+
+            var newReservation = new Reservation()
+            {
+                ParkingPlaceId = (pPlaceId != null) ? (int)pPlaceId : 0,
+                StateOfReservationId = StateOfReservation.Reserved,
+                Arrival = DateTime.Now,
+                Departure = DateTime.Now.AddDays(1)
+            };
+
+            return View("Form", newReservation);
         }
 
         // update rezervace
         public ActionResult Update(int resId)
         {
-            return View("Form", _unitOfWork.Reservations.GetReservationCar(resId));
+            var updatedReservation = _unitOfWork.Reservations.GetReservationCar(resId);
+
+            return View("Form", updatedReservation);
         }
 
         // zruseni rezervace
         public ActionResult Delete(int resId)
         {
-            var reservation = _unitOfWork.Reservations.GetReservationCar(resId);
+            var reservationToDelete = _unitOfWork.Reservations.GetReservationCar(resId);
 
-            reservation.Cancel(_unitOfWork.ParkingPlaces.GetParkingPlace(reservation.ParkingPlaceId) 
-                , _unitOfWork.StatesOfPlaces.GetFreeStateOfPlace());
+            var reservationsParkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(reservationToDelete.ParkingPlaceId);
+            var freeStateOfPlace = _unitOfWork.StatesOfPlaces.GetFreeStateOfPlace();
+
+            reservationToDelete.Cancel(reservationsParkingPlace, freeStateOfPlace);
 
             _unitOfWork.Complete();
 
@@ -70,7 +78,7 @@ namespace HotelGarage.Controllers
 
 
             // vytvoreni auta anebo update
-            if (car == null)
+            if (_unitOfWork.Cars.GetCar(viewModel) == null)
             {
                 car = new Car(viewModel.Car);
                 _unitOfWork.Cars.Add(car);

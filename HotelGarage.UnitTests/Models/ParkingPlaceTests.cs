@@ -1,6 +1,6 @@
 ﻿using System;
+using HotelGarage.Core.Models;
 using HotelGarage.Helpers;
-using HotelGarage.Models;
 using NUnit.Framework;
 
 namespace HotelGarage.UnitTests.Models

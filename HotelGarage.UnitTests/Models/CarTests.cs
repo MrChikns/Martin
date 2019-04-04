@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 using NUnit.Framework;
-using HotelGarage.Models;
+using HotelGarage.Core.Models;
 
 namespace HotelGarage.UnitTests.Models
 {

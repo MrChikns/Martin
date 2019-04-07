@@ -117,9 +117,53 @@ namespace HotelGarage.UnitTests.Controllers
         }
 
         [Test]
+        public void TemporaryLeave_InhouseReservation_ReturnRedirectToActionResult()
+        {
+            _parkingPlace.Reservation = _reservation;
+
+            _mockParkingPlaceRepository.Setup(p => p.GetParkingPlaceReservationCar(_existing)).Returns(_parkingPlace);
+
+            var result = (RedirectToRouteResult)_controller.TemporaryLeave(_existing);
+
+            Assert.IsTrue(result.RouteValues.ContainsKey("action"));
+            Assert.IsTrue(result.RouteValues.ContainsValue("Parking"));
+        }
+
+        [Test]
         public void Reserve_NoReservationWithGivenId_ThrowArgumentOutOfRangeException()
         {
             Assert.That(() => _controller.Reserve("_existing", _nonExisting), Throws.Exception.TypeOf<ArgumentOutOfRangeException>());
+        }
+
+        [Test]
+        public void Reserve_ReservedReservationAndReservedParkingPlace_ReturnRedirectToActionResult()
+        {
+            _parkingPlace.Reservation = _reservation;
+            _mockReservationRepository.Setup(r => r.GetReservation(_existing)).Returns(_reservation);
+            _mockParkingPlaceRepository.Setup(r => r.GetParkingPlace(_reservation)).Returns(_parkingPlace);
+            _mockParkingPlaceRepository.Setup(r => r.GetParkingPlace("_existing")).Returns(_parkingPlace);
+            _mockStatesOfPlacesRepository.Setup(r => r.GetFreeStateOfPlace()).Returns(new StateOfPlace() { Id = _existing});
+
+            var result = (RedirectToRouteResult)_controller.Reserve("_existing",_existing);
+
+            Assert.IsTrue(result.RouteValues.ContainsKey("action"));
+            Assert.IsTrue(result.RouteValues.ContainsValue("Parking"));
+        }
+
+        [Test]
+        public void Reserve_InhouseReservationAndOccupiedParkingPlace_ReturnRedirectToActionResult()
+        {
+            _parkingPlace.Reservation = _reservation;
+            _reservation.StateOfReservationId = StateOfReservation.Inhouse;
+            _mockReservationRepository.Setup(r => r.GetReservation(_existing)).Returns(_reservation);
+            _mockParkingPlaceRepository.Setup(r => r.GetParkingPlace(_reservation)).Returns(_parkingPlace);
+            _mockParkingPlaceRepository.Setup(r => r.GetParkingPlace("_existing")).Returns(_parkingPlace);
+            _mockStatesOfPlacesRepository.Setup(r => r.GetFreeStateOfPlace()).Returns(new StateOfPlace() { Id = _existing });
+
+            var result = (RedirectToRouteResult)_controller.Reserve("_existing", _existing);
+
+            Assert.IsTrue(result.RouteValues.ContainsKey("action"));
+            Assert.IsTrue(result.RouteValues.ContainsValue("Parking"));
         }
     }
 }

@@ -25,14 +25,25 @@ namespace HotelGarage.Controllers
         public ActionResult CheckIn(int pPlaceId, int reservationId)
         {
             var reservation = _unitOfWork.Reservations.GetReservationCar(reservationId)
-                ?? throw new ArgumentOutOfRangeException("Wrong reservation ID passed"); 
+                ?? throw new ArgumentOutOfRangeException("Wrong reservation ID passed");
 
-            CheckEligibilityToCheckIn(reservation);
-            CheckInAndSaveContext(pPlaceId, reservation);
+            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(pPlaceId)
+                ?? throw new ArgumentOutOfRangeException("Parking place with such an id does not exist");
 
+            if (parkingPlace.StateOfPlaceId != StateOfPlace.Reserved)
+                throw new ArgumentException("Parking place has a wrong state to check in");
+
+            if (reservation.Arrival.Date != DateTime.Today.Date && reservation.StateOfReservationId != StateOfReservation.TemporaryLeave)
+                throw new ArgumentException("Reservation not arriving today and is no Temporary Leave");
+
+            reservation.CheckIn();
+
+            parkingPlace.Occupy(_unitOfWork.StatesOfPlaces.GetOccupiedStateOfPlace(), reservation);
+
+            _unitOfWork.Complete();
+            
             return RedirectToAction("Parking");
         }
-
 
         public ActionResult CheckOut(int pPlaceId)
         {
@@ -72,32 +83,6 @@ namespace HotelGarage.Controllers
             _unitOfWork.Complete();
 
             return RedirectToAction("Parking");
-        }
-
-        public RedirectToRouteResult CheckEligibilityToCheckIn(Reservation reservation)
-        {
-            if (reservation.Arrival.Date != DateTime.Today.Date
-                && reservation.StateOfReservationId != StateOfReservation.TemporaryLeave)
-                return RedirectToAction("Parking");
-
-            return null;
-        }
-
-        public void CheckInAndSaveContext(int pPlaceId, Reservation reservation)
-        {
-            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(pPlaceId)
-                ?? throw new ArgumentOutOfRangeException("Parking place with such an id does not exist");
-
-            if (parkingPlace.StateOfPlaceId == StateOfPlace.Reserved)
-            {
-                reservation.CheckIn();
-                _unitOfWork.ParkingPlaces.GetParkingPlace(pPlaceId)
-                    .Occupy(_unitOfWork.StatesOfPlaces.GetOccupiedStateOfPlace(), reservation);
-
-                _unitOfWork.Complete();
-            }
-            else
-                throw new ArgumentException("Parking place has a wrong state to check in");
         }
 
         public void ReleasePreviouslyReservedPlace(Reservation reservation) {

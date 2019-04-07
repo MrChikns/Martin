@@ -2,10 +2,12 @@
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading;
+using System.Web.Mvc;
 using HotelGarage.Controllers;
 using HotelGarage.Core;
 using HotelGarage.Core.Models;
 using HotelGarage.Core.Repositories;
+using HotelGarage.Persistence;
 using HotelGarage.UnitTests.Extensions;
 using Moq;
 using NUnit.Framework;
@@ -19,57 +21,105 @@ namespace HotelGarage.UnitTests.Controllers
         Mock<IUnitOfWork> _mockUnitOfWork;
         Mock<IReservationRepository> _mockReservationRepository;
         private Mock<IParkingPlaceRepository> _mockParkingPlaceRepository;
-
+        private Mock<IStateOfPlaceRepository> _mockStatesOfPlacesRepository;
+        private Reservation _reservation;
+        private ParkingPlace _parkingPlace;
+        private int _existing = 1;
+        private int _nonExisting = 2;
+        
         [SetUp]
         public void SetUp()
         {
+            _reservation = new Reservation() { Id = _existing, Arrival = DateTime.Today,
+                StateOfReservationId = StateOfReservation.Reserved, Car = new Car(), ParkingPlaceId = _existing };
+            _parkingPlace = new ParkingPlace() { Id = _existing, StateOfPlace = 
+                new StateOfPlace() { Id = StateOfPlace.Reserved}, StateOfPlaceId = StateOfPlace.Reserved };
+
             _mockReservationRepository = new Mock<IReservationRepository>();
+            _mockReservationRepository.Setup(r => r.GetReservationCar(_existing)).Returns(_reservation);
+
             _mockParkingPlaceRepository = new Mock<IParkingPlaceRepository>();
+            _mockParkingPlaceRepository.Setup(p => p.GetParkingPlace(_existing)).Returns(_parkingPlace);
+
+            _mockStatesOfPlacesRepository = new Mock<IStateOfPlaceRepository>();
+            _mockStatesOfPlacesRepository.Setup(s => s.GetOccupiedStateOfPlace()).Returns(new StateOfPlace());
 
             _mockUnitOfWork = new Mock<IUnitOfWork>();
             _mockUnitOfWork.SetupGet(u => u.Reservations).Returns(_mockReservationRepository.Object);
             _mockUnitOfWork.SetupGet(u => u.ParkingPlaces).Returns(_mockParkingPlaceRepository.Object);
+            _mockUnitOfWork.SetupGet(u => u.StatesOfPlaces).Returns(_mockStatesOfPlacesRepository.Object);
 
             _controller = new ParkingController(_mockUnitOfWork.Object);
             _controller.MockCurrentUser("1", "user1@domain.com");
         }
 
         [Test]
+        public void CheckIn_ExistingReservationAndParkingPlace_ReturnsRedirectToActionResult()
+        {
+            var result = (RedirectToRouteResult)_controller.CheckIn(_existing,_existing);            
+
+            Assert.IsTrue(result.RouteValues.ContainsKey("action"));
+            Assert.IsTrue(result.RouteValues.ContainsValue("Parking"));
+        }
+
+        [Test]
         public void CheckIn_NoReservationWithGivenId_ThrowArgumentOutOfRangeException()
         {
-            Assert.That(() => _controller.CheckIn(1, 1),Throws.Exception.TypeOf<ArgumentOutOfRangeException>()); 
+            Assert.That(() => _controller.CheckIn(_existing, _nonExisting),Throws.Exception.TypeOf<ArgumentOutOfRangeException>()); 
+        }
+
+        [Test]
+        public void CheckIn_NoParkingPlaceWithGivenId_ThrowArgumentOutOfRangeException()
+        {
+            Assert.That(() => _controller.CheckIn(_nonExisting, _existing), Throws.Exception.TypeOf<ArgumentOutOfRangeException>());
+        }
+
+        [Test]
+        public void CheckIn_StateOfPlaceNotReserved_ThrowArgumentException()
+        {
+            _parkingPlace.StateOfPlaceId = StateOfPlace.Occupied;
+
+            Assert.That(() => _controller.CheckIn(_existing, _existing), Throws.Exception.TypeOf<ArgumentException>());
+        }
+
+        [Test]
+        public void CheckIn_ArrivalNotTodayAndNoTemporaryLeave_ThrowArgumentOutOfRangeException()
+        {
+            _reservation.Arrival = DateTime.Today.AddDays(1);
+
+            Assert.That(() => _controller.CheckIn(_existing, _existing), Throws.Exception.TypeOf<ArgumentException>());
         }
 
         [Test]
         public void CheckOut_NoParkingPlaceWithGivenId_ThrowArgumentOutOfRangeException()
         {
-            Assert.That(() => _controller.CheckOut(1), Throws.Exception.TypeOf<ArgumentOutOfRangeException>());
+            Assert.That(() => _controller.CheckOut(_nonExisting), Throws.Exception.TypeOf<ArgumentOutOfRangeException>());
+        }
+
+        [Test]
+        public void CheckOut_ExistingParkingPlace_ReturnsRedirectToActionResult()
+        {
+            _parkingPlace.Reservation = _reservation;
+            _reservation.StateOfReservationId = StateOfReservation.Inhouse;
+
+            _mockParkingPlaceRepository.Setup(p => p.GetParkingPlaceReservationCar(_existing)).Returns(_parkingPlace);
+
+            var result = (RedirectToRouteResult)_controller.CheckOut(_existing);
+
+            Assert.IsTrue(result.RouteValues.ContainsKey("action"));
+            Assert.IsTrue(result.RouteValues.ContainsValue("Parking"));
         }
 
         [Test]
         public void TemporaryLeave_NoParkingPlaceWithGivenId_ThrowArgumentOutOfRangeException()
         {
-            Assert.That(() => _controller.TemporaryLeave(1), Throws.Exception.TypeOf<ArgumentOutOfRangeException>());
+            Assert.That(() => _controller.TemporaryLeave(_nonExisting), Throws.Exception.TypeOf<ArgumentOutOfRangeException>());
         }
 
         [Test]
         public void Reserve_NoReservationWithGivenId_ThrowArgumentOutOfRangeException()
         {
-            Assert.That(() => _controller.Reserve("", 1), Throws.Exception.TypeOf<ArgumentOutOfRangeException>());
-        }
-
-        [Test]
-        public void CheckInAndSaveContext_OutOfRangeParkingPlaceIdPassed_ThrowArgumentOutOfRangeException()
-        {
-            Assert.That(() => _controller.CheckInAndSaveContext(1, new Reservation()), Throws.Exception.TypeOf<ArgumentOutOfRangeException>());
-        }
-
-        [Test]
-        public void CheckInAndSaveContext_ParkingPlaceIdOfWrongStatePassed_ThrowArgumentOutOfRangeException()
-        {
-            _mockParkingPlaceRepository.Setup(p => p.GetParkingPlace(1)).Returns(new ParkingPlace() { StateOfPlaceId = StateOfPlace.Occupied});
-
-            Assert.That(() => _controller.CheckInAndSaveContext(1, new Reservation()), Throws.Exception.TypeOf<ArgumentException>());
+            Assert.That(() => _controller.Reserve("_existing", _nonExisting), Throws.Exception.TypeOf<ArgumentOutOfRangeException>());
         }
     }
 }

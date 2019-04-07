@@ -1,8 +1,6 @@
 ﻿using HotelGarage.Core;
 using HotelGarage.Core.Models;
 using HotelGarage.Core.ViewModels;
-using HotelGarage.Persistence;
-using HotelGarage.Persistence.Repositories;
 using System;
 using System.Web.Mvc;
 
@@ -30,7 +28,7 @@ namespace HotelGarage.Controllers
 
             if(reservation == null)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException("Wrong reservation ID passed");
             }
 
             CheckEligibilityToCheckIn(reservation);
@@ -44,6 +42,11 @@ namespace HotelGarage.Controllers
         {
             var pPlace = _unitOfWork.ParkingPlaces.GetParkingPlaceReservationCar(pPlaceId);
 
+            if (pPlace == null)
+            {
+                throw new ArgumentOutOfRangeException("Wrong parking place ID passed");
+            }
+
             pPlace.Reservation.CheckOut();
             pPlace.Release(_unitOfWork.StatesOfPlaces.GetFreeStateOfPlace());
 
@@ -55,6 +58,11 @@ namespace HotelGarage.Controllers
         public ActionResult TemporaryLeave(int pPlaceId)
         {
             var pPlace = _unitOfWork.ParkingPlaces.GetParkingPlaceReservationCar(pPlaceId);
+
+            if (pPlace == null)
+            {
+                throw new ArgumentOutOfRangeException("Wrong parking place ID passed");
+            }
 
             pPlace.Reservation.TemporaryLeave();
             pPlace.Reserve(_unitOfWork.StatesOfPlaces.GetReservedStateOfPlace(), pPlace.Reservation);
@@ -68,6 +76,11 @@ namespace HotelGarage.Controllers
         public ActionResult Reserve(string ParkingPlaceName, int ReservationId)
         {
             var reservation = _unitOfWork.Reservations.GetReservation(ReservationId);
+
+            if (reservation == null)
+            {
+                throw new ArgumentOutOfRangeException("Wrong reservation ID passed");
+            }
 
             ReleasePreviouslyReservedPlace(reservation);
             MoveOrDirectlyReserveParkingPlace(reservation, ParkingPlaceName);
@@ -88,7 +101,14 @@ namespace HotelGarage.Controllers
 
         public void CheckInAndSaveContext(int pPlaceId, Reservation reservation)
         {
-            if (_unitOfWork.ParkingPlaces.GetParkingPlace(pPlaceId).StateOfPlaceId == StateOfPlace.Reserved)
+            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(pPlaceId);
+
+            if (parkingPlace == null)
+            {
+                throw new ArgumentOutOfRangeException("Parking place with such an id does not exist");
+            }
+
+            if (parkingPlace.StateOfPlaceId == StateOfPlace.Reserved)
             {
                 reservation.CheckIn();
                 _unitOfWork.ParkingPlaces.GetParkingPlace(pPlaceId)
@@ -96,6 +116,8 @@ namespace HotelGarage.Controllers
 
                 _unitOfWork.Complete();
             }
+            else
+                throw new ArgumentException("Parking place has a wrong state to check in");
         }
 
         public void ReleasePreviouslyReservedPlace(Reservation reservation) {

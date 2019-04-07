@@ -2,8 +2,6 @@
 using HotelGarage.Core.Dtos;
 using HotelGarage.Core.Models;
 using HotelGarage.Core.Repositories;
-using HotelGarage.Persistence;
-using HotelGarage.Persistence.Repositories;
 using System;
 using System.Web.Mvc;
 

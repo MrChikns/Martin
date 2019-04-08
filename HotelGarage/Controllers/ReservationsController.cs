@@ -42,7 +42,8 @@ namespace HotelGarage.Controllers
         // update rezervace
         public ActionResult Update(int resId)
         {
-            var updatedReservation = _unitOfWork.Reservations.GetReservationCar(resId);
+            var updatedReservation = _unitOfWork.Reservations.GetReservationCar(resId)??
+                throw new ArgumentOutOfRangeException("Reservation ID not existing");
 
             return View("Form", updatedReservation);
         }

@@ -37,7 +37,7 @@ namespace HotelGarage.UnitTests.Controllers
 
             _mockReservationRepository = new Mock<IReservationRepository>();
             _mockReservationRepository.Setup(r => r.GetReservationCar(_existing)).Returns(_reservation);
-
+            
             _mockParkingPlaceRepository = new Mock<IParkingPlaceRepository>();
             _mockParkingPlaceRepository.Setup(p => p.GetParkingPlace(_existing)).Returns(_parkingPlace);
 
@@ -56,10 +56,9 @@ namespace HotelGarage.UnitTests.Controllers
         [Test]
         public void CheckIn_ExistingReservationAndParkingPlace_ReturnsRedirectToActionResult()
         {
-            var result = (RedirectToRouteResult)_controller.CheckIn(_existing,_existing);            
+            var result = (RedirectToRouteResult)_controller.CheckIn(_existing,_existing);
 
-            Assert.IsTrue(result.RouteValues.ContainsKey("action"));
-            Assert.IsTrue(result.RouteValues.ContainsValue("Parking"));
+            Assert.AreEqual("Parking", result.RouteValues["action"]);
         }
 
         [Test]
@@ -106,8 +105,7 @@ namespace HotelGarage.UnitTests.Controllers
 
             var result = (RedirectToRouteResult)_controller.CheckOut(_existing);
 
-            Assert.IsTrue(result.RouteValues.ContainsKey("action"));
-            Assert.IsTrue(result.RouteValues.ContainsValue("Parking"));
+            Assert.AreEqual("Parking", result.RouteValues["action"]);
         }
 
         [Test]
@@ -125,8 +123,7 @@ namespace HotelGarage.UnitTests.Controllers
 
             var result = (RedirectToRouteResult)_controller.TemporaryLeave(_existing);
 
-            Assert.IsTrue(result.RouteValues.ContainsKey("action"));
-            Assert.IsTrue(result.RouteValues.ContainsValue("Parking"));
+            Assert.AreEqual("Parking", result.RouteValues["action"]);
         }
 
         [Test]
@@ -146,8 +143,7 @@ namespace HotelGarage.UnitTests.Controllers
 
             var result = (RedirectToRouteResult)_controller.Reserve("_existing",_existing);
 
-            Assert.IsTrue(result.RouteValues.ContainsKey("action"));
-            Assert.IsTrue(result.RouteValues.ContainsValue("Parking"));
+            Assert.AreEqual("Parking", result.RouteValues["action"]);
         }
 
         [Test]
@@ -162,8 +158,7 @@ namespace HotelGarage.UnitTests.Controllers
 
             var result = (RedirectToRouteResult)_controller.Reserve("_existing", _existing);
 
-            Assert.IsTrue(result.RouteValues.ContainsKey("action"));
-            Assert.IsTrue(result.RouteValues.ContainsValue("Parking"));
+            Assert.AreEqual("Parking", result.RouteValues["action"]);
         }
     }
 }

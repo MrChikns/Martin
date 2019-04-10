@@ -43,7 +43,7 @@ namespace HotelGarage.Controllers
         public ActionResult Update(int resId)
         {
             var updatedReservation = _unitOfWork.Reservations.GetReservationCar(resId)??
-                throw new ArgumentOutOfRangeException("Reservation ID not existing");
+                throw new ArgumentOutOfRangeException("Reservation ID does not exist");
 
             return View("Form", updatedReservation);
         }
@@ -51,7 +51,8 @@ namespace HotelGarage.Controllers
         // zruseni rezervace
         public ActionResult Delete(int resId)
         {
-            var reservationToDelete = _unitOfWork.Reservations.GetReservationCar(resId);
+            var reservationToDelete = _unitOfWork.Reservations.GetReservationCar(resId)??
+                throw new ArgumentOutOfRangeException("Reservation ID does not exist");
 
             var reservationsParkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(reservationToDelete.ParkingPlaceId);
             var freeStateOfPlace = _unitOfWork.StatesOfPlaces.GetFreeStateOfPlace();

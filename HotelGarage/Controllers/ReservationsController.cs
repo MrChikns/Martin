@@ -24,7 +24,7 @@ namespace HotelGarage.Controllers
             return View("List", allReservations);
         }
 
-        // nova rezervace
+        // formular pro novou rezervaci
         public ActionResult Create(int? pPlaceId)
         {
 
@@ -39,7 +39,7 @@ namespace HotelGarage.Controllers
             return View("Form", newReservation);
         }
 
-        // update rezervace
+        // formular pro update rezervace
         public ActionResult Update(int resId)
         {
             var updatedReservation = _unitOfWork.Reservations.GetReservationCar(resId)??

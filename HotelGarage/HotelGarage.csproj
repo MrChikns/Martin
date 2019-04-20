@@ -90,6 +90,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
@@ -264,6 +265,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Constants.cs" />
+    <Compile Include="Persistence\IApplicationDbContext.cs" />
     <Compile Include="Persistence\Migrations\201810111011152_InitialModel.cs" />
     <Compile Include="Persistence\Migrations\201810111011152_InitialModel.Designer.cs">
       <DependentUpon>201810111011152_InitialModel.cs</DependentUpon>

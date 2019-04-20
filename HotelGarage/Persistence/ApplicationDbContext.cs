@@ -4,7 +4,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace HotelGarage.Persistence
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext
     {
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Car> Cars { get; set; }

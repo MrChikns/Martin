@@ -8,9 +8,9 @@ namespace HotelGarage.Persistence.Repositories
 {
     public class CarRepository : ICarRepository
     {
-        private ApplicationDbContext _context;
+        private IApplicationDbContext _context;
 
-        public CarRepository(ApplicationDbContext context)
+        public CarRepository(IApplicationDbContext context)
         {
             _context = context;
         }

@@ -43,7 +43,7 @@ namespace HotelGarage.Controllers
         public ActionResult Update(int resId)
         {
             var updatedReservation = _unitOfWork.Reservations.GetReservationCar(resId)??
-                throw new ArgumentOutOfRangeException("Reservation ID not existing");
+                throw new ArgumentOutOfRangeException("Reservation ID does not exist");
 
             return View("Form", updatedReservation);
         }
@@ -51,7 +51,8 @@ namespace HotelGarage.Controllers
         // zruseni rezervace
         public ActionResult Delete(int resId)
         {
-            var reservationToDelete = _unitOfWork.Reservations.GetReservationCar(resId);
+            var reservationToDelete = _unitOfWork.Reservations.GetReservationCar(resId)??
+                throw new ArgumentOutOfRangeException("Reservation ID does not exist");
 
             var reservationsParkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(reservationToDelete.ParkingPlaceId);
             var freeStateOfPlace = _unitOfWork.StatesOfPlaces.GetFreeStateOfPlace();
@@ -75,8 +76,7 @@ namespace HotelGarage.Controllers
             var reservation = _unitOfWork.Reservations.GetReservation(viewModel.Id);
             var car = _unitOfWork.Cars.GetCar(viewModel);
 
-
-            // vytvoreni auta anebo update
+            // vytvoreni auta anebo update stavajiciho
             if (_unitOfWork.Cars.GetCar(viewModel) == null)
             {
                 car = new Car(viewModel.Car);
@@ -88,37 +88,17 @@ namespace HotelGarage.Controllers
             //vytvoreni rezervace anebo update
             if (viewModel.Id == 0)
             {
-                reservation = new Reservation()
-                {
-                    LicensePlate = viewModel.LicensePlate,
-                    Arrival = viewModel.Arrival,
-                    Departure = viewModel.Departure,
-                    IsRegistered = viewModel.IsRegistered,
-                    ParkingPlaceId = viewModel.ParkingPlaceId,
-                    Car = car,
-                    StateOfReservationId = StateOfReservation.Reserved
-                };
+                reservation = viewModel;
+                reservation.Car = car;
+                reservation.StateOfReservationId = StateOfReservation.Reserved;
 
                 _unitOfWork.Reservations.AddReservation(reservation);
             }
             else
                 reservation.Update(viewModel, car);
 
-            ParkingPlaceNotAssignedAndResNotInhouseCheck(
-                reservation,
-                _unitOfWork.ParkingPlaces.GetParkingPlaceStateOfPlace(reservation),
-                _unitOfWork.StatesOfPlaces);
+            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlaceStateOfPlace(reservation);
 
-            _unitOfWork.Complete();
-
-            return RedirectToAction("Parking", "Parking");
-        }
-
-        public void ParkingPlaceNotAssignedAndResNotInhouseCheck(
-            Reservation reservation, 
-            ParkingPlace parkingPlace, 
-            IStateOfPlaceRepository stateOfPlaceRepository)
-        {
             if (reservation.ParkingPlaceId != 0 && reservation.StateOfReservationId != StateOfReservation.Inhouse)
             {
                 // prirazeni k mistu rezervace a nastaveni mista na rezervovano
@@ -129,6 +109,10 @@ namespace HotelGarage.Controllers
                 else
                     parkingPlace.AssingnFreeParkingPlace(_unitOfWork.StatesOfPlaces.GetFreeStateOfPlace(), reservation);
             }
+
+            _unitOfWork.Complete();
+
+            return RedirectToAction("Parking", "Parking");
         }
     }
 }

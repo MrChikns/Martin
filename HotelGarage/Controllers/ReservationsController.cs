@@ -76,15 +76,19 @@ namespace HotelGarage.Controllers
             var reservation = _unitOfWork.Reservations.GetReservation(viewModel.Id);
             var car = _unitOfWork.Cars.GetCar(viewModel);
 
-            // vytvoreni auta anebo update stavajiciho
-            if (_unitOfWork.Cars.GetCar(viewModel) == null)
-            {
-                car = new Car(viewModel.Car);
-                _unitOfWork.Cars.Add(car);
-            }
-            else
-                car.Update(viewModel);
+            car = CreateOrUpdateCar(viewModel, car);
+            reservation = CreateOrUpdateReservation(viewModel, reservation, car);
 
+            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlaceStateOfPlace(reservation);
+            setupForAssignedNonInHouseReservation(reservation, parkingPlace);
+
+            _unitOfWork.Complete();
+
+            return RedirectToAction("Parking", "Parking");
+        }
+
+        private Reservation CreateOrUpdateReservation(Reservation viewModel, Reservation reservation, Car car)
+        {
             //vytvoreni rezervace anebo update
             if (viewModel.Id == 0)
             {
@@ -97,8 +101,25 @@ namespace HotelGarage.Controllers
             else
                 reservation.Update(viewModel, car);
 
-            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlaceStateOfPlace(reservation);
+            return reservation;
+        }
 
+        private Car CreateOrUpdateCar(Reservation viewModel, Car car)
+        {
+            // vytvoreni auta anebo update stavajiciho
+            if (_unitOfWork.Cars.GetCar(viewModel) == null)
+            {
+                car = new Car(viewModel.Car);
+                _unitOfWork.Cars.Add(car);
+            }
+            else
+                car.Update(viewModel);
+
+            return car;
+        }
+
+        private void setupForAssignedNonInHouseReservation(Reservation reservation, ParkingPlace parkingPlace)
+        {
             if (reservation.ParkingPlaceId != 0 && reservation.StateOfReservationId != StateOfReservation.Inhouse)
             {
                 // prirazeni k mistu rezervace a nastaveni mista na rezervovano
@@ -109,10 +130,6 @@ namespace HotelGarage.Controllers
                 else
                     parkingPlace.AssingnFreeParkingPlace(_unitOfWork.StatesOfPlaces.GetFreeStateOfPlace(), reservation);
             }
-
-            _unitOfWork.Complete();
-
-            return RedirectToAction("Parking", "Parking");
         }
     }
 }

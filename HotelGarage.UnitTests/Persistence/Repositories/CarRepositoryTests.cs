@@ -1,6 +1,7 @@
 ﻿using HotelGarage.Core.Models;
 using HotelGarage.Persistence;
 using HotelGarage.Persistence.Repositories;
+using HotelGarage.UnitTests.Extensions;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -15,14 +16,15 @@ namespace HotelGarage.UnitTests.Persistence.Repositories
     class CarRepositoryTests
     {
         private CarRepository _repository;
+        private Mock<DbSet<Car>> _mockCars;
 
         [SetUp]
         public void TestInitialize()
         {
-            var mockCars = new Mock<DbSet<Car>>();
+            _mockCars = new Mock<DbSet<Car>>();
 
             var mockContext = new Mock<IApplicationDbContext>();
-            mockContext.SetupGet(c => c.Cars).Returns(mockCars.Object);
+            mockContext.SetupGet(c => c.Cars).Returns(() => _mockCars.Object);
 
             _repository = new CarRepository(mockContext.Object);
         }
@@ -30,7 +32,14 @@ namespace HotelGarage.UnitTests.Persistence.Repositories
         [Test]
         public void GetCar_ReservationExists_ReturnCar()
         {
-            var car = new Car() { };
+            var car = new Car() { LicensePlate = "aa"};
+            var reservation = new Reservation() { Car = car};
+
+            _mockCars.SetSource(new[] { car });
+
+            var returnedCar = _repository.GetCar(reservation);
+
+            Assert.That(returnedCar, Is.EqualTo(car));
         }
 
     }

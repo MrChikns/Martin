@@ -42,5 +42,18 @@ namespace HotelGarage.UnitTests.Persistence.Repositories
             Assert.That(returnedCar, Is.EqualTo(car));
         }
 
+        [Test]
+        public void GetCar_ReservationDoesNotExist_ReturnNull()
+        {
+            var car = new Car() { LicensePlate = "aa" };
+            var reservation = new Reservation() { Car = car };
+
+            _mockCars.SetSource(new[] { new Car() { LicensePlate = "bb"} });
+
+            var returnedCar = _repository.GetCar(reservation);
+
+            Assert.That(returnedCar, Is.EqualTo(null));
+        }
+
     }
 }

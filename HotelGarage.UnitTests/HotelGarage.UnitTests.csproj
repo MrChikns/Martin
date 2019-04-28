@@ -87,6 +87,7 @@
     <Compile Include="Models\ParkingPlaceTests.cs" />
     <Compile Include="Persistence\Repositories\CarRepositoryTests.cs" />
     <Compile Include="Extensions\MockDbSetExtensions.cs" />
+    <Compile Include="Persistence\Repositories\ParkingPlaceRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\ReservationTests.cs" />
   </ItemGroup>

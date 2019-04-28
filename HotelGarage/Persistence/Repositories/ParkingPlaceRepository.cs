@@ -9,9 +9,9 @@ namespace HotelGarage.Persistence.Repositories
 {
     public class ParkingPlaceRepository : IParkingPlaceRepository
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
 
-        public ParkingPlaceRepository(ApplicationDbContext context)
+        public ParkingPlaceRepository(IApplicationDbContext context)
         {
             _context = context;
         }

@@ -36,7 +36,7 @@ namespace HotelGarage.Persistence.Repositories
 
         public ParkingPlace GetParkingPlace(Reservation reservation)
         {
-            return _context.ParkingPlaces.First(p => p.Id == reservation.ParkingPlaceId);
+            return _context.ParkingPlaces.FirstOrDefault(p => p.Id == reservation.ParkingPlaceId);
         }
 
         public ParkingPlace GetParkingPlaceStateOfPlace(Reservation reservation)

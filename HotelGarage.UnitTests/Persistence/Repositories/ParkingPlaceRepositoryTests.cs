@@ -126,5 +126,56 @@ namespace HotelGarage.UnitTests.Persistence.Repositories
             Assert.That(returnedParkingPlace.Id, Is.EqualTo(1));
         }
 
+        [Test]
+        public void GetParkingPlaceStateOfPlace_ReservationDoesNotExist_ReturnsNull()
+        {
+            var parkingPlace = new ParkingPlace() { Id = 1, StateOfPlace = new StateOfPlace() { Id = 2} };
+            _mockParkingPlaces.SetSource(new[] { parkingPlace });
+
+            var returnedParkingPlace = _repository.GetParkingPlace(new Reservation() { ParkingPlaceId = 2 });
+
+            Assert.That(returnedParkingPlace, Is.EqualTo(null));
+        }
+
+        [Test]
+        public void GetParkingPlaceStateOfPlace_ReservationExists_ReturnsParkingPlace()
+        {
+            var parkingPlace = new ParkingPlace() { Id = 1, StateOfPlace = new StateOfPlace() { Id = 2} };
+            _mockParkingPlaces.SetSource(new[] { parkingPlace });
+
+            var returnedParkingPlace = _repository.GetParkingPlace(new Reservation() { ParkingPlaceId = 1 });
+
+            Assert.That(returnedParkingPlace.Id, Is.EqualTo(1));
+            Assert.That(returnedParkingPlace.StateOfPlace.Id, Is.EqualTo(2));
+        }
+
+        
+
+        [Test]
+        public void GetNamesOfFreeParkingPlaces_ListIsEmpty_ReturnsNull()
+        {
+            var parkingplace = new ParkingPlace() { StateOfPlaceId = StateOfPlace.Free, Name = "prvni" };
+            var parkingplace2 = new ParkingPlace() { StateOfPlaceId = StateOfPlace.Free, Name = "druhe" };
+
+            _mockParkingPlaces.SetSource(new List<ParkingPlace>());
+
+            var returnedParkingPlaces = _repository.GetNamesOfFreeParkingPlaces();
+
+            Assert.That(returnedParkingPlaces, Is.Empty);
+        }
+
+        [Test]
+        public void GetNamesOfFreeParkingPlaces_ListIsNotEmpty_ReturnsListOfNames()
+        {
+            var parkingplace = new ParkingPlace() { StateOfPlaceId = StateOfPlace.Free, Name = "prvni" };
+            var parkingplace2 = new ParkingPlace() { StateOfPlaceId = StateOfPlace.Free, Name = "druhe" };
+
+            _mockParkingPlaces.SetSource(new[] { parkingplace,parkingplace2});
+
+            var returnedParkingPlaces = _repository.GetNamesOfFreeParkingPlaces();
+
+            Assert.That(returnedParkingPlaces[0], Is.EqualTo("prvni"));
+            Assert.That(returnedParkingPlaces[1], Is.EqualTo("druhe"));
+        }
     }
 }

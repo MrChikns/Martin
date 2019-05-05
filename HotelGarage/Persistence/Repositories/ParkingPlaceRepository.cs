@@ -65,7 +65,12 @@ namespace HotelGarage.Persistence.Repositories
 
         public string GetParkingPlaceName(int id)
         {
-            return _context.ParkingPlaces.First(p => p.Id == id).Name;
+            var parkingPlace = _context.ParkingPlaces.FirstOrDefault(p => p.Id == id);
+
+            if (parkingPlace == null)
+                return null;
+
+            return parkingPlace.Name;
         }
     }
 }

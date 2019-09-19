@@ -20,6 +20,7 @@ namespace HotelGarage.Core.Dtos
         public string ParkingPlaceName { get; set; }
         public string IsEmployee { get; set; }
         public string NumberOfStays { get; set; }
+        public int Id { get; set; }
 
         public ReservationListDto(Reservation reservation, IReservationRepository reservationRepository,
             IParkingPlaceRepository parkingPlaceRepository)
@@ -40,6 +41,7 @@ namespace HotelGarage.Core.Dtos
             ParkingPlaceName = (reservation.ParkingPlaceId == 0) ? nevyplneno : parkingPlaceRepository.GetParkingPlaceName(reservation.ParkingPlaceId);
             IsEmployee = (reservation.Car.IsEmployee) ? "Zaměstnanec" : "Host";
             NumberOfStays = reservation.Car.NumberOfStays.ToString();
+            Id = reservation.Id;
         }
 
         public static IList<ReservationListDto> GetAllReservationDtos(IUnitOfWork unitOfWork)

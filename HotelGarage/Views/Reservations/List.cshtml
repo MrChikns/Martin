@@ -75,7 +75,14 @@
             <td>@res.ParkingPlaceName</td>
             <td>@res.IsEmployee</td>
             <td>@res.NumberOfStays</td>
-            <td>uprav / smaž</td>
+            <td>
+                @Html.ActionLink("Uprav", "Update", "Reservations",
+                    new { resId = res.Id },
+                    new { }) /
+                @Html.ActionLink("Zruš", "Delete", "Reservations",
+                    new { resId = res.Id },
+                    new { })
+            </td>
         </tr>
         }
     </tbody>

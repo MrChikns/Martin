@@ -1,6 +1,4 @@
 ﻿using HotelGarage.Core.Models;
-using HotelGarage.Persistence;
-using HotelGarage.Persistence.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,14 +7,12 @@ namespace HotelGarage.Core.Dtos
     public class ReservationDto
     {
         public int Id { get; set; }
-
         public string CarLicensePlate { get; set; }
         public string CarGuestsName { get; set; }
         public string Arrival { get; set; }
         public string Departure { get; set; }
         public byte StateOfReservationId { get; set; }
         public bool IsRegistered { get; set; }
-
         public int ParkingPlaceId { get; set; }
         public string ParkingPlaceName { get; set; }
 

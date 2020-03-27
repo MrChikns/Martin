@@ -1,14 +1,11 @@
 ﻿using HotelGarage.Core.Models;
 using HotelGarage.Core.Repositories;
-using HotelGarage.Persistence;
-using HotelGarage.Persistence.Repositories;
 using System.Collections.Generic;
 
 namespace HotelGarage.Core.Dtos
 {
     public class ReservationListDto
     {
-
         public string GuestsName { get; set; }
         public string Arrival { get; set; }
         public string Departure { get; set; }
@@ -22,16 +19,14 @@ namespace HotelGarage.Core.Dtos
         public string NumberOfStays { get; set; }
         public int Id { get; set; }
 
-        public ReservationListDto(Reservation reservation, IReservationRepository reservationRepository,
-            IParkingPlaceRepository parkingPlaceRepository)
+        public ReservationListDto(Reservation reservation, IReservationRepository reservationRepository, IParkingPlaceRepository parkingPlaceRepository)
         {
             var nevyplneno = "Nevyplněno";
 
             GuestsName = reservation.Car.GuestsName ?? nevyplneno;
             Arrival = reservation.Arrival.ToString("yyyy.MM.dd hh:mm");
             Departure = reservation.Departure.ToString("yyyy.MM.dd hh:mm");
-            GuestRoomNumber = (reservation.Car.GuestRoomNumber == null) ? 
-                nevyplneno : reservation.Car.GuestRoomNumber.ToString();
+            GuestRoomNumber = (reservation.Car.GuestRoomNumber == null) ? nevyplneno : reservation.Car.GuestRoomNumber.ToString();
             TotalPrice = reservation.Car.ReturnCalculatedTotalPriceString(
                 reservation.Car.CalculateNumberOfDays(reservation.Arrival, reservation.Departure), 
                 reservation.Car.PricePerNight);
@@ -52,9 +47,8 @@ namespace HotelGarage.Core.Dtos
             {
                 allResListDto.Add(new ReservationListDto(res,unitOfWork.Reservations,unitOfWork.ParkingPlaces));
             }
+
             return allResListDto;
         }
-
-        
     }
 }

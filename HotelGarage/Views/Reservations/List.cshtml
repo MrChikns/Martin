@@ -77,10 +77,10 @@
             <td>@res.NumberOfStays</td>
             <td>
                 @Html.ActionLink("Uprav", "Update", "Reservations",
-                    new { resId = res.Id },
+                    new { reservationId = res.Id },
                     new { }) /
                 @Html.ActionLink("Zruš", "Delete", "Reservations",
-                    new { resId = res.Id },
+                    new { reservationId = res.Id },
                     new { })
             </td>
         </tr>

@@ -10,7 +10,7 @@ namespace HotelGarage.Controllers
     public class ParkingController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-
+            
         public ParkingController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -22,22 +22,21 @@ namespace HotelGarage.Controllers
             return View(new ParkingViewModel(_unitOfWork));
         }
 
-        public ActionResult CheckIn(int pPlaceId, int reservationId)
+        public ActionResult CheckIn(int parkingPlaceId, int reservationId)
         {
-            var reservation = _unitOfWork.Reservations.GetReservationCar(reservationId)
-                ?? throw new ArgumentOutOfRangeException("Wrong reservation ID passed");
-
-            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(pPlaceId)
-                ?? throw new ArgumentOutOfRangeException("Parking place with such an id does not exist");
+            var reservation = _unitOfWork.Reservations.GetReservationCar(reservationId) ?? throw new ArgumentOutOfRangeException("Invalid reservation Id.");
+            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(parkingPlaceId) ?? throw new ArgumentOutOfRangeException("Invalid parking place Id.");
 
             if (parkingPlace.StateOfPlaceId != StateOfPlace.Reserved)
-                throw new ArgumentException("Parking place has a wrong state to check in");
-
+            {
+                throw new ArgumentException("Invalid parking place state. Only reserved parking places can be checked in.");
+            }
             if (reservation.Arrival.Date != DateTime.Today.Date && reservation.StateOfReservationId != StateOfReservation.TemporaryLeave)
-                throw new ArgumentException("Reservation not arriving today and is no Temporary Leave");
+            {
+                throw new ArgumentException("Reservation not arriving today has to be in temporary leave state to check in again.");
+            }
 
             reservation.CheckIn();
-
             parkingPlace.Occupy(_unitOfWork.StatesOfPlaces.GetOccupiedStateOfPlace(), reservation);
 
             _unitOfWork.Complete();
@@ -45,26 +44,24 @@ namespace HotelGarage.Controllers
             return RedirectToAction("Parking");
         }
 
-        public ActionResult CheckOut(int pPlaceId)
+        public ActionResult CheckOut(int parkingPlaceId)
         {
-            var pPlace = _unitOfWork.ParkingPlaces.GetParkingPlaceReservationCar(pPlaceId)
-                ?? throw new ArgumentOutOfRangeException("Wrong parking place ID passed"); 
+            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlaceReservationCar(parkingPlaceId) ?? throw new ArgumentOutOfRangeException("Invalid parking place ID."); 
 
-            pPlace.Reservation.CheckOut();
-            pPlace.Release(_unitOfWork.StatesOfPlaces.GetFreeStateOfPlace());
+            parkingPlace.Reservation.CheckOut();
+            parkingPlace.Release(_unitOfWork.StatesOfPlaces.GetFreeStateOfPlace());
 
             _unitOfWork.Complete();
 
             return RedirectToAction("Parking");
         }
 
-        public ActionResult TemporaryLeave(int pPlaceId)
+        public ActionResult TemporaryLeave(int parkingPlaceId)
         {
-            var pPlace = _unitOfWork.ParkingPlaces.GetParkingPlaceReservationCar(pPlaceId)
-                ?? throw new ArgumentOutOfRangeException("Wrong parking place ID passed");
+            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlaceReservationCar(parkingPlaceId) ?? throw new ArgumentOutOfRangeException("Invalid parking place ID.");
 
-            pPlace.Reservation.TemporaryLeave();
-            pPlace.Reserve(_unitOfWork.StatesOfPlaces.GetReservedStateOfPlace(), pPlace.Reservation);
+            parkingPlace.Reservation.TemporaryLeave();
+            parkingPlace.Reserve(_unitOfWork.StatesOfPlaces.GetReservedStateOfPlace(), parkingPlace.Reservation);
 
             _unitOfWork.Complete();
 
@@ -72,13 +69,12 @@ namespace HotelGarage.Controllers
         }
 
         [HttpPost]
-        public ActionResult Reserve(string ParkingPlaceName, int ReservationId)
+        public ActionResult Reserve(string parkingPlaceName, int reservationId)
         {
-            var reservation = _unitOfWork.Reservations.GetReservation(ReservationId)
-                ?? throw new ArgumentOutOfRangeException("Wrong reservation ID passed");
+            var reservation = _unitOfWork.Reservations.GetReservation(reservationId) ?? throw new ArgumentOutOfRangeException("Invalid reservation ID.");
 
             ReleasePreviouslyReservedPlace(reservation);
-            MoveOrDirectlyReserveParkingPlace(reservation, ParkingPlaceName);
+            MoveOrDirectlyReserveParkingPlace(reservation, parkingPlaceName);
 
             _unitOfWork.Complete();
 
@@ -88,8 +84,8 @@ namespace HotelGarage.Controllers
         public void ReleasePreviouslyReservedPlace(Reservation reservation) {
             if (reservation.ParkingPlaceId != 0)
             {
-                _unitOfWork.ParkingPlaces.GetParkingPlace(reservation)
-                    .Release(_unitOfWork.StatesOfPlaces.GetFreeStateOfPlace());
+                var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(reservation);
+                parkingPlace.Release(_unitOfWork.StatesOfPlaces.GetFreeStateOfPlace());
             }
         }
 

@@ -52,20 +52,20 @@ namespace HotelGarage.Core.Models
 
         public void Update(Reservation reservation)
         {
-            this.LicensePlate = reservation.Car.LicensePlate;
-            this.CarModel = reservation.Car.CarModel;
-            this.GuestsName = reservation.Car.GuestsName;
-            this.GuestRoomNumber = reservation.Car.GuestRoomNumber;
-            this.PricePerNight = reservation.Car.PricePerNight;
-            this.IsEmployee = reservation.Car.IsEmployee;
-            this.Note = reservation.Car.Note;
+            LicensePlate = reservation.Car.LicensePlate;
+            CarModel = reservation.Car.CarModel;
+            GuestsName = reservation.Car.GuestsName;
+            GuestRoomNumber = reservation.Car.GuestRoomNumber;
+            PricePerNight = reservation.Car.PricePerNight;
+            IsEmployee = reservation.Car.IsEmployee;
+            Note = reservation.Car.Note;
         }
 
         public string ReturnCalculatedTotalPriceString(int numberOfDays, int? pricePerNight)
         {
             if (pricePerNight == null)
             {
-                return Helpers.Constants.NotFilledOutMessageConstant;
+                return Helpers.Constants.NotFilledOutMessage;
             }
 
             if (numberOfDays == 0)
@@ -79,22 +79,21 @@ namespace HotelGarage.Core.Models
         public int CalculateNumberOfDays(DateTime arrivalDate, DateTime departureDate)
         {
             var numberOfDays = (departureDate - arrivalDate).TotalDays;
-
             if (numberOfDays < 0)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException("Invalid number of days. Cannot be lower than 0.");
             }
             
             return (int)numberOfDays;
         }
 
         public void AddStay() {
-            this.NumberOfStays += 1;
+            NumberOfStays += 1;
         }
 
         public void ResetPricePerNightToNull()
         {
-            this.PricePerNight = null;
+            PricePerNight = null;
         }
     }
 }

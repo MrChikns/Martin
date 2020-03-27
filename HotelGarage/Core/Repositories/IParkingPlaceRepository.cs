@@ -6,11 +6,11 @@ namespace HotelGarage.Core.Repositories
     public interface IParkingPlaceRepository
     {
         List<string> GetNamesOfFreeParkingPlaces();
-        ParkingPlace GetParkingPlace(int pPlaceId);
+        ParkingPlace GetParkingPlace(int parkingPlaceId);
         ParkingPlace GetParkingPlace(Reservation reservation);
-        ParkingPlace GetParkingPlace(string ParkingPlaceName);
+        ParkingPlace GetParkingPlace(string parkingPlaceName);
         string GetParkingPlaceName(int id);
-        ParkingPlace GetParkingPlaceReservationCar(int pPlaceId);
+        ParkingPlace GetParkingPlaceReservationCar(int parkingPlaceId);
         List<ParkingPlace> GetParkingPlacesStateOfPlaceReservationCar();
         ParkingPlace GetParkingPlaceStateOfPlace(Reservation reservation);
     }

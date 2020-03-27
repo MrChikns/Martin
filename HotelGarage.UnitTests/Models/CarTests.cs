@@ -24,7 +24,7 @@ namespace HotelGarage.UnitTests.Models
      
             var calculatedPricePerNight = _car.ReturnCalculatedTotalPriceString(1, null);
 
-            Assert.That(calculatedPricePerNight, Is.EqualTo(Helpers.Constants.NotFilledOutMessageConstant));
+            Assert.That(calculatedPricePerNight, Is.EqualTo(Helpers.Constants.NotFilledOutMessage));
         }
 
         [Test]

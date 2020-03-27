@@ -50,7 +50,7 @@ namespace HotelGarage.UnitTests.Models
         {
             ParkingPlace parkingPlace = null;
 
-            _reservation.Cancel(parkingPlace, new StateOfPlace() { Id = 1, Name = Helpers.Constants.FreeStateOfPlaceConstant });
+            _reservation.Cancel(parkingPlace, new StateOfPlace() { Id = 1, Name = Helpers.Constants.FreeStateOfPlaceLabel });
 
             Assert.That(parkingPlace, Is.EqualTo(null));
             Assert.That(_reservation.StateOfReservationId, Is.EqualTo(4));
@@ -62,7 +62,7 @@ namespace HotelGarage.UnitTests.Models
             ParkingPlace parkingPlace = new ParkingPlace();
             parkingPlace.AssignReservation(_reservation);
 
-            _reservation.Cancel(parkingPlace, new StateOfPlace() { Id = 1, Name = Helpers.Constants.FreeStateOfPlaceConstant });
+            _reservation.Cancel(parkingPlace, new StateOfPlace() { Id = 1, Name = Helpers.Constants.FreeStateOfPlaceLabel });
 
             Assert.That(parkingPlace.Reservation, Is.EqualTo(null));
             Assert.That(_reservation.StateOfReservationId, Is.EqualTo(4));

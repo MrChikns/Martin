@@ -1,6 +1,4 @@
 ﻿using HotelGarage.Core.Models;
-using HotelGarage.Persistence;
-using HotelGarage.Persistence.Repositories;
 using System;
 using System.Collections.Generic;
 
@@ -12,9 +10,8 @@ namespace HotelGarage.Core.Dtos
         public int? ReservationId { get; set; }
         public string LicensePlate { get; set; }
         public string Departure { get; set; }
-        public string PPlaceName { get; set; }
+        public string ParkingPlaceName { get; set; }
         public string StateOfPlace { get; set; }
-
         public string DepartureBootbox { get; set; }
         public string ArrivalBootbox { get; internal set; }
         public string GuestNameBootbox { get; internal set; }
@@ -27,14 +24,13 @@ namespace HotelGarage.Core.Dtos
         public string IsRegisteredBootbox { get; internal set; }
         public string ParkPlaceShortLicensePlate { get; internal set; }
 
-        //constructor to initialize empty parkingplace
-        public ParkingPlaceDto(ParkingPlace parkingPlace)
+        private ParkingPlaceDto(ParkingPlace parkingPlace)
         {
             Id = parkingPlace.Id;
             ReservationId = 0;
             LicensePlate = " ";
             Departure = " ";
-            PPlaceName = parkingPlace.Name;
+            ParkingPlaceName = parkingPlace.Name;
             StateOfPlace = parkingPlace.GetStateOfPlaceName();
 
             DepartureBootbox = " ";
@@ -53,65 +49,61 @@ namespace HotelGarage.Core.Dtos
         {
             if (car != null)
             {
-                var notFilledOut = Helpers.Constants.NotFilledOutMessageConstant;
-
-                this.GuestNameBootbox = car.GuestsName ?? notFilledOut;
-                this.RoomNumberBootbox = (car.GuestRoomNumber == null) ? notFilledOut : car.GuestRoomNumber.ToString();
-                this.CarModelBootbox = car.CarModel ?? notFilledOut;
-                this.PricePerNightBootbox = (car.PricePerNight == null) ? notFilledOut : car.PricePerNight.ToString();
-                this.IsEmployeeBootbox = (car.IsEmployee == true) ? "Zaměstnanec" : "Host";
-                this.NoteBootBox = car.Note ?? notFilledOut;
+                var notFilledOut = Helpers.Constants.NotFilledOutMessage;
+                GuestNameBootbox = car.GuestsName ?? notFilledOut;
+                RoomNumberBootbox = (car.GuestRoomNumber == null) ? notFilledOut : car.GuestRoomNumber.ToString();
+                CarModelBootbox = car.CarModel ?? notFilledOut;
+                PricePerNightBootbox = (car.PricePerNight == null) ? notFilledOut : car.PricePerNight.ToString();
+                IsEmployeeBootbox = (car.IsEmployee == true) ? "Zaměstnanec" : "Host";
+                NoteBootBox = car.Note ?? notFilledOut;
             }
         }
 
         internal void AssignReservation(ParkingPlace parkingPlace)
         {
-            this.LicensePlate = parkingPlace.Reservation.LicensePlate;
-            this.LicensePlateBootbox = parkingPlace.Reservation.LicensePlate;
-            this.Departure = parkingPlace.Reservation.Departure.ToShortDateString();
-            this.DepartureBootbox = parkingPlace.Reservation.Departure.ToShortDateString();
-            this.ArrivalBootbox = parkingPlace.Reservation.Arrival.ToShortDateString();
-            this.ReservationId = parkingPlace.Reservation.Id;
-            this.IsRegisteredBootbox = (parkingPlace.Reservation.IsRegistered)?"Ano":"Ne!";
+            LicensePlate = parkingPlace.Reservation.LicensePlate;
+            LicensePlateBootbox = parkingPlace.Reservation.LicensePlate;
+            Departure = parkingPlace.Reservation.Departure.ToShortDateString();
+            DepartureBootbox = parkingPlace.Reservation.Departure.ToShortDateString();
+            ArrivalBootbox = parkingPlace.Reservation.Arrival.ToShortDateString();
+            ReservationId = parkingPlace.Reservation.Id;
+            IsRegisteredBootbox = (parkingPlace.Reservation.IsRegistered)? "Ano" : "Ne!";
         }
 
         public static List<ParkingPlaceDto> GetParkingPlaceDtos(IUnitOfWork unitOfWork)
         {
-            var dtoList = new List<ParkingPlaceDto>();
+            var parkingPlaceDtos = new List<ParkingPlaceDto>();
             var parkingPlaces = unitOfWork.ParkingPlaces.GetParkingPlacesStateOfPlaceReservationCar();
+
             foreach (var parkingPlace in parkingPlaces)
             {
-                //predvyplneni pro prázdné parkovací místo 
-                var ppDto = new ParkingPlaceDto(parkingPlace);
-
-                // pokud je potreba vyplnit rezervaci do parkovaciho mista
+                var parkingPlaceDto = new ParkingPlaceDto(parkingPlace);
+                
                 if (parkingPlace.Reservation != null)
                 {
                     // pokud auto prebydli noc, prestoze melo odjet, posune se jeho datum odjezdu
                     if (parkingPlace.Reservation.Departure < DateTime.Today.Date)
                     {
                         parkingPlace.Reservation.UpdateInhouseReservationCheckout();
-                        ppDto.StateOfPlace = parkingPlace.GetStateOfPlaceName();
+                        parkingPlaceDto.StateOfPlace = parkingPlace.GetStateOfPlaceName();
                         unitOfWork.Complete();
                     }
 
                     //vyrazeni rezervaci z minuleho dne anebo prirazeni rezervace do parkovaciho mista
-                    if (parkingPlace.Reservation.Arrival.Date != DateTime.Today.Date
-                        && parkingPlace.Reservation.StateOfReservationId == StateOfReservation.Reserved)
+                    if (parkingPlace.Reservation.Arrival.Date != DateTime.Today.Date && parkingPlace.Reservation.StateOfReservationId == StateOfReservation.Reserved)
                     {
-                        var res = parkingPlace.Reservation;
                         parkingPlace.Release(unitOfWork.StatesOfPlaces.GetFreeStateOfPlace());
                         unitOfWork.Complete();
                     }
                     else
                     {
-                        ppDto.AssignCar(unitOfWork.Cars.GetCar(parkingPlace.Reservation));
-                        ppDto.AssignReservation(parkingPlace);
+                        parkingPlaceDto.AssignCar(unitOfWork.Cars.GetCar(parkingPlace.Reservation));
+                        parkingPlaceDto.AssignReservation(parkingPlace);
                     }
                 }
-                dtoList.Add(ppDto);
+                parkingPlaceDtos.Add(parkingPlaceDto);
             }
-            return dtoList;
+            return parkingPlaceDtos;
         }
     }
 }

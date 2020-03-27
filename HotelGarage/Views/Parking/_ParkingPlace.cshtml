@@ -7,22 +7,22 @@
        data-bbox-cena="@Model.PricePerNightBootbox" data-bbox-spz="@Model.LicensePlateBootbox"
        data-bbox-typAuta="@Model.CarModelBootbox" data-bbox-zamestnanec="@Model.IsEmployeeBootbox"
        data-bbox-jeRegistrovan="@Model.IsRegisteredBootbox" data-bbox-poznamka="@Model.NoteBootBox">
-        @Model.PPlaceName<br>
+        @Model.ParkingPlaceName<br>
         @((Model.GuestNameBootbox.Length > 15) ? Model.GuestNameBootbox.Substring(0, 15) : Model.GuestNameBootbox)<br>
         Odj: @Model.Departure
     </p>
     <a href="javascript:void()" class="js-sOPChange">@Model.StateOfPlace</a>
     <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.Id>
         @Html.ActionLink("Reserve", "Create", "Reservations",
-            new { pPlaceId = Model.Id },
+            new { parkingPlaceId = Model.Id },
             new { @class = "nav-link js-reserve" })
 
         @Html.ActionLink("Check In", "CheckIn", "Parking",
-            new {  pPlaceId = Model.Id, reservationId = Model.ReservationId },
+            new {  parkingPlaceId = Model.Id, reservationId = Model.ReservationId },
             new { @class = "nav-link js-checkin", @onclick = "return confirm('Opravdu chcete rezervaci ubytovat?')" })
 
         @Html.ActionLink("Upravit", "Update", "Reservations",
-            new { resId = Model.ReservationId},
+            new { reservationId = Model.ReservationId},
             new { @class = "nav-link js-upravit" })
 
         <a href="javascript:void()" class="nav-link js-checkout">Check Out</a>

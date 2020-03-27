@@ -21,17 +21,17 @@ namespace HotelGarage.Persistence.Repositories
             return _context.ParkingPlaces.FirstOrDefault(p => p.Name == ParkingPlaceName);
         }
 
-        public ParkingPlace GetParkingPlace(int pPlaceId)
+        public ParkingPlace GetParkingPlace(int parkingPlaceId)
         {
-            return _context.ParkingPlaces.FirstOrDefault(p => p.Id == pPlaceId);
+            return _context.ParkingPlaces.FirstOrDefault(p => p.Id == parkingPlaceId);
         }
 
-        public ParkingPlace GetParkingPlaceReservationCar(int pPlaceId)
+        public ParkingPlace GetParkingPlaceReservationCar(int parkingPlaceId)
         {
             return _context.ParkingPlaces
                 .Include(r => r.Reservation)
                 .Include(c => c.Reservation.Car)
-                .First(p => p.Id == pPlaceId);
+                .First(p => p.Id == parkingPlaceId);
         }
 
         public ParkingPlace GetParkingPlace(Reservation reservation)

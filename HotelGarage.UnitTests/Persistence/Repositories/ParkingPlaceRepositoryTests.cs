@@ -174,7 +174,7 @@ namespace HotelGarage.UnitTests.Persistence.Repositories
         }
 
         [Test]
-        public void GetParkingPlaceName_IdExists_ReturnPPlaceName()
+        public void GetParkingPlaceName_IdExists_Return()
         {
             var parkingplace = new ParkingPlace() { Id = 1, Name = "prvni" };
 

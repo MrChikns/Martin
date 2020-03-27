@@ -1,4 +1,6 @@
 # ParkingWebApp
-In development web app to manage a specific parking lot in a hotel. App in Czech language.
+App to manage a specific parking lot in a hotel. App in Czech language.
 
-Rozpracovaná webová aplikace na zaznamenávání parkujících hostů v hotelové garáži. Aplikace je postavena na architektuře MVC a napsaná v C#. Ukládá hosty a jejich auta v lokální databázi pomocí Entity Framework. Frontend je řešen pomocí JQuery a Bootstrap. V aplikaci je možné vytvořit, ubytovat, odjet nebo přesunout rezervace. Vše je graficky znázorněno přesně podle rozvržení garáže, pro kterou je aplikace vytvořena. Přes externí plugin je pak umožněn přehled rezervací, který se dá dále filtrovat pomocí zadaných kritérií.
+It is and MVC aplication written in C# and using Entity Framework code first approach to access the database. Frontend is written in jQuery and Bootstrap. Also few javascript plugins are used (dataTables, Bootbox, typeAhead) and test are written using Moq and NUnit.
+
+Application itself is registering a data about cars/guests parking in a garage. Currently you can create, accomodate, depart or move reservations. Parking UI is correspondich with the real structure of parking lot. Thanks to external plugin you can overview reservations and can filter them by given criteria.

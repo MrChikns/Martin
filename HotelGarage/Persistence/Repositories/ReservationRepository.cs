@@ -29,8 +29,10 @@ namespace HotelGarage.Persistence.Repositories
         public List<Reservation> GetTodaysReservationsCar()
         {
             return _context.Reservations
-                .Where(a => (DbFunctions.TruncateTime(a.Arrival) == DateTime.Today.Date && a.StateOfReservationId == StateOfReservation.Reserved)
-                            ||(a.StateOfReservationId == StateOfReservation.TemporaryLeave))
+                .Where(a => (
+                    DbFunctions.TruncateTime(a.Arrival) == DateTime.Today.Date && a.State == StateOfReservationEnum.Reserved)
+                    ||(a.State == StateOfReservationEnum.TemporaryLeave)
+                )
                 .Include(c => c.Car)
                 .ToList();
         }
@@ -38,8 +40,7 @@ namespace HotelGarage.Persistence.Repositories
         public List<Reservation> GetNoShowReservationsCar()
         {
             return _context.Reservations
-                .Where(a => DbFunctions.TruncateTime(a.Arrival) < DateTime.Today.Date
-                            && a.StateOfReservationId == StateOfReservation.Reserved)
+                .Where(a => DbFunctions.TruncateTime(a.Arrival) < DateTime.Today.Date && a.State == StateOfReservationEnum.Reserved)
                 .Include(c => c.Car)
                 .ToList();
         }
@@ -47,7 +48,7 @@ namespace HotelGarage.Persistence.Repositories
         public List<Reservation> GetInhouseReservationsCar()
         {
             return _context.Reservations
-                .Where(a => a.StateOfReservationId == StateOfReservation.Inhouse)
+                .Where(a => a.State == StateOfReservationEnum.Inhouse)
                 .Include(c => c.Car)
                 .ToList();
         }
@@ -89,11 +90,10 @@ namespace HotelGarage.Persistence.Repositories
             return _context.Reservations
                 .Include(r => r.Car)
                 .Where(r =>
-                    (r.StateOfReservationId == StateOfReservation.Reserved
-                        || r.StateOfReservationId == StateOfReservation.Inhouse
-                        || r.StateOfReservationId == StateOfReservation.TemporaryLeave)
+                    (r.State == StateOfReservationEnum.Reserved || r.State == StateOfReservationEnum.Inhouse || r.State == StateOfReservationEnum.TemporaryLeave)
                     && (DbFunctions.TruncateTime(r.Arrival) <= date
-                        && DbFunctions.TruncateTime(r.Departure) > date))
+                    && DbFunctions.TruncateTime(r.Departure) > date)
+                )
                 .ToList();
         }
 

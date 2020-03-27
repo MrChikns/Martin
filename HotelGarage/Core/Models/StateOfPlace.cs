@@ -10,4 +10,12 @@
         public static readonly byte Reserved = 3;
         public static readonly byte Employee = 4;
     }
+
+    public enum StateOfPlaceEnum
+    {
+        Free = 1,
+        Occupied = 2,
+        Reserved = 3,
+        Employee = 4
+    }
 }

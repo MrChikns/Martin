@@ -11,7 +11,7 @@ namespace HotelGarage.Core.Dtos
         public string CarGuestsName { get; set; }
         public string Arrival { get; set; }
         public string Departure { get; set; }
-        public byte StateOfReservationId { get; set; }
+        public StateOfReservationEnum StateOfReservation { get; set; }
         public bool IsRegistered { get; set; }
         public int ParkingPlaceId { get; set; }
         public string ParkingPlaceName { get; set; }
@@ -25,7 +25,7 @@ namespace HotelGarage.Core.Dtos
             ParkingPlaceName = parkingPlaceName;
             Arrival = reservation.Arrival.ToShortDateString();
             Departure = reservation.Departure.ToShortDateString();
-            StateOfReservationId = reservation.StateOfReservationId;
+            StateOfReservation = reservation.State;
             IsRegistered = reservation.IsRegistered;
         }
 
@@ -37,9 +37,13 @@ namespace HotelGarage.Core.Dtos
                 string parkingPlaceName;
 
                 if (reservation.ParkingPlaceId != 0)
+                {
                     parkingPlaceName = unitOfWork.ParkingPlaces.GetParkingPlace(reservation).Name;
+                }
                 else
+                {
                     parkingPlaceName = "Nepřiřazeno";
+                }
 
                 arrivingResDtos.Add(new ReservationDto(reservation, parkingPlaceName));
             }
@@ -48,32 +52,35 @@ namespace HotelGarage.Core.Dtos
 
         public static IList<ReservationDto> GetNoShowReservations(IUnitOfWork unitOfWork)
         {
-            var nSResDtos = new List<ReservationDto>();
+            var noShowReservationDtos = new List<ReservationDto>();
             foreach (var reservation in unitOfWork.Reservations.GetNoShowReservationsCar())
             {
-                //asi smazat
                 string parkingPlaceName;
 
                 if (reservation.ParkingPlaceId != 0)
+                {
                     parkingPlaceName = unitOfWork.ParkingPlaces.GetParkingPlace(reservation).Name;
+                }
                 else
+                {
                     parkingPlaceName = "Nepřiřazeno";
+                }
 
-                nSResDtos.Add(new ReservationDto(reservation, parkingPlaceName));
+                noShowReservationDtos.Add(new ReservationDto(reservation, parkingPlaceName));
             }
-            return nSResDtos.OrderBy(o => o.Arrival).ToList();
+            return noShowReservationDtos.OrderBy(o => o.Arrival).ToList();
         }
         
         public static IList<ReservationDto> GetInhouseReservations(IUnitOfWork unitOfWork)
         {
-            var inhouseResDtos = new List<ReservationDto>();
+            var inhouseReservationDtos = new List<ReservationDto>();
             foreach (var reservation in unitOfWork.Reservations.GetInhouseReservationsCar())
             {
-                inhouseResDtos.Add(new ReservationDto(reservation, 
-                    unitOfWork.ParkingPlaces.GetParkingPlace(reservation).Name));
+                var parkingPlaceName = unitOfWork.ParkingPlaces.GetParkingPlace(reservation).Name;
+                inhouseReservationDtos.Add(new ReservationDto(reservation, parkingPlaceName));
             }
 
-            return inhouseResDtos.OrderBy(o => o.ParkingPlaceId).ToList();
+            return inhouseReservationDtos.OrderBy(o => o.ParkingPlaceId).ToList();
         }
     }
 }

@@ -25,7 +25,7 @@ namespace HotelGarage.Controllers
             return View("Form", new Reservation()
             {
                 ParkingPlaceId = parkingPlaceId ?? 0,
-                StateOfReservationId = StateOfReservation.Reserved,
+                State = StateOfReservationEnum.Reserved,
                 Arrival = DateTime.Now,
                 Departure = DateTime.Now.AddDays(1)
             });
@@ -42,7 +42,7 @@ namespace HotelGarage.Controllers
         {
             var deletedReservation = _unitOfWork.Reservations.GetReservationCar(reservationId) ?? throw new ArgumentOutOfRangeException("Invalid reservation ID.");
             var reservationParkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(deletedReservation.ParkingPlaceId);
-            deletedReservation.Cancel(reservationParkingPlace, _unitOfWork.StatesOfPlaces.GetFreeStateOfPlace());
+            deletedReservation.Cancel(reservationParkingPlace);
 
             _unitOfWork.Complete();
 
@@ -77,7 +77,7 @@ namespace HotelGarage.Controllers
             {
                 reservation = viewModel;
                 reservation.Car = car;
-                reservation.StateOfReservationId = StateOfReservation.Reserved;
+                reservation.State = StateOfReservationEnum.Reserved;
 
                 _unitOfWork.Reservations.AddReservation(reservation);
             }
@@ -105,15 +105,15 @@ namespace HotelGarage.Controllers
 
         private void SetupReservation(Reservation reservation, ParkingPlace parkingPlace)
         {
-            if (reservation.ParkingPlaceId != 0 && reservation.StateOfReservationId != StateOfReservation.Inhouse)
+            if (reservation.ParkingPlaceId != 0 && reservation.State != StateOfReservationEnum.Inhouse)
             {
-                if (reservation.StateOfReservationId == StateOfReservation.Reserved && reservation.Arrival.Date == DateTime.Today.Date)
+                if (reservation.State == StateOfReservationEnum.Reserved && reservation.Arrival.Date == DateTime.Today.Date)
                 {
-                    parkingPlace.Reserve(_unitOfWork.StatesOfPlaces.GetReservedStateOfPlace(), reservation);
+                    parkingPlace.Reserve(reservation);
                 }
                 else
                 {
-                    parkingPlace.AssingnFreeParkingPlace(_unitOfWork.StatesOfPlaces.GetFreeStateOfPlace(), reservation);
+                    parkingPlace.AssingnFreeParkingPlace(reservation);
                 }
             }
         }

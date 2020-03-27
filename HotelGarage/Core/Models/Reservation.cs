@@ -27,7 +27,7 @@ namespace HotelGarage.Core.Models
 
         public int ParkingPlaceId { get; set; }
 
-        public byte StateOfReservationId { get; set; }
+        public StateOfReservationEnum State { get; set; }
 
         public void SetDepartureDay(DateTime date)
         {
@@ -41,11 +41,11 @@ namespace HotelGarage.Core.Models
         
         public void CheckOut()
         {
-            if (StateOfReservationId == StateOfReservation.Inhouse)
+            if (State == StateOfReservationEnum.Inhouse)
             {
                 Departure = DateTime.Now;
                 ParkingPlaceId = 0;
-                StateOfReservationId = StateOfReservation.Departed;
+                State = StateOfReservationEnum.Departed;
                 Car.AddStay();
             }
             else
@@ -56,14 +56,14 @@ namespace HotelGarage.Core.Models
 
         public void TemporaryLeave()
         {
-            StateOfReservationId = StateOfReservation.TemporaryLeave;
+            State = StateOfReservationEnum.TemporaryLeave;
         }
 
         public void CheckIn()
         {
-            if (StateOfReservationId == StateOfReservation.Reserved || StateOfReservationId == StateOfReservation.TemporaryLeave)
+            if (State == StateOfReservationEnum.Reserved || State == StateOfReservationEnum.TemporaryLeave)
             {
-                if (StateOfReservationId == StateOfReservation.Reserved)
+                if (State == StateOfReservationEnum.Reserved)
                 {
                     Arrival = DateTime.Now;
                 }
@@ -73,7 +73,7 @@ namespace HotelGarage.Core.Models
                     IsRegistered = true;
                 }
 
-                StateOfReservationId = StateOfReservation.Inhouse;
+                State = StateOfReservationEnum.Inhouse;
             }
             else
             {
@@ -90,17 +90,17 @@ namespace HotelGarage.Core.Models
             LicensePlate = updated.LicensePlate;
             ParkingPlaceId = updated.ParkingPlaceId;
             Car = car;
-            StateOfReservationId = updated.StateOfReservationId;
+            State = updated.State;
         }
 
-        public void Cancel(ParkingPlace parkingPlace, StateOfPlace freePlace)
+        public void Cancel(ParkingPlace parkingPlace)
         {
             if (parkingPlace != null)
             {
-                parkingPlace.Release(freePlace);
+                parkingPlace.Release();
             }
-            
-            StateOfReservationId = StateOfReservation.Cancelled;
+
+            State = StateOfReservationEnum.Cancelled;
             Car.ResetPricePerNightToNull();
         }
 

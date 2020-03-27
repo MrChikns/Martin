@@ -27,17 +27,17 @@ namespace HotelGarage.Controllers
             var reservation = _unitOfWork.Reservations.GetReservationCar(reservationId) ?? throw new ArgumentOutOfRangeException("Invalid reservation Id.");
             var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(parkingPlaceId) ?? throw new ArgumentOutOfRangeException("Invalid parking place Id.");
 
-            if (parkingPlace.StateOfPlaceId != StateOfPlace.Reserved)
+            if (parkingPlace.State != StateOfPlaceEnum.Reserved)
             {
                 throw new ArgumentException("Invalid parking place state. Only reserved parking places can be checked in.");
             }
-            if (reservation.Arrival.Date != DateTime.Today.Date && reservation.StateOfReservationId != StateOfReservation.TemporaryLeave)
+            if (reservation.Arrival.Date != DateTime.Today.Date && reservation.State != StateOfReservationEnum.TemporaryLeave)
             {
                 throw new ArgumentException("Reservation not arriving today has to be in temporary leave state to check in again.");
             }
 
             reservation.CheckIn();
-            parkingPlace.Occupy(_unitOfWork.StatesOfPlaces.GetOccupiedStateOfPlace(), reservation);
+            parkingPlace.Occupy(reservation);
 
             _unitOfWork.Complete();
             
@@ -49,7 +49,7 @@ namespace HotelGarage.Controllers
             var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlaceReservationCar(parkingPlaceId) ?? throw new ArgumentOutOfRangeException("Invalid parking place ID."); 
 
             parkingPlace.Reservation.CheckOut();
-            parkingPlace.Release(_unitOfWork.StatesOfPlaces.GetFreeStateOfPlace());
+            parkingPlace.Release();
 
             _unitOfWork.Complete();
 
@@ -61,7 +61,7 @@ namespace HotelGarage.Controllers
             var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlaceReservationCar(parkingPlaceId) ?? throw new ArgumentOutOfRangeException("Invalid parking place ID.");
 
             parkingPlace.Reservation.TemporaryLeave();
-            parkingPlace.Reserve(_unitOfWork.StatesOfPlaces.GetReservedStateOfPlace(), parkingPlace.Reservation);
+            parkingPlace.Reserve(parkingPlace.Reservation);
 
             _unitOfWork.Complete();
 
@@ -85,20 +85,18 @@ namespace HotelGarage.Controllers
             if (reservation.ParkingPlaceId != 0)
             {
                 var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(reservation);
-                parkingPlace.Release(_unitOfWork.StatesOfPlaces.GetFreeStateOfPlace());
+                parkingPlace.Release();
             }
         }
 
         public void MoveOrDirectlyReserveParkingPlace(Reservation reservation, string ParkingPlaceName) {
-            if (reservation.StateOfReservationId == StateOfReservation.Inhouse)
+            if (reservation.State == StateOfReservationEnum.Inhouse)
             {
-                _unitOfWork.ParkingPlaces.GetParkingPlace(ParkingPlaceName)
-                .MoveInhouseReservation(_unitOfWork.StatesOfPlaces.GetOccupiedStateOfPlace(), reservation);
+                _unitOfWork.ParkingPlaces.GetParkingPlace(ParkingPlaceName).MoveInhouseReservation(reservation);
             }
             else
             {
-                _unitOfWork.ParkingPlaces.GetParkingPlace(ParkingPlaceName)
-                    .Reserve(_unitOfWork.StatesOfPlaces.GetReservedStateOfPlace(), reservation);
+                _unitOfWork.ParkingPlaces.GetParkingPlace(ParkingPlaceName).Reserve(reservation);
             }
         }
     }

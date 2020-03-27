@@ -32,7 +32,7 @@ namespace HotelGarage.UnitTests.Controllers
             {
                 Id = _existing,
                 Arrival = DateTime.Today,
-                StateOfReservationId = StateOfReservation.Reserved,
+                State = StateOfReservation.Reserved,
                 Car = new Car(),
                 ParkingPlaceId = _existing
             };
@@ -40,7 +40,7 @@ namespace HotelGarage.UnitTests.Controllers
             _parkingPlace = new ParkingPlace()
             {
                 Id = _existing,
-                StateOfPlace =
+                State =
                 new StateOfPlace() { Id = StateOfPlace.Reserved },
                 StateOfPlaceId = StateOfPlace.Reserved,
                 Reservation = _reservation

@@ -11,7 +11,7 @@ namespace HotelGarage.Core.Dtos
         public string LicensePlate { get; set; }
         public string Departure { get; set; }
         public string ParkingPlaceName { get; set; }
-        public string StateOfPlace { get; set; }
+        public StateOfPlaceEnum StateOfPlace { get; set; }
         public string DepartureBootbox { get; set; }
         public string ArrivalBootbox { get; internal set; }
         public string GuestNameBootbox { get; internal set; }
@@ -31,7 +31,7 @@ namespace HotelGarage.Core.Dtos
             LicensePlate = " ";
             Departure = " ";
             ParkingPlaceName = parkingPlace.Name;
-            StateOfPlace = parkingPlace.GetStateOfPlaceName();
+            StateOfPlace = parkingPlace.State;
 
             DepartureBootbox = " ";
             IsRegisteredBootbox = " ";
@@ -85,14 +85,14 @@ namespace HotelGarage.Core.Dtos
                     if (parkingPlace.Reservation.Departure < DateTime.Today.Date)
                     {
                         parkingPlace.Reservation.UpdateInhouseReservationCheckout();
-                        parkingPlaceDto.StateOfPlace = parkingPlace.GetStateOfPlaceName();
+                        parkingPlaceDto.StateOfPlace = parkingPlace.State;
                         unitOfWork.Complete();
                     }
 
                     //vyrazeni rezervaci z minuleho dne anebo prirazeni rezervace do parkovaciho mista
-                    if (parkingPlace.Reservation.Arrival.Date != DateTime.Today.Date && parkingPlace.Reservation.StateOfReservationId == StateOfReservation.Reserved)
+                    if (parkingPlace.Reservation.Arrival.Date != DateTime.Today.Date && parkingPlace.Reservation.State == StateOfReservationEnum.Reserved)
                     {
-                        parkingPlace.Release(unitOfWork.StatesOfPlaces.GetFreeStateOfPlace());
+                        parkingPlace.Release();
                         unitOfWork.Complete();
                     }
                     else

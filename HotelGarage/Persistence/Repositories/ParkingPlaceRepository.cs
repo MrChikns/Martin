@@ -41,14 +41,14 @@ namespace HotelGarage.Persistence.Repositories
         public ParkingPlace GetParkingPlaceStateOfPlace(Reservation reservation)
         {
             return _context.ParkingPlaces
-                .Include(s => s.StateOfPlace)
+                .Include(s => s.State)
                 .FirstOrDefault(p => p.Id == reservation.ParkingPlaceId);
         }
 
         public List<ParkingPlace> GetParkingPlacesStateOfPlaceReservationCar()
         {
             return _context.ParkingPlaces
-                .Include(s => s.StateOfPlace)
+                .Include(s => s.State)
                 .Include(r => r.Reservation)
                 .Include(c => c.Reservation.Car)
                 .ToList();
@@ -57,7 +57,7 @@ namespace HotelGarage.Persistence.Repositories
         public List<string> GetNamesOfFreeParkingPlaces()
         {
             return _context.ParkingPlaces
-                .Where(s => s.StateOfPlaceId == StateOfPlace.Free)
+                .Where(s => s.State == StateOfPlaceEnum.Free)
                 .Select(n => n.Name)
                 .ToList();
         }

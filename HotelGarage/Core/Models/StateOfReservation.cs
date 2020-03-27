@@ -11,4 +11,13 @@
         public static readonly byte Cancelled = 4;
         public static readonly byte TemporaryLeave = 5;
     }
+
+    public enum StateOfReservationEnum
+    {
+        Reserved = 1,
+        Inhouse = 2,
+        Departed = 3,
+        Cancelled = 4,
+        TemporaryLeave = 5
+    }
 }

@@ -1,11 +1,6 @@
 ﻿using HotelGarage.Core;
-using HotelGarage.Core.Models;
 using HotelGarage.Core.Repositories;
 using HotelGarage.Persistence.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace HotelGarage.Persistence
 {
@@ -15,7 +10,6 @@ namespace HotelGarage.Persistence
 
         public IParkingPlaceRepository ParkingPlaces { get; private set; }
         public IReservationRepository Reservations { get; private set; }
-        public IStateOfPlaceRepository StatesOfPlaces { get; private set; }
         public ICarRepository Cars { get; private set; }
 
         public UnitOfWork(ApplicationDbContext context)
@@ -23,7 +17,6 @@ namespace HotelGarage.Persistence
             _context = context;
             ParkingPlaces = new ParkingPlaceRepository(_context);
             Reservations = new ReservationRepository(_context);
-            StatesOfPlaces = new StateOfPlaceRepository(_context); 
             Cars = new CarRepository(_context);
         }
 

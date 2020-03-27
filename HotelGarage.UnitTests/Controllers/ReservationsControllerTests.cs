@@ -18,7 +18,6 @@ namespace HotelGarage.UnitTests.Controllers
         Mock<IReservationRepository> _mockReservationRepository;
         private Mock<IParkingPlaceRepository> _mockParkingPlaceRepository;
         private Mock<ICarRepository> _mockCarRepository;
-        private Mock<IStateOfPlaceRepository> _mockStatesOfPlacesRepository;
         private Reservation _reservation;
         private ParkingPlace _parkingPlace;
         private Car _car;
@@ -32,7 +31,7 @@ namespace HotelGarage.UnitTests.Controllers
             {
                 Id = _existing,
                 Arrival = DateTime.Today,
-                State = StateOfReservation.Reserved,
+                State = ReservationState.Reserved,
                 Car = new Car(),
                 ParkingPlaceId = _existing
             };
@@ -40,9 +39,7 @@ namespace HotelGarage.UnitTests.Controllers
             _parkingPlace = new ParkingPlace()
             {
                 Id = _existing,
-                State =
-                new StateOfPlace() { Id = StateOfPlace.Reserved },
-                StateOfPlaceId = StateOfPlace.Reserved,
+                State = ParkingPlaceState.Reserved,
                 Reservation = _reservation
             };
 
@@ -54,20 +51,14 @@ namespace HotelGarage.UnitTests.Controllers
 
             _mockParkingPlaceRepository = new Mock<IParkingPlaceRepository>();
             _mockParkingPlaceRepository.Setup(p => p.GetParkingPlace(_existing)).Returns(_parkingPlace);
-            _mockParkingPlaceRepository.Setup(p => p.GetParkingPlaceStateOfPlace(_reservation)).Returns(_parkingPlace);
 
             _mockCarRepository = new Mock<ICarRepository>();
             _mockCarRepository.Setup(c => c.GetCar(_reservation)).Returns(_car);
-
-            _mockStatesOfPlacesRepository = new Mock<IStateOfPlaceRepository>();
-            _mockStatesOfPlacesRepository.Setup(s => s.GetFreeStateOfPlace()).Returns(new StateOfPlace());
-            _mockStatesOfPlacesRepository.Setup(s => s.GetReservedStateOfPlace()).Returns(new StateOfPlace());
 
             _mockUnitOfWork = new Mock<IUnitOfWork>();
             _mockUnitOfWork.SetupGet(u => u.Reservations).Returns(_mockReservationRepository.Object);
             _mockUnitOfWork.SetupGet(u => u.ParkingPlaces).Returns(_mockParkingPlaceRepository.Object);
             _mockUnitOfWork.SetupGet(u => u.Cars).Returns(_mockCarRepository.Object);
-            _mockUnitOfWork.SetupGet(u => u.StatesOfPlaces).Returns(_mockStatesOfPlacesRepository.Object);
 
             _controller = new ReservationsController(_mockUnitOfWork.Object);
             _controller.MockCurrentUser("1", "user1@domain.com");

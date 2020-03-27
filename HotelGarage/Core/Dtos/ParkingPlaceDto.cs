@@ -11,7 +11,7 @@ namespace HotelGarage.Core.Dtos
         public string LicensePlate { get; set; }
         public string Departure { get; set; }
         public string ParkingPlaceName { get; set; }
-        public StateOfPlaceEnum StateOfPlace { get; set; }
+        public ParkingPlaceState StateOfPlace { get; set; }
         public string DepartureBootbox { get; set; }
         public string ArrivalBootbox { get; internal set; }
         public string GuestNameBootbox { get; internal set; }
@@ -73,7 +73,7 @@ namespace HotelGarage.Core.Dtos
         public static List<ParkingPlaceDto> GetParkingPlaceDtos(IUnitOfWork unitOfWork)
         {
             var parkingPlaceDtos = new List<ParkingPlaceDto>();
-            var parkingPlaces = unitOfWork.ParkingPlaces.GetParkingPlacesStateOfPlaceReservationCar();
+            var parkingPlaces = unitOfWork.ParkingPlaces.GetParkingPlaces();
 
             foreach (var parkingPlace in parkingPlaces)
             {
@@ -90,7 +90,7 @@ namespace HotelGarage.Core.Dtos
                     }
 
                     //vyrazeni rezervaci z minuleho dne anebo prirazeni rezervace do parkovaciho mista
-                    if (parkingPlace.Reservation.Arrival.Date != DateTime.Today.Date && parkingPlace.Reservation.State == StateOfReservationEnum.Reserved)
+                    if (parkingPlace.Reservation.Arrival.Date != DateTime.Today.Date && parkingPlace.Reservation.State == ReservationState.Reserved)
                     {
                         parkingPlace.Release();
                         unitOfWork.Complete();

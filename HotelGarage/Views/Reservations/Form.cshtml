@@ -8,20 +8,20 @@
 {
     @Html.AntiForgeryToken()
     <div class="form-group">
-        @Html.LabelFor(c => c.LicensePlate, "Státní Poznávací Značka")
-        @Html.TextBoxFor(c => c.LicensePlate, new { @class = "form-control SPZbox typeahead", type="text",autofocus = "autofocus", data_id = "spz-visible", placeholder = "Doplňte SPZ nebo jméno", maxlength = 20 })
-        @Html.ValidationMessageFor(c => c.LicensePlate)
+        @Html.LabelFor(r => r.LicensePlate, "Státní Poznávací Značka")
+        @Html.TextBoxFor(r => r.LicensePlate, new { @class = "form-control SPZbox typeahead", type="text",autofocus = "autofocus", data_id = "spz-visible", placeholder = "Doplňte SPZ nebo jméno", maxlength = 20 })
+        @Html.ValidationMessageFor(r => r.LicensePlate)
     </div>
     <div class="form-group">
-        @Html.TextBoxFor(c => c.Car.LicensePlate, new { @class = "form-control", data_id = "spz-hidden", style = "display:none;" })
-        @Html.TextBoxFor(c => c.ParkingPlaceId, new { @class = "form-control", @Value = Model.ParkingPlaceId, style = "display:none;" })
-        @Html.TextBoxFor(c => c.Id, new { @class = "form-control", @Value = Model.Id, style = "display:none;" })
-        @Html.TextBoxFor(c => c.StateOfReservationId, new { @class = "form-control", @Value = Model.StateOfReservationId, style = "display:none;" })
+        @Html.TextBoxFor(r => r.Car.LicensePlate, new { @class = "form-control", data_id = "spz-hidden", style = "display:none;" })
+        @Html.TextBoxFor(r => r.ParkingPlaceId, new { @class = "form-control", @Value = Model.ParkingPlaceId, style = "display:none;" })
+        @Html.TextBoxFor(r => r.Id, new { @class = "form-control", @Value = Model.Id, style = "display:none;" })
+        @Html.TextBoxFor(r => r.State, new { @class = "form-control", @Value = Model.State, style = "display:none;" })
     </div>
     <div class="form-group">
         @Html.LabelFor(r => r.Arrival, "Příjezd")
-        @Html.TextBoxFor(r => r.Arrival, (Model.StateOfReservationId == 2 ||
-            Model.StateOfReservationId == 5) ? // kontrola zda je rezervace najezdova anebo vyjeta pobytova
+        @Html.TextBoxFor(r => r.Arrival, (Model.State == HotelGarage.Core.Models.ReservationState.Inhouse ||
+            Model.State == HotelGarage.Core.Models.ReservationState.TemporaryLeave) ?
             (object)new { @class = "form-control", type = "datetime-local",
                 @Value = Model.Arrival.ToString("yyyy-MM-ddTHH:mm"),
                 @readonly = "readonly"
@@ -38,7 +38,7 @@
     </div>
     <div class="form-group form-inline" id="isRegisteredDiv">
         @Html.LabelFor(r => r.IsRegistered, "Je Registrovaná?")
-        @Html.CheckBoxFor(r => r.IsRegistered, (Model.StateOfReservationId == 2?
+        @Html.CheckBoxFor(r => r.IsRegistered, (Model.State == HotelGarage.Core.Models.ReservationState.Inhouse ?
         (object)new { @class = "form-control" }: (object)new { @class = "form-control", @disabled = "disabled" }))
         @Html.ValidationMessageFor(r => r.IsRegistered)
     </div>

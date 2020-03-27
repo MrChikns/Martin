@@ -27,7 +27,7 @@ namespace HotelGarage.Core.Models
 
         public int ParkingPlaceId { get; set; }
 
-        public StateOfReservationEnum State { get; set; }
+        public ReservationState State { get; set; }
 
         public void SetDepartureDay(DateTime date)
         {
@@ -41,11 +41,11 @@ namespace HotelGarage.Core.Models
         
         public void CheckOut()
         {
-            if (State == StateOfReservationEnum.Inhouse)
+            if (State == ReservationState.Inhouse)
             {
                 Departure = DateTime.Now;
                 ParkingPlaceId = 0;
-                State = StateOfReservationEnum.Departed;
+                State = ReservationState.Departed;
                 Car.AddStay();
             }
             else
@@ -56,14 +56,14 @@ namespace HotelGarage.Core.Models
 
         public void TemporaryLeave()
         {
-            State = StateOfReservationEnum.TemporaryLeave;
+            State = ReservationState.TemporaryLeave;
         }
 
         public void CheckIn()
         {
-            if (State == StateOfReservationEnum.Reserved || State == StateOfReservationEnum.TemporaryLeave)
+            if (State == ReservationState.Reserved || State == ReservationState.TemporaryLeave)
             {
-                if (State == StateOfReservationEnum.Reserved)
+                if (State == ReservationState.Reserved)
                 {
                     Arrival = DateTime.Now;
                 }
@@ -73,7 +73,7 @@ namespace HotelGarage.Core.Models
                     IsRegistered = true;
                 }
 
-                State = StateOfReservationEnum.Inhouse;
+                State = ReservationState.Inhouse;
             }
             else
             {
@@ -100,7 +100,7 @@ namespace HotelGarage.Core.Models
                 parkingPlace.Release();
             }
 
-            State = StateOfReservationEnum.Cancelled;
+            State = ReservationState.Cancelled;
             Car.ResetPricePerNightToNull();
         }
 

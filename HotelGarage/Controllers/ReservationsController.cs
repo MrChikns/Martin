@@ -25,7 +25,7 @@ namespace HotelGarage.Controllers
             return View("Form", new Reservation()
             {
                 ParkingPlaceId = parkingPlaceId ?? 0,
-                State = StateOfReservationEnum.Reserved,
+                State = ReservationState.Reserved,
                 Arrival = DateTime.Now,
                 Departure = DateTime.Now.AddDays(1)
             });
@@ -63,7 +63,7 @@ namespace HotelGarage.Controllers
             car = CreateOrUpdateCar(viewModel, car);
             reservation = CreateOrUpdateReservation(viewModel, reservation, car);
             
-            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlaceStateOfPlace(reservation);
+            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(reservation);
             SetupReservation(reservation, parkingPlace);
 
             _unitOfWork.Complete();
@@ -77,7 +77,7 @@ namespace HotelGarage.Controllers
             {
                 reservation = viewModel;
                 reservation.Car = car;
-                reservation.State = StateOfReservationEnum.Reserved;
+                reservation.State = ReservationState.Reserved;
 
                 _unitOfWork.Reservations.AddReservation(reservation);
             }
@@ -105,9 +105,9 @@ namespace HotelGarage.Controllers
 
         private void SetupReservation(Reservation reservation, ParkingPlace parkingPlace)
         {
-            if (reservation.ParkingPlaceId != 0 && reservation.State != StateOfReservationEnum.Inhouse)
+            if (reservation.ParkingPlaceId != 0 && reservation.State != ReservationState.Inhouse)
             {
-                if (reservation.State == StateOfReservationEnum.Reserved && reservation.Arrival.Date == DateTime.Today.Date)
+                if (reservation.State == ReservationState.Reserved && reservation.Arrival.Date == DateTime.Today.Date)
                 {
                     parkingPlace.Reserve(reservation);
                 }

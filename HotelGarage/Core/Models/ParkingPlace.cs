@@ -8,7 +8,7 @@ namespace HotelGarage.Core.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Label { get; set; }
-        public StateOfPlaceEnum State { get; set; }
+        public ParkingPlaceState State { get; set; }
         public Reservation Reservation { get; set; }
 
         public void AssignReservation(Reservation reservation)
@@ -16,36 +16,26 @@ namespace HotelGarage.Core.Models
             Reservation = reservation;
         }
 
-        public void AssignStateOfPlaceId(StateOfPlaceEnum stateOfPlace)
-        {
-            State = stateOfPlace;
-        }
-
-        public void AssignStateOfPlace(StateOfPlaceEnum stateOfPlace)
-        {
-            State = stateOfPlace;
-        }
-
         public void Release()
         {
             Reservation.SetParkingPlaceId(0);
-            State = StateOfPlaceEnum.Free;
+            State = ParkingPlaceState.Free;
             Reservation = null;
         }
 
         public void Reserve(Reservation reservation)
         {
             reservation.SetParkingPlaceId(Id);
-            State = StateOfPlaceEnum.Reserved;
+            State = ParkingPlaceState.Reserved;
             Reservation = reservation;
         }
 
         public void MoveInhouseReservation(Reservation reservation)
         {
-            if (reservation.State == StateOfReservationEnum.Inhouse)
+            if (reservation.State == ReservationState.Inhouse)
             {
                 reservation.SetParkingPlaceId(Id);
-                State = StateOfPlaceEnum.Occupied;
+                State = ParkingPlaceState.Occupied;
                 Reservation = reservation;
             }
             else
@@ -56,9 +46,9 @@ namespace HotelGarage.Core.Models
 
         public void Occupy(Reservation reservation)
         {
-            if (State == StateOfPlaceEnum.Reserved && reservation.ParkingPlaceId == Id)
+            if (State == ParkingPlaceState.Reserved && reservation.ParkingPlaceId == Id)
             {
-                State = StateOfPlaceEnum.Occupied;
+                State = ParkingPlaceState.Occupied;
                 Reservation = reservation;
             }
             else
@@ -70,7 +60,7 @@ namespace HotelGarage.Core.Models
         public void AssingnFreeParkingPlace(Reservation reservation)
         {   
             reservation.SetParkingPlaceId(0);
-            State = StateOfPlaceEnum.Free;
+            State = ParkingPlaceState.Free;
             Reservation = null;
         }
     }

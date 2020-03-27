@@ -27,11 +27,11 @@ namespace HotelGarage.Controllers
             var reservation = _unitOfWork.Reservations.GetReservationCar(reservationId) ?? throw new ArgumentOutOfRangeException("Invalid reservation Id.");
             var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(parkingPlaceId) ?? throw new ArgumentOutOfRangeException("Invalid parking place Id.");
 
-            if (parkingPlace.State != StateOfPlaceEnum.Reserved)
+            if (parkingPlace.State != ParkingPlaceState.Reserved)
             {
                 throw new ArgumentException("Invalid parking place state. Only reserved parking places can be checked in.");
             }
-            if (reservation.Arrival.Date != DateTime.Today.Date && reservation.State != StateOfReservationEnum.TemporaryLeave)
+            if (reservation.Arrival.Date != DateTime.Today.Date && reservation.State != ReservationState.TemporaryLeave)
             {
                 throw new ArgumentException("Reservation not arriving today has to be in temporary leave state to check in again.");
             }
@@ -46,7 +46,7 @@ namespace HotelGarage.Controllers
 
         public ActionResult CheckOut(int parkingPlaceId)
         {
-            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlaceReservationCar(parkingPlaceId) ?? throw new ArgumentOutOfRangeException("Invalid parking place ID."); 
+            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(parkingPlaceId) ?? throw new ArgumentOutOfRangeException("Invalid parking place ID."); 
 
             parkingPlace.Reservation.CheckOut();
             parkingPlace.Release();
@@ -58,7 +58,7 @@ namespace HotelGarage.Controllers
 
         public ActionResult TemporaryLeave(int parkingPlaceId)
         {
-            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlaceReservationCar(parkingPlaceId) ?? throw new ArgumentOutOfRangeException("Invalid parking place ID.");
+            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(parkingPlaceId) ?? throw new ArgumentOutOfRangeException("Invalid parking place ID.");
 
             parkingPlace.Reservation.TemporaryLeave();
             parkingPlace.Reserve(parkingPlace.Reservation);
@@ -90,7 +90,7 @@ namespace HotelGarage.Controllers
         }
 
         public void MoveOrDirectlyReserveParkingPlace(Reservation reservation, string ParkingPlaceName) {
-            if (reservation.State == StateOfReservationEnum.Inhouse)
+            if (reservation.State == ReservationState.Inhouse)
             {
                 _unitOfWork.ParkingPlaces.GetParkingPlace(ParkingPlaceName).MoveInhouseReservation(reservation);
             }

@@ -30,8 +30,8 @@ namespace HotelGarage.Persistence.Repositories
         {
             return _context.Reservations
                 .Where(a => (
-                    DbFunctions.TruncateTime(a.Arrival) == DateTime.Today.Date && a.State == StateOfReservationEnum.Reserved)
-                    ||(a.State == StateOfReservationEnum.TemporaryLeave)
+                    DbFunctions.TruncateTime(a.Arrival) == DateTime.Today.Date && a.State == ReservationState.Reserved)
+                    ||(a.State == ReservationState.TemporaryLeave)
                 )
                 .Include(c => c.Car)
                 .ToList();
@@ -40,7 +40,7 @@ namespace HotelGarage.Persistence.Repositories
         public List<Reservation> GetNoShowReservationsCar()
         {
             return _context.Reservations
-                .Where(a => DbFunctions.TruncateTime(a.Arrival) < DateTime.Today.Date && a.State == StateOfReservationEnum.Reserved)
+                .Where(a => DbFunctions.TruncateTime(a.Arrival) < DateTime.Today.Date && a.State == ReservationState.Reserved)
                 .Include(c => c.Car)
                 .ToList();
         }
@@ -48,7 +48,7 @@ namespace HotelGarage.Persistence.Repositories
         public List<Reservation> GetInhouseReservationsCar()
         {
             return _context.Reservations
-                .Where(a => a.State == StateOfReservationEnum.Inhouse)
+                .Where(a => a.State == ReservationState.Inhouse)
                 .Include(c => c.Car)
                 .ToList();
         }
@@ -58,11 +58,6 @@ namespace HotelGarage.Persistence.Repositories
             return _context.Reservations
                 .Include(c => c.Car)
                 .ToList();
-        }
-
-        public string GetStateOfReservationName(int id)
-        {
-            return _context.StateOfReservations.First(s => s.Id == id).State;
         }
 
         public List<string> GetLicensePlates()
@@ -90,7 +85,7 @@ namespace HotelGarage.Persistence.Repositories
             return _context.Reservations
                 .Include(r => r.Car)
                 .Where(r =>
-                    (r.State == StateOfReservationEnum.Reserved || r.State == StateOfReservationEnum.Inhouse || r.State == StateOfReservationEnum.TemporaryLeave)
+                    (r.State == ReservationState.Reserved || r.State == ReservationState.Inhouse || r.State == ReservationState.TemporaryLeave)
                     && (DbFunctions.TruncateTime(r.Arrival) <= date
                     && DbFunctions.TruncateTime(r.Departure) > date)
                 )

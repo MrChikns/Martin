@@ -11,7 +11,7 @@ namespace HotelGarage.Core.Dtos
         public string CarGuestsName { get; set; }
         public string Arrival { get; set; }
         public string Departure { get; set; }
-        public StateOfReservationEnum StateOfReservation { get; set; }
+        public ReservationState State { get; set; }
         public bool IsRegistered { get; set; }
         public int ParkingPlaceId { get; set; }
         public string ParkingPlaceName { get; set; }
@@ -25,7 +25,7 @@ namespace HotelGarage.Core.Dtos
             ParkingPlaceName = parkingPlaceName;
             Arrival = reservation.Arrival.ToShortDateString();
             Departure = reservation.Departure.ToShortDateString();
-            StateOfReservation = reservation.State;
+            State = reservation.State;
             IsRegistered = reservation.IsRegistered;
         }
 

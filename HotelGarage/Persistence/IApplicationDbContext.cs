@@ -8,7 +8,5 @@ namespace HotelGarage.Persistence
         DbSet<Car> Cars { get; set; }
         DbSet<ParkingPlace> ParkingPlaces { get; set; }
         DbSet<Reservation> Reservations { get; set; }
-        DbSet<StateOfReservation> StateOfReservations { get; set; }
-        DbSet<StateOfPlace> StatesOfPlace { get; set; }
     }
 }

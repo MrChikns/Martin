@@ -9,16 +9,16 @@ namespace HotelGarage.UnitTests.Models
     public class ParkingPlaceTests
     {
         private ParkingPlace _parkingPlace;
-        private StateOfPlaceEnum _stateOfPlace;
+        private ParkingPlaceState _stateOfPlace;
         private Reservation _reservation;
 
         [SetUp]
         public void SetUp()
         {
-            _stateOfPlace = StateOfPlaceEnum.Occupied;
+            _stateOfPlace = ParkingPlaceState.Occupied;
             _reservation = new Reservation() { Id = 1};
             _parkingPlace = new ParkingPlace() { Id = 1};
-            _parkingPlace.AssignStateOfPlace(_stateOfPlace);
+            _parkingPlace.State = _stateOfPlace;
             _parkingPlace.AssignReservation(_reservation);
         }
 
@@ -53,27 +53,26 @@ namespace HotelGarage.UnitTests.Models
         [Test]
         public void Release_ParkingPlaceStateIsNotFreeAndReservationIsAssigned()
         {
-            _reservation.State = StateOfReservationEnum.Inhouse;
+            _reservation.State = ReservationState.Inhouse;
             _parkingPlace.Release();
 
             Assert.That(_reservation.ParkingPlaceId, Is.EqualTo(0));
             Assert.That(_parkingPlace.Reservation, Is.EqualTo(null));
-            Assert.That(_parkingPlace.State, Is.EqualTo(StateOfPlaceEnum.Free));
+            Assert.That(_parkingPlace.State, Is.EqualTo(ParkingPlaceState.Free));
             Assert.That(_parkingPlace.Label, Is.EqualTo(Constants.FreeStateOfPlaceLabel));
         }
 
         [Test]
         public void Reserve_ParkingPlaceFreeAndReservationNotAssigned()
         {
-            _stateOfPlace = StateOfPlaceEnum.Free;
-            _parkingPlace.AssignStateOfPlace(StateOfPlaceEnum.Free);
+            _parkingPlace.State = ParkingPlaceState.Free;
 
             var reservation = new Reservation() { Id = 5};
             reservation.SetParkingPlaceId(0);
             _parkingPlace.Reserve(reservation);
 
             Assert.That(reservation.ParkingPlaceId, Is.EqualTo(1));
-            Assert.That(_parkingPlace.State, Is.EqualTo(StateOfPlaceEnum.Reserved));
+            Assert.That(_parkingPlace.State, Is.EqualTo(ParkingPlaceState.Reserved));
             Assert.That(_parkingPlace.Label, Is.EqualTo(Constants.ReservedStateOfPlaceLabel));
             Assert.That(_parkingPlace.Reservation, Is.EqualTo(reservation));
         }
@@ -81,9 +80,8 @@ namespace HotelGarage.UnitTests.Models
         [Test]
         public void Occupy_ParkingPlaceReserved_OccupiedByReservation()
         {
-            _stateOfPlace = StateOfPlaceEnum.Reserved;
             _parkingPlace.Reservation.SetParkingPlaceId(0);
-            _parkingPlace.AssignStateOfPlace(StateOfPlaceEnum.Reserved);
+            _parkingPlace.State = ParkingPlaceState.Reserved;
             _parkingPlace.Id = 5;
 
             var reservation = new Reservation() { Id = 5 };
@@ -91,7 +89,7 @@ namespace HotelGarage.UnitTests.Models
             _parkingPlace.Occupy(reservation);
 
             Assert.That(reservation.ParkingPlaceId, Is.EqualTo(5));
-            Assert.That(_parkingPlace.State, Is.EqualTo(StateOfPlace.Occupied));
+            Assert.That(_parkingPlace.State, Is.EqualTo(ParkingPlaceState.Occupied));
             Assert.That(_parkingPlace.Label, Is.EqualTo(Constants.OccupiedStateOfPlaceLabel));
             Assert.That(_parkingPlace.Reservation, Is.EqualTo(reservation));
         }
@@ -108,31 +106,30 @@ namespace HotelGarage.UnitTests.Models
         public void Release_ParkingPlaceNotFree_ReservationNullAndStateOfPlaceFree()
         {
             var reservation = _reservation;
-            _parkingPlace.AssignStateOfPlace(StateOfPlaceEnum.Reserved);
-            _stateOfPlace = StateOfPlaceEnum.Reserved;
+            _parkingPlace.State = ParkingPlaceState.Reserved;
             _parkingPlace.AssingnFreeParkingPlace(reservation);
 
             Assert.That(reservation.ParkingPlaceId, Is.EqualTo(0));
             Assert.That(_parkingPlace.Reservation, Is.EqualTo(null));
-            Assert.That(_parkingPlace.State, Is.EqualTo(StateOfPlaceEnum.Free));
+            Assert.That(_parkingPlace.State, Is.EqualTo(ParkingPlaceState.Free));
             Assert.That(_parkingPlace.Label, Is.EqualTo(Constants.FreeStateOfPlaceLabel));
         }
 
         [Test]
         public void MoveInhouseReservation_ReservationInHouse_SetValuesAfterMove()
         {
-            _reservation.State = StateOfReservationEnum.Inhouse;
+            _reservation.State = ReservationState.Inhouse;
             _parkingPlace.MoveInhouseReservation(_reservation);
 
             Assert.That(_reservation.ParkingPlaceId, Is.EqualTo(_reservation.Id));
-            Assert.That(_parkingPlace.State, Is.EqualTo(StateOfPlaceEnum.Occupied));
+            Assert.That(_parkingPlace.State, Is.EqualTo(ParkingPlaceState.Occupied));
             Assert.That(_parkingPlace.Reservation, Is.EqualTo(_reservation));
         }
 
         [Test]
         public void MoveInhouseReservation_ReservationNotInHouse_ThrowsException()
         {
-            _reservation.State = StateOfReservationEnum.Departed;
+            _reservation.State = ReservationState.Departed;
 
             Assert.That(() => _parkingPlace.MoveInhouseReservation(_reservation), Throws.InstanceOf<ArgumentOutOfRangeException>());
         }

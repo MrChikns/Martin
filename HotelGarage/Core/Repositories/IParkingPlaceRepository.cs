@@ -8,7 +8,7 @@ namespace HotelGarage.Core.Repositories
         ParkingPlace GetParkingPlace(int id);
         ParkingPlace GetParkingPlace(string name);
         ParkingPlace GetParkingPlace(Reservation reservation);
-        List<ParkingPlace> GetParkingPlaces();
+        List<ParkingPlace> GetAllParkingPlaces();
         List<string> GetFreeParkingPlaceNames();
         string GetParkingPlaceName(int id);
     }

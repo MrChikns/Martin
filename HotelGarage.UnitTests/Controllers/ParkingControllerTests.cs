@@ -40,7 +40,7 @@ namespace HotelGarage.UnitTests.Controllers
             };
 
             _mockReservationRepository = new Mock<IReservationRepository>();
-            _mockReservationRepository.Setup(r => r.GetReservationCar(_existing)).Returns(_reservation);
+            _mockReservationRepository.Setup(r => r.GetReservation(_existing)).Returns(_reservation);
             
             _mockParkingPlaceRepository = new Mock<IParkingPlaceRepository>();
             _mockParkingPlaceRepository.Setup(p => p.GetParkingPlace(_existing)).Returns(_parkingPlace);

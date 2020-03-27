@@ -15,29 +15,24 @@ namespace HotelGarage.Persistence.Repositories
         {
             _context = context;
         }
-
-        public Reservation GetReservation(int reservationId)
-        {
-            return _context.Reservations.FirstOrDefault(r => r.Id == reservationId);
-        }
         
-        public Reservation GetReservationCar(int reservationId)
+        public Reservation GetReservation(int id)
         {
-            return _context.Reservations.Include(c => c.Car).First(r => r.Id == reservationId);
+            return _context.Reservations.Include(c => c.Car).First(r => r.Id == id);
         }
 
-        public List<Reservation> GetTodaysReservationsCar()
+        public List<Reservation> GetTodaysReservations()
         {
             return _context.Reservations
                 .Where(a => (
                     DbFunctions.TruncateTime(a.Arrival) == DateTime.Today.Date && a.State == ReservationState.Reserved)
-                    ||(a.State == ReservationState.TemporaryLeave)
+                    || (a.State == ReservationState.TemporaryLeave)
                 )
                 .Include(c => c.Car)
                 .ToList();
         }
 
-        public List<Reservation> GetNoShowReservationsCar()
+        public List<Reservation> GetNoShowReservations()
         {
             return _context.Reservations
                 .Where(a => DbFunctions.TruncateTime(a.Arrival) < DateTime.Today.Date && a.State == ReservationState.Reserved)
@@ -45,7 +40,7 @@ namespace HotelGarage.Persistence.Repositories
                 .ToList();
         }
         
-        public List<Reservation> GetInhouseReservationsCar()
+        public List<Reservation> GetInhouseReservations()
         {
             return _context.Reservations
                 .Where(a => a.State == ReservationState.Inhouse)
@@ -53,7 +48,7 @@ namespace HotelGarage.Persistence.Repositories
                 .ToList();
         }
 
-        public List<Reservation> GetAllReservationsCar()
+        public List<Reservation> GetAllReservations()
         {
             return _context.Reservations
                 .Include(c => c.Car)
@@ -72,7 +67,7 @@ namespace HotelGarage.Persistence.Repositories
             return list;
         }
 
-        public List<Reservation> GetReturningReservationsCars()
+        public List<Reservation> GetReturningReservations()
         {
             return _context.Reservations
                 .Where(c => c.Car.NumberOfStays >= 2)
@@ -80,14 +75,14 @@ namespace HotelGarage.Persistence.Repositories
                 .ToList();
         }
         
-        public List<Reservation> GetInhouseReservationsFromSelectedDay(DateTime date)
+        public List<Reservation> GetInhouseReservations(DateTime inhouseDate)
         {
             return _context.Reservations
                 .Include(r => r.Car)
                 .Where(r =>
                     (r.State == ReservationState.Reserved || r.State == ReservationState.Inhouse || r.State == ReservationState.TemporaryLeave)
-                    && (DbFunctions.TruncateTime(r.Arrival) <= date
-                    && DbFunctions.TruncateTime(r.Departure) > date)
+                    && (DbFunctions.TruncateTime(r.Arrival) <= inhouseDate
+                    && DbFunctions.TruncateTime(r.Departure) > inhouseDate)
                 )
                 .ToList();
         }
@@ -97,7 +92,7 @@ namespace HotelGarage.Persistence.Repositories
             _context.Reservations.Add(reservation);
         }
 
-        public OccupancyNumbersOfTheDay[] GetNumberOfFreeParkingPlacesAndPlacesOccupiedByEmployeesArray()
+        public OccupancyNumbersOfTheDay[] GetFreeandEmployeeParkingPlacesCount()
         {
             OccupancyNumbersOfTheDay[] freeplaces = new OccupancyNumbersOfTheDay[7];
             var listOfReservationsForNextWeek = new List<Reservation>();
@@ -105,7 +100,7 @@ namespace HotelGarage.Persistence.Repositories
 
             for (int i = 0; i < 7; i++)
             {
-                listOfReservationsForNextWeek = this.GetInhouseReservationsFromSelectedDay(DateTime.Today.AddDays(i));
+                listOfReservationsForNextWeek = this.GetInhouseReservations(DateTime.Today.AddDays(i));
 
                 freeplaces[i].NumberOfFreePlaces = totalNumberOfParkingPlaces - listOfReservationsForNextWeek.Count() 
                     + listOfReservationsForNextWeek.Where(r => r.ParkingPlaceId > 19).Count(); // odecet mist ktera jsou nestandardni(staff only) stoji na nich pouze zamestnanci

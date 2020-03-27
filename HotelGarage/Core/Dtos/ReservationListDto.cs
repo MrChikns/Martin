@@ -43,7 +43,7 @@ namespace HotelGarage.Core.Dtos
         {
             var allResListDto = new List<ReservationListDto>();
 
-            foreach (var res in unitOfWork.Reservations.GetAllReservationsCar())
+            foreach (var res in unitOfWork.Reservations.GetAllReservations())
             {
                 allResListDto.Add(new ReservationListDto(res,unitOfWork.Reservations,unitOfWork.ParkingPlaces));
             }

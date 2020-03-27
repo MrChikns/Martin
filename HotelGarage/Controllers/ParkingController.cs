@@ -24,7 +24,7 @@ namespace HotelGarage.Controllers
 
         public ActionResult CheckIn(int parkingPlaceId, int reservationId)
         {
-            var reservation = _unitOfWork.Reservations.GetReservationCar(reservationId) ?? throw new ArgumentOutOfRangeException("Invalid reservation Id.");
+            var reservation = _unitOfWork.Reservations.GetReservation(reservationId) ?? throw new ArgumentOutOfRangeException("Invalid reservation Id.");
             var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(parkingPlaceId) ?? throw new ArgumentOutOfRangeException("Invalid parking place Id.");
 
             if (parkingPlace.State != ParkingPlaceState.Reserved)

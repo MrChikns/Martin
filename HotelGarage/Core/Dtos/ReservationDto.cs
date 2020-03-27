@@ -32,7 +32,7 @@ namespace HotelGarage.Core.Dtos
         public static IList<ReservationDto> GetArrivingReservations(IUnitOfWork unitOfWork)
         {
             var arrivingResDtos = new List<ReservationDto>();
-            foreach (var reservation in unitOfWork.Reservations.GetTodaysReservationsCar())
+            foreach (var reservation in unitOfWork.Reservations.GetTodaysReservations())
             {
                 string parkingPlaceName;
 
@@ -53,7 +53,7 @@ namespace HotelGarage.Core.Dtos
         public static IList<ReservationDto> GetNoShowReservations(IUnitOfWork unitOfWork)
         {
             var noShowReservationDtos = new List<ReservationDto>();
-            foreach (var reservation in unitOfWork.Reservations.GetNoShowReservationsCar())
+            foreach (var reservation in unitOfWork.Reservations.GetNoShowReservations())
             {
                 string parkingPlaceName;
 
@@ -74,7 +74,7 @@ namespace HotelGarage.Core.Dtos
         public static IList<ReservationDto> GetInhouseReservations(IUnitOfWork unitOfWork)
         {
             var inhouseReservationDtos = new List<ReservationDto>();
-            foreach (var reservation in unitOfWork.Reservations.GetInhouseReservationsCar())
+            foreach (var reservation in unitOfWork.Reservations.GetInhouseReservations())
             {
                 var parkingPlaceName = unitOfWork.ParkingPlaces.GetParkingPlace(reservation).Name;
                 inhouseReservationDtos.Add(new ReservationDto(reservation, parkingPlaceName));

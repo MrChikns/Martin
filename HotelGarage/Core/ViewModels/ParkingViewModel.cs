@@ -20,7 +20,7 @@ namespace HotelGarage.Core.ViewModels
             NoShowReservations = ReservationDto.GetNoShowReservations(unitOfWork);
             InHouseReservations = ReservationDto.GetInhouseReservations(unitOfWork);
             FreeParkingPlaceNames = unitOfWork.ParkingPlaces.GetFreeParkingPlaceNames();
-            NumberOfFreeAndEmployeeOccupiedParkingPlacesArray = unitOfWork.Reservations.GetNumberOfFreeParkingPlacesAndPlacesOccupiedByEmployeesArray();
+            NumberOfFreeAndEmployeeOccupiedParkingPlacesArray = unitOfWork.Reservations.GetFreeandEmployeeParkingPlacesCount();
         }
     }
 }

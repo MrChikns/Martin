@@ -33,7 +33,7 @@ namespace HotelGarage.Persistence.Repositories
             return _context.ParkingPlaces.FirstOrDefault(p => p.Id == reservation.ParkingPlaceId);
         }
 
-        public List<ParkingPlace> GetParkingPlaces()
+        public List<ParkingPlace> GetAllParkingPlaces()
         {
             return _context.ParkingPlaces
                 .Include(r => r.Reservation)

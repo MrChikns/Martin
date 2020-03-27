@@ -73,7 +73,7 @@ namespace HotelGarage.Core.Dtos
         public static List<ParkingPlaceDto> GetParkingPlaceDtos(IUnitOfWork unitOfWork)
         {
             var parkingPlaceDtos = new List<ParkingPlaceDto>();
-            var parkingPlaces = unitOfWork.ParkingPlaces.GetParkingPlaces();
+            var parkingPlaces = unitOfWork.ParkingPlaces.GetAllParkingPlaces();
 
             foreach (var parkingPlace in parkingPlaces)
             {

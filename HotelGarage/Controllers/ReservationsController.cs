@@ -33,14 +33,14 @@ namespace HotelGarage.Controllers
 
         public ActionResult Update(int reservationId)
         {
-            var updatedReservation = _unitOfWork.Reservations.GetReservationCar(reservationId) ?? throw new ArgumentOutOfRangeException("Invalid reservation ID.");
+            var updatedReservation = _unitOfWork.Reservations.GetReservation(reservationId) ?? throw new ArgumentOutOfRangeException("Invalid reservation ID.");
             
             return View("Form", updatedReservation);
         }
 
         public ActionResult Delete(int reservationId)
         {
-            var deletedReservation = _unitOfWork.Reservations.GetReservationCar(reservationId) ?? throw new ArgumentOutOfRangeException("Invalid reservation ID.");
+            var deletedReservation = _unitOfWork.Reservations.GetReservation(reservationId) ?? throw new ArgumentOutOfRangeException("Invalid reservation ID.");
             var reservationParkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(deletedReservation.ParkingPlaceId);
             deletedReservation.Cancel(reservationParkingPlace);
 
@@ -51,17 +51,17 @@ namespace HotelGarage.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(Reservation viewModel)
+        public ActionResult Save(Reservation newReservationData)
         {
             if (!ModelState.IsValid)
             {
-                return View("Form", viewModel);
+                return View("Form", newReservationData);
             }
 
-            var reservation = _unitOfWork.Reservations.GetReservation(viewModel.Id);
-            var car = _unitOfWork.Cars.GetCar(viewModel);
-            car = CreateOrUpdateCar(viewModel, car);
-            reservation = CreateOrUpdateReservation(viewModel, reservation, car);
+            var reservation = _unitOfWork.Reservations.GetReservation(newReservationData.Id);
+            var car = _unitOfWork.Cars.GetCar(newReservationData);
+            car = CreateOrUpdateCar(newReservationData, car);
+            reservation = CreateOrUpdateReservation(newReservationData, reservation, car);
             
             var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(reservation);
             SetupReservation(reservation, parkingPlace);

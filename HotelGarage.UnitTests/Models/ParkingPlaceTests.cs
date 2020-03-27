@@ -138,15 +138,6 @@ namespace HotelGarage.UnitTests.Models
         }
 
         [Test]
-        public void Release_ParkingPlaceFree_ThrowsException()
-        {
-            var free = new StateOfPlace() { Id = StateOfPlace.Free, Name = Constants.FreeStateOfPlaceLabel};
-            _parkingPlace.StateOfPlaceId = StateOfPlace.Free;
-
-            Assert.That(() => _parkingPlace.Release(free), Throws.InstanceOf<ArgumentOutOfRangeException>());
-        }
-
-        [Test]
         public void MoveInhouseReservation_ReservationInHouse_SetValuesAfterMove()
         {
             _reservation.StateOfReservationId = StateOfReservation.Inhouse;

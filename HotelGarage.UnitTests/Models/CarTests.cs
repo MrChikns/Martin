@@ -42,8 +42,8 @@ namespace HotelGarage.UnitTests.Models
         }
 
         [Test]
-        [TestCase(2019,1,2,2019,1,1,0)] // When arrival is after departure in the same year.
-        [TestCase(2019,1,1,2018,1,1,1)] // When arrival is after departure in different years.
+        [TestCase(2019,1,2,2019,1,1)] // When arrival is after departure in the same year.
+        [TestCase(2019,1,1,2018,1,1)] // When arrival is after departure in different years.
         public void CalculateNumberOfDays_WrongArrivalDeparturePairs_ThrowsException(
             int arrivalYear,
             int arrivalMonth,

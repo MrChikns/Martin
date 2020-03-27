@@ -1,16 +1,12 @@
-﻿using System;
-using System.Security.Claims;
-using System.Security.Principal;
-using System.Threading;
-using System.Web.Mvc;
-using HotelGarage.Controllers;
+﻿using HotelGarage.Controllers;
 using HotelGarage.Core;
 using HotelGarage.Core.Models;
 using HotelGarage.Core.Repositories;
-using HotelGarage.Persistence;
 using HotelGarage.UnitTests.Extensions;
 using Moq;
 using NUnit.Framework;
+using System;
+using System.Web.Mvc;
 
 namespace HotelGarage.UnitTests.Controllers
 {
@@ -30,10 +26,16 @@ namespace HotelGarage.UnitTests.Controllers
         [SetUp]
         public void SetUp()
         {
-            _reservation = new Reservation() { Id = _existing, Arrival = DateTime.Today,
-                StateOfReservationId = StateOfReservation.Reserved, Car = new Car(), ParkingPlaceId = _existing };
-            _parkingPlace = new ParkingPlace() { Id = _existing, StateOfPlace = 
-                new StateOfPlace() { Id = StateOfPlace.Reserved}, StateOfPlaceId = StateOfPlace.Reserved };
+            _reservation = new Reservation()
+            {
+                Id = _existing, Arrival = DateTime.Today,
+                StateOfReservationId = StateOfReservation.Reserved, Car = new Car(), ParkingPlaceId = _existing 
+            };
+            _parkingPlace = new ParkingPlace()
+            {
+                Id = _existing, StateOfPlace = 
+                new StateOfPlace() { Id = StateOfPlace.Reserved}, StateOfPlaceId = StateOfPlace.Reserved 
+            };
 
             _mockReservationRepository = new Mock<IReservationRepository>();
             _mockReservationRepository.Setup(r => r.GetReservationCar(_existing)).Returns(_reservation);
@@ -100,11 +102,9 @@ namespace HotelGarage.UnitTests.Controllers
         {
             _parkingPlace.Reservation = _reservation;
             _reservation.StateOfReservationId = StateOfReservation.Inhouse;
-
             _mockParkingPlaceRepository.Setup(p => p.GetParkingPlaceReservationCar(_existing)).Returns(_parkingPlace);
 
             var result = (RedirectToRouteResult)_controller.CheckOut(_existing);
-
             Assert.AreEqual("Parking", result.RouteValues["action"]);
         }
 
@@ -118,11 +118,9 @@ namespace HotelGarage.UnitTests.Controllers
         public void TemporaryLeave_InhouseReservation_ReturnRedirectToActionResult()
         {
             _parkingPlace.Reservation = _reservation;
-
             _mockParkingPlaceRepository.Setup(p => p.GetParkingPlaceReservationCar(_existing)).Returns(_parkingPlace);
 
             var result = (RedirectToRouteResult)_controller.TemporaryLeave(_existing);
-
             Assert.AreEqual("Parking", result.RouteValues["action"]);
         }
 
@@ -142,7 +140,6 @@ namespace HotelGarage.UnitTests.Controllers
             _mockStatesOfPlacesRepository.Setup(r => r.GetFreeStateOfPlace()).Returns(new StateOfPlace() { Id = _existing});
 
             var result = (RedirectToRouteResult)_controller.Reserve("_existing",_existing);
-
             Assert.AreEqual("Parking", result.RouteValues["action"]);
         }
 
@@ -157,7 +154,6 @@ namespace HotelGarage.UnitTests.Controllers
             _mockStatesOfPlacesRepository.Setup(r => r.GetFreeStateOfPlace()).Returns(new StateOfPlace() { Id = _existing });
 
             var result = (RedirectToRouteResult)_controller.Reserve("_existing", _existing);
-
             Assert.AreEqual("Parking", result.RouteValues["action"]);
         }
     }

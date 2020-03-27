@@ -41,67 +41,73 @@ namespace HotelGarage.Core.Models
         
         public void CheckOut()
         {
-            if (this.StateOfReservationId == StateOfReservation.Inhouse)
+            if (StateOfReservationId == StateOfReservation.Inhouse)
             {
-                this.Departure = DateTime.Now;
-                this.ParkingPlaceId = 0;
-                this.StateOfReservationId = StateOfReservation.Departed;
-                this.Car.AddStay();
+                Departure = DateTime.Now;
+                ParkingPlaceId = 0;
+                StateOfReservationId = StateOfReservation.Departed;
+                Car.AddStay();
             }
-            else {
-                throw new ArgumentOutOfRangeException("Predana rezervace, ktera neni inhouse.");
+            else
+            {
+                throw new ArgumentOutOfRangeException("Invalid reservation state.");
             }
         }
 
         public void TemporaryLeave()
         {
-            this.StateOfReservationId = StateOfReservation.TemporaryLeave;
+            StateOfReservationId = StateOfReservation.TemporaryLeave;
         }
 
         public void CheckIn()
         {
-            if (this.StateOfReservationId == StateOfReservation.Reserved ||
-                this.StateOfReservationId == StateOfReservation.TemporaryLeave)
+            if (StateOfReservationId == StateOfReservation.Reserved || StateOfReservationId == StateOfReservation.TemporaryLeave)
             {
-                if (this.StateOfReservationId == StateOfReservation.Reserved)
-                    this.Arrival = DateTime.Now;
+                if (StateOfReservationId == StateOfReservation.Reserved)
+                {
+                    Arrival = DateTime.Now;
+                }
 
-                if (this.Car.IsEmployee)
-                    this.IsRegistered = true;
+                if (Car.IsEmployee)
+                {
+                    IsRegistered = true;
+                }
 
-                this.StateOfReservationId = StateOfReservation.Inhouse;
+                StateOfReservationId = StateOfReservation.Inhouse;
             }
             else
             {
-                throw new ArgumentOutOfRangeException("Predana rezervace se spatnym stavem.");
+                throw new ArgumentOutOfRangeException("Invalid reservation state.");
             }
             
         }
 
         public void Update(Reservation updated, Car car)
         {
-            this.Arrival = updated.Arrival;
-            this.Departure = updated.Departure;
-            this.IsRegistered = updated.IsRegistered;
-            this.LicensePlate = updated.LicensePlate;
-            this.ParkingPlaceId = updated.ParkingPlaceId;
-            this.Car = car;
-            this.StateOfReservationId = updated.StateOfReservationId;
+            Arrival = updated.Arrival;
+            Departure = updated.Departure;
+            IsRegistered = updated.IsRegistered;
+            LicensePlate = updated.LicensePlate;
+            ParkingPlaceId = updated.ParkingPlaceId;
+            Car = car;
+            StateOfReservationId = updated.StateOfReservationId;
         }
 
         public void Cancel(ParkingPlace parkingPlace, StateOfPlace freePlace)
         {
-            if(parkingPlace != null)
+            if (parkingPlace != null)
+            {
                 parkingPlace.Release(freePlace);
+            }
             
-            this.StateOfReservationId = StateOfReservation.Cancelled;
-            this.Car.ResetPricePerNightToNull();
+            StateOfReservationId = StateOfReservation.Cancelled;
+            Car.ResetPricePerNightToNull();
         }
 
         public void UpdateInhouseReservationCheckout()
         {
-            this.Departure = DateTime.Today.Date + new TimeSpan(12,0,0);
-            this.IsRegistered = false;
+            Departure = DateTime.Today.Date + new TimeSpan(12,0,0);
+            IsRegistered = false;
         }
     }
 

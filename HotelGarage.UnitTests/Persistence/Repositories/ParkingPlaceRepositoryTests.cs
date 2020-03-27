@@ -4,12 +4,8 @@ using HotelGarage.Persistence.Repositories;
 using HotelGarage.UnitTests.Extensions;
 using Moq;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotelGarage.UnitTests.Persistence.Repositories
 {

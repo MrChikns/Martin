@@ -6,12 +6,7 @@ using HotelGarage.UnitTests.Extensions;
 using Moq;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
-using System.Web.Routing;
 
 namespace HotelGarage.UnitTests.Controllers
 {
@@ -88,7 +83,6 @@ namespace HotelGarage.UnitTests.Controllers
         public void Update_ReservationIdExists_ReturnView()
         {
             var result = _controller.Update(_existing) as ViewResult;
-
             Assert.IsNotNull(result);
             Assert.IsTrue(result.ViewName == "Form");
         }
@@ -103,7 +97,6 @@ namespace HotelGarage.UnitTests.Controllers
         public void Delete_ReservationIdExists_ReturnRedirectToActionResult()
         {
             var result = (RedirectToRouteResult)_controller.Delete(_existing);
-
             Assert.AreEqual("Parking",result.RouteValues["action"]);
             Assert.AreEqual("Parking", result.RouteValues["controller"]);
         }
@@ -112,7 +105,6 @@ namespace HotelGarage.UnitTests.Controllers
         public void Save_ViewModelIsValid_ReturnRedirectToActionResult()
         {
             var result = (RedirectToRouteResult)_controller.Save(_reservation);
-
             Assert.AreEqual("Parking", result.RouteValues["action"]);
             Assert.AreEqual("Parking", result.RouteValues["controller"]);
         }
@@ -122,7 +114,6 @@ namespace HotelGarage.UnitTests.Controllers
         {
             _controller.ModelState.AddModelError("","");
             var result = _controller.Save(_reservation) as ViewResult;
-
             Assert.IsNotNull(result);
             Assert.IsTrue(result.ViewName == "Form");
         }

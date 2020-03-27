@@ -4,10 +4,7 @@ using HotelGarage.Persistence.Repositories;
 using HotelGarage.UnitTests.Extensions;
 using Moq;
 using NUnit.Framework;
-using System;
 using System.Data.Entity;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotelGarage.UnitTests.Persistence.Repositories
 {
@@ -22,7 +19,7 @@ namespace HotelGarage.UnitTests.Persistence.Repositories
         public void TestInitialize()
         {
             _mockCars = new Mock<DbSet<Car>>();
-
+            
             var mockContext = new Mock<IApplicationDbContext>();
             mockContext.SetupGet(c => c.Cars).Returns(() => _mockCars.Object);
 

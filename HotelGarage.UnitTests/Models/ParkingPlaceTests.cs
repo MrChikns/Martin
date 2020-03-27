@@ -1,7 +1,7 @@
-﻿using System;
-using HotelGarage.Core.Models;
+﻿using HotelGarage.Core.Models;
 using HotelGarage.Helpers;
 using NUnit.Framework;
+using System;
 
 namespace HotelGarage.UnitTests.Models
 {
@@ -12,14 +12,12 @@ namespace HotelGarage.UnitTests.Models
         private StateOfPlace _stateOfPlace;
         private Reservation _reservation;
 
-
         [SetUp]
         public void SetUp()
         {
             _stateOfPlace = new StateOfPlace() { Name = Constants.OccupiedStateOfPlaceLabel };
             _reservation = new Reservation() { Id = 1};
             _parkingPlace = new ParkingPlace() { Id = 1};
-
             _parkingPlace.AssignStateOfPlace(_stateOfPlace);
             _parkingPlace.AssignReservation(_reservation);
         }

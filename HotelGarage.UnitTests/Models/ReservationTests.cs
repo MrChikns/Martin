@@ -1,8 +1,6 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
+﻿using HotelGarage.Core.Models;
 using NUnit.Framework;
-using HotelGarage.Core.Models;
+using System;
 
 namespace HotelGarage.UnitTests.Models
 {
@@ -16,7 +14,6 @@ namespace HotelGarage.UnitTests.Models
         public void SetUp()
         {
             _staraSPZ = "staraSPZ";
-
             _reservation = new Reservation()
             {
                 LicensePlate = _staraSPZ,
@@ -48,20 +45,16 @@ namespace HotelGarage.UnitTests.Models
         [Test]
         public void Cancel_ResHasFreeParkingPlace_SetReservationToCancell()
         {
-            ParkingPlace parkingPlace = null;
-
-            _reservation.Cancel(parkingPlace, new StateOfPlace() { Id = 1, Name = Helpers.Constants.FreeStateOfPlaceLabel });
-
-            Assert.That(parkingPlace, Is.EqualTo(null));
+            _reservation.Cancel(null, new StateOfPlace() { Id = 1, Name = Helpers.Constants.FreeStateOfPlaceLabel });
+            
             Assert.That(_reservation.StateOfReservationId, Is.EqualTo(4));
         }
 
         [Test]
         public void Cancel_ResHasOccupiedParkingPlace_ReleaseParkingPlaceFromReservationAndSetResToCancell()
         {
-            ParkingPlace parkingPlace = new ParkingPlace();
+            var parkingPlace = new ParkingPlace();
             parkingPlace.AssignReservation(_reservation);
-
             _reservation.Cancel(parkingPlace, new StateOfPlace() { Id = 1, Name = Helpers.Constants.FreeStateOfPlaceLabel });
 
             Assert.That(parkingPlace.Reservation, Is.EqualTo(null));

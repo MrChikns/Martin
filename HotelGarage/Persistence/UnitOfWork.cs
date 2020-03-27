@@ -18,7 +18,6 @@ namespace HotelGarage.Persistence
         public IStateOfPlaceRepository StatesOfPlaces { get; private set; }
         public ICarRepository Cars { get; private set; }
 
-
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
+﻿using HotelGarage.Core.Models;
 using NUnit.Framework;
-using HotelGarage.Core.Models;
+using System;
 
 namespace HotelGarage.UnitTests.Models
 {
@@ -17,9 +15,8 @@ namespace HotelGarage.UnitTests.Models
             _car = new Car();
         }
 
-        //ReturnCalculatedTotalPriceString
         [Test]
-        public void ReturnCalculatedTotalPriceString_PricePerNightIsNull_ReturnsNotFilledOutMessage()
+        public void ReturnCalculatedTotalPrice_PricePerNightIsNull_NotFilledOutMessage()
         {
      
             var calculatedPricePerNight = _car.ReturnCalculatedTotalPriceString(1, null);
@@ -28,7 +25,7 @@ namespace HotelGarage.UnitTests.Models
         }
 
         [Test]
-        public void ReturnCalculatedTotalPriceString_NumberOfDaysIsZero_ReturnsAPriceForOneDay()
+        public void ReturnCalculatedTotalPrice_NumberOfDaysIsZero_PriceForOneDay()
         {
             var pricePerNight = 2;
             var calculatedPricePerNight = _car.ReturnCalculatedTotalPriceString(0, pricePerNight);
@@ -37,43 +34,49 @@ namespace HotelGarage.UnitTests.Models
         }
 
         [Test]
-        public void ReturnCalculatedTotalPriceString_NumberOfDaysIsOneOrMore_ReturnsAPriceMultipliedByDays()
+        public void ReturnCalculatedTotalPrice_NumberOfDaysIsOneOrMore_PriceMultipliedByDays()
         {
             var calculatedPricePerNight = _car.ReturnCalculatedTotalPriceString(5, 1);
 
             Assert.That(calculatedPricePerNight, Is.EqualTo("5"));
         }
 
-        // CalculateNumberOfDays
         [Test]
-        [TestCase(2019,1,2,2019,1,1,0)] //WhenArrivalAfterDepartureInTheSameYear
-        [TestCase(2019,1,1,2018,1,1,1)] //WhenArrivalAfterDepartureInDifferentYears
+        [TestCase(2019,1,2,2019,1,1,0)] // When arrival is after departure in the same year.
+        [TestCase(2019,1,1,2018,1,1,1)] // When arrival is after departure in different years.
         public void CalculateNumberOfDays_WrongArrivalDeparturePairs_ThrowsException(
-            int arrivalYear, int arrivalMonth, int arrivalDay,
-            int departureYear, int departureMonth, int departureDay,
-            int result)
+            int arrivalYear,
+            int arrivalMonth,
+            int arrivalDay,
+            int departureYear,
+            int departureMonth,
+            int departureDay
+        )
         {
             var arrivalDate = new DateTime(arrivalYear, arrivalMonth, arrivalDay);
             var departureDate = new DateTime(departureYear, departureMonth, departureDay);
 
-            Assert.That(() => _car.CalculateNumberOfDays(arrivalDate, departureDate),
-                Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(() => _car.CalculateNumberOfDays(arrivalDate, departureDate), Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
 
         [Test]
-        [TestCase(2019, 1, 1, 2019, 1, 2, 1)] //WhenArrivalBeforeDepartureAndInTheSameYear
-        [TestCase(2019, 1, 1, 2020, 1, 1, 365)] //WhenArrivalBeforDepartureAndInDifferentYearsNoLeapYear
-        [TestCase(2019, 12, 31, 2020, 3, 1, 61)] //WhenArrivalBeforDepartureAndInDifferentYearsInLeapYear
-        [TestCase(2018, 1, 1, 2020, 1, 1, 730)] //WhenArrivalBeforeDepartureAndAtLeastTwoYearsApart
-        [TestCase(2019, 1, 1, 2019, 1, 1, 0)] //WhenArrivalAndDepartureAreSame
+        [TestCase(2019, 1, 1, 2019, 1, 2, 1)] //When arrival is before departure and in the same year.
+        [TestCase(2019, 1, 1, 2020, 1, 1, 365)] //When arrival is before departure and in different year. Not leap year.
+        [TestCase(2019, 12, 31, 2020, 3, 1, 61)] // When arrival is befor departure and in different year. In leap year.
+        [TestCase(2018, 1, 1, 2020, 1, 1, 730)] // When arrival is before departure and at least two years apart.
+        [TestCase(2019, 1, 1, 2019, 1, 1, 0)] // When arrival and departure are the same.
         public void CalculateNumberOfDays_AcceptedArrivalDeparturePairs_ReturnsNumberOfDays(
-            int arrivalYear, int arrivalMonth, int arrivalDay,
-            int departureYear, int departureMonth, int departureDay,
-            int result)
+            int arrivalYear,
+            int arrivalMonth,
+            int arrivalDay,
+            int departureYear,
+            int departureMonth,
+            int departureDay,
+            int result
+        )
         {
             var arrivalDate = new DateTime(arrivalYear, arrivalMonth, arrivalDay);
             var departureDate = new DateTime(departureYear, departureMonth, departureDay);
-
             var calculatedNumberOfDays = _car.CalculateNumberOfDays(arrivalDate, departureDate);
 
             Assert.That(calculatedNumberOfDays,Is.EqualTo(result));

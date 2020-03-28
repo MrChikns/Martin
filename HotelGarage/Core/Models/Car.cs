@@ -61,11 +61,11 @@ namespace HotelGarage.Core.Models
             Note = reservation.Car.Note;
         }
 
-        public string ReturnCalculatedTotalPriceString(int numberOfDays, int? pricePerNight)
+        public string ReturnTotalPriceString(int numberOfDays, int? pricePerNight)
         {
             if (pricePerNight == null)
             {
-                return Helpers.Constants.NotFilledOutMessage;
+                return Helpers.Labels.NotFilledOutLabel;
             }
 
             if (numberOfDays == 0)

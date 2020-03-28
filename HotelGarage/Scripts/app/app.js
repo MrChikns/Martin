@@ -1,13 +1,10 @@
-﻿//
-// res list =>
-//
-var ReservationList = function () { 
+﻿var ReservationList = function () { 
     var init = function () {
         table.draw();
         $("#filterBtn").on("click", function () { table.draw(); });
     };
 
-    // prepsani datatable s nastavenymi daty a filtrem
+    // Data table setup with data and filter.
     var table = $('#example').DataTable({
         columnDefs: [{
             targets: [0, 1, 2],
@@ -20,9 +17,6 @@ var ReservationList = function () {
     };
 }();
 
-//
-// res form =>
-//
 var ReservationForm = function () { 
     var init = function () {
         setUpBoxColor();
@@ -34,14 +28,12 @@ var ReservationForm = function () {
             datumTokenizer: Bloodhound.tokenizers.whitespace,
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             prefetch: {
-                //url: '/api/reservations/',
                 url: '/api/reservations/',
-                ttl: 1 // in milliseconds
+                ttl: 1 // milliseconds
             }
         });
 
-        // passing in `null` for the `options` arguments will result in the default
-        // options being used
+        // Passing in `null` for the `options` argument will result in the default option.
         $('.typeahead').typeahead(null, {
             name: 'reservations',
             source: reservations
@@ -49,7 +41,6 @@ var ReservationForm = function () {
        
     };
 
-    // kontrola prijezdu pri vytvareni rezervace - zda je odjezd az po prijezdu
     var departureAfterArrivalCheck = function (event) {
         if ($('#Arrival').val() > $('#Departure').val()) {
             alert("Odjezd musí být po příjezdu!");
@@ -57,7 +48,6 @@ var ReservationForm = function () {
         }
     };
 
-    // prebarveni stavu parkovaciho mista podle stavu registrace hosta
     var setUpBoxColor = function () {
         if ($('#IsRegistered').attr('checked') === "checked") 
             $('#isRegisteredDiv').addClass('alert alert-success');
@@ -65,12 +55,10 @@ var ReservationForm = function () {
             $('#isRegisteredDiv').addClass('alert alert-warning');
     };
 
-    // prepinani barvy pri kliknuti na checkbox
     var toggleBoxColor = function () {
         $('#isRegisteredDiv').toggleClass('alert-warning alert-success');
     };
 
-    // doplneni SPZ z textboxu aby byl vracen kompletni viewModel
     var passLicensePlaceIntoModel = function () {
         $('input[data-id="spz-hidden"]').val($(this).val());
     };
@@ -80,7 +68,6 @@ var ReservationForm = function () {
     };
 }();
 
-// Main parking place.
 var ParkingPlace = function () {
     var init = function () {
         $('div.alert-prijezd').each(highlightReservations);

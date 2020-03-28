@@ -19,16 +19,16 @@ namespace HotelGarage.UnitTests.Models
         public void ReturnCalculatedTotalPrice_PricePerNightIsNull_NotFilledOutMessage()
         {
      
-            var calculatedPricePerNight = _car.ReturnCalculatedTotalPriceString(1, null);
+            var calculatedPricePerNight = _car.ReturnTotalPriceString(1, null);
 
-            Assert.That(calculatedPricePerNight, Is.EqualTo(Helpers.Constants.NotFilledOutMessage));
+            Assert.That(calculatedPricePerNight, Is.EqualTo(Helpers.Labels.NotFilledOutLabel));
         }
 
         [Test]
         public void ReturnCalculatedTotalPrice_NumberOfDaysIsZero_PriceForOneDay()
         {
             var pricePerNight = 2;
-            var calculatedPricePerNight = _car.ReturnCalculatedTotalPriceString(0, pricePerNight);
+            var calculatedPricePerNight = _car.ReturnTotalPriceString(0, pricePerNight);
 
             Assert.That(calculatedPricePerNight, Is.EqualTo(pricePerNight.ToString()));
         }
@@ -36,7 +36,7 @@ namespace HotelGarage.UnitTests.Models
         [Test]
         public void ReturnCalculatedTotalPrice_NumberOfDaysIsOneOrMore_PriceMultipliedByDays()
         {
-            var calculatedPricePerNight = _car.ReturnCalculatedTotalPriceString(5, 1);
+            var calculatedPricePerNight = _car.ReturnTotalPriceString(5, 1);
 
             Assert.That(calculatedPricePerNight, Is.EqualTo("5"));
         }

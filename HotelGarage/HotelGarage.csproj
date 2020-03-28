@@ -264,7 +264,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\Constants.cs" />
+    <Compile Include="Helpers\Labels.cs" />
     <Compile Include="Persistence\IApplicationDbContext.cs" />
     <Compile Include="Persistence\Migrations\201810111011152_InitialModel.cs" />
     <Compile Include="Persistence\Migrations\201810111011152_InitialModel.Designer.cs">

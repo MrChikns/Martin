@@ -36,7 +36,7 @@ namespace HotelGarage.Core.Dtos
             LicensePlate = " ";
             Departure = " ";
             ParkingPlaceName = parkingPlace.Name;
-            StateOfPlaceLabel = GetParkingPlaceLabel(parkingPlace.State);
+            StateOfPlaceLabel = GetParkingPlaceLabel(parkingPlace);
             DepartureBootbox = " ";
             IsRegisteredBootbox = " ";
             ArrivalBootbox = " ";
@@ -49,23 +49,42 @@ namespace HotelGarage.Core.Dtos
             NoteBootBox = " ";
         }
 
-        private string GetParkingPlaceLabel(ParkingPlaceState state)
+        private string GetParkingPlaceLabel(ParkingPlace parkingPlace)
         {
             string label;
+            var reservation = parkingPlace.Reservation;
 
-            switch (state)
+            switch (parkingPlace.State)
             {
                 case ParkingPlaceState.Free:
-                    label = Constants.FreeStateOfPlaceLabel;
+                    var numberOfStandardParkingPlaces = 19;
+                    if (Id > numberOfStandardParkingPlaces)
+                    {
+                        label = Labels.StaffFreeStateLabel;
+                    }
+                    else
+                    {
+                        label = Labels.FreeStateLabel;
+                    }
                     break;
                 case ParkingPlaceState.Occupied:
-                    label = Constants.OccupiedStateOfPlaceLabel;
+                    if (!reservation.IsRegistered)
+                    {
+                        label = Labels.NotRegisteredStateLabel;
+                        break;
+                    }
+                    if (reservation.Departure.Date <= DateTime.Today.Date)
+                    {
+                        label = Labels.DepartureStateLabel;
+                        break;
+                    }
+                    label = Labels.OccupiedStateLabel;
                     break;
                 case ParkingPlaceState.Reserved:
-                    label = Constants.ReservedStateOfPlaceLabel;
+                    label = Labels.ReservedStateLabel;
                     break;
                 case ParkingPlaceState.Employee:
-                    label = Constants.EmployeeStateOfPlaceLabel;
+                    label = Labels.EmployeeStateLabel;
                     break;
                 default:
                     throw new ArgumentException("Invalid reservation state.");
@@ -78,7 +97,7 @@ namespace HotelGarage.Core.Dtos
         {
             if (car != null)
             {
-                var notFilledOut = Helpers.Constants.NotFilledOutMessage;
+                var notFilledOut = Helpers.Labels.NotFilledOutLabel;
                 GuestNameBootbox = car.GuestsName ?? notFilledOut;
                 RoomNumberBootbox = (car.GuestRoomNumber == null) ? notFilledOut : car.GuestRoomNumber.ToString();
                 CarModelBootbox = car.CarModel ?? notFilledOut;
@@ -115,7 +134,7 @@ namespace HotelGarage.Core.Dtos
                     {
                         parkingPlace.Reservation.UpdateInhouseReservationCheckout();
                         parkingPlaceDto.StateOfPlace = parkingPlace.State;
-                        parkingPlaceDto.StateOfPlaceLabel = GetParkingPlaceLabel(parkingPlace.State);
+                        parkingPlaceDto.StateOfPlaceLabel = GetParkingPlaceLabel(parkingPlace);
                         unitOfWork.Complete();
                     }
 

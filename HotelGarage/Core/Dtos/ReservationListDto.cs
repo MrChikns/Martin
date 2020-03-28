@@ -27,7 +27,7 @@ namespace HotelGarage.Core.Dtos
             Arrival = reservation.Arrival.ToString("yyyy.MM.dd hh:mm");
             Departure = reservation.Departure.ToString("yyyy.MM.dd hh:mm");
             GuestRoomNumber = (reservation.Car.GuestRoomNumber == null) ? nevyplneno : reservation.Car.GuestRoomNumber.ToString();
-            TotalPrice = reservation.Car.ReturnCalculatedTotalPriceString(
+            TotalPrice = reservation.Car.ReturnTotalPriceString(
                 reservation.Car.CalculateNumberOfDays(reservation.Arrival, reservation.Departure), 
                 reservation.Car.PricePerNight);
             ReservationState = reservation.State.ToString();

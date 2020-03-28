@@ -1,6 +1,7 @@
 ﻿namespace HotelGarage.Core.Models
 {
-    public enum ParkingPlaceState
+    public enum 
+        ParkingPlaceState
     {
         Free = 1,
         Occupied = 2,

@@ -354,6 +354,10 @@
     <Compile Include="Persistence\Migrations\202003272037113_addEnumPt2.Designer.cs">
       <DependentUpon>202003272037113_addEnumPt2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Persistence\Migrations\202003272355367_addEnumPt3.cs" />
+    <Compile Include="Persistence\Migrations\202003272355367_addEnumPt3.Designer.cs">
+      <DependentUpon>202003272355367_addEnumPt3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Core\ViewModels\AccountViewModels.cs" />
     <Compile Include="Core\Models\Car.cs" />
@@ -513,6 +517,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\202003272037113_addEnumPt2.resx">
       <DependentUpon>202003272037113_addEnumPt2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\202003272355367_addEnumPt3.resx">
+      <DependentUpon>202003272355367_addEnumPt3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

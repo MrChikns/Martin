@@ -23,34 +23,6 @@ namespace HotelGarage.UnitTests.Models
         }
 
         [Test]
-        public void GetStateOfParkingPlace_NameIsObsazenoAndReservationUnregistered_Neregistrovan()
-        {
-            Assert.That(_parkingPlace.Label, Is.EqualTo(Constants.NotRegisteredStateOfPlaceLabel));
-        }
-
-        [Test]
-        public void GetStateOfParkingPlaceName_NameIsObsazenoAndDepartureToday_Odjezd()
-        {
-            _reservation.IsRegistered = true;
-
-            Assert.That(_parkingPlace.Label, Is.EqualTo(Constants.DepartureStateOfPlaceLabel));
-        }
-
-        [Test]
-        public void GetStateOfParkingPlaceName_NameIsVolnoAndStaffOnly_VolnoStaff()
-        {
-            _parkingPlace.Id = Constants.NumberOfStandardParkingPlaces + 1;
-
-            Assert.That(_parkingPlace.Label, Is.EqualTo(Constants.FreeStaffStateOfPlaceLabel));
-        }
-
-        [Test]
-        public void GetStateOfParkingPlaceName_NameIsRezervovano_Rezervovano()
-        {
-            Assert.That(_parkingPlace.Label, Is.EqualTo(Constants.ReservedStateOfPlaceLabel));
-        }
-
-        [Test]
         public void Release_ParkingPlaceStateIsNotFreeAndReservationIsAssigned()
         {
             _reservation.State = ReservationState.Inhouse;
@@ -59,7 +31,6 @@ namespace HotelGarage.UnitTests.Models
             Assert.That(_reservation.ParkingPlaceId, Is.EqualTo(0));
             Assert.That(_parkingPlace.Reservation, Is.EqualTo(null));
             Assert.That(_parkingPlace.State, Is.EqualTo(ParkingPlaceState.Free));
-            Assert.That(_parkingPlace.Label, Is.EqualTo(Constants.FreeStateOfPlaceLabel));
         }
 
         [Test]
@@ -73,7 +44,6 @@ namespace HotelGarage.UnitTests.Models
 
             Assert.That(reservation.ParkingPlaceId, Is.EqualTo(1));
             Assert.That(_parkingPlace.State, Is.EqualTo(ParkingPlaceState.Reserved));
-            Assert.That(_parkingPlace.Label, Is.EqualTo(Constants.ReservedStateOfPlaceLabel));
             Assert.That(_parkingPlace.Reservation, Is.EqualTo(reservation));
         }
 
@@ -90,7 +60,6 @@ namespace HotelGarage.UnitTests.Models
 
             Assert.That(reservation.ParkingPlaceId, Is.EqualTo(5));
             Assert.That(_parkingPlace.State, Is.EqualTo(ParkingPlaceState.Occupied));
-            Assert.That(_parkingPlace.Label, Is.EqualTo(Constants.OccupiedStateOfPlaceLabel));
             Assert.That(_parkingPlace.Reservation, Is.EqualTo(reservation));
         }
 
@@ -112,7 +81,6 @@ namespace HotelGarage.UnitTests.Models
             Assert.That(reservation.ParkingPlaceId, Is.EqualTo(0));
             Assert.That(_parkingPlace.Reservation, Is.EqualTo(null));
             Assert.That(_parkingPlace.State, Is.EqualTo(ParkingPlaceState.Free));
-            Assert.That(_parkingPlace.Label, Is.EqualTo(Constants.FreeStateOfPlaceLabel));
         }
 
         [Test]

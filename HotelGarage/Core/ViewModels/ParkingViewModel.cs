@@ -15,7 +15,8 @@ namespace HotelGarage.Core.ViewModels
 
         public ParkingViewModel(IUnitOfWork unitOfWork)
         {
-            ParkingPlaceDtos = ParkingPlaceDto.GetParkingPlaceDtos(unitOfWork);
+            var parkingPlaceDto = new ParkingPlaceDto();
+            ParkingPlaceDtos = parkingPlaceDto.GetParkingPlaceDtos(unitOfWork);
             TodaysReservations = ReservationDto.GetArrivingReservations(unitOfWork);
             NoShowReservations = ReservationDto.GetNoShowReservations(unitOfWork);
             InHouseReservations = ReservationDto.GetInhouseReservations(unitOfWork);

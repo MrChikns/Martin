@@ -12,7 +12,7 @@ namespace HotelGarage.Core.Repositories
         List<string> GetLicensePlates();
         List<Reservation> GetNoShowReservations();
         OccupancyNumbersOfTheDay[] GetFreeandEmployeeParkingPlacesCount();
-        Reservation GetReservation(int reservationId);
+        Reservation GetReservation(int reservationId, bool includeCar);
         List<Reservation> GetReturningReservations();
         List<Reservation> GetTodaysReservations();
         void AddReservation(Reservation reservation);

@@ -16,9 +16,14 @@ namespace HotelGarage.Persistence.Repositories
             _context = context;
         }
         
-        public Reservation GetReservation(int id)
+        public Reservation GetReservation(int id, bool includeCar)
         {
-            return _context.Reservations.Include(c => c.Car).First(r => r.Id == id);
+            if (includeCar)
+            {
+                return _context.Reservations.Include(c => c.Car).FirstOrDefault(r => r.Id == id);
+            }
+
+            return _context.Reservations.FirstOrDefault(r => r.Id == id);
         }
 
         public List<Reservation> GetTodaysReservations()

@@ -25,7 +25,7 @@ namespace HotelGarage.Controllers
         public ActionResult CheckIn(int parkingPlaceId, int reservationId)
         {
             var reservation = _unitOfWork.Reservations.GetReservation(reservationId, includeCar: true) ?? throw new ArgumentOutOfRangeException("Invalid reservation Id.");
-            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(parkingPlaceId) ?? throw new ArgumentOutOfRangeException("Invalid parking place Id.");
+            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(parkingPlaceId, includeCarAndReservation: true) ?? throw new ArgumentOutOfRangeException("Invalid parking place Id.");
 
             if (parkingPlace.State != ParkingPlaceState.Reserved)
             {
@@ -46,7 +46,7 @@ namespace HotelGarage.Controllers
 
         public ActionResult CheckOut(int parkingPlaceId)
         {
-            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(parkingPlaceId) ?? throw new ArgumentOutOfRangeException("Invalid parking place ID."); 
+            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(parkingPlaceId, includeCarAndReservation: true) ?? throw new ArgumentOutOfRangeException("Invalid parking place ID."); 
 
             parkingPlace.Reservation.CheckOut();
             parkingPlace.Release();
@@ -58,7 +58,7 @@ namespace HotelGarage.Controllers
 
         public ActionResult TemporaryLeave(int parkingPlaceId)
         {
-            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(parkingPlaceId) ?? throw new ArgumentOutOfRangeException("Invalid parking place ID.");
+            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(parkingPlaceId, includeCarAndReservation: true) ?? throw new ArgumentOutOfRangeException("Invalid parking place ID.");
 
             parkingPlace.Reservation.State = ReservationState.TemporaryLeave;
             parkingPlace.Reserve(parkingPlace.Reservation);
@@ -84,7 +84,7 @@ namespace HotelGarage.Controllers
         public void ReleasePreviouslyReservedPlace(Reservation reservation) {
             if (reservation.ParkingPlaceId != 0)
             {
-                var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(reservation);
+                var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(reservation.ParkingPlaceId, includeCarAndReservation: false);
                 parkingPlace.Release();
             }
         }

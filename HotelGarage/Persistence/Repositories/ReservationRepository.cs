@@ -26,12 +26,12 @@ namespace HotelGarage.Persistence.Repositories
             return _context.Reservations.FirstOrDefault(r => r.Id == id);
         }
 
-        public List<Reservation> GetTodaysReservations()
+        public List<Reservation> GetReservations(DateTime arrivalDateTime, ReservationState state)
         {
             return _context.Reservations
-                .Where(a => (
-                    DbFunctions.TruncateTime(a.Arrival) == DateTime.Today.Date && a.State == ReservationState.Reserved)
-                    || (a.State == ReservationState.TemporaryLeave)
+                .Where(a =>
+                    (DbFunctions.TruncateTime(a.Arrival) == arrivalDateTime.Date && a.State == state) ||
+                    a.State == ReservationState.TemporaryLeave
                 )
                 .Include(c => c.Car)
                 .ToList();

@@ -17,9 +17,9 @@ namespace HotelGarage.Core.ViewModels
         {
             var parkingPlaceDto = new ParkingPlaceDto();
             ParkingPlaceDtos = parkingPlaceDto.GetParkingPlaceDtos(unitOfWork);
-            TodaysReservations = ReservationDto.GetArrivingReservations(unitOfWork);
-            NoShowReservations = ReservationDto.GetNoShowReservations(unitOfWork);
-            InHouseReservations = ReservationDto.GetInhouseReservations(unitOfWork);
+            TodaysReservations = ReservationDto.GetArrivingReservationDtos(unitOfWork);
+            NoShowReservations = ReservationDto.GetNoShowReservationDtos(unitOfWork);
+            InHouseReservations = ReservationDto.GetInhouseReservationDtos(unitOfWork);
             FreeParkingPlaceNames = unitOfWork.ParkingPlaces.GetFreeParkingPlaceNames();
             OccupancyNumbers = unitOfWork.Reservations.GetOccupancyNumbers(numberOfParkingPlaces: 19);
         }

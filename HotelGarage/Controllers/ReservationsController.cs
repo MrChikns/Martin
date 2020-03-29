@@ -41,7 +41,7 @@ namespace HotelGarage.Controllers
         public ActionResult Delete(int reservationId)
         {
             var deletedReservation = _unitOfWork.Reservations.GetReservation(reservationId, includeCar: true) ?? throw new ArgumentOutOfRangeException("Invalid reservation ID.");
-            var reservationParkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(deletedReservation.ParkingPlaceId);
+            var reservationParkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(deletedReservation.ParkingPlaceId, includeCarAndReservation: true);
             deletedReservation.Cancel(reservationParkingPlace);
 
             _unitOfWork.Complete();
@@ -60,7 +60,7 @@ namespace HotelGarage.Controllers
 
             var car = CreateOrUpdateCar(newReservationData);
             var reservation = CreateOrUpdateReservation(newReservationData, car);
-            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(reservation);
+            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(reservation.ParkingPlaceId, includeCarAndReservation: false);
             SetupReservation(reservation, parkingPlace);
 
             _unitOfWork.Complete();

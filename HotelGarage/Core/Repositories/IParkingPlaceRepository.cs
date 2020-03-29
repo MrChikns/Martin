@@ -5,9 +5,8 @@ namespace HotelGarage.Core.Repositories
 {
     public interface IParkingPlaceRepository
     {
-        ParkingPlace GetParkingPlace(int id);
+        ParkingPlace GetParkingPlace(int id, bool includeCarAndReservation);
         ParkingPlace GetParkingPlace(string name);
-        ParkingPlace GetParkingPlace(Reservation reservation);
         List<ParkingPlace> GetAllParkingPlaces();
         List<string> GetFreeParkingPlaceNames();
         string GetParkingPlaceName(int id);

@@ -10,6 +10,7 @@
         public const string EmployeeState = "Zaměstnanec";
         public const string NotRegisteredState = "Neregistrován!";
         public const string DepartureState = "Odjezd";
+        public const string NotAssigned = "Nepřiřazeno";
         public const string Empty = " ";
     }
 }

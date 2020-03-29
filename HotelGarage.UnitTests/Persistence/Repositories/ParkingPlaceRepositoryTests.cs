@@ -30,7 +30,7 @@ namespace HotelGarage.UnitTests.Persistence.Repositories
         public void GetParkingPlace_NameDoesNotExist_ReturnsNull()
         {
             var parkingPlace = new ParkingPlace() { Name = "aa"};
-            _mockParkingPlaces.SetSource(new[] { parkingPlace});
+            _mockParkingPlaces.SetSource(new[] { parkingPlace });
 
             var returnedParkingPlace = _repository.GetParkingPlace("bb");
 

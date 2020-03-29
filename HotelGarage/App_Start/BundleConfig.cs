@@ -13,12 +13,12 @@ namespace HotelGarage
                         "~/Scripts/app/range_dates.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/lib").Include(
-                        "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/jquery.dataTables.min.js",
-                        "~/Scripts/dataTables.material.min.js",
-                        "~/Scripts/dataTables.bootstrap4.min.js",
                         "~/Scripts/bootbox.min.js",
                         "~/Scripts/bootstrap.js",
+                        "~/Scripts/dataTables.bootstrap4.min.js",
+                        "~/Scripts/dataTables.material.min.js",
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery.dataTables.min.js",
                         "~/Scripts/typeahead.bundle.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -31,7 +31,7 @@ namespace HotelGarage
 
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/Content/bootstrap.min.css",
                       "~/Content/material.min.css",
                       "~/Content/dataTables.material.min.css",
                       "~/Content/site.less"));

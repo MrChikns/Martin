@@ -1,5 +1,5 @@
 ﻿using System.Data.Entity;
-using HotelGarage.Core.Models;
+using HotelGarage.Core.Model;
 
 namespace HotelGarage.Persistence
 {

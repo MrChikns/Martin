@@ -1,4 +1,4 @@
-﻿using HotelGarage.Core.Models;
+﻿using HotelGarage.Core.Model;
 using NUnit.Framework;
 using System;
 
@@ -46,7 +46,7 @@ namespace HotelGarage.UnitTests.Models
         public void Cancel_ResHasOccupiedParkingPlace_ReleaseParkingPlaceFromReservationAndSetResToCancell()
         {
             var parkingPlace = new ParkingPlace();
-            parkingPlace.AssignReservation(_reservation);
+            parkingPlace.Reservation = _reservation;
             _reservation.Cancel(parkingPlace);
 
             Assert.That(parkingPlace.Reservation, Is.EqualTo(null));

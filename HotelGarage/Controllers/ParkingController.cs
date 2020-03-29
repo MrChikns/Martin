@@ -1,6 +1,7 @@
 ﻿using HotelGarage.Core;
-using HotelGarage.Core.Models;
-using HotelGarage.Core.ViewModels;
+using HotelGarage.Core.Dto;
+using HotelGarage.Core.Model;
+using HotelGarage.Core.ViewModel;
 using System;
 using System.Web.Mvc;
 
@@ -19,7 +20,7 @@ namespace HotelGarage.Controllers
         [AllowAnonymous]
         public ActionResult Parking()
         {
-            return View(new ParkingViewModel(_unitOfWork));
+            return View(new ParkingViewModel(_unitOfWork, new ParkingPlaceDto()));
         }
 
         public ActionResult CheckIn(int parkingPlaceId, int reservationId)
@@ -72,31 +73,22 @@ namespace HotelGarage.Controllers
         public ActionResult Reserve(string parkingPlaceName, int reservationId)
         {
             var reservation = _unitOfWork.Reservations.GetReservation(reservationId, includeCar: true) ?? throw new ArgumentOutOfRangeException("Invalid reservation ID.");
-
-            ReleasePreviouslyReservedPlace(reservation);
-            MoveOrReserveParkingPlace(reservation, parkingPlaceName);
+            var newParkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(parkingPlaceName);
+            
+            ReleaseOldParkingPlace(reservation.ParkingPlaceId);
+            newParkingPlace.Reserve(reservation);
 
             _unitOfWork.Complete();
 
             return RedirectToAction("Parking");
         }
 
-        public void ReleasePreviouslyReservedPlace(Reservation reservation) {
-            if (reservation.ParkingPlaceId != 0)
+        public void ReleaseOldParkingPlace(int parkingPlaceId) 
+        {
+            if (parkingPlaceId != 0)
             {
-                var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(reservation.ParkingPlaceId, includeCarAndReservation: false);
+                var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(parkingPlaceId, includeCarAndReservation: false);
                 parkingPlace.Release();
-            }
-        }
-
-        public void MoveOrReserveParkingPlace(Reservation reservation, string ParkingPlaceName) {
-            if (reservation.State == ReservationState.Inhouse)
-            {
-                _unitOfWork.ParkingPlaces.GetParkingPlace(ParkingPlaceName).MoveInhouseReservation(reservation);
-            }
-            else
-            {
-                _unitOfWork.ParkingPlaces.GetParkingPlace(ParkingPlaceName).Reserve(reservation);
             }
         }
     }

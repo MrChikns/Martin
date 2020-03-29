@@ -1,4 +1,4 @@
-﻿@model HotelGarage.Core.ViewModels.ParkingViewModel
+﻿@model HotelGarage.Core.ViewModel.ParkingViewModel
 
 @{
     ViewBag.Title = "Náhled parkování";
@@ -239,7 +239,7 @@
                                     <div>
                                         @Html.ActionLink("Upravit",
                                             "Update",
-                                            "Reservations",
+                                            "Reservation",
                                             new { reservationId = reservation.Id },
                                             new { @class = "nav-link odkaz-prijezd" })
                                     </div>
@@ -247,7 +247,7 @@
                                     <div style="text-align:center">
                                         @Html.ActionLink("Smazat",
                                             "Delete",
-                                            "Reservations",
+                                            "Reservation",
                                             new { reservationId = reservation.Id },
                                             new { @class = "nav-link odkaz-prijezd js-delete",
                                                 @onclick = "return confirm('Opravdu chcete rezervaci zrušit?')"
@@ -292,7 +292,7 @@
                                     <div>
                                         @Html.ActionLink("Upravit",
                                              "Update",
-                                             "Reservations",
+                                             "Reservation",
                                              new { reservationId = reservation.Id },
                                              new { @class = "nav-link odkaz-prijezd" })
                                     </div>
@@ -300,10 +300,10 @@
                                     <div style="text-align:center">
                                         @Html.ActionLink("Smazat",
                                              "Delete",
-                                             "Reservations",
+                                             "Reservation",
                                              new { reservationId = reservation.Id },
                                                  // kontrola zda nejde o docasne vyjetou rezervaci
-                                                 (reservation.State == HotelGarage.Core.Models.ReservationState.TemporaryLeave) ?
+                                                 (reservation.State == HotelGarage.Core.Model.ReservationState.TemporaryLeave) ?
                                                      new { @class = "nav-link odkaz-prijezd disabled", @onclick = "javascript:return false;" } :
                                                      (object)new { @class = "nav-link odkaz-prijezd",
                                                          @onclick = "return confirm('Opravdu chcete rezervaci zrušit?')" })
@@ -364,7 +364,7 @@
                                     <div>
                                         @Html.ActionLink("Upravit",
                                            "Update",
-                                           "Reservations",
+                                           "Reservation",
                                            new { reservationId = reservation.Id },
                                            new { @class = "nav-link odkaz-prijezd" })
                                     </div>

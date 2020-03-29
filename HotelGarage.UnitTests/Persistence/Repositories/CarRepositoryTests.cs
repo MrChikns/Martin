@@ -1,12 +1,12 @@
-﻿using HotelGarage.Core.Models;
+﻿using HotelGarage.Core.Model;
 using HotelGarage.Persistence;
-using HotelGarage.Persistence.Repositories;
+using HotelGarage.Persistence.Repository;
 using HotelGarage.UnitTests.Extensions;
 using Moq;
 using NUnit.Framework;
 using System.Data.Entity;
 
-namespace HotelGarage.UnitTests.Persistence.Repositories
+namespace HotelGarage.UnitTests.Persistence.Repository
 {
 
     [TestFixture]

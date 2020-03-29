@@ -1,5 +1,5 @@
 ﻿using System.Data.Entity;
-using HotelGarage.Core.Models;
+using HotelGarage.Core.Model;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace HotelGarage.Persistence

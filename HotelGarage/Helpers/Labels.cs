@@ -12,6 +12,8 @@
         public const string NotRegisteredState = "Neregistrován!";
         public const string DepartureState = "Odjezd";
         public const string NotAssigned = "Nepřiřazeno";
+        public const string Yes = "Ano";
+        public const string No = "Ne";
         public const string Empty = " ";
     }
 }

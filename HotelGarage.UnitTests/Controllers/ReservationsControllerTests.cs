@@ -1,7 +1,7 @@
 ﻿using HotelGarage.Controllers;
 using HotelGarage.Core;
-using HotelGarage.Core.Models;
-using HotelGarage.Core.Repositories;
+using HotelGarage.Core.Model;
+using HotelGarage.Core.Repository;
 using HotelGarage.UnitTests.Extensions;
 using Moq;
 using NUnit.Framework;
@@ -13,7 +13,7 @@ namespace HotelGarage.UnitTests.Controllers
     [TestFixture]
     class ReservationsControllerTests
     {
-        private ReservationsController _controller;
+        private ReservationController _controller;
         Mock<IUnitOfWork> _mockUnitOfWork;
         Mock<IReservationRepository> _mockReservationRepository;
         private Mock<IParkingPlaceRepository> _mockParkingPlaceRepository;
@@ -59,7 +59,7 @@ namespace HotelGarage.UnitTests.Controllers
             _mockUnitOfWork.SetupGet(u => u.ParkingPlaces).Returns(_mockParkingPlaceRepository.Object);
             _mockUnitOfWork.SetupGet(u => u.Cars).Returns(_mockCarRepository.Object);
 
-            _controller = new ReservationsController(_mockUnitOfWork.Object);
+            _controller = new ReservationController(_mockUnitOfWork.Object);
             _controller.MockCurrentUser("1", "user1@domain.com");
         }
 

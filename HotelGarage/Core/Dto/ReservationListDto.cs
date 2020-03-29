@@ -1,9 +1,9 @@
-﻿using HotelGarage.Core.Models;
-using HotelGarage.Core.Repositories;
+﻿using HotelGarage.Core.Model;
+using HotelGarage.Core.Repository;
 using HotelGarage.Helpers;
 using System.Collections.Generic;
 
-namespace HotelGarage.Core.Dtos
+namespace HotelGarage.Core.Dto
 {
     public class ReservationListDto
     {

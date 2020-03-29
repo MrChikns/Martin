@@ -1,6 +1,6 @@
 ﻿using HotelGarage.Core;
-using HotelGarage.Core.Repositories;
-using HotelGarage.Persistence.Repositories;
+using HotelGarage.Core.Repository;
+using HotelGarage.Persistence.Repository;
 
 namespace HotelGarage.Persistence
 {

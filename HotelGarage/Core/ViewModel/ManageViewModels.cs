@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-namespace HotelGarage.Core.ViewModels
+namespace HotelGarage.Core.ViewModel
 {
     public class IndexViewModel
     {

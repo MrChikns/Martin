@@ -1,4 +1,4 @@
-﻿using HotelGarage.Core.Repositories;
+﻿using HotelGarage.Core.Repository;
 
 namespace HotelGarage.Core
 {

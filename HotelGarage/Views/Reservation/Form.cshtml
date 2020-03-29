@@ -1,10 +1,10 @@
-﻿@model HotelGarage.Core.Models.Reservation
+﻿@model HotelGarage.Core.Model.Reservation
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h4>@((Model.Id == 0) ? "Nová Rezervace" : "Upravit Rezervaci")</h4>
-@using (Html.BeginForm("Save", "Reservations"))
+@using (Html.BeginForm("Save", "Reservation"))
 {
     @Html.AntiForgeryToken()
     <div class="form-group">
@@ -20,8 +20,8 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(r => r.Arrival, "Příjezd")
-        @Html.TextBoxFor(r => r.Arrival, (Model.State == HotelGarage.Core.Models.ReservationState.Inhouse ||
-            Model.State == HotelGarage.Core.Models.ReservationState.TemporaryLeave) ?
+        @Html.TextBoxFor(r => r.Arrival, (Model.State == HotelGarage.Core.Model.ReservationState.Inhouse ||
+            Model.State == HotelGarage.Core.Model.ReservationState.TemporaryLeave) ?
             (object)new { @class = "form-control", type = "datetime-local",
                 @Value = Model.Arrival.ToString("yyyy-MM-ddTHH:mm"),
                 @readonly = "readonly"
@@ -38,7 +38,7 @@
     </div>
     <div class="form-group form-inline" id="isRegisteredDiv">
         @Html.LabelFor(r => r.IsRegistered, "Je Registrovaná?")
-        @Html.CheckBoxFor(r => r.IsRegistered, (Model.State == HotelGarage.Core.Models.ReservationState.Inhouse ?
+        @Html.CheckBoxFor(r => r.IsRegistered, (Model.State == HotelGarage.Core.Model.ReservationState.Inhouse ?
         (object)new { @class = "form-control" }: (object)new { @class = "form-control", @disabled = "disabled" }))
         @Html.ValidationMessageFor(r => r.IsRegistered)
     </div>

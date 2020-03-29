@@ -1,4 +1,4 @@
-﻿@model IList<HotelGarage.Core.Dtos.ReservationListDto>
+﻿@model IList<HotelGarage.Core.Dto.ReservationListDto>
 
 @{
     ViewBag.Title = "List";
@@ -76,10 +76,10 @@
             <td>@res.IsEmployee</td>
             <td>@res.NumberOfStays</td>
             <td>
-                @Html.ActionLink("Uprav", "Update", "Reservations",
+                @Html.ActionLink("Uprav", "Update", "Reservation",
                     new { reservationId = res.Id },
                     new { }) /
-                @Html.ActionLink("Zruš", "Delete", "Reservations",
+                @Html.ActionLink("Zruš", "Delete", "Reservation",
                     new { reservationId = res.Id },
                     new { })
             </td>

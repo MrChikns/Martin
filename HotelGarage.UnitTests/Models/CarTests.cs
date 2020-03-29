@@ -1,4 +1,4 @@
-﻿using HotelGarage.Core.Models;
+﻿using HotelGarage.Core.Model;
 using NUnit.Framework;
 using System;
 

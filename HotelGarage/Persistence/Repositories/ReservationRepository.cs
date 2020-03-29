@@ -1,11 +1,11 @@
-﻿using HotelGarage.Core.Models;
-using HotelGarage.Core.Repositories;
+﻿using HotelGarage.Core.Model;
+using HotelGarage.Core.Repository;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
-namespace HotelGarage.Persistence.Repositories
+namespace HotelGarage.Persistence.Repository
 {
     public class ReservationRepository : IReservationRepository
     {

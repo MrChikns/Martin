@@ -60,7 +60,7 @@ namespace HotelGarage.Controllers
         {
             var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(parkingPlaceId) ?? throw new ArgumentOutOfRangeException("Invalid parking place ID.");
 
-            parkingPlace.Reservation.TemporaryLeave();
+            parkingPlace.Reservation.State = ReservationState.TemporaryLeave;
             parkingPlace.Reserve(parkingPlace.Reservation);
 
             _unitOfWork.Complete();

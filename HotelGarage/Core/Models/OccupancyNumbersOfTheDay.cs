@@ -1,8 +1,8 @@
 ﻿namespace HotelGarage.Core.Models
 {
-    public struct OccupancyNumbersOfTheDay
+    public struct OccupancyNumbers
     {
-        public int NumberOfFreePlaces { get; set; }
-        public int NumberOfPlacesOccupiedByEmployees { get; set; }
+        public int FreePlacesCount { get; set; }
+        public int OccupiedByEmployeesCount { get; set; }
     }
 }

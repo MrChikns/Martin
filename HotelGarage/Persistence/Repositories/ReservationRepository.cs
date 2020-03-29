@@ -97,23 +97,20 @@ namespace HotelGarage.Persistence.Repositories
             _context.Reservations.Add(reservation);
         }
 
-        public OccupancyNumbersOfTheDay[] GetFreeandEmployeeParkingPlacesCount()
+        public OccupancyNumbers[] GetOccupancyNumbers(int numberOfParkingPlaces)
         {
-            OccupancyNumbersOfTheDay[] freeplaces = new OccupancyNumbersOfTheDay[7];
-            var listOfReservationsForNextWeek = new List<Reservation>();
-            int totalNumberOfParkingPlaces = 19;
+            var occupancyNumbers = new OccupancyNumbers[7];
 
-            for (int i = 0; i < 7; i++)
+            for (int dayCount = 0; dayCount < 7; dayCount++)
             {
-                listOfReservationsForNextWeek = this.GetInhouseReservations(DateTime.Today.AddDays(i));
+                var reservations = GetInhouseReservations(DateTime.Today.AddDays(dayCount));
+                var standardParkingPlaceReservations = reservations.Where(r => r.ParkingPlaceId <= numberOfParkingPlaces);
 
-                freeplaces[i].NumberOfFreePlaces = totalNumberOfParkingPlaces - listOfReservationsForNextWeek.Count() 
-                    + listOfReservationsForNextWeek.Where(r => r.ParkingPlaceId > 19).Count(); // odecet mist ktera jsou nestandardni(staff only) stoji na nich pouze zamestnanci
-                freeplaces[i].NumberOfPlacesOccupiedByEmployees = listOfReservationsForNextWeek
-                                                                    .Where(r => r.Car.IsEmployee == true).Count();
+                occupancyNumbers[dayCount].FreePlacesCount = numberOfParkingPlaces - standardParkingPlaceReservations.Count();
+                occupancyNumbers[dayCount].OccupiedByEmployeesCount = standardParkingPlaceReservations.Where(r => r.Car.IsEmployee.Equals(true)).Count();
             }
 
-            return freeplaces;
+            return occupancyNumbers;
         }
     }
 }

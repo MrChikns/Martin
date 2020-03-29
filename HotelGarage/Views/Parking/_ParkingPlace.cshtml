@@ -2,16 +2,16 @@
 
 <div class="card-body">
     <p class="card-title">@Model.LicensePlate</p>
-    <p class="card-text" data-bbox-prijezd="@Model.ArrivalBootbox" data-bbox-odjezd="@Model.DepartureBootbox"
-       data-bbox-pokoj="@Model.RoomNumberBootbox" data-bbox-jmeno="@Model.GuestNameBootbox"
-       data-bbox-cena="@Model.PricePerNightBootbox" data-bbox-spz="@Model.LicensePlateBootbox"
-       data-bbox-typAuta="@Model.CarModelBootbox" data-bbox-zamestnanec="@Model.IsEmployeeBootbox"
-       data-bbox-jeRegistrovan="@Model.IsRegisteredBootbox" data-bbox-poznamka="@Model.NoteBootBox">
+    <p class="card-text" data-bbox-prijezd="@Model.BootBoxData.Arrival" data-bbox-odjezd="@Model.BootBoxData.Departure"
+       data-bbox-pokoj="@Model.BootBoxData.RoomNumber" data-bbox-jmeno="@Model.BootBoxData.GuestName"
+       data-bbox-cena="@Model.BootBoxData.PricePerNight" data-bbox-spz="@Model.BootBoxData.LicensePlate"
+       data-bbox-typAuta="@Model.BootBoxData.CarModel" data-bbox-zamestnanec="@Model.BootBoxData.IsEmployee"
+       data-bbox-jeRegistrovan="@Model.BootBoxData.IsRegistered" data-bbox-poznamka="@Model.BootBoxData.Note">
         @Model.ParkingPlaceName<br>
-        @((Model.GuestNameBootbox.Length > 15) ? Model.GuestNameBootbox.Substring(0, 15) : Model.GuestNameBootbox)<br>
+        @((Model.BootBoxData.GuestName.Length > 15) ? Model.BootBoxData.GuestName.Substring(0, 15) : Model.BootBoxData.GuestName)<br>
         Odj: @Model.Departure
     </p>
-    <a href="javascript:void()" class="js-sOPChange">@Model.StateOfPlaceLabel</a>
+    <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceState</a>
     <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.Id>
         @Html.ActionLink("Reserve", "Create", "Reservations",
             new { parkingPlaceId = Model.Id },

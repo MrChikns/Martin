@@ -2,14 +2,14 @@
 {
     public static class Labels
     {
-        public const string NotFilledOutLabel = "Nevyplněno";
-        public const string StaffFreeStateLabel = "Volno Staff";
-        public const string FreeStateLabel = "Volno";
-        public const string OccupiedStateLabel = "Obsazeno";
-        public const string ReservedStateLabel = "Rezervováno";
-        public const string EmployeeStateLabel = "Zaměstnanec";
-
-        public const string NotRegisteredStateLabel = "Neregistrován!";
-        public const string DepartureStateLabel = "Odjezd";
+        public const string NotFilledOut = "Nevyplněno";
+        public const string StaffFreeState = "Volno Staff";
+        public const string FreeState = "Volno";
+        public const string OccupiedState = "Obsazeno";
+        public const string ReservedState = "Rezervováno";
+        public const string EmployeeState = "Zaměstnanec";
+        public const string NotRegisteredState = "Neregistrován!";
+        public const string DepartureState = "Odjezd";
+        public const string Empty = " ";
     }
 }

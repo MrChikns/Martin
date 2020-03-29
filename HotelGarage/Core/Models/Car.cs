@@ -65,7 +65,7 @@ namespace HotelGarage.Core.Models
         {
             if (pricePerNight == null)
             {
-                return Helpers.Labels.NotFilledOutLabel;
+                return Helpers.Labels.NotFilledOut;
             }
 
             if (numberOfDays == 0)

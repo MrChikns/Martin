@@ -20,7 +20,7 @@ namespace HotelGarage.Persistence.Repositories
             return _context.ParkingPlaces
                 .Include(r => r.Reservation)
                 .Include(c => c.Reservation.Car)
-                .First(p => p.Id == id);
+                .FirstOrDefault(p => p.Id == id);
         }
 
         public ParkingPlace GetParkingPlace(string name)

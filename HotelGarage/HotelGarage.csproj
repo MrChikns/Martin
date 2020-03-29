@@ -388,6 +388,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\dataTables.bootstrap4.min.js" />
     <Content Include="Scripts\dataTables.material.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\app\app.js" />
     <Content Include="favicon.ico" />

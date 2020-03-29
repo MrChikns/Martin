@@ -15,22 +15,17 @@ namespace HotelGarage.Persistence.Repositories
             _context = context;
         }
 
-        public ParkingPlace GetParkingPlace(string ParkingPlaceName)
-        {
-            return _context.ParkingPlaces.FirstOrDefault(p => p.Name == ParkingPlaceName);
-        }
-
-        public ParkingPlace GetParkingPlace(int parkingPlaceId)
-        {
-            return _context.ParkingPlaces.FirstOrDefault(p => p.Id == parkingPlaceId);
-        }
-
-        public ParkingPlace GetParkingPlaceReservationCar(int parkingPlaceId)
+        public ParkingPlace GetParkingPlace(int id)
         {
             return _context.ParkingPlaces
                 .Include(r => r.Reservation)
                 .Include(c => c.Reservation.Car)
-                .First(p => p.Id == parkingPlaceId);
+                .FirstOrDefault(p => p.Id == id);
+        }
+
+        public ParkingPlace GetParkingPlace(string name)
+        {
+            return _context.ParkingPlaces.FirstOrDefault(p => p.Name == name);
         }
 
         public ParkingPlace GetParkingPlace(Reservation reservation)
@@ -38,26 +33,18 @@ namespace HotelGarage.Persistence.Repositories
             return _context.ParkingPlaces.FirstOrDefault(p => p.Id == reservation.ParkingPlaceId);
         }
 
-        public ParkingPlace GetParkingPlaceStateOfPlace(Reservation reservation)
+        public List<ParkingPlace> GetAllParkingPlaces()
         {
             return _context.ParkingPlaces
-                .Include(s => s.StateOfPlace)
-                .FirstOrDefault(p => p.Id == reservation.ParkingPlaceId);
-        }
-
-        public List<ParkingPlace> GetParkingPlacesStateOfPlaceReservationCar()
-        {
-            return _context.ParkingPlaces
-                .Include(s => s.StateOfPlace)
                 .Include(r => r.Reservation)
                 .Include(c => c.Reservation.Car)
                 .ToList();
         }
 
-        public List<string> GetNamesOfFreeParkingPlaces()
+        public List<string> GetFreeParkingPlaceNames()
         {
             return _context.ParkingPlaces
-                .Where(s => s.StateOfPlaceId == StateOfPlace.Free)
+                .Where(s => s.State == ParkingPlaceState.Free)
                 .Select(n => n.Name)
                 .ToList();
         }
@@ -65,9 +52,6 @@ namespace HotelGarage.Persistence.Repositories
         public string GetParkingPlaceName(int id)
         {
             var parkingPlace = _context.ParkingPlaces.FirstOrDefault(p => p.Id == id);
-
-            if (parkingPlace == null)
-                return null;
 
             return parkingPlace.Name;
         }

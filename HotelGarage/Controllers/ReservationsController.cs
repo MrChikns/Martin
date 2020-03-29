@@ -25,7 +25,7 @@ namespace HotelGarage.Controllers
             return View("Form", new Reservation()
             {
                 ParkingPlaceId = parkingPlaceId ?? 0,
-                StateOfReservationId = StateOfReservation.Reserved,
+                State = ReservationState.Reserved,
                 Arrival = DateTime.Now,
                 Departure = DateTime.Now.AddDays(1)
             });
@@ -33,16 +33,16 @@ namespace HotelGarage.Controllers
 
         public ActionResult Update(int reservationId)
         {
-            var updatedReservation = _unitOfWork.Reservations.GetReservationCar(reservationId) ?? throw new ArgumentOutOfRangeException("Invalid reservation ID.");
+            var updatedReservation = _unitOfWork.Reservations.GetReservation(reservationId, includeCar: true) ?? throw new ArgumentOutOfRangeException("Invalid reservation ID.");
             
             return View("Form", updatedReservation);
         }
 
         public ActionResult Delete(int reservationId)
         {
-            var deletedReservation = _unitOfWork.Reservations.GetReservationCar(reservationId) ?? throw new ArgumentOutOfRangeException("Invalid reservation ID.");
+            var deletedReservation = _unitOfWork.Reservations.GetReservation(reservationId, includeCar: true) ?? throw new ArgumentOutOfRangeException("Invalid reservation ID.");
             var reservationParkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(deletedReservation.ParkingPlaceId);
-            deletedReservation.Cancel(reservationParkingPlace, _unitOfWork.StatesOfPlaces.GetFreeStateOfPlace());
+            deletedReservation.Cancel(reservationParkingPlace);
 
             _unitOfWork.Complete();
 
@@ -51,19 +51,16 @@ namespace HotelGarage.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(Reservation viewModel)
+        public ActionResult Save(Reservation newReservationData)
         {
             if (!ModelState.IsValid)
             {
-                return View("Form", viewModel);
+                return View("Form", newReservationData);
             }
 
-            var reservation = _unitOfWork.Reservations.GetReservation(viewModel.Id);
-            var car = _unitOfWork.Cars.GetCar(viewModel);
-            car = CreateOrUpdateCar(viewModel, car);
-            reservation = CreateOrUpdateReservation(viewModel, reservation, car);
-            
-            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlaceStateOfPlace(reservation);
+            var car = CreateOrUpdateCar(newReservationData);
+            var reservation = CreateOrUpdateReservation(newReservationData, car);
+            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(reservation);
             SetupReservation(reservation, parkingPlace);
 
             _unitOfWork.Complete();
@@ -71,33 +68,39 @@ namespace HotelGarage.Controllers
             return RedirectToAction("Parking", "Parking");
         }
 
-        private Reservation CreateOrUpdateReservation(Reservation viewModel, Reservation reservation, Car car)
+        private Reservation CreateOrUpdateReservation(Reservation newReservation, Car car)
         {
-            if (viewModel.Id == 0)
-            {
-                reservation = viewModel;
-                reservation.Car = car;
-                reservation.StateOfReservationId = StateOfReservation.Reserved;
+            Reservation reservation;
 
-                _unitOfWork.Reservations.AddReservation(reservation);
+            if (newReservation.Id == 0)
+            {
+                newReservation.Car = car;
+                newReservation.State = ReservationState.Reserved;
+                _unitOfWork.Reservations.AddReservation(newReservation);
+
+                reservation = newReservation;
             }
             else
             {
-                reservation.Update(viewModel, car);
+                reservation = _unitOfWork.Reservations.GetReservation(newReservation.Id, includeCar: true);
+                reservation.Update(newReservation, car);
             }
 
             return reservation;
         }
 
-        private Car CreateOrUpdateCar(Reservation viewModel, Car car)
+        private Car CreateOrUpdateCar(Reservation reservation)
         {
-            if (_unitOfWork.Cars.GetCar(viewModel) == null)
+            var car = _unitOfWork.Cars.GetCar(reservation);
+            
+            if (car == null)
             {
-                _unitOfWork.Cars.Add(new Car(viewModel.Car));
+                _unitOfWork.Cars.Add(reservation.Car);
+                car = reservation.Car;
             }
             else
             {
-                car.Update(viewModel);
+                car.Update(reservation.Car);
             }
 
             return car;
@@ -105,15 +108,15 @@ namespace HotelGarage.Controllers
 
         private void SetupReservation(Reservation reservation, ParkingPlace parkingPlace)
         {
-            if (reservation.ParkingPlaceId != 0 && reservation.StateOfReservationId != StateOfReservation.Inhouse)
+            if (reservation.ParkingPlaceId != 0 && reservation.State != ReservationState.Inhouse)
             {
-                if (reservation.StateOfReservationId == StateOfReservation.Reserved && reservation.Arrival.Date == DateTime.Today.Date)
+                if (reservation.State == ReservationState.Reserved && reservation.Arrival.Date == DateTime.Today.Date)
                 {
-                    parkingPlace.Reserve(_unitOfWork.StatesOfPlaces.GetReservedStateOfPlace(), reservation);
+                    parkingPlace.Reserve(reservation);
                 }
                 else
                 {
-                    parkingPlace.AssingnFreeParkingPlace(_unitOfWork.StatesOfPlaces.GetFreeStateOfPlace(), reservation);
+                    parkingPlace.AssingnFreeParkingPlace(reservation);
                 }
             }
         }

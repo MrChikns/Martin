@@ -7,80 +7,34 @@ namespace HotelGarage.Core.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public ParkingPlaceState State { get; set; }
         public Reservation Reservation { get; set; }
-        public int StateOfPlaceId { get; set; }
-        public StateOfPlace StateOfPlace { get; set; }
-
-        public string GetStateOfPlaceName()
-        {
-            var parkingPlaceName = StateOfPlace.Name;
-
-            switch (StateOfPlace.Name)
-            {
-                case Constants.ReservedStateOfPlaceLabel:
-                case Constants.EmployeeStateOfPlaceLabel:
-                    break;
-                case Constants.OccupiedStateOfPlaceLabel:
-                    if (!Reservation.IsRegistered)
-                    {
-                        parkingPlaceName = Constants.NotRegisteredStateOfPlaceLabel;
-                        break;
-                    }
-                    if (Reservation.Departure.Date <= DateTime.Today.Date)
-                        parkingPlaceName = Constants.DepartureStateOfPlaceLabel;
-                    break;
-                case Constants.FreeStateOfPlaceLabel:
-                    if (Id > Constants.NumberOfStandardParkingPlaces)
-                        parkingPlaceName = Constants.FreeStaffStateOfPlaceLabel;
-                    break;
-                default:
-                    throw new ArgumentException("Parking place label is not in the database.");
-            }
-
-            return parkingPlaceName;
-        }
 
         public void AssignReservation(Reservation reservation)
         {
             Reservation = reservation;
         }
 
-        public void AssignStateOfPlaceId(int id)
+        public void Release()
         {
-            StateOfPlaceId = id;
+            Reservation.SetParkingPlaceId(0);
+            State = ParkingPlaceState.Free;
+            Reservation = null;
         }
 
-        public void AssignStateOfPlace(StateOfPlace stateOfPlace)
-        {
-            StateOfPlace = stateOfPlace;
-        }
-
-        public void Release(StateOfPlace freePlace)
-        {
-            if (StateOfPlaceId != StateOfPlace.Free)
-            {
-                Reservation.SetParkingPlaceId(0);
-                Reservation = null;
-                StateOfPlaceId = StateOfPlace.Free;
-                StateOfPlace = freePlace;
-            }
-        }
-
-        public void Reserve(StateOfPlace reservedPlace, Reservation reservation)
+        public void Reserve(Reservation reservation)
         {
             reservation.SetParkingPlaceId(Id);
-            StateOfPlaceId = StateOfPlace.Reserved;
-            StateOfPlace = reservedPlace;
+            State = ParkingPlaceState.Reserved;
             Reservation = reservation;
         }
 
-        public void MoveInhouseReservation(StateOfPlace inhousePlace, Reservation reservation)
+        public void MoveInhouseReservation(Reservation reservation)
         {
-            if (reservation.StateOfReservationId == StateOfReservation.Inhouse)
+            if (reservation.State == ReservationState.Inhouse)
             {
                 reservation.SetParkingPlaceId(Id);
-                StateOfPlaceId = StateOfPlace.Occupied;
-                StateOfPlace = inhousePlace;
+                State = ParkingPlaceState.Occupied;
                 Reservation = reservation;
             }
             else
@@ -89,12 +43,11 @@ namespace HotelGarage.Core.Models
             }
         }
 
-        public void Occupy(StateOfPlace occupiedPlaceState, Reservation reservation)
+        public void Occupy(Reservation reservation)
         {
-            if (StateOfPlaceId == StateOfPlace.Reserved && reservation.ParkingPlaceId == Id)
+            if (State == ParkingPlaceState.Reserved && reservation.ParkingPlaceId == Id)
             {
-                StateOfPlaceId = StateOfPlace.Occupied;
-                StateOfPlace = occupiedPlaceState;
+                State = ParkingPlaceState.Occupied;
                 Reservation = reservation;
             }
             else
@@ -103,11 +56,10 @@ namespace HotelGarage.Core.Models
             }
         }
 
-        public void AssingnFreeParkingPlace(StateOfPlace stateOfPlace, Reservation reservation)
+        public void AssingnFreeParkingPlace(Reservation reservation)
         {   
             reservation.SetParkingPlaceId(0);
-            StateOfPlaceId = StateOfPlace.Free;
-            StateOfPlace = stateOfPlace;
+            State = ParkingPlaceState.Free;
             Reservation = null;
         }
     }

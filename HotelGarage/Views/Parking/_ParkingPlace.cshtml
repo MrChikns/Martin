@@ -11,7 +11,7 @@
         @((Model.GuestNameBootbox.Length > 15) ? Model.GuestNameBootbox.Substring(0, 15) : Model.GuestNameBootbox)<br>
         Odj: @Model.Departure
     </p>
-    <a href="javascript:void()" class="js-sOPChange">@Model.StateOfPlace</a>
+    <a href="javascript:void()" class="js-sOPChange">@Model.StateOfPlaceLabel</a>
     <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.Id>
         @Html.ActionLink("Reserve", "Create", "Reservations",
             new { parkingPlaceId = Model.Id },

@@ -7,7 +7,6 @@ namespace HotelGarage.Core
         ICarRepository Cars { get; }
         IParkingPlaceRepository ParkingPlaces { get; }
         IReservationRepository Reservations { get; }
-        IStateOfPlaceRepository StatesOfPlaces { get; }
 
         void Complete();
     }

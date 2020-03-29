@@ -10,17 +10,18 @@ namespace HotelGarage.Core.ViewModels
         public IList<ReservationDto> TodaysReservations { get; set; }
         public IList<ReservationDto> NoShowReservations { get; set; }
         public IList<ReservationDto> InHouseReservations { get; set; }
-        public IList<string> FreeParkingPlaces { get; set; }
+        public IList<string> FreeParkingPlaceNames { get; set; }
         public OccupancyNumbersOfTheDay[] NumberOfFreeAndEmployeeOccupiedParkingPlacesArray { get; set; }
 
         public ParkingViewModel(IUnitOfWork unitOfWork)
         {
-            ParkingPlaceDtos = ParkingPlaceDto.GetParkingPlaceDtos(unitOfWork);
+            var parkingPlaceDto = new ParkingPlaceDto();
+            ParkingPlaceDtos = parkingPlaceDto.GetParkingPlaceDtos(unitOfWork);
             TodaysReservations = ReservationDto.GetArrivingReservations(unitOfWork);
             NoShowReservations = ReservationDto.GetNoShowReservations(unitOfWork);
             InHouseReservations = ReservationDto.GetInhouseReservations(unitOfWork);
-            FreeParkingPlaces = unitOfWork.ParkingPlaces.GetNamesOfFreeParkingPlaces();
-            NumberOfFreeAndEmployeeOccupiedParkingPlacesArray = unitOfWork.Reservations.GetNumberOfFreeParkingPlacesAndPlacesOccupiedByEmployeesArray();
+            FreeParkingPlaceNames = unitOfWork.ParkingPlaces.GetFreeParkingPlaceNames();
+            NumberOfFreeAndEmployeeOccupiedParkingPlacesArray = unitOfWork.Reservations.GetFreeandEmployeeParkingPlacesCount();
         }
     }
 }

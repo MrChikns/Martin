@@ -1,4 +1,5 @@
 ﻿using HotelGarage.Core.Models;
+using HotelGarage.Helpers;
 using System;
 using System.Collections.Generic;
 
@@ -11,7 +12,8 @@ namespace HotelGarage.Core.Dtos
         public string LicensePlate { get; set; }
         public string Departure { get; set; }
         public string ParkingPlaceName { get; set; }
-        public string StateOfPlace { get; set; }
+        public ParkingPlaceState StateOfPlace { get; set; }
+        public string StateOfPlaceLabel { get; set; }
         public string DepartureBootbox { get; set; }
         public string ArrivalBootbox { get; internal set; }
         public string GuestNameBootbox { get; internal set; }
@@ -24,6 +26,9 @@ namespace HotelGarage.Core.Dtos
         public string IsRegisteredBootbox { get; internal set; }
         public string ParkPlaceShortLicensePlate { get; internal set; }
 
+        public ParkingPlaceDto()
+        { }
+
         private ParkingPlaceDto(ParkingPlace parkingPlace)
         {
             Id = parkingPlace.Id;
@@ -31,8 +36,7 @@ namespace HotelGarage.Core.Dtos
             LicensePlate = " ";
             Departure = " ";
             ParkingPlaceName = parkingPlace.Name;
-            StateOfPlace = parkingPlace.GetStateOfPlaceName();
-
+            StateOfPlaceLabel = GetParkingPlaceLabel(parkingPlace);
             DepartureBootbox = " ";
             IsRegisteredBootbox = " ";
             ArrivalBootbox = " ";
@@ -45,11 +49,55 @@ namespace HotelGarage.Core.Dtos
             NoteBootBox = " ";
         }
 
+        private string GetParkingPlaceLabel(ParkingPlace parkingPlace)
+        {
+            string label;
+            var reservation = parkingPlace.Reservation;
+
+            switch (parkingPlace.State)
+            {
+                case ParkingPlaceState.Free:
+                    var numberOfStandardParkingPlaces = 19;
+                    if (Id > numberOfStandardParkingPlaces)
+                    {
+                        label = Labels.StaffFreeStateLabel;
+                    }
+                    else
+                    {
+                        label = Labels.FreeStateLabel;
+                    }
+                    break;
+                case ParkingPlaceState.Occupied:
+                    if (!reservation.IsRegistered)
+                    {
+                        label = Labels.NotRegisteredStateLabel;
+                        break;
+                    }
+                    if (reservation.Departure.Date <= DateTime.Today.Date)
+                    {
+                        label = Labels.DepartureStateLabel;
+                        break;
+                    }
+                    label = Labels.OccupiedStateLabel;
+                    break;
+                case ParkingPlaceState.Reserved:
+                    label = Labels.ReservedStateLabel;
+                    break;
+                case ParkingPlaceState.Employee:
+                    label = Labels.EmployeeStateLabel;
+                    break;
+                default:
+                    throw new ArgumentException("Invalid reservation state.");
+            }
+
+            return label;
+        }
+
         internal void AssignCar(Car car)
         {
             if (car != null)
             {
-                var notFilledOut = Helpers.Constants.NotFilledOutMessage;
+                var notFilledOut = Helpers.Labels.NotFilledOutLabel;
                 GuestNameBootbox = car.GuestsName ?? notFilledOut;
                 RoomNumberBootbox = (car.GuestRoomNumber == null) ? notFilledOut : car.GuestRoomNumber.ToString();
                 CarModelBootbox = car.CarModel ?? notFilledOut;
@@ -70,10 +118,10 @@ namespace HotelGarage.Core.Dtos
             IsRegisteredBootbox = (parkingPlace.Reservation.IsRegistered)? "Ano" : "Ne!";
         }
 
-        public static List<ParkingPlaceDto> GetParkingPlaceDtos(IUnitOfWork unitOfWork)
+        public List<ParkingPlaceDto> GetParkingPlaceDtos(IUnitOfWork unitOfWork)
         {
             var parkingPlaceDtos = new List<ParkingPlaceDto>();
-            var parkingPlaces = unitOfWork.ParkingPlaces.GetParkingPlacesStateOfPlaceReservationCar();
+            var parkingPlaces = unitOfWork.ParkingPlaces.GetAllParkingPlaces();
 
             foreach (var parkingPlace in parkingPlaces)
             {
@@ -85,14 +133,15 @@ namespace HotelGarage.Core.Dtos
                     if (parkingPlace.Reservation.Departure < DateTime.Today.Date)
                     {
                         parkingPlace.Reservation.UpdateInhouseReservationCheckout();
-                        parkingPlaceDto.StateOfPlace = parkingPlace.GetStateOfPlaceName();
+                        parkingPlaceDto.StateOfPlace = parkingPlace.State;
+                        parkingPlaceDto.StateOfPlaceLabel = GetParkingPlaceLabel(parkingPlace);
                         unitOfWork.Complete();
                     }
 
                     //vyrazeni rezervaci z minuleho dne anebo prirazeni rezervace do parkovaciho mista
-                    if (parkingPlace.Reservation.Arrival.Date != DateTime.Today.Date && parkingPlace.Reservation.StateOfReservationId == StateOfReservation.Reserved)
+                    if (parkingPlace.Reservation.Arrival.Date != DateTime.Today.Date && parkingPlace.Reservation.State == ReservationState.Reserved)
                     {
-                        parkingPlace.Release(unitOfWork.StatesOfPlaces.GetFreeStateOfPlace());
+                        parkingPlace.Release();
                         unitOfWork.Complete();
                     }
                     else

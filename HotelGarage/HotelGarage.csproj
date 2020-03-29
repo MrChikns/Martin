@@ -264,7 +264,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\Constants.cs" />
+    <Compile Include="Helpers\Labels.cs" />
     <Compile Include="Persistence\IApplicationDbContext.cs" />
     <Compile Include="Persistence\Migrations\201810111011152_InitialModel.cs" />
     <Compile Include="Persistence\Migrations\201810111011152_InitialModel.Designer.cs">
@@ -346,6 +346,18 @@
     <Compile Include="Persistence\Migrations\201811272102374_numberOfStaysIntoCarModelClass.Designer.cs">
       <DependentUpon>201811272102374_numberOfStaysIntoCarModelClass.cs</DependentUpon>
     </Compile>
+    <Compile Include="Persistence\Migrations\202003272012583_introduceEnums.cs" />
+    <Compile Include="Persistence\Migrations\202003272012583_introduceEnums.Designer.cs">
+      <DependentUpon>202003272012583_introduceEnums.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\202003272037113_addEnumPt2.cs" />
+    <Compile Include="Persistence\Migrations\202003272037113_addEnumPt2.Designer.cs">
+      <DependentUpon>202003272037113_addEnumPt2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\202003272355367_addEnumPt3.cs" />
+    <Compile Include="Persistence\Migrations\202003272355367_addEnumPt3.Designer.cs">
+      <DependentUpon>202003272355367_addEnumPt3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Core\ViewModels\AccountViewModels.cs" />
     <Compile Include="Core\Models\Car.cs" />
@@ -353,8 +365,8 @@
     <Compile Include="Core\Models\OccupancyNumbersOfTheDay.cs" />
     <Compile Include="Core\Models\ParkingPlace.cs" />
     <Compile Include="Core\Models\Reservation.cs" />
-    <Compile Include="Core\Models\StateOfPlace.cs" />
-    <Compile Include="Core\Models\StateOfReservation.cs" />
+    <Compile Include="Core\Models\ParkingPlaceState.cs" />
+    <Compile Include="Core\Models\ReservationState.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Persistence\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -362,10 +374,8 @@
     <Compile Include="Core\Repositories\ICarRepository.cs" />
     <Compile Include="Core\Repositories\IParkingPlaceRepository.cs" />
     <Compile Include="Core\Repositories\IReservationRepository.cs" />
-    <Compile Include="Core\Repositories\IStateOfPlaceRepository.cs" />
     <Compile Include="Persistence\Repositories\ParkingPlaceRepository.cs" />
     <Compile Include="Persistence\Repositories\ReservationRepository.cs" />
-    <Compile Include="Persistence\Repositories\StateOfPlaceRepository.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Core\ViewModels\ParkingViewModel.cs" />
   </ItemGroup>
@@ -375,10 +385,7 @@
     <Content Include="Content\dataTables.material.min.css" />
     <Content Include="Content\material.min.css" />
     <Content Include="Scripts\bootbox.min.js" />
-    <Content Include="Scripts\bootstrap.bundle.js" />
-    <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\dataTables.bootstrap4.min.js" />
     <Content Include="Scripts\dataTables.material.min.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
@@ -390,10 +397,6 @@
     </Content>
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\site.less" />
-    <Content Include="Scripts\bootstrap.min.js.map" />
-    <Content Include="Scripts\bootstrap.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Content\bootstrap.min.css.map" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -508,6 +511,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201811272102374_numberOfStaysIntoCarModelClass.resx">
       <DependentUpon>201811272102374_numberOfStaysIntoCarModelClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\202003272012583_introduceEnums.resx">
+      <DependentUpon>202003272012583_introduceEnums.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\202003272037113_addEnumPt2.resx">
+      <DependentUpon>202003272037113_addEnumPt2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\202003272355367_addEnumPt3.resx">
+      <DependentUpon>202003272355367_addEnumPt3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -15,53 +15,49 @@ namespace HotelGarage.Persistence.Repositories
         {
             _context = context;
         }
-
-        public Reservation GetReservation(int reservationId)
+        
+        public Reservation GetReservation(int id, bool includeCar)
         {
-            return _context.Reservations.FirstOrDefault(r => r.Id == reservationId);
+            if (includeCar)
+            {
+                return _context.Reservations.Include(c => c.Car).FirstOrDefault(r => r.Id == id);
+            }
+
+            return _context.Reservations.FirstOrDefault(r => r.Id == id);
+        }
+
+        public List<Reservation> GetTodaysReservations()
+        {
+            return _context.Reservations
+                .Where(a => (
+                    DbFunctions.TruncateTime(a.Arrival) == DateTime.Today.Date && a.State == ReservationState.Reserved)
+                    || (a.State == ReservationState.TemporaryLeave)
+                )
+                .Include(c => c.Car)
+                .ToList();
+        }
+
+        public List<Reservation> GetNoShowReservations()
+        {
+            return _context.Reservations
+                .Where(a => DbFunctions.TruncateTime(a.Arrival) < DateTime.Today.Date && a.State == ReservationState.Reserved)
+                .Include(c => c.Car)
+                .ToList();
         }
         
-        public Reservation GetReservationCar(int reservationId)
-        {
-            return _context.Reservations.Include(c => c.Car).First(r => r.Id == reservationId);
-        }
-
-        public List<Reservation> GetTodaysReservationsCar()
+        public List<Reservation> GetInhouseReservations()
         {
             return _context.Reservations
-                .Where(a => (DbFunctions.TruncateTime(a.Arrival) == DateTime.Today.Date && a.StateOfReservationId == StateOfReservation.Reserved)
-                            ||(a.StateOfReservationId == StateOfReservation.TemporaryLeave))
+                .Where(a => a.State == ReservationState.Inhouse)
                 .Include(c => c.Car)
                 .ToList();
         }
 
-        public List<Reservation> GetNoShowReservationsCar()
-        {
-            return _context.Reservations
-                .Where(a => DbFunctions.TruncateTime(a.Arrival) < DateTime.Today.Date
-                            && a.StateOfReservationId == StateOfReservation.Reserved)
-                .Include(c => c.Car)
-                .ToList();
-        }
-        
-        public List<Reservation> GetInhouseReservationsCar()
-        {
-            return _context.Reservations
-                .Where(a => a.StateOfReservationId == StateOfReservation.Inhouse)
-                .Include(c => c.Car)
-                .ToList();
-        }
-
-        public List<Reservation> GetAllReservationsCar()
+        public List<Reservation> GetAllReservations()
         {
             return _context.Reservations
                 .Include(c => c.Car)
                 .ToList();
-        }
-
-        public string GetStateOfReservationName(int id)
-        {
-            return _context.StateOfReservations.First(s => s.Id == id).State;
         }
 
         public List<string> GetLicensePlates()
@@ -76,7 +72,7 @@ namespace HotelGarage.Persistence.Repositories
             return list;
         }
 
-        public List<Reservation> GetReturningReservationsCars()
+        public List<Reservation> GetReturningReservations()
         {
             return _context.Reservations
                 .Where(c => c.Car.NumberOfStays >= 2)
@@ -84,16 +80,15 @@ namespace HotelGarage.Persistence.Repositories
                 .ToList();
         }
         
-        public List<Reservation> GetInhouseReservationsFromSelectedDay(DateTime date)
+        public List<Reservation> GetInhouseReservations(DateTime inhouseDate)
         {
             return _context.Reservations
                 .Include(r => r.Car)
                 .Where(r =>
-                    (r.StateOfReservationId == StateOfReservation.Reserved
-                        || r.StateOfReservationId == StateOfReservation.Inhouse
-                        || r.StateOfReservationId == StateOfReservation.TemporaryLeave)
-                    && (DbFunctions.TruncateTime(r.Arrival) <= date
-                        && DbFunctions.TruncateTime(r.Departure) > date))
+                    (r.State == ReservationState.Reserved || r.State == ReservationState.Inhouse || r.State == ReservationState.TemporaryLeave)
+                    && (DbFunctions.TruncateTime(r.Arrival) <= inhouseDate
+                    && DbFunctions.TruncateTime(r.Departure) > inhouseDate)
+                )
                 .ToList();
         }
 
@@ -102,7 +97,7 @@ namespace HotelGarage.Persistence.Repositories
             _context.Reservations.Add(reservation);
         }
 
-        public OccupancyNumbersOfTheDay[] GetNumberOfFreeParkingPlacesAndPlacesOccupiedByEmployeesArray()
+        public OccupancyNumbersOfTheDay[] GetFreeandEmployeeParkingPlacesCount()
         {
             OccupancyNumbersOfTheDay[] freeplaces = new OccupancyNumbersOfTheDay[7];
             var listOfReservationsForNextWeek = new List<Reservation>();
@@ -110,7 +105,7 @@ namespace HotelGarage.Persistence.Repositories
 
             for (int i = 0; i < 7; i++)
             {
-                listOfReservationsForNextWeek = this.GetInhouseReservationsFromSelectedDay(DateTime.Today.AddDays(i));
+                listOfReservationsForNextWeek = this.GetInhouseReservations(DateTime.Today.AddDays(i));
 
                 freeplaces[i].NumberOfFreePlaces = totalNumberOfParkingPlaces - listOfReservationsForNextWeek.Count() 
                     + listOfReservationsForNextWeek.Where(r => r.ParkingPlaceId > 19).Count(); // odecet mist ktera jsou nestandardni(staff only) stoji na nich pouze zamestnanci

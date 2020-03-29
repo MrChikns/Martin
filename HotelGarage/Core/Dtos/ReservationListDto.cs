@@ -27,10 +27,10 @@ namespace HotelGarage.Core.Dtos
             Arrival = reservation.Arrival.ToString("yyyy.MM.dd hh:mm");
             Departure = reservation.Departure.ToString("yyyy.MM.dd hh:mm");
             GuestRoomNumber = (reservation.Car.GuestRoomNumber == null) ? nevyplneno : reservation.Car.GuestRoomNumber.ToString();
-            TotalPrice = reservation.Car.ReturnCalculatedTotalPriceString(
+            TotalPrice = reservation.Car.ReturnTotalPriceString(
                 reservation.Car.CalculateNumberOfDays(reservation.Arrival, reservation.Departure), 
                 reservation.Car.PricePerNight);
-            ReservationState = reservationRepository.GetStateOfReservationName(reservation.StateOfReservationId);
+            ReservationState = reservation.State.ToString();
             LicensePlate = reservation.LicensePlate;
             CarModel = reservation.Car.CarModel ?? nevyplneno;
             ParkingPlaceName = (reservation.ParkingPlaceId == 0) ? nevyplneno : parkingPlaceRepository.GetParkingPlaceName(reservation.ParkingPlaceId);
@@ -43,7 +43,7 @@ namespace HotelGarage.Core.Dtos
         {
             var allResListDto = new List<ReservationListDto>();
 
-            foreach (var res in unitOfWork.Reservations.GetAllReservationsCar())
+            foreach (var res in unitOfWork.Reservations.GetAllReservations())
             {
                 allResListDto.Add(new ReservationListDto(res,unitOfWork.Reservations,unitOfWork.ParkingPlaces));
             }

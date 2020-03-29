@@ -49,58 +49,6 @@ namespace HotelGarage.UnitTests.Persistence.Repositories
         }
 
         [Test]
-        public void GetParkingPlace_IdDoesNotExist_ReturnsNull()
-        {
-            var parkingPlace = new ParkingPlace() { Id = 1 };
-            _mockParkingPlaces.SetSource(new[] { parkingPlace });
-
-            var returnedParkingPlace = _repository.GetParkingPlace(2);
-
-            Assert.That(returnedParkingPlace, Is.EqualTo(null));
-        }
-
-        [Test]
-        public void GetParkingPlace_IdExists_ReturnsParkingPlace()
-        {
-            var parkingPlace = new ParkingPlace() { Id = 1 };
-            _mockParkingPlaces.SetSource(new[] { parkingPlace });
-
-            var returnedParkingPlace = _repository.GetParkingPlace(1);
-
-            Assert.That(returnedParkingPlace.Id, Is.EqualTo(1));
-        }
-
-        [Test]
-        public void GetParkingPlaceReservationCar_IdDoesNotExist_ReturnsNull()
-        {
-            var parkingPlace = new ParkingPlace() { Id = 1 };
-            _mockParkingPlaces.SetSource(new[] { parkingPlace });
-
-            var returnedParkingPlace = _repository.GetParkingPlace(2);
-
-            Assert.That(returnedParkingPlace, Is.EqualTo(null));
-        }
-
-        [Test]
-        public void GetParkingPlaceReservationCar_IdExists_ReturnsParkingPlace()
-        {
-            var parkingPlace = new ParkingPlace() {
-                Id = 1,
-                Reservation = new Reservation() {
-                    Id = 2,
-                    Car = new Car() { Id = 3} }
-            };
-
-            _mockParkingPlaces.SetSource(new[] { parkingPlace });
-
-            var returnedParkingPlace = _repository.GetParkingPlace(1);
-
-            Assert.That(returnedParkingPlace.Id, Is.EqualTo(1));
-            Assert.That(returnedParkingPlace.Reservation.Id, Is.EqualTo(2));
-            Assert.That(returnedParkingPlace.Reservation.Car.Id, Is.EqualTo(3));
-        }
-
-        [Test]
         public void GetParkingPlace_ReservationDoesNotExist_ReturnsNull()
         {
             var parkingPlace = new ParkingPlace() { Id = 1 };
@@ -125,7 +73,7 @@ namespace HotelGarage.UnitTests.Persistence.Repositories
         [Test]
         public void GetParkingPlaceStateOfPlace_ReservationDoesNotExist_ReturnsNull()
         {
-            var parkingPlace = new ParkingPlace() { Id = 1, StateOfPlace = new StateOfPlace() { Id = 2} };
+            var parkingPlace = new ParkingPlace() { Id = 1, State = ParkingPlaceState.Occupied };
             _mockParkingPlaces.SetSource(new[] { parkingPlace });
 
             var returnedParkingPlace = _repository.GetParkingPlace(new Reservation() { ParkingPlaceId = 2 });
@@ -136,13 +84,13 @@ namespace HotelGarage.UnitTests.Persistence.Repositories
         [Test]
         public void GetParkingPlaceStateOfPlace_ReservationExists_ReturnsParkingPlace()
         {
-            var parkingPlace = new ParkingPlace() { Id = 1, StateOfPlace = new StateOfPlace() { Id = 2} };
+            var parkingPlace = new ParkingPlace() { Id = 1, State = ParkingPlaceState.Occupied };
             _mockParkingPlaces.SetSource(new[] { parkingPlace });
 
             var returnedParkingPlace = _repository.GetParkingPlace(new Reservation() { ParkingPlaceId = 1 });
 
             Assert.That(returnedParkingPlace.Id, Is.EqualTo(1));
-            Assert.That(returnedParkingPlace.StateOfPlace.Id, Is.EqualTo(2));
+            Assert.That(returnedParkingPlace.State, Is.EqualTo(ParkingPlaceState.Occupied));
         }
 
         [Test]
@@ -150,7 +98,7 @@ namespace HotelGarage.UnitTests.Persistence.Repositories
         {
             _mockParkingPlaces.SetSource(new List<ParkingPlace>());
 
-            var returnedParkingPlaces = _repository.GetNamesOfFreeParkingPlaces();
+            var returnedParkingPlaces = _repository.GetFreeParkingPlaceNames();
 
             Assert.That(returnedParkingPlaces, Is.Empty);
         }
@@ -158,12 +106,12 @@ namespace HotelGarage.UnitTests.Persistence.Repositories
         [Test]
         public void GetNamesOfFreeParkingPlaces_ListIsNotEmpty_ReturnsListOfNames()
         {
-            var parkingplace = new ParkingPlace() { StateOfPlaceId = StateOfPlace.Free, Name = "prvni" };
-            var parkingplace2 = new ParkingPlace() { StateOfPlaceId = StateOfPlace.Free, Name = "druhe" };
+            var parkingplace = new ParkingPlace() { State = ParkingPlaceState.Free, Name = "prvni" };
+            var parkingplace2 = new ParkingPlace() { State = ParkingPlaceState.Free, Name = "druhe" };
 
             _mockParkingPlaces.SetSource(new[] { parkingplace,parkingplace2});
 
-            var returnedParkingPlaces = _repository.GetNamesOfFreeParkingPlaces();
+            var returnedParkingPlaces = _repository.GetFreeParkingPlaceNames();
 
             Assert.That(returnedParkingPlaces[0], Is.EqualTo("prvni"));
             Assert.That(returnedParkingPlaces[1], Is.EqualTo("druhe"));
@@ -179,18 +127,6 @@ namespace HotelGarage.UnitTests.Persistence.Repositories
             var returnedParkingPlace = _repository.GetParkingPlaceName(1);
 
             Assert.That(returnedParkingPlace, Is.EqualTo("prvni"));
-        }
-
-        [Test]
-        public void GetParkingPlaceName_IdDoesNotExist_ReturnNull()
-        {
-            var parkingplace = new ParkingPlace() { Id = 1, Name = "prvni" };
-
-            _mockParkingPlaces.SetSource(new[] { parkingplace });
-
-            var returnedParkingPlace = _repository.GetParkingPlaceName(2);
-
-            Assert.That(returnedParkingPlace, Is.EqualTo(null));
         }
     }
 }

@@ -50,22 +50,22 @@ namespace HotelGarage.Core.Models
             NumberOfStays = 0;
         }
 
-        public void Update(Reservation reservation)
+        public void Update(Car car)
         {
-            LicensePlate = reservation.Car.LicensePlate;
-            CarModel = reservation.Car.CarModel;
-            GuestsName = reservation.Car.GuestsName;
-            GuestRoomNumber = reservation.Car.GuestRoomNumber;
-            PricePerNight = reservation.Car.PricePerNight;
-            IsEmployee = reservation.Car.IsEmployee;
-            Note = reservation.Car.Note;
+            LicensePlate = car.LicensePlate;
+            CarModel = car.CarModel;
+            GuestsName = car.GuestsName;
+            GuestRoomNumber = car.GuestRoomNumber;
+            PricePerNight = car.PricePerNight;
+            IsEmployee = car.IsEmployee;
+            Note = car.Note;
         }
 
-        public string ReturnCalculatedTotalPriceString(int numberOfDays, int? pricePerNight)
+        public string ReturnTotalPriceString(int numberOfDays, int? pricePerNight)
         {
             if (pricePerNight == null)
             {
-                return Helpers.Constants.NotFilledOutMessage;
+                return Helpers.Labels.NotFilledOutLabel;
             }
 
             if (numberOfDays == 0)

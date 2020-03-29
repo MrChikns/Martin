@@ -219,8 +219,8 @@
                             </div>
                             <div class="ml-auto">
                                 <div class="input-group justify-content-center">
-                                    @Html.DropDownListFor(r => r.ParkingPlaceName,
-                                        new SelectList(Model.FreeParkingPlaces),
+                                    @Html.DropDownListFor(m => m.FreeParkingPlaceNames,
+                                        new SelectList(Model.FreeParkingPlaceNames),
                                         new
                                         {
                                             @class = "custom-select disabled",
@@ -275,8 +275,8 @@
                             </div>
                             <div class="ml-auto">
                                 <div class="input-group justify-content-center">
-                                    @Html.DropDownListFor(r => r.ParkingPlaceName,
-                                         new SelectList(Model.FreeParkingPlaces),
+                                    @Html.DropDownListFor(r => r.FreeParkingPlaceNames,
+                                         new SelectList(Model.FreeParkingPlaceNames),
                                          new { @class = "custom-select", @id = "inputGroupSelect04",
                                              value = reservation.ParkingPlaceId, value_id = i,
                                              buttonType = "arriving" })
@@ -303,7 +303,7 @@
                                              "Reservations",
                                              new { reservationId = reservation.Id },
                                                  // kontrola zda nejde o docasne vyjetou rezervaci
-                                                 (reservation.StateOfReservationId == 5) ?
+                                                 (reservation.State == HotelGarage.Core.Models.ReservationState.TemporaryLeave) ?
                                                      new { @class = "nav-link odkaz-prijezd disabled", @onclick = "javascript:return false;" } :
                                                      (object)new { @class = "nav-link odkaz-prijezd",
                                                          @onclick = "return confirm('Opravdu chcete rezervaci zrušit?')" })
@@ -342,8 +342,8 @@
                             </div>
                             <div class="ml-auto">
                                 <div class="input-group justify-content-center">
-                                    @Html.DropDownListFor(r => r.ParkingPlaceName,
-                                       new SelectList(Model.FreeParkingPlaces),
+                                    @Html.DropDownListFor(m => m.FreeParkingPlaceNames,
+                                       new SelectList(Model.FreeParkingPlaceNames),
                                        new
                                        {
                                            @class = "custom-select",

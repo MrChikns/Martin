@@ -22,14 +22,14 @@ namespace HotelGarage.UnitTests.Models
                 IsRegistered = true,
                 ParkingPlaceId = 1,
                 Car = new Car { LicensePlate = _staraSPZ },
-                StateOfReservationId = StateOfReservation.Reserved
+                State = ReservationState.Reserved
             };
         }   
 
         [Test]
         public void CheckOut_ReservationIsNotInhouse_ThrowsArgumentOutOfRangeException()
         {
-            _reservation.StateOfReservationId = StateOfReservation.Cancelled;
+            _reservation.State = ReservationState.Cancelled;
 
             Assert.That(() => _reservation.CheckOut(), Throws.Exception.TypeOf<ArgumentOutOfRangeException>());
         }
@@ -37,17 +37,9 @@ namespace HotelGarage.UnitTests.Models
         [Test]
         public void CheckIn_ReservationWithWrongState_ThrowsException()
         {
-            _reservation.StateOfReservationId = StateOfReservation.Inhouse;
+            _reservation.State = ReservationState.Inhouse;
 
             Assert.That(() => _reservation.CheckIn(), Throws.Exception.TypeOf<ArgumentOutOfRangeException>());
-        }
-
-        [Test]
-        public void Cancel_ResHasFreeParkingPlace_SetReservationToCancell()
-        {
-            _reservation.Cancel(null, new StateOfPlace() { Id = 1, Name = Helpers.Constants.FreeStateOfPlaceLabel });
-            
-            Assert.That(_reservation.StateOfReservationId, Is.EqualTo(4));
         }
 
         [Test]
@@ -55,10 +47,10 @@ namespace HotelGarage.UnitTests.Models
         {
             var parkingPlace = new ParkingPlace();
             parkingPlace.AssignReservation(_reservation);
-            _reservation.Cancel(parkingPlace, new StateOfPlace() { Id = 1, Name = Helpers.Constants.FreeStateOfPlaceLabel });
+            _reservation.Cancel(parkingPlace);
 
             Assert.That(parkingPlace.Reservation, Is.EqualTo(null));
-            Assert.That(_reservation.StateOfReservationId, Is.EqualTo(4));
+            Assert.That(_reservation.State, Is.EqualTo(ReservationState.Cancelled));
         }
     }
 }

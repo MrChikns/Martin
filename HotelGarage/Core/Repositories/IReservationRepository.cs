@@ -6,17 +6,15 @@ namespace HotelGarage.Core.Repositories
 {
     public interface IReservationRepository
     {
-        List<Reservation> GetAllReservationsCar();
-        List<Reservation> GetInhouseReservationsCar();
-        List<Reservation> GetInhouseReservationsFromSelectedDay(DateTime date);
+        List<Reservation> GetAllReservations();
+        List<Reservation> GetInhouseReservations();
+        List<Reservation> GetInhouseReservations(DateTime date);
         List<string> GetLicensePlates();
-        List<Reservation> GetNoShowReservationsCar();
-        OccupancyNumbersOfTheDay[] GetNumberOfFreeParkingPlacesAndPlacesOccupiedByEmployeesArray();
-        Reservation GetReservation(int reservationId);
-        Reservation GetReservationCar(int reservationId);
-        List<Reservation> GetReturningReservationsCars();
-        string GetStateOfReservationName(int id);
-        List<Reservation> GetTodaysReservationsCar();
+        List<Reservation> GetNoShowReservations();
+        OccupancyNumbersOfTheDay[] GetFreeandEmployeeParkingPlacesCount();
+        Reservation GetReservation(int reservationId, bool includeCar);
+        List<Reservation> GetReturningReservations();
+        List<Reservation> GetTodaysReservations();
         void AddReservation(Reservation reservation);
     }
 }

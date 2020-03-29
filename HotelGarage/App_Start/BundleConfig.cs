@@ -14,10 +14,10 @@ namespace HotelGarage
 
             bundles.Add(new ScriptBundle("~/bundles/lib").Include(
                         "~/Scripts/bootbox.min.js",
-                        "~/Scripts/bootstrap.js",
+                        "~/Scripts/bootstrap.min.js",
                         "~/Scripts/dataTables.bootstrap4.min.js",
                         "~/Scripts/dataTables.material.min.js",
-                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery-*",
                         "~/Scripts/jquery.dataTables.min.js",
                         "~/Scripts/typeahead.bundle.min.js"));
 

@@ -74,7 +74,7 @@ namespace HotelGarage.Controllers
             var reservation = _unitOfWork.Reservations.GetReservation(reservationId, includeCar: true) ?? throw new ArgumentOutOfRangeException("Invalid reservation ID.");
 
             ReleasePreviouslyReservedPlace(reservation);
-            MoveOrDirectlyReserveParkingPlace(reservation, parkingPlaceName);
+            MoveOrReserveParkingPlace(reservation, parkingPlaceName);
 
             _unitOfWork.Complete();
 
@@ -89,7 +89,7 @@ namespace HotelGarage.Controllers
             }
         }
 
-        public void MoveOrDirectlyReserveParkingPlace(Reservation reservation, string ParkingPlaceName) {
+        public void MoveOrReserveParkingPlace(Reservation reservation, string ParkingPlaceName) {
             if (reservation.State == ReservationState.Inhouse)
             {
                 _unitOfWork.ParkingPlaces.GetParkingPlace(ParkingPlaceName).MoveInhouseReservation(reservation);

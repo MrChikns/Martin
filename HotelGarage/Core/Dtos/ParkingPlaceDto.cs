@@ -32,28 +32,17 @@ namespace HotelGarage.Core.Dtos
                     Departure = Labels.Empty,
                     LicensePlate = Labels.Empty,
                     BootBoxData = new BootBoxDataDto()
-                    {
-                        Departure = Labels.Empty,
-                        IsRegistered = Labels.Empty,
-                        Arrival = Labels.Empty,
-                        GuestName = Labels.Empty,
-                        RoomNumber = Labels.Empty,
-                        CarModel = Labels.Empty,
-                        PricePerNight = Labels.Empty,
-                        LicensePlate = Labels.Empty,
-                        IsEmployee = Labels.Empty,
-                        Note = Labels.Empty
-                    }
                 };
 
                 if (parkingPlace.Reservation != null)
                 {
-                    // pokud auto prebydli noc, prestoze melo odjet, posune se jeho datum odjezdu
+                    // If car stays to next day after departure date, update the reservation departure.
                     if (parkingPlace.Reservation.Departure < DateTime.Today.Date)
                     {
                         parkingPlace.Reservation.UpdateInhouseReservationCheckout();
                         parkingPlaceDto.StateOfPlace = parkingPlace.State;
                         parkingPlaceDto.ParkingPlaceState = GetParkingPlaceLabel(parkingPlace);
+
                         unitOfWork.Complete();
                     }
 
@@ -61,6 +50,7 @@ namespace HotelGarage.Core.Dtos
                     if (parkingPlace.Reservation.Arrival.Date != DateTime.Today.Date && parkingPlace.Reservation.State == ReservationState.Reserved)
                     {
                         parkingPlace.Release();
+
                         unitOfWork.Complete();
                     }
                     else
@@ -76,46 +66,35 @@ namespace HotelGarage.Core.Dtos
 
         private string GetParkingPlaceLabel(ParkingPlace parkingPlace)
         {
-            string label;
-            var reservation = parkingPlace.Reservation;
-
             switch (parkingPlace.State)
             {
                 case Models.ParkingPlaceState.Free:
                     var numberOfStandardParkingPlaces = 19;
-                    if (Id > numberOfStandardParkingPlaces)
+                    if (parkingPlace.Id > numberOfStandardParkingPlaces)
                     {
-                        label = Labels.StaffFreeState;
+                        return Labels.StaffFreeState;
                     }
                     else
                     {
-                        label = Labels.FreeState;
+                        return Labels.FreeState;
                     }
-                    break;
                 case Models.ParkingPlaceState.Occupied:
-                    if (!reservation.IsRegistered)
+                    if (!parkingPlace.Reservation.IsRegistered)
                     {
-                        label = Labels.NotRegisteredState;
-                        break;
+                        return Labels.NotRegisteredState;
                     }
-                    if (reservation.Departure.Date <= DateTime.Today.Date)
+                    if (parkingPlace.Reservation.Departure.Date <= DateTime.Today.Date)
                     {
-                        label = Labels.DepartureState;
-                        break;
+                        return Labels.DepartureState;
                     }
-                    label = Labels.OccupiedState;
-                    break;
+                    return Labels.OccupiedState;
                 case Models.ParkingPlaceState.Reserved:
-                    label = Labels.ReservedState;
-                    break;
+                    return Labels.ReservedState;
                 case Models.ParkingPlaceState.Employee:
-                    label = Labels.EmployeeState;
-                    break;
+                    return Labels.EmployeeState;
                 default:
                     throw new ArgumentException("Invalid reservation state.");
             }
-
-            return label;
         }
 
         internal void AssignCar(Car car)

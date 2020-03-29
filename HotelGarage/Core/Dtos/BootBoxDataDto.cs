@@ -1,7 +1,23 @@
-﻿namespace HotelGarage.Core.Dtos
+﻿using HotelGarage.Helpers;
+
+namespace HotelGarage.Core.Dtos
 {
     public class BootBoxDataDto
     {
+        public BootBoxDataDto()
+        {
+            Departure = Labels.Empty;
+            IsRegistered = Labels.Empty;
+            Arrival = Labels.Empty;
+            GuestName = Labels.Empty;
+            RoomNumber = Labels.Empty;
+            CarModel = Labels.Empty;
+            PricePerNight = Labels.Empty;
+            LicensePlate = Labels.Empty;
+            IsEmployee = Labels.Empty;
+            Note = Labels.Empty;
+        }
+
         public string Departure { get; set; }
         public string Arrival { get; set; }
         public string GuestName { get; set; }

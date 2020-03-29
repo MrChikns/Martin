@@ -14,11 +14,11 @@ namespace HotelGarage.Core.Models
 
         public Car Car { get; set; }
 
-        [Required(ErrorMessage = "Zadejte datum ve správném formátu.")]
+        [Required(ErrorMessage = "Invalid date format.")]
         [Display(Name = "Příjezd")]
         public DateTime Arrival { get; set; }
 
-        [Required(ErrorMessage = "Zadejte datum ve správném formátu.")]
+        [Required(ErrorMessage = "Invalid date format.")]
         [Display(Name = "Odjezd")]
         public DateTime Departure { get; set; }
 
@@ -28,11 +28,6 @@ namespace HotelGarage.Core.Models
         public int ParkingPlaceId { get; set; }
 
         public ReservationState State { get; set; }
-
-        public void SetDepartureDay(DateTime date)
-        {
-            Departure = date;
-        }
 
         public void SetParkingPlaceId(int id)
         {
@@ -52,11 +47,6 @@ namespace HotelGarage.Core.Models
             {
                 throw new ArgumentOutOfRangeException("Invalid reservation state.");
             }
-        }
-
-        public void TemporaryLeave()
-        {
-            State = ReservationState.TemporaryLeave;
         }
 
         public void CheckIn()
@@ -110,6 +100,4 @@ namespace HotelGarage.Core.Models
             IsRegistered = false;
         }
     }
-
-    
 }

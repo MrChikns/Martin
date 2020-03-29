@@ -256,6 +256,7 @@
     <Compile Include="Controllers\ParkingController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ReservationsController.cs" />
+    <Compile Include="Core\Dtos\BootBoxDataDto.cs" />
     <Compile Include="Core\Models\ApplicationUser.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
     <Compile Include="Core\Dtos\ReservationDto.cs" />

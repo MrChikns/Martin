@@ -1,5 +1,4 @@
-﻿using HotelGarage.Helpers;
-using System;
+﻿using System;
 
 namespace HotelGarage.Core.Models
 {

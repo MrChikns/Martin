@@ -1,5 +1,6 @@
 ﻿using HotelGarage.Core.Models;
 using HotelGarage.Core.Repositories;
+using HotelGarage.Helpers;
 using System.Collections.Generic;
 
 namespace HotelGarage.Core.Dtos
@@ -19,36 +20,36 @@ namespace HotelGarage.Core.Dtos
         public string NumberOfStays { get; set; }
         public int Id { get; set; }
 
-        public ReservationListDto(Reservation reservation, IReservationRepository reservationRepository, IParkingPlaceRepository parkingPlaceRepository)
+        public ReservationListDto(Reservation reservation, IParkingPlaceRepository parkingPlaceRepository)
         {
-            var nevyplneno = "Nevyplněno";
-
-            GuestsName = reservation.Car.GuestsName ?? nevyplneno;
+            GuestsName = reservation.Car.GuestsName ?? Labels.NotFilledOut;
             Arrival = reservation.Arrival.ToString("yyyy.MM.dd hh:mm");
             Departure = reservation.Departure.ToString("yyyy.MM.dd hh:mm");
-            GuestRoomNumber = (reservation.Car.GuestRoomNumber == null) ? nevyplneno : reservation.Car.GuestRoomNumber.ToString();
+            GuestRoomNumber = (reservation.Car.GuestRoomNumber == null) ? Labels.NotFilledOut : reservation.Car.GuestRoomNumber.ToString();
             TotalPrice = reservation.Car.ReturnTotalPriceString(
                 reservation.Car.CalculateNumberOfDays(reservation.Arrival, reservation.Departure), 
-                reservation.Car.PricePerNight);
+                reservation.Car.PricePerNight
+            );
             ReservationState = reservation.State.ToString();
             LicensePlate = reservation.LicensePlate;
-            CarModel = reservation.Car.CarModel ?? nevyplneno;
-            ParkingPlaceName = (reservation.ParkingPlaceId == 0) ? nevyplneno : parkingPlaceRepository.GetParkingPlaceName(reservation.ParkingPlaceId);
-            IsEmployee = (reservation.Car.IsEmployee) ? "Zaměstnanec" : "Host";
+            CarModel = reservation.Car.CarModel ?? Labels.NotFilledOut;
+            ParkingPlaceName = (reservation.ParkingPlaceId == 0) ? Labels.NotFilledOut : parkingPlaceRepository.GetParkingPlaceName(reservation.ParkingPlaceId);
+            IsEmployee = (reservation.Car.IsEmployee) ? Labels.EmployeeState : Labels.GuestState;
             NumberOfStays = reservation.Car.NumberOfStays.ToString();
             Id = reservation.Id;
         }
 
         public static IList<ReservationListDto> GetAllReservationDtos(IUnitOfWork unitOfWork)
         {
-            var allResListDto = new List<ReservationListDto>();
+            var allReservationDtos = new List<ReservationListDto>();
+            var allReservations = unitOfWork.Reservations.GetAllReservations();
 
-            foreach (var res in unitOfWork.Reservations.GetAllReservations())
+            foreach (var res in allReservations)
             {
-                allResListDto.Add(new ReservationListDto(res,unitOfWork.Reservations,unitOfWork.ParkingPlaces));
+                allReservationDtos.Add(new ReservationListDto(res, unitOfWork.ParkingPlaces));
             }
 
-            return allResListDto;
+            return allReservationDtos;
         }
     }
 }

@@ -30,7 +30,7 @@ namespace HotelGarage.UnitTests.Persistence.Repositories
         public void GetParkingPlace_NameDoesNotExist_ReturnsNull()
         {
             var parkingPlace = new ParkingPlace() { Name = "aa"};
-            _mockParkingPlaces.SetSource(new[] { parkingPlace});
+            _mockParkingPlaces.SetSource(new[] { parkingPlace });
 
             var returnedParkingPlace = _repository.GetParkingPlace("bb");
 
@@ -54,7 +54,7 @@ namespace HotelGarage.UnitTests.Persistence.Repositories
             var parkingPlace = new ParkingPlace() { Id = 1 };
             _mockParkingPlaces.SetSource(new[] { parkingPlace });
 
-            var returnedParkingPlace = _repository.GetParkingPlace(new Reservation() { ParkingPlaceId = 2});
+            var returnedParkingPlace = _repository.GetParkingPlace(2, false);
 
             Assert.That(returnedParkingPlace, Is.EqualTo(null));
         }
@@ -65,7 +65,7 @@ namespace HotelGarage.UnitTests.Persistence.Repositories
             var parkingPlace = new ParkingPlace() { Id = 1 };
             _mockParkingPlaces.SetSource(new[] { parkingPlace });
 
-            var returnedParkingPlace = _repository.GetParkingPlace(new Reservation() { ParkingPlaceId = 1});
+            var returnedParkingPlace = _repository.GetParkingPlace(parkingPlace.Id, false );
 
             Assert.That(returnedParkingPlace.Id, Is.EqualTo(1));
         }
@@ -76,7 +76,7 @@ namespace HotelGarage.UnitTests.Persistence.Repositories
             var parkingPlace = new ParkingPlace() { Id = 1, State = ParkingPlaceState.Occupied };
             _mockParkingPlaces.SetSource(new[] { parkingPlace });
 
-            var returnedParkingPlace = _repository.GetParkingPlace(new Reservation() { ParkingPlaceId = 2 });
+            var returnedParkingPlace = _repository.GetParkingPlace(2, false);
 
             Assert.That(returnedParkingPlace, Is.EqualTo(null));
         }
@@ -87,7 +87,7 @@ namespace HotelGarage.UnitTests.Persistence.Repositories
             var parkingPlace = new ParkingPlace() { Id = 1, State = ParkingPlaceState.Occupied };
             _mockParkingPlaces.SetSource(new[] { parkingPlace });
 
-            var returnedParkingPlace = _repository.GetParkingPlace(new Reservation() { ParkingPlaceId = 1 });
+            var returnedParkingPlace = _repository.GetParkingPlace(parkingPlace.Id, false);
 
             Assert.That(returnedParkingPlace.Id, Is.EqualTo(1));
             Assert.That(returnedParkingPlace.State, Is.EqualTo(ParkingPlaceState.Occupied));

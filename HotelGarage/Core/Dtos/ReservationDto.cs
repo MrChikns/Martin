@@ -1,4 +1,5 @@
 ﻿using HotelGarage.Core.Models;
+using HotelGarage.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,7 +17,7 @@ namespace HotelGarage.Core.Dtos
         public int ParkingPlaceId { get; set; }
         public string ParkingPlaceName { get; set; }
 
-        public ReservationDto(Reservation reservation, string parkingPlaceName)
+        private ReservationDto(Reservation reservation, string parkingPlaceName)
         {
             Id = reservation.Id;
             CarLicensePlate = reservation.LicensePlate;
@@ -29,58 +30,55 @@ namespace HotelGarage.Core.Dtos
             IsRegistered = reservation.IsRegistered;
         }
 
-        public static IList<ReservationDto> GetArrivingReservations(IUnitOfWork unitOfWork)
+        public static IList<ReservationDto> GetArrivingReservationDtos(IUnitOfWork unitOfWork)
         {
-            var arrivingResDtos = new List<ReservationDto>();
-            foreach (var reservation in unitOfWork.Reservations.GetTodaysReservations())
-            {
-                string parkingPlaceName;
-
-                if (reservation.ParkingPlaceId != 0)
-                {
-                    parkingPlaceName = unitOfWork.ParkingPlaces.GetParkingPlace(reservation).Name;
-                }
-                else
-                {
-                    parkingPlaceName = "Nepřiřazeno";
-                }
-
-                arrivingResDtos.Add(new ReservationDto(reservation, parkingPlaceName));
-            }
-            return arrivingResDtos.OrderBy(o => o.ParkingPlaceId).ToList();
+            var todayReservations = unitOfWork.Reservations.GetReservations(arrival: System.DateTime.Today, state: ReservationState.Reserved);
+            var arrivingReservationDtos = GetReservationDtos(unitOfWork, todayReservations);
+            
+            return arrivingReservationDtos.OrderBy(o => o.ParkingPlaceId).ToList();
         }
 
-        public static IList<ReservationDto> GetNoShowReservations(IUnitOfWork unitOfWork)
+        public static IList<ReservationDto> GetNoShowReservationDtos(IUnitOfWork unitOfWork)
         {
-            var noShowReservationDtos = new List<ReservationDto>();
-            foreach (var reservation in unitOfWork.Reservations.GetNoShowReservations())
-            {
-                string parkingPlaceName;
+            var noShowReservations = unitOfWork.Reservations.GetNoShowReservations();
+            var noShowReservationDtos = GetReservationDtos(unitOfWork, noShowReservations);
 
-                if (reservation.ParkingPlaceId != 0)
-                {
-                    parkingPlaceName = unitOfWork.ParkingPlaces.GetParkingPlace(reservation).Name;
-                }
-                else
-                {
-                    parkingPlaceName = "Nepřiřazeno";
-                }
-
-                noShowReservationDtos.Add(new ReservationDto(reservation, parkingPlaceName));
-            }
             return noShowReservationDtos.OrderBy(o => o.Arrival).ToList();
         }
         
-        public static IList<ReservationDto> GetInhouseReservations(IUnitOfWork unitOfWork)
+        public static IList<ReservationDto> GetInhouseReservationDtos(IUnitOfWork unitOfWork)
         {
-            var inhouseReservationDtos = new List<ReservationDto>();
-            foreach (var reservation in unitOfWork.Reservations.GetInhouseReservations())
-            {
-                var parkingPlaceName = unitOfWork.ParkingPlaces.GetParkingPlace(reservation).Name;
-                inhouseReservationDtos.Add(new ReservationDto(reservation, parkingPlaceName));
-            }
+            var inHouseReservations = unitOfWork.Reservations.GetInhouseReservations();
+            var inhouseReservationDtos = GetReservationDtos(unitOfWork, inHouseReservations);
 
             return inhouseReservationDtos.OrderBy(o => o.ParkingPlaceId).ToList();
+        }
+
+        private static List<ReservationDto> GetReservationDtos(IUnitOfWork unitOfWork, List<Reservation> reservations)
+        {
+            var reservationDtos = new List<ReservationDto>();
+
+            foreach (var reservation in reservations)
+            {
+                var parkingPlaceName = GetParkingPlaceName(unitOfWork, reservation.ParkingPlaceId);
+                reservationDtos.Add(new ReservationDto(reservation, parkingPlaceName));
+            }
+
+            return reservationDtos;
+        }
+
+        private static string GetParkingPlaceName(IUnitOfWork unitOfWork, int parkingPlaceId)
+        {
+            if (parkingPlaceId != 0)
+            {
+                var parkingPlace = unitOfWork.ParkingPlaces.GetParkingPlace(parkingPlaceId, includeCarAndReservation: false);
+
+                return parkingPlace.Name;
+            }
+            else
+            {
+                return Labels.NotAssigned;
+            }
         }
     }
 }

@@ -15,22 +15,23 @@ namespace HotelGarage.Persistence.Repositories
             _context = context;
         }
 
-        public ParkingPlace GetParkingPlace(int id)
+        public ParkingPlace GetParkingPlace(int id, bool includeCarAndReservation)
         {
-            return _context.ParkingPlaces
-                .Include(r => r.Reservation)
-                .Include(c => c.Reservation.Car)
-                .FirstOrDefault(p => p.Id == id);
+            if (includeCarAndReservation)
+            {
+                return _context.ParkingPlaces
+                    .Include(r => r.Reservation)
+                    .Include(c => c.Reservation.Car)
+                    .FirstOrDefault(p => p.Id == id);
+            }
+
+            return _context.ParkingPlaces.FirstOrDefault(p => p.Id == id);
+
         }
 
         public ParkingPlace GetParkingPlace(string name)
         {
             return _context.ParkingPlaces.FirstOrDefault(p => p.Name == name);
-        }
-
-        public ParkingPlace GetParkingPlace(Reservation reservation)
-        {
-            return _context.ParkingPlaces.FirstOrDefault(p => p.Id == reservation.ParkingPlaceId);
         }
 
         public List<ParkingPlace> GetAllParkingPlaces()

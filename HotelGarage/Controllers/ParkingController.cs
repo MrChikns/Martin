@@ -72,31 +72,22 @@ namespace HotelGarage.Controllers
         public ActionResult Reserve(string parkingPlaceName, int reservationId)
         {
             var reservation = _unitOfWork.Reservations.GetReservation(reservationId, includeCar: true) ?? throw new ArgumentOutOfRangeException("Invalid reservation ID.");
-
-            ReleasePreviouslyReservedPlace(reservation);
-            MoveOrReserveParkingPlace(reservation, parkingPlaceName);
+            var newParkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(parkingPlaceName);
+            
+            ReleaseOldParkingPlace(reservation.ParkingPlaceId);
+            newParkingPlace.Reserve(reservation);
 
             _unitOfWork.Complete();
 
             return RedirectToAction("Parking");
         }
 
-        public void ReleasePreviouslyReservedPlace(Reservation reservation) {
-            if (reservation.ParkingPlaceId != 0)
+        public void ReleaseOldParkingPlace(int parkingPlaceId) 
+        {
+            if (parkingPlaceId != 0)
             {
-                var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(reservation.ParkingPlaceId, includeCarAndReservation: false);
+                var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(parkingPlaceId, includeCarAndReservation: false);
                 parkingPlace.Release();
-            }
-        }
-
-        public void MoveOrReserveParkingPlace(Reservation reservation, string ParkingPlaceName) {
-            if (reservation.State == ReservationState.Inhouse)
-            {
-                _unitOfWork.ParkingPlaces.GetParkingPlace(ParkingPlaceName).MoveInhouseReservation(reservation);
-            }
-            else
-            {
-                _unitOfWork.ParkingPlaces.GetParkingPlace(ParkingPlaceName).Reserve(reservation);
             }
         }
     }

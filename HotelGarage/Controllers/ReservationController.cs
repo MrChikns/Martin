@@ -6,11 +6,11 @@ using System.Web.Mvc;
 
 namespace HotelGarage.Controllers
 {
-    public class ReservationsController : Controller
+    public class ReservationController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public ReservationsController(IUnitOfWork unitOfWork)
+        public ReservationController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -40,9 +40,9 @@ namespace HotelGarage.Controllers
 
         public ActionResult Delete(int reservationId)
         {
-            var deletedReservation = _unitOfWork.Reservations.GetReservation(reservationId, includeCar: true) ?? throw new ArgumentOutOfRangeException("Invalid reservation ID.");
-            var reservationParkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(deletedReservation.ParkingPlaceId, includeCarAndReservation: true);
-            deletedReservation.Cancel(reservationParkingPlace);
+            var reservationToDelete = _unitOfWork.Reservations.GetReservation(reservationId, includeCar: true) ?? throw new ArgumentOutOfRangeException("Invalid reservation ID.");
+            var parkingPlace = _unitOfWork.ParkingPlaces.GetParkingPlace(reservationToDelete.ParkingPlaceId, includeCarAndReservation: true);
+            reservationToDelete.Cancel(parkingPlace);
 
             _unitOfWork.Complete();
 

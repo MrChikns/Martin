@@ -106,7 +106,7 @@ namespace HotelGarage.Core.Dtos
                 BootBoxData.RoomNumber = (car.GuestRoomNumber == null) ? notFilledOut : car.GuestRoomNumber.ToString();
                 BootBoxData.CarModel = car.CarModel ?? notFilledOut;
                 BootBoxData.PricePerNight = (car.PricePerNight == null) ? notFilledOut : car.PricePerNight.ToString();
-                BootBoxData.IsEmployee = (car.IsEmployee == true) ? "Zaměstnanec" : "Host";
+                BootBoxData.IsEmployee = (car.IsEmployee == true) ? Labels.EmployeeState : Labels.GuestState;
                 BootBoxData.Note = car.Note ?? notFilledOut;
             }
         }
@@ -119,14 +119,7 @@ namespace HotelGarage.Core.Dtos
             BootBoxData.Arrival = reservation.Arrival.ToShortDateString();
             BootBoxData.Departure = reservation.Departure.ToShortDateString();
             BootBoxData.LicensePlate = reservation.LicensePlate;
-            BootBoxData.IsRegistered = IsRegisteredLabel(reservation.IsRegistered);
+            BootBoxData.IsRegistered = reservation.IsRegistered ? Labels.Yes : Labels.No;
         }
-
-        private string IsRegisteredLabel(bool isRegistered)
-        {
-            return isRegistered ? "Ano" : "Ne!";
-        }
-
-        
     }
 }

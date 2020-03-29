@@ -1,5 +1,4 @@
 ﻿using HotelGarage.Core.Models;
-using HotelGarage.Helpers;
 using NUnit.Framework;
 using System;
 
@@ -81,25 +80,6 @@ namespace HotelGarage.UnitTests.Models
             Assert.That(reservation.ParkingPlaceId, Is.EqualTo(0));
             Assert.That(_parkingPlace.Reservation, Is.EqualTo(null));
             Assert.That(_parkingPlace.State, Is.EqualTo(ParkingPlaceState.Free));
-        }
-
-        [Test]
-        public void MoveInhouseReservation_ReservationInHouse_SetValuesAfterMove()
-        {
-            _reservation.State = ReservationState.Inhouse;
-            _parkingPlace.MoveInhouseReservation(_reservation);
-
-            Assert.That(_reservation.ParkingPlaceId, Is.EqualTo(_reservation.Id));
-            Assert.That(_parkingPlace.State, Is.EqualTo(ParkingPlaceState.Occupied));
-            Assert.That(_parkingPlace.Reservation, Is.EqualTo(_reservation));
-        }
-
-        [Test]
-        public void MoveInhouseReservation_ReservationNotInHouse_ThrowsException()
-        {
-            _reservation.State = ReservationState.Departed;
-
-            Assert.That(() => _parkingPlace.MoveInhouseReservation(_reservation), Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
     }
 }

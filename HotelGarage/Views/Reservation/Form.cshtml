@@ -4,7 +4,7 @@
 }
 
 <h4>@((Model.Id == 0) ? "Nová Rezervace" : "Upravit Rezervaci")</h4>
-@using (Html.BeginForm("Save", "Reservations"))
+@using (Html.BeginForm("Save", "Reservation"))
 {
     @Html.AntiForgeryToken()
     <div class="form-group">

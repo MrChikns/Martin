@@ -28,20 +28,6 @@ namespace HotelGarage.Core.Models
             Reservation = reservation;
         }
 
-        public void MoveInhouseReservation(Reservation reservation)
-        {
-            if (reservation.State == ReservationState.Inhouse)
-            {
-                reservation.SetParkingPlaceId(Id);
-                State = ParkingPlaceState.Occupied;
-                Reservation = reservation;
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException("Invalid reservation. It has to be inhouse to move it!");
-            }
-        }
-
         public void Occupy(Reservation reservation)
         {
             if (State == ParkingPlaceState.Reserved && reservation.ParkingPlaceId == Id)

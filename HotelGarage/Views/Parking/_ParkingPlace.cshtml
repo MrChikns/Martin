@@ -13,7 +13,7 @@
     </p>
     <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceState</a>
     <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.Id>
-        @Html.ActionLink("Reserve", "Create", "Reservations",
+        @Html.ActionLink("Reserve", "Create", "Reservation",
             new { parkingPlaceId = Model.Id },
             new { @class = "nav-link js-reserve" })
 
@@ -21,7 +21,7 @@
             new {  parkingPlaceId = Model.Id, reservationId = Model.ReservationId },
             new { @class = "nav-link js-checkin", @onclick = "return confirm('Opravdu chcete rezervaci ubytovat?')" })
 
-        @Html.ActionLink("Upravit", "Update", "Reservations",
+        @Html.ActionLink("Upravit", "Update", "Reservation",
             new { reservationId = Model.ReservationId},
             new { @class = "nav-link js-upravit" })
 

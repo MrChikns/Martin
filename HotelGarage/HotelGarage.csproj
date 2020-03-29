@@ -252,10 +252,9 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\API\ReservationsController.cs" />
     <Compile Include="Controllers\ParkingController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\ReservationsController.cs" />
+    <Compile Include="Controllers\ReservationController.cs" />
     <Compile Include="Core\Dtos\BootBoxDataDto.cs" />
     <Compile Include="Core\Models\ApplicationUser.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
@@ -435,10 +434,10 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Reservations\Form.cshtml" />
+    <Content Include="Views\Reservation\Form.cshtml" />
     <Content Include="Scripts\README.md" />
     <Content Include="Views\Parking\_ParkingPlace.cshtml" />
-    <Content Include="Views\Reservations\List.cshtml" />
+    <Content Include="Views\Reservation\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -28,15 +28,15 @@ var ReservationForm = function () {
             datumTokenizer: Bloodhound.tokenizers.whitespace,
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             prefetch: {
-                url: '/api/reservations/',
+                url: '/api/reservation/',
                 ttl: 1 // milliseconds
             }
         });
 
         // Passing in `null` for the `options` argument will result in the default option.
         $('.typeahead').typeahead(null, {
-            name: 'reservations',
-            source: reservations
+            name: 'reservation',
+            source: reservation
         });
        
     };
@@ -188,6 +188,7 @@ var ParkingPlace = function () {
         var jmeno = getDataAttr(this, "data-bbox-jmeno");
         var cena = getDataAttr(this, "data-bbox-cena");
         var zamestnanec = getDataAttr(this, "data-bbox-zamestnanec");
+        var jmenoLabel = zamestnanec === ' ' ? 'Jméno' : zamestnanec;
         var jeRegistrovan = getDataAttr(this, "data-bbox-jeRegistrovan");
         var typAuta = getDataAttr(this, "data-bbox-typAuta");
         var poznamka = getDataAttr(this, "data-bbox-poznamka");
@@ -196,7 +197,7 @@ var ParkingPlace = function () {
             title: spz,
             message:
                 "<div class= 'container'>" + "<div class=\"row\"><div class=\"col-sm-4\" style=\"text-align:right\">" +
-                "Příjezd: <br> Odjezd: <br>Pokoj: <br>" + zamestnanec +
+                "Příjezd: <br> Odjezd: <br>Pokoj: <br>" + jmenoLabel +
                 ": <br>Registrován: <br>Cena: <br>Typ Auta: <br>Poznámka: " +
                 "</div ><div class=\"col-sm\">" + prijezd + "<br>" + odjezd + "<br>" + pokoj +
                 "<br>" + jmeno + "<br>" + jeRegistrovan + "<br>" + cena + "<br>" + typAuta + "<br>" +

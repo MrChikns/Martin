@@ -50,7 +50,7 @@ namespace HotelGarage.UnitTests.Models
             _reservation.Cancel(parkingPlace);
 
             Assert.That(parkingPlace.Reservation, Is.EqualTo(null));
-            Assert.That(_reservation.State, Is.EqualTo(4));
+            Assert.That(_reservation.State, Is.EqualTo(ReservationState.Cancelled));
         }
     }
 }

@@ -46,8 +46,7 @@ namespace HotelGarage.UnitTests.Controllers
             _car = new Car();
 
             _mockReservationRepository = new Mock<IReservationRepository>();
-            _mockReservationRepository.Setup(r => r.GetReservation(_existing)).Returns(_reservation);
-            _mockReservationRepository.Setup(r => r.GetReservation(_existing)).Returns(_reservation);
+            _mockReservationRepository.Setup(r => r.GetReservation(_existing, true)).Returns(_reservation);
 
             _mockParkingPlaceRepository = new Mock<IParkingPlaceRepository>();
             _mockParkingPlaceRepository.Setup(p => p.GetParkingPlace(_existing)).Returns(_parkingPlace);
@@ -71,14 +70,6 @@ namespace HotelGarage.UnitTests.Controllers
         }
 
         [Test]
-        public void Update_ReservationIdExists_ReturnView()
-        {
-            var result = _controller.Update(_existing) as ViewResult;
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.ViewName == "Form");
-        }
-
-        [Test]
         public void Delete_ReservationIdDoesNotExist_ThrowArgumentOutOfRangeException()
         {
             Assert.That(() => _controller.Delete(_nonExisting), Throws.Exception.TypeOf<ArgumentOutOfRangeException>());
@@ -90,23 +81,6 @@ namespace HotelGarage.UnitTests.Controllers
             var result = (RedirectToRouteResult)_controller.Delete(_existing);
             Assert.AreEqual("Parking",result.RouteValues["action"]);
             Assert.AreEqual("Parking", result.RouteValues["controller"]);
-        }
-
-        [Test]
-        public void Save_ViewModelIsValid_ReturnRedirectToActionResult()
-        {
-            var result = (RedirectToRouteResult)_controller.Save(_reservation);
-            Assert.AreEqual("Parking", result.RouteValues["action"]);
-            Assert.AreEqual("Parking", result.RouteValues["controller"]);
-        }
-
-        [Test]
-        public void Save_ViewModelIsInValid_ReturnView()
-        {
-            _controller.ModelState.AddModelError("","");
-            var result = _controller.Save(_reservation) as ViewResult;
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.ViewName == "Form");
         }
     }
 }

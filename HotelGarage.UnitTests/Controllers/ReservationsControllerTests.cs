@@ -1,7 +1,7 @@
 ﻿using HotelGarage.Controllers;
 using HotelGarage.Core;
-using HotelGarage.Core.Models;
-using HotelGarage.Core.Repositories;
+using HotelGarage.Core.Model;
+using HotelGarage.Core.Repository;
 using HotelGarage.UnitTests.Extensions;
 using Moq;
 using NUnit.Framework;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace HotelGarage.Core.Models
+namespace HotelGarage.Core.Model
 {
     public class Reservation
     {

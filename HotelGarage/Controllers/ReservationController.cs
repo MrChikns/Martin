@@ -1,6 +1,6 @@
 ﻿using HotelGarage.Core;
-using HotelGarage.Core.Dtos;
-using HotelGarage.Core.Models;
+using HotelGarage.Core.Dto;
+using HotelGarage.Core.Model;
 using System;
 using System.Web.Mvc;
 

@@ -1,4 +1,4 @@
-﻿using HotelGarage.Core.Models;
+﻿using HotelGarage.Core.Model;
 using NUnit.Framework;
 using System;
 
@@ -18,7 +18,7 @@ namespace HotelGarage.UnitTests.Models
             _reservation = new Reservation() { Id = 1};
             _parkingPlace = new ParkingPlace() { Id = 1};
             _parkingPlace.State = _stateOfPlace;
-            _parkingPlace.AssignReservation(_reservation);
+            _parkingPlace.Reservation = _reservation;
         }
 
         [Test]

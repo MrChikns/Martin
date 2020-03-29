@@ -1,8 +1,8 @@
-﻿using HotelGarage.Core.Models;
-using HotelGarage.Core.Repositories;
+﻿using HotelGarage.Core.Model;
+using HotelGarage.Core.Repository;
 using System.Linq;
 
-namespace HotelGarage.Persistence.Repositories
+namespace HotelGarage.Persistence.Repository
 {
     public class CarRepository : ICarRepository
     {

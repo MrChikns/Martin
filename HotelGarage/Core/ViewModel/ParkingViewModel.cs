@@ -1,8 +1,8 @@
-﻿using HotelGarage.Core.Dtos;
-using HotelGarage.Core.Models;
+﻿using HotelGarage.Core.Dto;
+using HotelGarage.Core.Model;
 using System.Collections.Generic;
 
-namespace HotelGarage.Core.ViewModels
+namespace HotelGarage.Core.ViewModel
 {
     public class ParkingViewModel
     {
@@ -13,9 +13,8 @@ namespace HotelGarage.Core.ViewModels
         public IList<string> FreeParkingPlaceNames { get; set; }
         public OccupancyNumbers[] OccupancyNumbers { get; set; }
 
-        public ParkingViewModel(IUnitOfWork unitOfWork)
+        public ParkingViewModel(IUnitOfWork unitOfWork, ParkingPlaceDto parkingPlaceDto)
         {
-            var parkingPlaceDto = new ParkingPlaceDto();
             ParkingPlaceDtos = parkingPlaceDto.GetParkingPlaceDtos(unitOfWork);
             TodaysReservations = ReservationDto.GetArrivingReservationDtos(unitOfWork);
             NoShowReservations = ReservationDto.GetNoShowReservationDtos(unitOfWork);

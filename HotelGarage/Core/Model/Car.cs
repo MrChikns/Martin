@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace HotelGarage.Core.Models
+namespace HotelGarage.Core.Model
 {
     public class Car
     {
@@ -35,20 +35,6 @@ namespace HotelGarage.Core.Models
 
         [Display(Name ="Počet Pobytů")]
         public int NumberOfStays { get; private set; }
-
-        public Car() { }
-
-        public Car(Car car)
-        {
-            LicensePlate = car.LicensePlate;
-            CarModel = car.CarModel;
-            GuestsName = car.GuestsName;
-            GuestRoomNumber = car.GuestRoomNumber;
-            PricePerNight = car.PricePerNight;
-            IsEmployee = car.IsEmployee;
-            Note = car.Note;
-            NumberOfStays = 0;
-        }
 
         public void Update(Car car)
         {

@@ -1,6 +1,7 @@
 ﻿using HotelGarage.Core;
-using HotelGarage.Core.Models;
-using HotelGarage.Core.ViewModels;
+using HotelGarage.Core.Dto;
+using HotelGarage.Core.Model;
+using HotelGarage.Core.ViewModel;
 using System;
 using System.Web.Mvc;
 
@@ -19,7 +20,7 @@ namespace HotelGarage.Controllers
         [AllowAnonymous]
         public ActionResult Parking()
         {
-            return View(new ParkingViewModel(_unitOfWork));
+            return View(new ParkingViewModel(_unitOfWork, new ParkingPlaceDto()));
         }
 
         public ActionResult CheckIn(int parkingPlaceId, int reservationId)

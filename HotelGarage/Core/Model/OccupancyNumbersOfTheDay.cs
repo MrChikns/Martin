@@ -1,4 +1,4 @@
-﻿namespace HotelGarage.Core.Models
+﻿namespace HotelGarage.Core.Model
 {
     public struct OccupancyNumbers
     {

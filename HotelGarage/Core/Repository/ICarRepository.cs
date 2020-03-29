@@ -1,6 +1,6 @@
-﻿using HotelGarage.Core.Models;
+﻿using HotelGarage.Core.Model;
 
-namespace HotelGarage.Core.Repositories
+namespace HotelGarage.Core.Repository
 {
     public interface ICarRepository
     {

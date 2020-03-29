@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HotelGarage.Core.Models
+namespace HotelGarage.Core.Model
 {
     public class ParkingPlace
     {
@@ -9,14 +9,16 @@ namespace HotelGarage.Core.Models
         public ParkingPlaceState State { get; set; }
         public Reservation Reservation { get; set; }
 
-        public void AssignReservation(Reservation reservation)
-        {
-            Reservation = reservation;
-        }
-
         public void Release()
         {
             Reservation.SetParkingPlaceId(0);
+            State = ParkingPlaceState.Free;
+            Reservation = null;
+        }
+
+        public void AssingnFreeParkingPlace(Reservation reservation)
+        {
+            reservation.SetParkingPlaceId(0);
             State = ParkingPlaceState.Free;
             Reservation = null;
         }
@@ -39,13 +41,6 @@ namespace HotelGarage.Core.Models
             {
                 throw new ArgumentOutOfRangeException("Invalid parking place and reservation. Parking place has to be reserved with current reservation.");
             }
-        }
-
-        public void AssingnFreeParkingPlace(Reservation reservation)
-        {   
-            reservation.SetParkingPlaceId(0);
-            State = ParkingPlaceState.Free;
-            Reservation = null;
         }
     }
 }

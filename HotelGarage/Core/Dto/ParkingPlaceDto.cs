@@ -1,9 +1,9 @@
-﻿using HotelGarage.Core.Models;
+﻿using HotelGarage.Core.Model;
 using HotelGarage.Helpers;
 using System;
 using System.Collections.Generic;
 
-namespace HotelGarage.Core.Dtos
+namespace HotelGarage.Core.Dto
 {
     public class ParkingPlaceDto
     {
@@ -46,7 +46,7 @@ namespace HotelGarage.Core.Dtos
                         unitOfWork.Complete();
                     }
 
-                    //vyrazeni rezervaci z minuleho dne anebo prirazeni rezervace do parkovaciho mista
+                    // Unassign no show reservations or fill out dto.
                     if (parkingPlace.Reservation.Arrival.Date != DateTime.Today.Date && parkingPlace.Reservation.State == ReservationState.Reserved)
                     {
                         parkingPlace.Release();
@@ -68,7 +68,7 @@ namespace HotelGarage.Core.Dtos
         {
             switch (parkingPlace.State)
             {
-                case Models.ParkingPlaceState.Free:
+                case Model.ParkingPlaceState.Free:
                     var numberOfStandardParkingPlaces = 19;
                     if (parkingPlace.Id > numberOfStandardParkingPlaces)
                     {
@@ -78,7 +78,7 @@ namespace HotelGarage.Core.Dtos
                     {
                         return Labels.FreeState;
                     }
-                case Models.ParkingPlaceState.Occupied:
+                case Model.ParkingPlaceState.Occupied:
                     if (!parkingPlace.Reservation.IsRegistered)
                     {
                         return Labels.NotRegisteredState;
@@ -88,9 +88,9 @@ namespace HotelGarage.Core.Dtos
                         return Labels.DepartureState;
                     }
                     return Labels.OccupiedState;
-                case Models.ParkingPlaceState.Reserved:
+                case Model.ParkingPlaceState.Reserved:
                     return Labels.ReservedState;
-                case Models.ParkingPlaceState.Employee:
+                case Model.ParkingPlaceState.Employee:
                     return Labels.EmployeeState;
                 default:
                     throw new ArgumentException("Invalid reservation state.");

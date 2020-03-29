@@ -1,6 +1,6 @@
 ﻿using HotelGarage.Helpers;
 
-namespace HotelGarage.Core.Dtos
+namespace HotelGarage.Core.Dto
 {
     public class BootBoxDataDto
     {

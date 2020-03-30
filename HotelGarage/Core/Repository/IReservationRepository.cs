@@ -11,9 +11,7 @@ namespace HotelGarage.Core.Repository
         List<Reservation> GetInhouseReservations(DateTime date);
         List<string> GetLicensePlates();
         List<Reservation> GetNoShowReservations();
-        OccupancyNumbers[] GetOccupancyNumbers(int numberOfParkingPlaces);
         Reservation GetReservation(int reservationId, bool includeCar);
-        List<Reservation> GetReturningReservations();
         List<Reservation> GetReservations(DateTime arrival, ReservationState state);
         void AddReservation(Reservation reservation);
     }

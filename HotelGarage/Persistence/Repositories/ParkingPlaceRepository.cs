@@ -26,7 +26,11 @@ namespace HotelGarage.Persistence.Repository
             }
 
             return _context.ParkingPlaces.FirstOrDefault(p => p.Id == id);
+        }
 
+        public List<ParkingPlace> GetParkingPlaces(ParkingPlaceType type, ParkingPlaceType type2)
+        {
+            return _context.ParkingPlaces.Where(p => p.Type == type || p.Type == type2).ToList();
         }
 
         public ParkingPlace GetParkingPlace(string name)

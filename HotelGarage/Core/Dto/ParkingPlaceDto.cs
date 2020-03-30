@@ -69,8 +69,7 @@ namespace HotelGarage.Core.Dto
             switch (parkingPlace.State)
             {
                 case Model.ParkingPlaceState.Free:
-                    var numberOfStandardParkingPlaces = 19;
-                    if (parkingPlace.Id > numberOfStandardParkingPlaces)
+                    if (parkingPlace.Type == ParkingPlaceType.StaffOnly)
                     {
                         return Labels.StaffFreeState;
                     }

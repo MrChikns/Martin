@@ -7,6 +7,7 @@ namespace HotelGarage.Core.Model
         public int Id { get; set; }
         public string Name { get; set; }
         public ParkingPlaceState State { get; set; }
+        public ParkingPlaceType Type { get; set; }
         public Reservation Reservation { get; set; }
 
         public void Release()

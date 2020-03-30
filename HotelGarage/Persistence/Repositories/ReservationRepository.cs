@@ -36,7 +36,7 @@ namespace HotelGarage.Persistence.Repository
                 .Include(c => c.Car)
                 .ToList();
         }
-
+               
         public List<Reservation> GetNoShowReservations()
         {
             return _context.Reservations
@@ -71,14 +71,6 @@ namespace HotelGarage.Persistence.Repository
                        
             return list;
         }
-
-        public List<Reservation> GetReturningReservations()
-        {
-            return _context.Reservations
-                .Where(c => c.Car.NumberOfStays >= 2)
-                .Include(c => c.Car)
-                .ToList();
-        }
         
         public List<Reservation> GetInhouseReservations(DateTime inhouseDate)
         {
@@ -95,22 +87,6 @@ namespace HotelGarage.Persistence.Repository
         public void AddReservation(Reservation reservation)
         {
             _context.Reservations.Add(reservation);
-        }
-
-        public OccupancyNumbers[] GetOccupancyNumbers(int numberOfParkingPlaces)
-        {
-            var occupancyNumbers = new OccupancyNumbers[7];
-
-            for (int dayCount = 0; dayCount < 7; dayCount++)
-            {
-                var reservations = GetInhouseReservations(DateTime.Today.AddDays(dayCount));
-                var standardParkingPlaceReservations = reservations.Where(r => r.ParkingPlaceId <= numberOfParkingPlaces);
-
-                occupancyNumbers[dayCount].FreePlacesCount = numberOfParkingPlaces - standardParkingPlaceReservations.Count();
-                occupancyNumbers[dayCount].OccupiedByEmployeesCount = standardParkingPlaceReservations.Where(r => r.Car.IsEmployee.Equals(true)).Count();
-            }
-
-            return occupancyNumbers;
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using HotelGarage.Core.Dto;
 using HotelGarage.Core.Model;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HotelGarage.Core.ViewModel
 {
@@ -20,7 +22,24 @@ namespace HotelGarage.Core.ViewModel
             NoShowReservations = ReservationDto.GetNoShowReservationDtos(unitOfWork);
             InHouseReservations = ReservationDto.GetInhouseReservationDtos(unitOfWork);
             FreeParkingPlaceNames = unitOfWork.ParkingPlaces.GetFreeParkingPlaceNames();
-            OccupancyNumbers = unitOfWork.Reservations.GetOccupancyNumbers(numberOfParkingPlaces: 19);
+            OccupancyNumbers = GetOccupancyNumbers(unitOfWork);
+        }
+
+        private OccupancyNumbers[] GetOccupancyNumbers(IUnitOfWork unitOfWork)
+        {
+            var totalDays = 7;
+            var occupancyNumbers = new OccupancyNumbers[totalDays];
+            var guestParkingPlaces = unitOfWork.ParkingPlaces.GetParkingPlaces(ParkingPlaceType.Garage, ParkingPlaceType.Outside);
+
+            for (int dayNumber = 0; dayNumber < totalDays; dayNumber++)
+            {
+                var reservations = unitOfWork.Reservations.GetInhouseReservations(DateTime.Today.AddDays(dayNumber));
+
+                occupancyNumbers[dayNumber].FreePlacesCount = guestParkingPlaces.Count - reservations.Count;
+                occupancyNumbers[dayNumber].OccupiedByEmployeesCount = reservations.Where(r => r.Car.IsEmployee.Equals(true)).Count();
+            }
+
+            return occupancyNumbers;
         }
     }
 }

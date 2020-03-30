@@ -3,13 +3,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h4>@((Model.Id == 0) ? "Nová Rezervace" : "Upravit Rezervaci")</h4>
+<h4>@((Model.Id == 0) ? "New reservation" : "Update reservation")</h4>
 @using (Html.BeginForm("Save", "Reservation"))
 {
     @Html.AntiForgeryToken()
     <div class="form-group">
-        @Html.LabelFor(r => r.LicensePlate, "Státní Poznávací Značka")
-        @Html.TextBoxFor(r => r.LicensePlate, new { @class = "form-control SPZbox typeahead", type="text",autofocus = "autofocus", data_id = "spz-visible", placeholder = "Doplňte SPZ nebo jméno", maxlength = 20 })
+        @Html.LabelFor(r => r.LicensePlate, "License plate")
+        @Html.TextBoxFor(r => r.LicensePlate, new { @class = "form-control SPZbox", type="text",autofocus = "autofocus", data_id = "spz-visible", placeholder = "Fill out LP or a name at least", maxlength = 20 })
         @Html.ValidationMessageFor(r => r.LicensePlate)
     </div>
     <div class="form-group">
@@ -19,7 +19,7 @@
         @Html.TextBoxFor(r => r.State, new { @class = "form-control", @Value = Model.State, style = "display:none;" })
     </div>
     <div class="form-group">
-        @Html.LabelFor(r => r.Arrival, "Příjezd")
+        @Html.LabelFor(r => r.Arrival, "Arrival")
         @Html.TextBoxFor(r => r.Arrival, (Model.State == HotelGarage.Core.Model.ReservationState.Inhouse ||
             Model.State == HotelGarage.Core.Model.ReservationState.TemporaryLeave) ?
             (object)new { @class = "form-control", type = "datetime-local",
@@ -31,50 +31,50 @@
         @Html.ValidationMessageFor(r => r.Arrival)
     </div>
     <div class="form-group">
-        @Html.LabelFor(r => r.Departure, "Odjezd")
+        @Html.LabelFor(r => r.Departure, "Departure")
         @Html.TextBoxFor(r => r.Departure, new { @class = "form-control", type = "datetime-local",
             @Value = Model.Departure.ToString("yyyy-MM-ddT12:00")})
         @Html.ValidationMessageFor(r => r.Departure)
     </div>
     <div class="form-group form-inline" id="isRegisteredDiv">
-        @Html.LabelFor(r => r.IsRegistered, "Je Registrovaná?")
+        @Html.LabelFor(r => r.IsRegistered, "Is registered?")
         @Html.CheckBoxFor(r => r.IsRegistered, (Model.State == HotelGarage.Core.Model.ReservationState.Inhouse ?
         (object)new { @class = "form-control" }: (object)new { @class = "form-control", @disabled = "disabled" }))
         @Html.ValidationMessageFor(r => r.IsRegistered)
     </div>
     <div class="form-group">
-        @Html.LabelFor(c => c.Car.CarModel, "Typ Auta")
+        @Html.LabelFor(c => c.Car.CarModel, "Car brand")
         @Html.TextBoxFor(c => c.Car.CarModel, new { @class = "form-control", maxlength = 50 })
         @Html.ValidationMessageFor(c => c.Car.CarModel)
     </div>
     <div class="form-group">
-        @Html.LabelFor(c => c.Car.GuestsName, "Příjmení a Jméno Hosta")
+        @Html.LabelFor(c => c.Car.GuestsName, "Last and first name")
         @Html.TextBoxFor(c => c.Car.GuestsName, new { @class = "form-control", maxlength = 50 })
         @Html.ValidationMessageFor(c => c.Car.GuestsName)
     </div>
     <div class="form-group">
-        @Html.LabelFor(c => c.Car.GuestRoomNumber, "Číslo Pokoje Hosta")
+        @Html.LabelFor(c => c.Car.GuestRoomNumber, "Room number")
         @Html.TextBoxFor(c => c.Car.GuestRoomNumber, new { @class = "form-control", maxlength = 3 })
         @Html.ValidationMessageFor(c => c.Car.GuestRoomNumber)
     </div>
     <div class="form-group">
-        @Html.LabelFor(c => c.Car.PricePerNight, "Cena za Noc v EUR")
+        @Html.LabelFor(c => c.Car.PricePerNight, "Price per night")
         @Html.TextBoxFor(c => c.Car.PricePerNight, new { @class = "form-control", maxlength = 3 })
         @Html.ValidationMessageFor(c => c.Car.PricePerNight)
     </div>
     <div class="form-group">
-        @Html.LabelFor(c => c.Car.Note, "Poznámka")
+        @Html.LabelFor(c => c.Car.Note, "Note")
         @Html.TextAreaFor(c => c.Car.Note, new { @class = "form-control", maxlength = 100, Rows = 5, style = "resize:none;" })
         @Html.ValidationMessageFor(c => c.Car.Note)
     </div>
     <div class="form-group form-inline">
-        @Html.LabelFor(c => c.Car.IsEmployee, "Zaměstnanec?")
+        @Html.LabelFor(c => c.Car.IsEmployee, "Is employee?")
         @Html.CheckBoxFor(c => c.Car.IsEmployee, new { @class = "form-control" })
         @Html.ValidationMessageFor(c => c.Car.IsEmployee)
     </div>
     <div class="row">
-        <input type="button" value="Zrušit" class="btn btn-outline-primary mx-3" onclick='location.href="@Url.Action("Parking", "Parking")"'>
-        <button type="submit" class="btn btn-primary js-res-save-btn">Uložit</button>
+        <input type="button" value="Cancel changes" class="btn btn-outline-primary mx-3" onclick='location.href="@Url.Action("Parking", "Parking")"'>
+        <button type="submit" class="btn btn-primary js-res-save-btn">Save</button>
     </div>
 }
 

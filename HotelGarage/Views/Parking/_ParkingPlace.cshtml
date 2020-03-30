@@ -21,7 +21,7 @@
             new {  parkingPlaceId = Model.Id, reservationId = Model.ReservationId },
             new { @class = "nav-link js-checkin", @onclick = "return confirm('Opravdu chcete rezervaci ubytovat?')" })
 
-        @Html.ActionLink("Upravit", "Update", "Reservation",
+        @Html.ActionLink("Update", "Update", "Reservation",
             new { reservationId = Model.ReservationId},
             new { @class = "nav-link js-upravit" })
 

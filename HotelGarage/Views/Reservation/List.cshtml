@@ -1,63 +1,61 @@
 ﻿@model IList<HotelGarage.Core.Dto.ReservationListDto>
 
 @{
-    ViewBag.Title = "List";
+    ViewBag.Title = "Reservation overview";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h4>Přehled Rezervací</h4>
+<h4>Reservation overview</h4>
 <p>
-    Filtrovat můžete tlačítkem níže podle data příjezdu, odjezdu nebo data pobytu podle zadaných hodnot. 
-    Vyhledávat dále můžete v políčku search ze všech zobrazených záznamů z jakéhokoliv sloupce. 
-    Můžete vyplnit i více slov z různých sloupců a tím více upřesníte výběr.
+    Specify one or more words from different columns to further narrow the search.
 </p>
 <div class="row ml-auto">
     <p>
-        Filtrovat podle:&nbsp;
+        Filter by:&nbsp;
     </p>
     <div class="btn-group-sm btn-group-toggle" data-toggle="buttons" id="optionRange">
         <label class="btn btn-outline-secondary active" id="optionArrival">
-            <input type="radio" name="optionArrival" autocomplete="off"> Příjezdu
+            <input type="radio" name="optionArrival" autocomplete="off"> Arrival
         </label>
         <label class="btn btn-outline-secondary" id="optionDeparture">
-            <input type="radio" name="optionDeparture" autocomplete="off"> Odjezdu
+            <input type="radio" name="optionDeparture" autocomplete="off"> Departure
         </label>
         <label class="btn btn-outline-secondary" id="optionStay">
-            <input type="radio" name="optionStay" autocomplete="off"> Pobytu
+            <input type="radio" name="optionStay" autocomplete="off"> In-house
         </label>
     </div>
     <p>
-        &nbsp; Od
+        &nbsp; From
     </p>
     <label>
         @Html.TextBox("min", DateTime.Now.ToString("yyyy-MM-dd"), new { @class = "form-control form-control-sm", type = "date", id = "min" })
     </label>
     <p>
-        &nbsp; Do
+        &nbsp; To
     </p>
     <label>
         @Html.TextBox("max", DateTime.Now.ToString("yyyy-MM-dd"), new { @class = "form-control form-control-sm", type = "date", id = "max" })
     </label>
     <div class="btn-group-sm">
         &nbsp;
-        <button class="btn btn-secondary" id="filterBtn">Filtruj</button>
+        <button class="btn btn-secondary" id="filterBtn">Filter</button>
     </div>
 </div>
 <table id="example" class="mdl-data-table" style="width:100%">
     <thead>
         <tr>
-            <th>Jméno</th>
-            <th>Příjezd</th>
-            <th>Odjezd</th>
-            <th>Pokoj</th>
-            <th>Celk. Cena</th>
-            <th>Rezervace</th>
-            <th>SPZ</th>
-            <th>Typ Auta</th>
-            <th>Park. Místo</th>
-            <th>Zaměstnanec</th>
-            <th>Návštěv</th>
-            <th>Úpravy</th>
+            <th>Name</th>
+            <th>Arrival</th>
+            <th>Departure</th>
+            <th>Room</th>
+            <th>Total price</th>
+            <th>Reservation</th>
+            <th>LPN</th>
+            <th>Car brand</th>
+            <th>Park. place</th>
+            <th></th>
+            <th>Visits</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -76,10 +74,10 @@
             <td>@res.IsEmployee</td>
             <td>@res.NumberOfStays</td>
             <td>
-                @Html.ActionLink("Uprav", "Update", "Reservation",
+                @Html.ActionLink("Update", "Update", "Reservation",
                     new { reservationId = res.Id },
                     new { }) /
-                @Html.ActionLink("Zruš", "Delete", "Reservation",
+                @Html.ActionLink("Delete", "Delete", "Reservation",
                     new { reservationId = res.Id },
                     new { })
             </td>
@@ -88,18 +86,18 @@
     </tbody>
     <tfoot>
         <tr>
-            <th>Jméno</th>
-            <th>Příjezd</th>
-            <th>Odjezd</th>
-            <th>Pokoj</th>
-            <th>Celk. Cena</th>
-            <th>Rezervace</th>
-            <th>SPZ</th>
-            <th>Typ Auta</th>
-            <th>Park. Místo</th>
-            <th>Zaměstnanec</th>
-            <th>Návštěv</th>
-            <th>Úpravy</th>
+            <th>Name</th>
+            <th>Arrival</th>
+            <th>Departure</th>
+            <th>Room</th>
+            <th>Total price</th>
+            <th>Reservation</th>
+            <th>LPN</th>
+            <th>Car brand</th>
+            <th>Park. place</th>
+            <th></th>
+            <th>Visits</th>
+            <th></th>
         </tr>
     </tfoot>
 </table>

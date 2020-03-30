@@ -363,6 +363,10 @@
     <Compile Include="Persistence\Migrations\202003301024455_parkingPlaceType.Designer.cs">
       <DependentUpon>202003301024455_parkingPlaceType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Persistence\Migrations\202003302141250_EnglishTranslation.cs" />
+    <Compile Include="Persistence\Migrations\202003302141250_EnglishTranslation.Designer.cs">
+      <DependentUpon>202003302141250_EnglishTranslation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Core\ViewModel\AccountViewModels.cs" />
     <Compile Include="Core\Model\Car.cs" />
@@ -522,6 +526,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\202003301024455_parkingPlaceType.resx">
       <DependentUpon>202003301024455_parkingPlaceType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\202003302141250_EnglishTranslation.resx">
+      <DependentUpon>202003302141250_EnglishTranslation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

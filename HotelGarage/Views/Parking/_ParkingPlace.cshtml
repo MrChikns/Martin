@@ -9,7 +9,7 @@
        data-bbox-jeRegistrovan="@Model.BootBoxData.IsRegistered" data-bbox-poznamka="@Model.BootBoxData.Note">
         @Model.ParkingPlaceName<br>
         @((Model.BootBoxData.GuestName.Length > 15) ? Model.BootBoxData.GuestName.Substring(0, 15) : Model.BootBoxData.GuestName)<br>
-        Odj: @Model.Departure
+        Dep: @Model.Departure
     </p>
     <a href="javascript:void()" class="js-sOPChange">@Model.ParkingPlaceState</a>
     <nav class="nav sOPActionLink js-sOPActionLink" id=@Model.Id>

@@ -9,7 +9,7 @@
         public const string ReservedState = "Reserved";
         public const string EmployeeState = "Employee";
         public const string GuestState = "Guest";
-        public const string NotRegisteredState = "Unregistered!";
+        public const string NotRegisteredState = "Not registered!";
         public const string DepartureState = "Departure";
         public const string NotAssigned = "Not assigned";
         public const string Yes = "Yes";

@@ -23,27 +23,11 @@ var ReservationForm = function () {
         $('.js-res-save-btn').on("click", departureAfterArrivalCheck);
         $('#IsRegistered').on("click", toggleBoxColor);
         $('input[data-id="spz-visible"]').on('keyup', passLicensePlaceIntoModel);
-
-        var reservations = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.whitespace,
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            prefetch: {
-                url: '/api/reservation/',
-                ttl: 1 // milliseconds
-            }
-        });
-
-        // Passing in `null` for the `options` argument will result in the default option.
-        $('.typeahead').typeahead(null, {
-            name: 'reservation',
-            source: reservation
-        });
-       
     };
 
     var departureAfterArrivalCheck = function (event) {
         if ($('#Arrival').val() > $('#Departure').val()) {
-            alert("Odjezd musí být po příjezdu!");
+            alert("Arrival is not before departure!");
             event.preventDefault();
         }
     };
@@ -84,7 +68,7 @@ var ParkingPlace = function () {
 
     // Highlight todays reservations without assigned parking place.
     var highlightReservations = function () {
-        $(this).children(".js-parkingPlaceArrival:contains('Nepřiřazeno')").addClass("alert-link");
+        $(this).children(".js-parkingPlaceArrival:contains('Not assigned')").addClass("alert-link");
     };
 
     // Hide check in button for reservations without assigned parking place.
@@ -122,16 +106,16 @@ var ParkingPlace = function () {
         var showEdit = ".js-checkout, .js-checkin, .js-reserve";
         var showCInEdit = ".js-checkout, .js-reserve";
 
-        btnState(this, 'Volno', 'btn btn-success', showReserve);
-        btnState(this, 'Obsazeno', 'btn btn-primary', showCOutEdit);
-        btnState(this, 'Rezervováno', 'btn btn-warning', showCInEdit);
-        btnState(this, 'Neregistrován!', 'btn btn-secondary', showEdit);
-        btnState(this, 'Odjezd', 'btn btn-danger', showCOutEdit);
-        btnState(this, 'Volno Staff', 'btn btn-light', showReserve);
+        btnState(this, 'Free', 'btn btn-success', showReserve);
+        btnState(this, 'Occupied', 'btn btn-primary', showCOutEdit);
+        btnState(this, 'Reserved', 'btn btn-warning', showCInEdit);
+        btnState(this, 'Not registered!', 'btn btn-secondary', showEdit);
+        btnState(this, 'Departure', 'btn btn-danger', showCOutEdit);
+        btnState(this, 'Free - Staff', 'btn btn-light', showReserve);
     };
 
     var employeeStateSetUp = function () {
-        if ($(this).next().attr("data-bbox-zamestnanec") === 'Zaměstnanec'
+        if ($(this).next().attr("data-bbox-zamestnanec") === 'Employee'
             && ($(this).next().next().hasClass("btn-primary") === true || 
                 $(this).next().next().hasClass("btn-danger") === true))
         {
@@ -145,13 +129,13 @@ var ParkingPlace = function () {
     };
 
     var getCheckOutHtml = function (id) {
-        return "<div class=\"row alert alert-primary\"><div class=\"nav-link\">Chcete ukončit pobyt?</div>" +
-            "<a class=\"nav-link js-checkout ml-auto\" href=\"/Parking/CheckOut?parkingPlaceId=" + id + "\">Check Out</a></div>";
+        return "<div class=\"row alert alert-primary\"><div class=\"nav-link\">End the stay?</div>" +
+            "<a class=\"nav-link js-checkout ml-auto\" href=\"/Parking/CheckOut?parkingPlaceId=" + id + "\">Depart</a></div>";
     };
 
     var getVyjezdHtml = function (id) {
-        return "<div class=\"row alert alert-primary\"><div class=\"nav-link\">Dočasný výjezd?</div>" +
-            "<a class=\"nav-link js-checkout ml-auto\" href=\"/Parking/TemporaryLeave?parkingPlaceId=" + id + "\">Výjezd</a></div>";
+        return "<div class=\"row alert alert-primary\"><div class=\"nav-link\">Temporary leave?</div>" +
+            "<a class=\"nav-link js-checkout ml-auto\" href=\"/Parking/TemporaryLeave?parkingPlaceId=" + id + "\">Leave</a></div>";
     };
 
 
@@ -166,10 +150,10 @@ var ParkingPlace = function () {
             var odjezd = $(this).parent().prev().prev().attr('data-bbox-odjezd');
 
             bootbox.dialog({
-                title: "SPZ:  " + spz,
+                title: "License plate:  " + spz,
                 message: (todaysDate() === odjezd) ? getCheckOutHtml(id) : getCheckOutHtml(id) + getVyjezdHtml(id),
                 buttons: {
-                    ok: { label: "Zavřít", className: 'btn-primary' }
+                    ok: { label: "Close", className: 'btn-primary' }
                 }
             });
         }
@@ -188,7 +172,7 @@ var ParkingPlace = function () {
         var jmeno = getDataAttr(this, "data-bbox-jmeno");
         var cena = getDataAttr(this, "data-bbox-cena");
         var zamestnanec = getDataAttr(this, "data-bbox-zamestnanec");
-        var jmenoLabel = zamestnanec === ' ' ? 'Jméno' : zamestnanec;
+        var jmenoLabel = zamestnanec === ' ' ? 'Name' : zamestnanec;
         var jeRegistrovan = getDataAttr(this, "data-bbox-jeRegistrovan");
         var typAuta = getDataAttr(this, "data-bbox-typAuta");
         var poznamka = getDataAttr(this, "data-bbox-poznamka");
@@ -197,8 +181,8 @@ var ParkingPlace = function () {
             title: spz,
             message:
                 "<div class= 'container'>" + "<div class=\"row\"><div class=\"col-sm-4\" style=\"text-align:right\">" +
-                "Příjezd: <br> Odjezd: <br>Pokoj: <br>" + jmenoLabel +
-                ": <br>Registrován: <br>Cena: <br>Typ Auta: <br>Poznámka: " +
+                "Arrival: <br> Departure: <br>Room: <br>" + jmenoLabel +
+                ": <br>Registered: <br>Price: <br>Car brand: <br>Note: " +
                 "</div ><div class=\"col-sm\">" + prijezd + "<br>" + odjezd + "<br>" + pokoj +
                 "<br>" + jmeno + "<br>" + jeRegistrovan + "<br>" + cena + "<br>" + typAuta + "<br>" +
                 poznamka + "</div ></div ></div > "
@@ -206,7 +190,7 @@ var ParkingPlace = function () {
             buttons: {
 
                 ok: {
-                    label: "Zavřít",
+                    label: "Close",
                     className: 'btn-info'
                 }
             }

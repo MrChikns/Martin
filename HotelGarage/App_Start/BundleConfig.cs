@@ -15,10 +15,8 @@ namespace HotelGarage
                         "~/Scripts/bootbox.min.js",
                         "~/Scripts/bootstrap.min.js",
                         "~/Scripts/dataTables.bootstrap4.min.js",
-                        "~/Scripts/dataTables.material.min.js",
                         "~/Scripts/jquery-*",
-                        "~/Scripts/jquery.dataTables.min.js",
-                        "~/Scripts/typeahead.bundle.min.js"));
+                        "~/Scripts/jquery.dataTables.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
